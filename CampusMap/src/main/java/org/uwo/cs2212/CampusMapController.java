@@ -1,5 +1,6 @@
 package org.uwo.cs2212;
 
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,6 +60,7 @@ public class CampusMapController implements Initializable {
     protected void onHelloButtonClick() {
     }
     private String mapName = "main-map.png";
+    private double zoom = 1.0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -80,7 +82,6 @@ public class CampusMapController implements Initializable {
 
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
         if (newValue.toString().equals("Western Main Campus")){
-
         }
         else if (newValue.toString().equals("Middlesex College")){
             mapName = "middlesex-f0.png";
@@ -109,7 +110,7 @@ public class CampusMapController implements Initializable {
             imageView.setX(0);
             imageView.setY(0);
             Group root = new Group();
-            imageView.setFitWidth(image.getWidth());
+            imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
             mapPane.setContent(root);
@@ -128,9 +129,19 @@ public class CampusMapController implements Initializable {
             Desktop desk = Desktop.getDesktop();
             desk.browse(configUrl.toURI());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+    }
+
+    public void onZoomInButtonClicked(ActionEvent actionEvent) {
+        zoom *= 0.8;
+        showMap();
+    }
+
+    public void onZoomOutButtonClicked(ActionEvent actionEvent) {
+        zoom *= 1.2;
+        showMap();
     }
 }
