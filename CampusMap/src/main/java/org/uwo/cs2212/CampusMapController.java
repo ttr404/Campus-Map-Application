@@ -7,16 +7,22 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.awt.*;
 
 public class CampusMapController implements Initializable {
     @FXML
@@ -116,4 +122,15 @@ public class CampusMapController implements Initializable {
         System.out.println("operate successful.");
     }
 
+    public void onHelpButtonClicked(ActionEvent actionEvent) {
+        try {
+            URL configUrl = getClass().getResource("help.pdf");
+            Desktop desk = Desktop.getDesktop();
+            desk.browse(configUrl.toURI());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

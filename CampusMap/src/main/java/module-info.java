@@ -3,6 +3,7 @@ module com.example.form {
     requires javafx.fxml;
 
     requires com.dlsc.formsfx;
+    requires java.desktop;
 
     opens org.uwo.cs2212 to javafx.fxml;
     exports org.uwo.cs2212;

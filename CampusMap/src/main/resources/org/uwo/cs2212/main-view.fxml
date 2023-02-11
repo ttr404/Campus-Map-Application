@@ -31,7 +31,9 @@
                     <Label minWidth="30"/>
                     <Button fx:id="zoomIn" text=" - "/>
                     <Button fx:id="zoomOut" text=" + "/>
-                    <Label minWidth="50"/>
+                    <Label minWidth="20"/>
+                    <Button fx:id="help" text="Help" onAction="#onHelpButtonClicked"/>
+                    <Label minWidth="20"/>
                     <Button fx:id="settingsButton" text="Settings" onAction="#onSettingsButtonClicked"/>
                     <Label minWidth="20"/>
                 </HBox>
