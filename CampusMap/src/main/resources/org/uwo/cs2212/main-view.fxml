@@ -18,19 +18,19 @@
             </top>
             <right>
                 <HBox>
-                    <Button fx:id="floor0" text=" G "/>
-                    <Button fx:id="floor1" text=" 2 "/>
-                    <Button fx:id="floor2" text=" 3 "/>
-                    <Button fx:id="floor3" text=" 4 "/>
-                    <Button fx:id="floor4" text=" 5 "/>
-                    <Button fx:id="floor5" text=" 6 "/>
+                    <Button fx:id="floor0" text="G"/>
+                    <Button fx:id="floor1" text="2"/>
+                    <Button fx:id="floor2" text="3"/>
+                    <Button fx:id="floor3" text="4"/>
+                    <Button fx:id="floor4" text="5"/>
+                    <Button fx:id="floor5" text="6"/>
                     <Label minWidth="30"/>
                     <Button fx:id="poiToggleButton" text="Edit" minWidth="50"/>
                     <Label minWidth="2"/>
                     <Button fx:id="favoriteButton"/>
                     <Label minWidth="30"/>
-                    <Button fx:id="zoomIn" text=" - " onAction="#onZoomInButtonClicked"/>
-                    <Button fx:id="zoomOut" text=" + " onAction="#onZoomOutButtonClicked"/>
+                    <Button fx:id="zoomIn" text="-" onAction="#onZoomInButtonClicked"/>
+                    <Button fx:id="zoomOut" text="+" onAction="#onZoomOutButtonClicked"/>
                     <Label minWidth="20"/>
                     <Button fx:id="help" text="Help" onAction="#onHelpButtonClicked"/>
                     <Label minWidth="20"/>
