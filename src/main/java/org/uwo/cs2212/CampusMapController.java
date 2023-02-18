@@ -82,8 +82,6 @@ public class CampusMapController implements Initializable {
 
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
         if (newValue.toString().equals("Western Main Campus")){
-            mapName = "main-map.png";
-            showMap();
         }
         else if (newValue.toString().equals("Middlesex College")){
             mapName = "middlesex-f0.png";
