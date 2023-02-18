@@ -1,0 +1,39 @@
+{
+  "baseMaps": [
+    {
+      "name": "Western Main Campus",
+      "floorConfigs": [
+        {
+          "configFileName": "main-map-config.json"
+        }
+      ]
+    },
+    {
+      "name": "Middlesex College Building",
+      "floorConfigs": [
+        {
+          "configFileName": "middlesex-00-config.json"
+        },
+        {
+          "configFileName": "middlesex-01-config.json"
+        }
+      ]
+    },
+    {
+      "name": "Western Science Centre",
+      "floorConfigs": [
+        {
+          "configFileName": "science-centre-00-config.json"
+        }
+      ]
+    },
+    {
+      "name": "Physics and Astronomy Building",
+      "floorConfigs": [
+        {
+          "configFileName": "physics-00-config.json"
+        }
+      ]
+    }
+  ]
+}

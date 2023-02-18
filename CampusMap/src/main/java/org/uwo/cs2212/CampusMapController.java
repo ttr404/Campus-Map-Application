@@ -1,5 +1,6 @@
 package org.uwo.cs2212;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,6 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
+import org.uwo.cs2212.model.BaseMap;
+import org.uwo.cs2212.model.FloorMap;
+import org.uwo.cs2212.model.MapConfig;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +26,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.awt.*;
 
@@ -56,50 +61,46 @@ public class CampusMapController implements Initializable {
     private ListView searchResult;
     @FXML
     private ScrollPane mapPane;
-    @FXML
-    protected void onHelloButtonClick() {
-    }
+
     private String mapName = "main-map.png";
     private double zoom = 1.0;
+    private MapConfig mapConfig;
+    private BaseMap currentBaseMap;
+    private FloorMap currentFloorMap;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        mapConfig = ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json"));
         initializeMapSelector();
         showMap();
 
     }
 
     private void initializeMapSelector() {
-        mapSelector.getItems().add("Western Main Campus");
-        mapSelector.getItems().add("Middlesex College");
-        mapSelector.getItems().add("Natural Science Centre");
-        mapSelector.valueProperty().setValue("Western Main Campus");
+        for(BaseMap baseMap: mapConfig.getBaseMaps()){
+            mapSelector.getItems().add(baseMap.getName());
+        }
+        currentBaseMap = mapConfig.getBaseMaps().get(0);
+        currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+        mapSelector.valueProperty().setValue(currentBaseMap.getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
             handleComboBoxValueChanged(ov, oldValue, newValue);
         });
     }
 
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
-        if (newValue.toString().equals("Western Main Campus")){
-            mapName = "main-map.png";
-            showMap();
-        }
-        else if (newValue.toString().equals("Middlesex College")){
-            mapName = "middlesex-f0.png";
-            showMap();
-        }
-        else if (newValue.toString().equals("Natural Science Centre")){
-            
-        }
-        else{
-
+        for(BaseMap baseMap: mapConfig.getBaseMaps()){
+            if (newValue.toString().equals(baseMap.getName())){
+                currentBaseMap = baseMap;
+                currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+                showMap();
+            }
         }
     }
 
     private void showMap(){
         try {
-            URL mapUrl = CampusMapController.class.getResource(mapName);
+            URL mapUrl = CampusMapController.class.getResource(currentFloorMap.getMapFileName());
             URI uri = mapUrl.toURI();
             InputStream stream = new FileInputStream(new File(uri));
             Image image = new Image(stream);
@@ -121,11 +122,13 @@ public class CampusMapController implements Initializable {
         {}
     }
 
-    public void onSettingsButtonClicked(ActionEvent actionEvent) {
+    @FXML
+    private void onSettingsButtonClicked(ActionEvent actionEvent) {
         System.out.println("operate successful.");
     }
 
-    public void onHelpButtonClicked(ActionEvent actionEvent) {
+    @FXML
+    private void onHelpButtonClicked(ActionEvent actionEvent) {
         try {
             URL configUrl = getClass().getResource("help.pdf");
             Desktop desk = Desktop.getDesktop();
@@ -137,13 +140,29 @@ public class CampusMapController implements Initializable {
         }
     }
 
-    public void onZoomInButtonClicked(ActionEvent actionEvent) {
+    @FXML
+    private void onZoomInButtonClicked(ActionEvent actionEvent) {
         zoom *= 0.8;
         showMap();
     }
 
-    public void onZoomOutButtonClicked(ActionEvent actionEvent) {
+    @FXML
+    private void onZoomOutButtonClicked(ActionEvent actionEvent) {
         zoom *= 1.2;
         showMap();
+    }
+
+    @FXML
+    private void onFloorGButtonClick(ActionEvent actionEvent) {
+        currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+        showMap();
+    }
+
+    @FXML
+    private void onFloor2ButtonClick(ActionEvent actionEvent) {
+        if (currentBaseMap.getFloorMaps().size() >= 2){
+            currentFloorMap = currentBaseMap.getFloorMaps().get(1);
+            showMap();
+        }
     }
 }
