@@ -29,8 +29,8 @@
                     <Label minWidth="2"/>
                     <Button fx:id="favoriteButton"/>
                     <Label minWidth="30"/>
-                    <Button fx:id="zoomIn" text="-" onAction="#onZoomInButtonClicked"/>
-                    <Button fx:id="zoomOut" text="+" onAction="#onZoomOutButtonClicked"/>
+                    <Button fx:id="zoomIn" text=" - " onAction="#onZoomInButtonClicked"/>
+                    <Button fx:id="zoomOut" text=" + " onAction="#onZoomOutButtonClicked"/>
                     <Label minWidth="20"/>
                     <Button fx:id="help" text="Help" onAction="#onHelpButtonClicked"/>
                     <Label minWidth="20"/>

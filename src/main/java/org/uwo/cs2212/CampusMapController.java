@@ -95,7 +95,7 @@ public class CampusMapController implements Initializable {
                 currentFloorMap = currentBaseMap.getFloorMaps().get(0);
                 showMap();
             }
-        }
+		}
     }
 
     private void showMap(){
