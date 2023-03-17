@@ -10,10 +10,36 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "baseLayer": true,
+      "color": "black",
+      "layerType": "base",
       "font": "Times New Roman",
-      "size": 16,
+      "size": 20,
+      "points": [
+        {
+          "x": 648,
+          "y": 328,
+          "name": "My Test1",
+          "roomNumber": "A100",
+          "description": "Class room A100",
+          "type": "ClassRoom"
+        },
+        {
+          "x": 30,
+          "y": 666,
+          "name": "My Test2",
+          "roomNumber": "A200",
+          "description": "Class room A200",
+          "type": "ClassRoom"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "indigo",
+      "layerType": "internal",
+      "font": "Times New Roman",
+      "size": 24,
+      "hideLayer": true,
       "points": [
         {
           "x": 100,
@@ -21,7 +47,8 @@
           "name": "My Test1",
           "roomNumber": "A100",
           "description": "Class room A100",
-          "type": "ClassRoom"
+          "type": "ClassRoom",
+          "selected": true
         },
         {
           "x": 200,
@@ -35,22 +62,22 @@
     },
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "baseLayer": false,
+      "color": "red",
+      "layerType": "internal",
       "font": "Times New Roman",
-      "size": 16,
+      "size": 24,
       "points": [
         {
-          "x": 100,
-          "y": 100,
+          "x": 437,
+          "y": 178,
           "name": "My Test1",
           "roomNumber": "A100",
           "description": "Class room A100",
           "type": "ClassRoom"
         },
         {
-          "x": 200,
-          "y": 200,
+          "x": 67,
+          "y": 222,
           "name": "My Test2",
           "roomNumber": "A200",
           "description": "Class room A200",
@@ -60,47 +87,22 @@
     },
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "baseLayer": false,
+      "color": "blue",
+      "layerType": "internal",
       "font": "Times New Roman",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
+          "x": 432,
+          "y": 234,
           "name": "My Test1",
           "roomNumber": "A100",
           "description": "Class room A100",
           "type": "ClassRoom"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "My Test2",
-          "roomNumber": "A200",
-          "description": "Class room A200",
-          "type": "ClassRoom"
-        }
-      ]
-    },
-    {
-      "name": "Main Map",
-      "color": "BLACK",
-      "baseLayer": false,
-      "font": "Times New Roman",
-      "size": 16,
-      "points": [
-        {
-          "x": 100,
-          "y": 100,
-          "name": "My Test1",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
-        },
-        {
-          "x": 200,
-          "y": 200,
+          "x": 120,
+          "y": 333,
           "name": "My Test2",
           "roomNumber": "A200",
           "description": "Class room A200",

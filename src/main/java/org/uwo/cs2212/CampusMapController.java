@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import org.uwo.cs2212.model.BaseMap;
 import org.uwo.cs2212.model.FloorMap;
+import org.uwo.cs2212.model.Layer;
 import org.uwo.cs2212.model.MapConfig;
 
 import java.io.File;
@@ -62,7 +63,6 @@ public class CampusMapController implements Initializable {
     @FXML
     private ScrollPane mapPane;
 
-    private String mapName = "main-map.png";
     private double zoom = 1.0;
     private MapConfig mapConfig;
     private BaseMap currentBaseMap;
@@ -116,6 +116,10 @@ public class CampusMapController implements Initializable {
             imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
+            for(Layer layer: currentFloorMap.getLayers()){
+                ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
+                root.getChildren().add(imageLayer);
+            }
             mapPane.setContent(root);
         }
         catch(Exception ex)

@@ -11,7 +11,7 @@
     {
       "name": "Main Map",
       "color": "BLACK",
-      "baseLayer": true,
+      "layerType": "base",
       "font": "Times New Roman",
       "size": 16,
       "points": [
@@ -36,7 +36,7 @@
     {
       "name": "Main Map",
       "color": "BLACK",
-      "baseLayer": false,
+      "layerType": "internal",
       "font": "Times New Roman",
       "size": 16,
       "points": [
@@ -61,7 +61,7 @@
     {
       "name": "Main Map",
       "color": "BLACK",
-      "baseLayer": false,
+      "layerType": "internal",
       "font": "Times New Roman",
       "size": 16,
       "points": [
@@ -86,7 +86,7 @@
     {
       "name": "Main Map",
       "color": "BLACK",
-      "baseLayer": false,
+      "layerType": "internal",
       "font": "Times New Roman",
       "size": 16,
       "points": [

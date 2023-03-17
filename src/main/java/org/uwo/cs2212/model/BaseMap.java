@@ -8,16 +8,16 @@ import java.util.List;
 
 public class BaseMap {
     private String name;
-    private List<FloorConfig> floorConfigs;
+    private List<FloorMap> floorConfigs;
     @JsonIgnore
     private List<FloorMap> floorMaps = new ArrayList<>();
 
 
-    public List<FloorConfig> getFloorConfigs() {
+    public List<FloorMap> getFloorConfigs() {
         return floorConfigs;
     }
 
-    public void setFloorConfigs(List<FloorConfig> floorConfigs) {
+    public void setFloorConfigs(List<FloorMap> floorConfigs) {
         this.floorConfigs = floorConfigs;
     }
 

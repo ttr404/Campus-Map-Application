@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.LoginViewController">
+   <left>
+       <ImageView fitHeight="400" fitWidth="300">
+       <image>
+           <Image url="@western-logo.png" />
+       </image>
+   </ImageView>
+   </left>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+          <Label minHeight="120" />
+          <HBox>
+              <Label minWidth="30" />
+              <Label fx:id="error" textFill="RED" />
+          </HBox>
+          <Label minHeight="10" />
+          <HBox>
+              <Label minWidth="10" />
+              <Label minWidth="80" text="User Name:" />
+              <TextField fx:id="loginName" />
+          </HBox>
+          <Label minHeight="20" />
+          <HBox>
+              <Label minWidth="10" />
+              <Label minWidth="80" text="Password:" />
+              <PasswordField fx:id="password" />
+          </HBox>
+          <Label minHeight="20" />
+          <HBox alignment="CENTER">
+              <Button mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" />
+          </HBox>
+          <Label minHeight="100" />
+      </VBox>
+   </center>
+    <right>
+        <Label minWidth="20" />
+    </right>
+</BorderPane>

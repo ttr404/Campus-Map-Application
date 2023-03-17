@@ -4,10 +4,11 @@ import java.util.List;
 
 public class Layer {
     private String name;
-    private boolean baseLayer;
+    private String layerType;
     private String color;
     private String font;
     private double size;
+    private boolean hideLayer;
     private List<PointOfInterest> points;
 
     public String getName() {
@@ -16,14 +17,6 @@ public class Layer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isBaseLayer() {
-        return baseLayer;
-    }
-
-    public void setBaseLayer(boolean baseLayer) {
-        this.baseLayer = baseLayer;
     }
 
     public String getColor() {
@@ -56,5 +49,21 @@ public class Layer {
 
     public void setPoints(List<PointOfInterest> points) {
         this.points = points;
+    }
+
+    public String getLayerType() {
+        return layerType;
+    }
+
+    public void setLayerType(String layerType) {
+        this.layerType = layerType;
+    }
+
+    public boolean isHideLayer() {
+        return hideLayer;
+    }
+
+    public void setHideLayer(boolean hideLayer) {
+        this.hideLayer = hideLayer;
     }
 }

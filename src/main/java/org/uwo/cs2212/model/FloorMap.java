@@ -7,6 +7,15 @@ public class FloorMap {
     private boolean showLegend;
     private List<Double> legendPosition;
     private List<Layer> layers;
+    private String configFileName;
+
+    public String getConfigFileName() {
+        return configFileName;
+    }
+
+    public void setConfigFileName(String configFileName) {
+        this.configFileName = configFileName;
+    }
 
     public String getMapFileName() {
         return mapFileName;

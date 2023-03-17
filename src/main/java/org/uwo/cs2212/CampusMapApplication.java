@@ -13,13 +13,14 @@ import java.net.URL;
 public class CampusMapApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
-        stage.setTitle("Western Campus Map");
-        stage.setScene(scene);
+        LoginViewController.setStage(stage);
+        FXMLLoader loginFxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("login-view.fxml"));
+        Scene loginScene = new Scene(loginFxmlLoader.load(), 571, 400);
+        stage.setTitle("Login page");
+        stage.setScene(loginScene);
         stage.setResizable(false);
         stage.show();
+
     }
 
     public static void main(String[] args) {
