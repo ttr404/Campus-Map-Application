@@ -3,6 +3,7 @@ package org.uwo.cs2212.model;
 import java.util.List;
 
 public class FloorMap {
+    private  String name;
     private String mapFileName;
     private boolean showLegend;
     private List<Double> legendPosition;
@@ -47,5 +48,13 @@ public class FloorMap {
 
     public void setLayers(List<Layer> layers) {
         this.layers = layers;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

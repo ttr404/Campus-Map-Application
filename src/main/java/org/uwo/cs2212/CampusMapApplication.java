@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.uwo.cs2212.model.MapConfig;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class CampusMapApplication extends Application {
         stage.setTitle("Login page");
         stage.setScene(loginScene);
         stage.setResizable(false);
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
     }

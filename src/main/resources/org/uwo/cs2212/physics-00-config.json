@@ -1,4 +1,6 @@
+
 {
+  "name": "Ground floor",
   "mapFileName": "physics-f0.png",
   "showLegend": true,
   "legendPosition": [

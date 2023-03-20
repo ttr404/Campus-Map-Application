@@ -35,13 +35,11 @@ public class ImageLayer extends Canvas {
                 }
                 else{
                     graphic.setFont(normalFont);
-                    graphic.fillOval(poi.getX()*zoom - 5, poi.getY()*zoom - 5, 10, 10);
+                    graphic.fillOval(poi.getX()*zoom - 6, poi.getY()*zoom - 6, 12, 12);
                     graphic.strokeText(poi.getName(), poi.getX()*zoom - 10, poi.getY()*zoom - 10);
                 }
             }
-
         }
-
     }
     private static boolean isBaseLayer(Layer layer){
         if (layer != null && layer.getLayerType() != null && "base".equals(layer.getLayerType().trim().toLowerCase())){

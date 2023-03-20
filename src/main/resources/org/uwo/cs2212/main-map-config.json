@@ -1,4 +1,5 @@
 {
+  "name": "Main campus",
   "mapFileName": "main-map.png",
   "showLegend": true,
   "legendPosition": [
@@ -38,17 +39,15 @@
       "color": "indigo",
       "layerType": "internal",
       "font": "Times New Roman",
-      "size": 24,
-      "hideLayer": true,
+      "size": 16,
       "points": [
         {
           "x": 100,
           "y": 100,
-          "name": "My Test1",
+          "name": "Indigo",
           "roomNumber": "A100",
           "description": "Class room A100",
-          "type": "ClassRoom",
-          "selected": true
+          "type": "ClassRoom"
         },
         {
           "x": 200,
@@ -68,9 +67,9 @@
       "size": 24,
       "points": [
         {
-          "x": 437,
-          "y": 178,
-          "name": "My Test1",
+          "x": 400,
+          "y": 200,
+          "name": "ABC",
           "roomNumber": "A100",
           "description": "Class room A100",
           "type": "ClassRoom"
