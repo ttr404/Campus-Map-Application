@@ -30,6 +30,21 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.awt.*;
 
+// testing
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
+
+
 public class CampusMapController implements Initializable {
     @FXML
     private Button floor0;
@@ -53,8 +68,12 @@ public class CampusMapController implements Initializable {
     private Button zoomIn;
     @FXML
     private Button zoomOut;
+
     @FXML
     private Button settingsButton;
+    @FXML
+    private Button help;
+    @FXML Button about;
     @FXML
     private ComboBox mapSelector;
     @FXML
@@ -121,6 +140,9 @@ public class CampusMapController implements Initializable {
 
 
 
+
+
+
     private void searchResultSelectionChanged(ObservableValue<? extends SearchResult> changed, SearchResult oldVal, SearchResult newVal) {
         selectPoi(newVal);
     }
@@ -173,7 +195,7 @@ public class CampusMapController implements Initializable {
     @FXML
     private void onHelpButtonClicked(ActionEvent actionEvent) {
         try {
-            URL configUrl = getClass().getResource("help.pdf");
+            URL configUrl = getClass().getResource("help_temp.pdf");
             Desktop desk = Desktop.getDesktop();
             desk.browse(configUrl.toURI());
         } catch (IOException e) {
@@ -182,6 +204,50 @@ public class CampusMapController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void onAboutButton(ActionEvent actionEvent) {
+        try {
+            URL configUrl = getClass().getResource("help_temp.pdf");
+            Desktop desk = Desktop.getDesktop();
+            desk.browse(configUrl.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void aboutButtonAction(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        String s ="About\n\n" +
+                "Campus Map Viewing App\n" +
+                "Version: 1.0.0\n" +
+                "Release Date: March 27, 2023\n" +
+                "\n" +
+                "Our Team\n" +
+                "\n" +
+                "  1) Boersen, Jarrett	Student	jboerse2@uwo.ca\n"+
+                "  2) Huang, Truman	    Student	yhuan939@uwo.ca\n"+
+                "  3) Xie, Yaopeng	    Student	yxie447@uwo.ca\n"+
+                "  4) Zhang, Binchi	    Student	bzhan484@uwo.ca\n"+
+                "  5) Zhang, Tingrui	    Student	tzhan425@uwo.ca\n\n"+
+
+        "Contact Us\n\n" +
+                "  If you have any questions, feedback or suggestions,\n  please feel free to reach out to us at \n  info@campusmapapp.com.\n  We are always happy to hear from our users and \n  help you in any way we can.\n" +
+                "\n" +
+                "Thank you for using our campus map viewing app!";
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+        VBox vbox = new VBox(new Label(s));
+        Scene scene = new Scene(vbox, 300, 100);
+        stage.setScene(scene);
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - 300);
+        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        stage.setWidth(300);
+        stage.setHeight(500);
+        stage.show();
+    }
+
 
     @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {

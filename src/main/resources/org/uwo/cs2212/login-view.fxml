@@ -41,8 +41,9 @@
                 <PasswordField fx:id="password" />
             </HBox>
             <Label minHeight="20" />
-            <HBox alignment="CENTER">
-                <Button mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" />
+            <HBox>
+                <Label minWidth="110" />
+                <Button fx:id="login" mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" />
             </HBox>
          <HBox prefHeight="34.0" prefWidth="250.0">
             <children>

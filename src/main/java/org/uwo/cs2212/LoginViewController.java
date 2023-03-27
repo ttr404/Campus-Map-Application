@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -30,6 +31,8 @@ public class LoginViewController {
     @FXML
     private ImageView temperature;
     @FXML
+    private Button login;
+    @FXML
     private Label weatherInfo;
     @FXML
     private Label tempLabel;
@@ -41,6 +44,7 @@ public class LoginViewController {
 
     public void initialize() {
         try {
+            login.setPrefWidth(120);
             showWeather();
         } catch (IOException e) {
             e.printStackTrace();
