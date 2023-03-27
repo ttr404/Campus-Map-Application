@@ -55,7 +55,6 @@ public class Weather {
         }
     }
 
-
     public HttpURLConnection fetchWeather() throws IOException {
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=metric";
         URL obj = new URL(url);
