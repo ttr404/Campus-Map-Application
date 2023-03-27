@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="org.uwo.cs2212.CampusMapController">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.CampusMapController">
     <top>
         <BorderPane>
             <top>
@@ -19,7 +28,7 @@
                     <Label minWidth="30" />
                     <Button fx:id="poiToggleButton" minWidth="50" text="Edit" />
                     <Label minWidth="2" />
-                    <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked"/>
+                    <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" />
                     <Label minWidth="30" />
                     <Button fx:id="zoomIn" onAction="#onZoomInButtonClicked" text=" - " />
                     <Button fx:id="zoomOut" onAction="#onZoomOutButtonClicked" text=" + " />
@@ -44,11 +53,28 @@
                 <TextField fx:id="searchText" promptText="please input search key ..." />
                 <Label minHeight="10" />
                 <HBox alignment="CENTER">
-                    <Button text="Search" onAction="#onSearchButtonClicked"/>
+               <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" text="All POI">
+                  <font>
+                     <Font size="10.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets right="5.0" />
+                  </HBox.margin>
+               </Button>
+                    <Button onAction="#onSearchButtonClicked" text="Search">
+                  <font>
+                     <Font size="10.0" />
+                  </font></Button>
                     <Label minWidth="4" />
-                    <Button text="Clear" onAction="#onClearButtonClicked"/>
+                    <Button onAction="#onClearButtonClicked" text="Clear">
+                  <font>
+                     <Font size="10.0" />
+                  </font></Button>
                     <Label minWidth="4" />
-                    <Button text="Favorites" onAction="#onListFavoritesButtonClicked"/>
+                    <Button onAction="#onListFavoritesButtonClicked" text="Favorites">
+                  <font>
+                     <Font size="10.0" />
+                  </font></Button>
                 </HBox>
                 <Label text="--------------------------------------" />
                 <!--<Label minHeight="10"/>-->

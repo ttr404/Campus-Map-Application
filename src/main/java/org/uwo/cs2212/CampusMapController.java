@@ -48,6 +48,8 @@ public class CampusMapController implements Initializable {
     @FXML
     private Button favoriteButton;
     @FXML
+    private Button showAllPOI;
+    @FXML
     private Button zoomIn;
     @FXML
     private Button zoomOut;
@@ -75,6 +77,7 @@ public class CampusMapController implements Initializable {
         mapConfig = ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json"));
         initializeMapSelector();
         initializeSearchListView();
+        setShowAllPOI();
         showFloorButtons();
         showMap();
         setFavouriteButtonState();
@@ -93,13 +96,30 @@ public class CampusMapController implements Initializable {
         });
     }
 
-    private void initializeSearchListView(){
+    private void initializeSearchListView(){ // need to change this to a different listview (Show all poi)
         MultipleSelectionModel<SearchResult> lvSelModel = informationList.getSelectionModel();
         lvSelModel.selectedItemProperty().addListener(
                 (changed, oldVal, newVal) -> {
                     searchResultSelectionChanged(changed, oldVal, newVal);
                 });
     }
+
+    private void setShowAllPOI(){
+        for(FloorMap floorMap : currentBaseMap.getFloorMaps()){
+            for (Layer layer: floorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    informationList.getItems().add(new SearchResult(floorMap, poi));
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void onAllPOIButtonClicked(ActionEvent actionEvent) {
+        setShowAllPOI();
+    }
+
+
 
     private void searchResultSelectionChanged(ObservableValue<? extends SearchResult> changed, SearchResult oldVal, SearchResult newVal) {
         selectPoi(newVal);

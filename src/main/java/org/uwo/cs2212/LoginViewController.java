@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.UserConfig;
 import org.uwo.cs2212.model.UserList;
-import org.uwo.cs2212.model.Weather;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -62,7 +60,6 @@ public class LoginViewController {
             error.setText("Invalid user name or password.");
             password.setText("");
         }
-
     }
 
     public boolean checkAccount(){

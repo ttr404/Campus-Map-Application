@@ -1,4 +1,4 @@
-package org.uwo.cs2212.model;
+package org.uwo.cs2212;
 
 import java.io.BufferedReader;
 import java.io.IOException;
