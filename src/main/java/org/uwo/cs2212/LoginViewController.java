@@ -4,12 +4,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.UserConfig;
 import org.uwo.cs2212.model.UserList;
+import org.uwo.cs2212.model.Weather;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -24,11 +27,26 @@ public class LoginViewController {
     private PasswordField password;
     @FXML
     private Label error;
-
+    @FXML
+    private ImageView weatherIcon;
+    @FXML
+    private ImageView temperature;
+    @FXML
+    private Label weatherInfo;
+    @FXML
+    private Label tempLabel;
     private static Stage stage;
 
     public static void setStage(Stage stage) {
         LoginViewController.stage = stage;
+    }
+
+    public void initialize() {
+        try {
+            showWeather();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onLoginGButtonClick(ActionEvent actionEvent) throws IOException {
@@ -56,6 +74,31 @@ public class LoginViewController {
             }
         }
         return false;
+    }
+
+    public void showWeather() throws IOException {
+        Weather currWeather = new Weather(43.009953, -81.273613);
+        currWeather.getWeather();
+        ImageView imageView = currWeather.grabImage(currWeather.getIcon());
+        imageView.setFitWidth(16);
+        imageView.setFitHeight(16);
+        weatherIcon.setImage(imageView.getImage());
+
+        weatherInfo.setText(currWeather.getWeather());
+
+        ImageView temp;
+        if (currWeather.getTemp() > 30.0){
+            temp = new ImageView(getClass().getResource("thermometer-high.png").toExternalForm());
+        } else if (currWeather.getTemp() < 0.0){
+            temp = new ImageView(getClass().getResource("thermometer-low.png").toExternalForm());
+        } else {
+            temp = new ImageView(getClass().getResource("thermometer.png").toExternalForm());
+        }
+        temp.setFitWidth(16);
+        temp.setFitWidth(16);
+        temperature.setImage(temp.getImage());
+
+        tempLabel.setText(currWeather.getTemp().toString() + "°C");
     }
 
 
@@ -91,4 +134,6 @@ public class LoginViewController {
 
         return hexString.toString();
     }
+
+
 }
