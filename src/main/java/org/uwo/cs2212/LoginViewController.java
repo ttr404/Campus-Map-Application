@@ -44,7 +44,7 @@ public class LoginViewController {
 
     public void initialize() {
         try {
-            login.setPrefWidth(120);
+            login.setPrefWidth(180);
             showWeather();
         } catch (IOException e) {
             e.printStackTrace();

@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.awt.*;
 
-// testing
+// testing(Truman)
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -43,11 +43,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
+import javafx.scene.text.*;
+import javafx.scene.paint.Color;
+
+
 
 
 public class CampusMapController implements Initializable {
     @FXML
     private Button floor0;
+    @FXML
+    private Button signOut;
     @FXML
     private Button floor1;
     @FXML
@@ -73,6 +79,9 @@ public class CampusMapController implements Initializable {
     private Button settingsButton;
     @FXML
     private Button help;
+
+    @FXML
+    private Label helpLabel;
     @FXML Button about;
     @FXML
     private ComboBox mapSelector;
@@ -192,7 +201,7 @@ public class CampusMapController implements Initializable {
     private void onSettingsButtonClicked(ActionEvent actionEvent) {
         System.out.println("operate successful.");
     }
-
+    /** option*/
     @FXML
     private void onHelpButtonClicked(ActionEvent actionEvent) {
         try {
@@ -205,18 +214,7 @@ public class CampusMapController implements Initializable {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void onAboutButton(ActionEvent actionEvent) {
-        try {
-            URL configUrl = getClass().getResource("help_temp.pdf");
-            Desktop desk = Desktop.getDesktop();
-            desk.browse(configUrl.toURI());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
+
     @FXML
     private void aboutButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -248,6 +246,76 @@ public class CampusMapController implements Initializable {
         stage.setHeight(500);
         stage.show();
     }
+
+
+
+
+
+    @FXML
+    private void helpButtonAction(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+
+        // Create a ChoiceBox control to select the help topic
+        ChoiceBox<String> helpTopic = new ChoiceBox<>();
+        helpTopic.getItems().addAll("Getting Started", "POI and Favorite","Setting");
+        helpTopic.setValue("Getting Started"); // Set the default value
+        //helpTopic.setPrefWidth(200);
+        Label helpLabel = new Label();
+        helpLabel.setWrapText(true); // Wrap text to multiple lines
+
+        VBox vbox = new VBox(new Label("Help Page"), helpTopic, helpLabel);
+        Scene scene = new Scene(vbox);
+
+        stage.setScene(scene);
+        stage.setWidth(300);
+        stage.setHeight(500);
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - stage.getWidth() );
+        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        stage.show();
+
+        // Set the initial help text
+        String helpText = getHelpText(helpTopic.getValue());
+        helpLabel.setText(helpText); // Set the text of the helpLabel control
+
+        // Add an event listener to the helpTopic control to update the help text
+        helpTopic.setOnAction(e -> {
+            String selectedTopic = helpTopic.getValue();
+            String selectedHelpText = getHelpText(selectedTopic);
+            helpLabel.setText(selectedHelpText);
+        });
+    }
+
+    // Helper method to get the help text for a given topic
+    private String getHelpText(String topic) {
+        switch (topic) {
+            case "Getting Started":
+                return "Getting started:\n\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide directions.\n\n" +
+                        "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top right of the screen.\n\n" +
+                        "To change the map view into a specific building, click on the layers button located at the bottom left of the screen. You can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n";
+            case "POI and Favorite":
+                return "POI and Favorite:\n\nTo view the available POI, click on the menu button located at the top left of the screen and select \"Points of Interest\".\n" +
+                        "\nTo view a specific POI, click on the icon on the map or select it from the list of POI.\n" +
+                        "\nTo add your own POI, click on the map at the desired location and select \"Add POI\". Enter the name of the POI and select the appropriate category.\n" +
+                        "\nTo view your saved POI list, click on the menu button located at the top left of the screen and select \"My POI\".\n";
+            case "Setting":
+                return "Setting:\n\nTo access app settings, click on the menu button located at the top left of the screen and select \"Settings\". Here, you can adjust settings such as units of measurement and language.\n" +
+                        "\nTo clear your search history, click on the menu button located at the top left of the screen and select \"Clear History\".\n" +
+                        "Contact Us:\n" +
+                        "If you have any questions or issues with the app, please contact us at support@campusmapapp.com. We are always happy to help!\n" +
+                        "\n" +
+                        "Thank you for using our campus map viewing app. We hope this help menu has been helpful in navigating the app. If you have any feedback or suggestions, please don't hesitate to reach out to us.\n" +
+                        "\n";
+            default:
+                return "";
+        }
+    }
+
+
+
+
+
 
 
     @FXML
