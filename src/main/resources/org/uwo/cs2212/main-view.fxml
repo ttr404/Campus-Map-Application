@@ -94,7 +94,7 @@
                 </HBox >
                 <Label text="--------------------------------------" />
                 <!--<Label minHeight="10"/>-->
-                <ListView fx:id="informationList" minHeight="534"  style="-fx-background-color: #ffbe4d;" />
+                <ListView fx:id="informationList" minHeight="534" />
 
             </VBox>
             <Label minWidth="8" />
