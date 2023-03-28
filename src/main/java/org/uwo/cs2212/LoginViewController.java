@@ -19,29 +19,32 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// The LoginViewController class is responsible for managing the login view.
 public class LoginViewController {
     @FXML
-    private TextField loginName;
+    private TextField loginName; // TextField for user to enter their username
     @FXML
-    private PasswordField password;
+    private PasswordField password; // PasswordField for user to enter their password
     @FXML
-    private Label error;
+    private Label error; // Label to display error messages if the login fails
     @FXML
-    private ImageView weatherIcon;
+    private ImageView weatherIcon; // ImageView to display the current weather icon
     @FXML
-    private ImageView temperature;
+    private ImageView temperature; // ImageView to display the current temperature icon
     @FXML
-    private Button login;
+    private Button login; // Button to trigger the login process
     @FXML
-    private Label weatherInfo;
+    private Label weatherInfo; // Label to display the current weather description
     @FXML
-    private Label tempLabel;
-    private static Stage stage;
+    private Label tempLabel; // Label to display the current temperature value
+    private static Stage stage; // The stage for the login view
 
+    // Set the stage for the login view
     public static void setStage(Stage stage) {
         LoginViewController.stage = stage;
     }
 
+    // Initialize the login view, set the button width, and show the current weather
     public void initialize() {
         try {
             login.setPrefWidth(180);
@@ -49,13 +52,14 @@ public class LoginViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    // Trigger the login process when the login button is clicked
     public void onLoginGButtonClick(ActionEvent actionEvent) throws IOException {
         logIn();
     }
 
+    // Handle the login process, show the main view if the login is successful, or display an error message if not
     public void logIn() throws IOException {
         if (checkAccount()){
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
@@ -67,12 +71,14 @@ public class LoginViewController {
             stage.setY(70);
             stage.show();
         }
+        // add multiple user method here
         else{
             error.setText("Invalid user name or password.");
             password.setText("");
         }
     }
 
+    // Check if the user entered the correct credentials
     public boolean checkAccount(){
         UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
         String encodePassword = toHexString(getSHA(password.getText()));
@@ -84,6 +90,7 @@ public class LoginViewController {
         return false;
     }
 
+    // Show the current weather on the login view
     public void showWeather() throws IOException {
         Weather currWeather = new Weather(43.009953, -81.273613);
         currWeather.getWeather();
