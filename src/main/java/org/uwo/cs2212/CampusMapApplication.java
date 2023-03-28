@@ -3,8 +3,8 @@ package org.uwo.cs2212;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.uwo.cs2212.model.MapConfig;
@@ -25,7 +25,7 @@ public class CampusMapApplication extends Application {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode().toString().equals("ENTER")){
                     try {
-                        controller.Login();
+                        controller.logIn();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -37,7 +37,6 @@ public class CampusMapApplication extends Application {
         stage.setResizable(false);
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-
     }
 
     public static void main(String[] args) {

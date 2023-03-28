@@ -25,13 +25,10 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.FormattableFlags;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.awt.*;
 
-// testing
+// testing(Truman)
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -42,13 +39,21 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
+import javafx.scene.text.*;
+
+
+
 
 
 public class CampusMapController implements Initializable {
     @FXML
     private Button floor0;
+    @FXML
+    private Button signOut;
     @FXML
     private Button floor1;
     @FXML
@@ -69,11 +74,11 @@ public class CampusMapController implements Initializable {
     private Button zoomIn;
     @FXML
     private Button zoomOut;
-
-    @FXML
-    private Button settingsButton;
     @FXML
     private Button help;
+
+    @FXML
+    private Label helpLabel;
     @FXML Button about;
     @FXML
     private ComboBox mapSelector;
@@ -83,6 +88,24 @@ public class CampusMapController implements Initializable {
     private ListView informationList;
     @FXML
     private ScrollPane mapPane;
+    @FXML
+    private CheckBox Classrooms;
+    @FXML
+    private CheckBox Stairwells;
+    @FXML
+    private CheckBox Elevators;
+    @FXML
+    private CheckBox Washrooms;
+    @FXML
+    private CheckBox EntryAndExit;
+    @FXML
+    private CheckBox Genlabs;
+    @FXML
+    private CheckBox Restaurants;
+    @FXML
+    private CheckBox CS_Labs;
+    @FXML
+    private CheckBox Collaborative;
 
     private double zoom = 1.0;
     private double imageWidth;
@@ -91,6 +114,16 @@ public class CampusMapController implements Initializable {
     private MapConfig mapConfig;
     private BaseMap currentBaseMap;
     private FloorMap currentFloorMap;
+    LinkedList classRoom = new LinkedList();
+    LinkedList stairWells = new LinkedList();
+    LinkedList elevators = new LinkedList();
+    LinkedList washRooms = new LinkedList();
+    LinkedList entryAndExit = new LinkedList();
+    LinkedList genLabs = new LinkedList();
+    LinkedList restaurants = new LinkedList();
+    LinkedList cs_Labs = new LinkedList();
+    LinkedList collaborative = new LinkedList();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -122,6 +155,210 @@ public class CampusMapController implements Initializable {
                 (changed, oldVal, newVal) -> {
                     searchResultSelectionChanged(changed, oldVal, newVal);
                 });
+    }
+
+    public void onClassrooms(ActionEvent actionEvent){
+        if (Classrooms.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("ClassRoom")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        classRoom.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(classRoom.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(classRoom.get(i));
+            }
+        }
+    }
+
+    public void onStairwells(ActionEvent actionEvent){
+        if (Stairwells.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("StairWell")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        stairWells.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(stairWells.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(stairWells.get(i));
+            }
+        }
+    }
+
+    public void onElevators(ActionEvent actionEvent){
+        if (Elevators.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("Elevator")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        elevators.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(elevators.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(elevators.get(i));
+            }
+        }
+    }
+
+    public void onWashrooms(ActionEvent actionEvent){
+        if (Washrooms.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("WashRoom")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        washRooms.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(washRooms.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(washRooms.get(i));
+            }
+        }
+    }
+
+    public void onEntryAndExit(ActionEvent actionEvent){
+        if (EntryAndExit.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("EntryAndExit")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        entryAndExit.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(entryAndExit.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(entryAndExit.get(i));
+            }
+        }
+    }
+
+    public void onGenlabs(ActionEvent actionEvent){
+        if (Genlabs.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("GenLab")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        genLabs.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(genLabs.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(genLabs.get(i));
+            }
+        }
+    }
+
+    public void onRestaurants(ActionEvent actionEvent){
+        if (Restaurants.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("Restaurant")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        restaurants.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(restaurants.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(restaurants.get(i));
+            }
+        }
+    }
+
+    public void onCS_Labs(ActionEvent actionEvent){
+        if (CS_Labs.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("CS_Labs")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        cs_Labs.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(cs_Labs.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(cs_Labs.get(i));
+            }
+        }
+    }
+
+    public void onCollaborative(ActionEvent actionEvent){
+        if (Collaborative.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("Collaborative")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        collaborative.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(collaborative.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(collaborative.get(i));
+            }
+        }
+    }
+
+    private void setShowAllPOI(){
+        informationList.getItems().clear();
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+            }
+        }
+
+    }
+
+    @FXML
+    private void onAllPOIButtonClicked(ActionEvent actionEvent) {
+        setShowAllPOI();
     }
 
     private void searchResultSelectionChanged(ObservableValue<? extends SearchResult> changed, SearchResult oldVal, SearchResult newVal) {
@@ -170,10 +407,10 @@ public class CampusMapController implements Initializable {
     }
 
     @FXML
-    private void onSettingsButtonClicked(ActionEvent actionEvent) {
+    private void onSettingsButtonClicked(ActionEvent actionEvent) { // delete this later
         System.out.println("operate successful.");
     }
-
+    /** option*/
     @FXML
     private void onHelpButtonClicked(ActionEvent actionEvent) {
         try {
@@ -186,18 +423,7 @@ public class CampusMapController implements Initializable {
             e.printStackTrace();
         }
     }
-    @FXML
-    private void onAboutButton(ActionEvent actionEvent) {
-        try {
-            URL configUrl = getClass().getResource("help_temp.pdf");
-            Desktop desk = Desktop.getDesktop();
-            desk.browse(configUrl.toURI());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
+
     @FXML
     private void aboutButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -232,30 +458,149 @@ public class CampusMapController implements Initializable {
 
 
     @FXML
+    private void helpButtonAction(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+
+        // Create a ChoiceBox control to select the help topic
+        ChoiceBox<String> helpTopic = new ChoiceBox<>();
+        helpTopic.getItems().addAll("Getting Started", "POI and Favorite","Setting");
+        helpTopic.setValue("Getting Started"); // Set the default value
+        //helpTopic.setPrefWidth(200);
+        Label helpLabel = new Label();
+        helpLabel.setWrapText(true); // Wrap text to multiple lines
+
+        VBox vbox = new VBox(new Label("Help Page"), helpTopic, helpLabel);
+        Scene scene = new Scene(vbox);
+
+        stage.setScene(scene);
+        stage.setWidth(300);
+        stage.setHeight(500);
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - stage.getWidth() );
+        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        stage.show();
+
+        // Set the initial help text
+        String helpText = getHelpText(helpTopic.getValue());
+        helpLabel.setText(helpText); // Set the text of the helpLabel control
+
+        // Add an event listener to the helpTopic control to update the help text
+        helpTopic.setOnAction(e -> {
+            String selectedTopic = helpTopic.getValue();
+            String selectedHelpText = getHelpText(selectedTopic);
+            helpLabel.setText(selectedHelpText);
+        });
+    }
+
+    // Helper method to get the help text for a given topic
+    private String getHelpText(String topic) {
+        switch (topic) {
+            case "Getting Started":
+                return "Getting started:\n\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide directions.\n\n" +
+                        "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top right of the screen.\n\n" +
+                        "To change the map view into a specific building, click on the layers button located at the bottom left of the screen. You can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n";
+            case "POI and Favorite":
+                return "POI and Favorite:\n\nTo view the available POI, click on the menu button located at the top left of the screen and select \"Points of Interest\".\n" +
+                        "\nTo view a specific POI, click on the icon on the map or select it from the list of POI.\n" +
+                        "\nTo add your own POI, click on the map at the desired location and select \"Add POI\". Enter the name of the POI and select the appropriate category.\n" +
+                        "\nTo view your saved POI list, click on the menu button located at the top left of the screen and select \"My POI\".\n";
+            case "Setting":
+                return "Setting:\n\nTo access app settings, click on the menu button located at the top left of the screen and select \"Settings\". Here, you can adjust settings such as units of measurement and language.\n" +
+                        "\nTo clear your search history, click on the menu button located at the top left of the screen and select \"Clear History\".\n" +
+                        "Contact Us:\n" +
+                        "If you have any questions or issues with the app, please contact us at support@campusmapapp.com. We are always happy to help!\n" +
+                        "\n" +
+                        "Thank you for using our campus map viewing app. We hope this help menu has been helpful in navigating the app. If you have any feedback or suggestions, please don't hesitate to reach out to us.\n" +
+                        "\n";
+            default:
+                return "";
+        }
+    }
+
+    @FXML
+    private void signOut(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        String s ="";
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+
+        // Create three buttons
+        Button saveButton = new Button("Save");
+        saveButton.setPrefSize(60, 30); // Set button size
+        saveButton.setTranslateX(100); // Set button X position
+        Button dontSaveButton = new Button("Don't save");
+        dontSaveButton.setPrefSize(90, 30); // Set button size
+        dontSaveButton.setTranslateX(20); // Set button X position
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setPrefSize(60, 30); // Set button size
+        cancelButton.setTranslateX(180); // Set button X position
+
+        // Add event handlers to the buttons
+        saveButton.setOnAction(e -> {
+            // Handle yes button click
+            try {
+                UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
+                // properly save the data
+                ConfigUtil.saveUserList(userlist,CampusMapApplication.class.getResource("user-account.json"));
+                returnBack("login-view.fxml","Login");
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                stage.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        dontSaveButton.setOnAction(e -> {
+            // Handle no button click
+            //Don't save the data, jump back to login page
+            try {
+                returnBack("login-view.fxml","Login");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+            stage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            // Handle cancel button click
+            stage.close();
+        });
+        // Create an HBox container to hold the buttons
+        HBox hbox = new HBox( dontSaveButton, saveButton, cancelButton);
+        hbox.setTranslateY(50);
+        hbox.setSpacing(-5); // Set spacing between buttons
+        VBox vbox = new VBox(new Label(s), hbox); // Add HBox to VBox container
+        Scene scene = new Scene(vbox, 280, 100);
+        stage.setScene(scene);
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth()-650);
+        stage.setY(((Node) event.getSource()).getScene().getWindow().getY()+200);
+        stage.setWidth(400);
+        stage.setHeight(200);
+        stage.show();
+    }
+
+    @FXML
+    private void returnBack(String file,String title) throws IOException {
+        Stage stage=new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
+        Scene scene = new Scene(fxmlLoader.load(), 571, 400);
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setX(200);
+        stage.setY(70);
+        stage.show();
+    }
+
+    @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {
-        if (zoom > 0.5){
-            zoom *= 0.8;
-        }
-        else{
-            zoomIn.setDisable(false);
-        }
+        zoom *= 0.8;
         showMap();
     }
 
     @FXML
     private void onZoomOutButtonClicked(ActionEvent actionEvent) {
-        if (zoom < 2.1){
-            zoom *= 1.2;
-        }
-        else{
-            zoomOut.setDisable(false);
-        }
-        showMap();
-    }
-
-    @FXML
-    private void onZoomResetButtonClicked(ActionEvent actionEvent) {
-        zoom = 1;
+        zoom *= 1.2;
         showMap();
     }
 
@@ -362,6 +707,7 @@ public class CampusMapController implements Initializable {
                 currentSelectedPoi.setSelected(true);
             }
             showMap();
+
             setFavouriteButtonState();
         }
     }
@@ -450,36 +796,13 @@ public class CampusMapController implements Initializable {
 
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
         informationList.getItems().clear();
-        for(BaseMap baseMap : mapConfig.getBaseMaps()){
-            for(FloorMap floorMap : baseMap.getFloorMaps()){
-                for (Layer layer: floorMap.getLayers()){
-                    for(PointOfInterest poi : layer.getPoints()){
-                        if (poi.isFavorite()) {
-                            informationList.getItems().add(new SearchResult(floorMap, poi));
-                        }
-                    }
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if (poi.isFavorite()) {
+                    informationList.getItems().add(poi);
                 }
             }
         }
     }
-
-    private void setShowAllPOI(){
-        informationList.getItems().clear();
-        for(BaseMap baseMap : mapConfig.getBaseMaps()){
-            for(FloorMap floorMap : baseMap.getFloorMaps()){
-                for (Layer layer: floorMap.getLayers()){
-                    for(PointOfInterest poi : layer.getPoints()){
-                        informationList.getItems().add(new SearchResult(floorMap, poi));
-                    }
-                }
-            }
-        }
-    }
-
-    @FXML
-    private void onAllPOIButtonClicked(ActionEvent actionEvent) {
-        setShowAllPOI();
-    }
-
 
 }

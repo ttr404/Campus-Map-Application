@@ -9,7 +9,6 @@ import org.uwo.cs2212.model.Layer;
 import org.uwo.cs2212.model.PointOfInterest;
 
 
-
 public class ImageLayer extends Canvas {
 
     public ImageLayer(double width, double height, double zoom, Layer layer) {

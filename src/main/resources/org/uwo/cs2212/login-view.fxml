@@ -42,8 +42,8 @@
             </HBox>
             <Label minHeight="20" />
             <HBox>
-                <Label minWidth="110" />
-                <Button fx:id="login" mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" />
+                <Label minWidth="90" />
+                <Button fx:id="login" mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" style="-fx-background-color: #b3d9ff; -fx-background-radius: 1000em;"/>
             </HBox>
             <HBox prefHeight="34.0" prefWidth="250.0">
                 <children>

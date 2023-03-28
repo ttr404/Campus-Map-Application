@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditing">
+   <children>
+      <HBox layoutX="-1.0" prefHeight="0.0" prefWidth="600.0">
+         <children>
+            <ToolBar prefHeight="37.0" prefWidth="601.0">
+              <items>
+                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Save" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="Close" />
+                  <Button layoutX="68.0" layoutY="10.0" mnemonicParsing="false" text="Add POI" />
+                  <Button layoutX="126.0" layoutY="10.0" mnemonicParsing="false" text="Delete POI" />
+                  <Button layoutX="184.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="72.0" text="Edit POI" />
+                  <Button mnemonicParsing="false" prefHeight="11.0" prefWidth="19.0" text="+" />
+                  <Button depthTest="DISABLE" layoutX="365.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="25.0" text="-" textAlignment="RIGHT" />
+              </items>
+            </ToolBar>
+         </children>
+      </HBox>
+      <VBox layoutY="39.0" prefHeight="361.0" prefWidth="152.0">
+         <children>
+            <TextField prefHeight="0.0" prefWidth="152.0" text="Please enter POI" />
+            <ScrollBar orientation="VERTICAL" prefHeight="165.0" prefWidth="16.0" />
+            <VBox prefHeight="68.0" prefWidth="152.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="POI name:" />
+                  <TextField prefHeight="6.0" prefWidth="152.0" />
+                  <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Number:" />
+                  <TextField layoutX="10.0" layoutY="27.0" prefHeight="6.0" prefWidth="152.0" />
+                  <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Type:" />
+                  <TextField layoutX="10.0" layoutY="67.0" prefHeight="6.0" prefWidth="152.0" />
+                  <Text layoutX="10.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
+                  <TextField layoutX="10.0" layoutY="26.0" prefHeight="6.0" prefWidth="152.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <ScrollBar layoutX="578.0" layoutY="36.0" orientation="VERTICAL" prefHeight="361.0" prefWidth="16.0" />
+      <ScrollBar layoutX="155.0" layoutY="379.0" prefHeight="16.0" prefWidth="423.0" />
+   </children>
+</AnchorPane>
