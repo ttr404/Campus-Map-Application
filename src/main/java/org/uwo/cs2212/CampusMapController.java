@@ -25,9 +25,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.awt.*;
 
 // testing(Truman)
@@ -76,7 +74,6 @@ public class CampusMapController implements Initializable {
     private Button zoomIn;
     @FXML
     private Button zoomOut;
-
     @FXML
     private Button help;
 
@@ -91,6 +88,24 @@ public class CampusMapController implements Initializable {
     private ListView informationList;
     @FXML
     private ScrollPane mapPane;
+    @FXML
+    private CheckBox Classrooms;
+    @FXML
+    private CheckBox Stairwells;
+    @FXML
+    private CheckBox Elevators;
+    @FXML
+    private CheckBox Washrooms;
+    @FXML
+    private CheckBox EntryAndExit;
+    @FXML
+    private CheckBox Genlabs;
+    @FXML
+    private CheckBox Restaurants;
+    @FXML
+    private CheckBox CS_Labs;
+    @FXML
+    private CheckBox Collaborative;
 
     private double zoom = 1.0;
     private double imageWidth;
@@ -99,6 +114,16 @@ public class CampusMapController implements Initializable {
     private MapConfig mapConfig;
     private BaseMap currentBaseMap;
     private FloorMap currentFloorMap;
+    LinkedList classRoom = new LinkedList();
+    LinkedList stairWells = new LinkedList();
+    LinkedList elevators = new LinkedList();
+    LinkedList washRooms = new LinkedList();
+    LinkedList entryAndExit = new LinkedList();
+    LinkedList genLabs = new LinkedList();
+    LinkedList restaurants = new LinkedList();
+    LinkedList cs_Labs = new LinkedList();
+    LinkedList collaborative = new LinkedList();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -132,25 +157,209 @@ public class CampusMapController implements Initializable {
                 });
     }
 
-    private void setShowAllPOI(){
-        informationList.getItems().clear();
-        for(FloorMap floorMap : currentBaseMap.getFloorMaps()){
-            for (Layer layer: floorMap.getLayers()){
+    public void onClassrooms(ActionEvent actionEvent){
+        if (Classrooms.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
                 for(PointOfInterest poi : layer.getPoints()){
-                    informationList.getItems().add(new SearchResult(floorMap, poi));
+                    if (poi.getType().equals("ClassRoom")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        classRoom.add(new SearchResult(currentFloorMap, poi));
+                    }
                 }
             }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(classRoom.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(classRoom.get(i));
+            }
         }
+    }
+
+    public void onStairwells(ActionEvent actionEvent){
+        if (Stairwells.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("StairWell")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        stairWells.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(stairWells.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(stairWells.get(i));
+            }
+        }
+    }
+
+    public void onElevators(ActionEvent actionEvent){
+        if (Elevators.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("Elevator")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        elevators.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(elevators.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(elevators.get(i));
+            }
+        }
+    }
+
+    public void onWashrooms(ActionEvent actionEvent){
+        if (Washrooms.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("WashRoom")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        washRooms.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(washRooms.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(washRooms.get(i));
+            }
+        }
+    }
+
+    public void onEntryAndExit(ActionEvent actionEvent){
+        if (EntryAndExit.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("EntryAndExit")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        entryAndExit.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(entryAndExit.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(entryAndExit.get(i));
+            }
+        }
+    }
+
+    public void onGenlabs(ActionEvent actionEvent){
+        if (Genlabs.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("GenLab")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        genLabs.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(genLabs.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(genLabs.get(i));
+            }
+        }
+    }
+
+    public void onRestaurants(ActionEvent actionEvent){
+        if (Restaurants.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("Restaurant")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        restaurants.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(restaurants.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(restaurants.get(i));
+            }
+        }
+    }
+
+    public void onCS_Labs(ActionEvent actionEvent){
+        if (CS_Labs.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("CS_Labs")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        cs_Labs.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(cs_Labs.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(cs_Labs.get(i));
+            }
+        }
+    }
+
+    public void onCollaborative(ActionEvent actionEvent){
+        if (Collaborative.isSelected()){
+            informationList.getItems().clear(); // change that later
+            for (Layer layer: currentFloorMap.getLayers()){
+                for(PointOfInterest poi : layer.getPoints()){
+                    if (poi.getType().equals("Collaborative")){
+                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                        collaborative.add(new SearchResult(currentFloorMap, poi));
+                    }
+                }
+            }
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().add(collaborative.get(i));
+            }
+        } else {
+            for (int i = 0; i < classRoom.size(); i++){
+                informationList.getItems().remove(collaborative.get(i));
+            }
+        }
+    }
+
+    private void setShowAllPOI(){
+        informationList.getItems().clear();
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+            }
+        }
+
     }
 
     @FXML
     private void onAllPOIButtonClicked(ActionEvent actionEvent) {
         setShowAllPOI();
     }
-
-
-
-
 
     private void searchResultSelectionChanged(ObservableValue<? extends SearchResult> changed, SearchResult oldVal, SearchResult newVal) {
         selectPoi(newVal);
@@ -198,7 +407,7 @@ public class CampusMapController implements Initializable {
     }
 
     @FXML
-    private void onSettingsButtonClicked(ActionEvent actionEvent) {
+    private void onSettingsButtonClicked(ActionEvent actionEvent) { // delete this later
         System.out.println("operate successful.");
     }
     /** option*/
@@ -246,9 +455,6 @@ public class CampusMapController implements Initializable {
         stage.setHeight(500);
         stage.show();
     }
-
-
-
 
 
     @FXML
@@ -501,6 +707,7 @@ public class CampusMapController implements Initializable {
                 currentSelectedPoi.setSelected(true);
             }
             showMap();
+
             setFavouriteButtonState();
         }
     }

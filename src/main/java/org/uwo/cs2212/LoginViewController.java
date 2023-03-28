@@ -67,7 +67,7 @@ public class LoginViewController {
             stage.setTitle("Western Campus Map");
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.setX(160);
+            stage.setX(200);
             stage.setY(70);
             stage.show();
         }
