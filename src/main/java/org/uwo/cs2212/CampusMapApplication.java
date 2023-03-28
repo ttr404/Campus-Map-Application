@@ -37,7 +37,6 @@ public class CampusMapApplication extends Application {
         stage.setResizable(false);
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-
     }
 
     public static void main(String[] args) {
