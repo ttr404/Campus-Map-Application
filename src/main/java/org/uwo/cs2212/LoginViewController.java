@@ -49,15 +49,22 @@ public class LoginViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void onLoginGButtonClick(ActionEvent actionEvent) throws IOException {
+        logIn();
+    }
+
+    public void logIn() throws IOException {
         if (checkAccount()){
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
             stage.setTitle("Western Campus Map");
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.setX(160);
+            stage.setY(70);
             stage.show();
         }
         else{

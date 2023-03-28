@@ -124,6 +124,7 @@ public class CampusMapController implements Initializable {
     }
 
     private void setShowAllPOI(){
+        informationList.getItems().clear();
         for(FloorMap floorMap : currentBaseMap.getFloorMaps()){
             for (Layer layer: floorMap.getLayers()){
                 for(PointOfInterest poi : layer.getPoints()){
@@ -142,7 +143,6 @@ public class CampusMapController implements Initializable {
 
 
 
-
     private void searchResultSelectionChanged(ObservableValue<? extends SearchResult> changed, SearchResult oldVal, SearchResult newVal) {
         selectPoi(newVal);
     }
@@ -156,6 +156,7 @@ public class CampusMapController implements Initializable {
                 showMap();
             }
 		}
+        setShowAllPOI();
     }
 
     private void showMap(){
