@@ -41,10 +41,12 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import javafx.scene.text.*;
-import javafx.scene.paint.Color;
+
 
 
 
@@ -75,8 +77,6 @@ public class CampusMapController implements Initializable {
     @FXML
     private Button zoomOut;
 
-    @FXML
-    private Button settingsButton;
     @FXML
     private Button help;
 
@@ -312,11 +312,79 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    @FXML
+    private void signOut(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        String s ="";
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
 
+        // Create three buttons
+        Button saveButton = new Button("Save");
+        saveButton.setPrefSize(60, 30); // Set button size
+        saveButton.setTranslateX(100); // Set button X position
+        Button dontSaveButton = new Button("Don't save");
+        dontSaveButton.setPrefSize(90, 30); // Set button size
+        dontSaveButton.setTranslateX(20); // Set button X position
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setPrefSize(60, 30); // Set button size
+        cancelButton.setTranslateX(180); // Set button X position
 
+        // Add event handlers to the buttons
+        saveButton.setOnAction(e -> {
+            // Handle yes button click
+            try {
+                UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
+                // properly save the data
+                ConfigUtil.saveUserList(userlist,CampusMapApplication.class.getResource("user-account.json"));
+                returnBack("login-view.fxml","Login");
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                stage.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        dontSaveButton.setOnAction(e -> {
+            // Handle no button click
+            //Don't save the data, jump back to login page
+            try {
+                returnBack("login-view.fxml","Login");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+            stage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            // Handle cancel button click
+            stage.close();
+        });
+        // Create an HBox container to hold the buttons
+        HBox hbox = new HBox( dontSaveButton, saveButton, cancelButton);
+        hbox.setTranslateY(50);
+        hbox.setSpacing(-5); // Set spacing between buttons
+        VBox vbox = new VBox(new Label(s), hbox); // Add HBox to VBox container
+        Scene scene = new Scene(vbox, 280, 100);
+        stage.setScene(scene);
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth()-650);
+        stage.setY(((Node) event.getSource()).getScene().getWindow().getY()+200);
+        stage.setWidth(400);
+        stage.setHeight(200);
+        stage.show();
+    }
 
-
-
+    @FXML
+    private void returnBack(String file,String title) throws IOException {
+        Stage stage=new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
+        Scene scene = new Scene(fxmlLoader.load(), 571, 400);
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setX(200);
+        stage.setY(70);
+        stage.show();
+    }
 
     @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {

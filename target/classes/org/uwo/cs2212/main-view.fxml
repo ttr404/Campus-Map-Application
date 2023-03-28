@@ -14,14 +14,14 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.CampusMapController">
     <top>
-        <BorderPane style="-fx-background-color: #fae6b1;">
+        <BorderPane style="-fx-background-color: #e6f0ff;">
             <top>
                 <Label minHeight="20" />
             </top>
             <left>
                 <HBox>
                     <Label minWidth="10"/>
-                    <Button fx:id="signOut" onAction="#onHelpButtonClicked" text="Sign Out" style="-fx-background-color: #8bb4c1;"/>
+                    <Button fx:id="signOut" onAction="#signOut" text="Sign Out" style="-fx-background-color: #8bb4c1;"/>
                     <Label minWidth="140"/>
                     <Button fx:id="zoomOut" onAction="#onZoomOutButtonClicked" text=" + " style="-fx-background-color: #b3dee5;"/>
                     <Label minWidth="3"/>
@@ -59,17 +59,17 @@
         </BorderPane>
     </top>
     <left>
-        <HBox style="-fx-background-color: #fae6b1;">
+        <HBox style="-fx-background-color: #e6f0ff;">
             <Label minWidth="8" />
             <VBox fx:id="leftPane" maxWidth="200" minWidth="200" >
                 <Label minHeight="5" />
-                <ComboBox fx:id="mapSelector" style="-fx-background-color: #ffbe4d;"/>
+                <ComboBox fx:id="mapSelector" style="-fx-background-color: #d9b3ff;"/>
                 <Label minHeight="15" />
                 <Label text="Please input location to search..." />
                 <TextField fx:id="searchText" promptText="please input search key ..." />
                 <Label minHeight="10" />
                 <HBox alignment="CENTER">
-               <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" text="All POI" style="-fx-background-color: #ffbe4d;" >
+               <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" text="All POI" style="-fx-background-color: #d9b3ff;" >
                   <font>
                      <Font size="10.0" />
                   </font>
@@ -77,17 +77,17 @@
                      <Insets right="5.0" />
                   </HBox.margin>
                </Button>
-                    <Button onAction="#onSearchButtonClicked" text="Search" style="-fx-background-color: #ffbe4d;">
+                    <Button onAction="#onSearchButtonClicked" text="Search" style="-fx-background-color: #d9b3ff;">
                   <font>
                      <Font size="10.0" />
                   </font></Button>
                     <Label minWidth="4" />
-                    <Button onAction="#onClearButtonClicked" text="Clear" style="-fx-background-color: #ffbe4d;">
+                    <Button onAction="#onClearButtonClicked" text="Clear" style="-fx-background-color: #d9b3ff;">
                   <font>
                      <Font size="10.0" />
                   </font></Button>
                     <Label minWidth="4" />
-                    <Button onAction="#onListFavoritesButtonClicked" text="Favorites" style="-fx-background-color: #ffbe4d;">
+                    <Button onAction="#onListFavoritesButtonClicked" text="Favorites" style="-fx-background-color: #d9b3ff;">
                   <font>
                      <Font size="10.0" />
                   </font></Button>
@@ -104,9 +104,9 @@
         <ScrollPane fx:id="mapPane" onMouseClicked="#onMapClicked" />
     </center>
     <right>
-        <VBox fx:id="rightPane" minWidth="8" style="-fx-background-color: #fae6b1;"/>
+        <VBox fx:id="rightPane" minWidth="8" style="-fx-background-color: #e6f0ff;"/>
     </right>
     <bottom>
-        <VBox fx:id="bottomPane" minHeight="8" style="-fx-background-color: #fae6b1;" />
+        <VBox fx:id="bottomPane" minHeight="8" style="-fx-background-color: #e6f0ff;" />
     </bottom>
 </BorderPane>
