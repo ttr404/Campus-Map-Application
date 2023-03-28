@@ -19,7 +19,7 @@
         {
           "x": 100,
           "y": 100,
-          "name": "Floor2-a",
+          "name": "MC200",
           "roomNumber": "A100",
           "description": "Class room A100",
           "type": "ClassRoom"
@@ -27,33 +27,8 @@
         {
           "x": 200,
           "y": 200,
-          "name": "Floor2-b",
-          "roomNumber": "A200",
-          "description": "Class room A200",
-          "type": "ClassRoom"
-        }
-      ]
-    },
-    {
-      "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "internal",
-      "font": "Times New Roman",
-      "size": 16,
-      "points": [
-        {
-          "x": 300,
-          "y": 400,
-          "name": "Floor2-My Test1",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
-        },
-        {
-          "x": 500,
-          "y": 700,
-          "name": "Floor2-My Test2",
-          "roomNumber": "A200",
+          "name": "MC201",
+          "roomNumber": "A101",
           "description": "Class room A200",
           "type": "ClassRoom"
         }

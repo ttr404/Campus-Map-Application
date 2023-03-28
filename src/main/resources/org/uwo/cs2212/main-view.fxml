@@ -32,6 +32,7 @@
                     <Label minWidth="30" />
                     <Button fx:id="zoomIn" onAction="#onZoomInButtonClicked" text=" - " />
                     <Button fx:id="zoomOut" onAction="#onZoomOutButtonClicked" text=" + " />
+                    <Button fx:id="zoomReset" onAction="#onZoomResetButtonClicked" text=" reset " />
                     <Label minWidth="20" />
                     <Button fx:id="help" onAction="#onHelpButtonClicked" text="Help" />
                     <Button fx:id="about" onAction="#aboutButtonAction" text="About" />
@@ -53,28 +54,26 @@
                 <TextField fx:id="searchText" promptText="please input search key ..." />
                 <Label minHeight="10" />
                 <HBox alignment="CENTER">
-               <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" text="All POI">
-                  <font>
-                     <Font size="10.0" />
-                  </font>
-                  <HBox.margin>
-                     <Insets right="5.0" />
-                  </HBox.margin>
-               </Button>
+                    <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" text="All POI">
+                        <font>
+                            <Font size="10.0" />
+                        </font>
+                    </Button>
+                    <Label minWidth="4" />
                     <Button onAction="#onSearchButtonClicked" text="Search">
-                  <font>
-                     <Font size="10.0" />
-                  </font></Button>
+                        <font>
+                            <Font size="10.0" />
+                        </font></Button>
                     <Label minWidth="4" />
                     <Button onAction="#onClearButtonClicked" text="Clear">
-                  <font>
-                     <Font size="10.0" />
-                  </font></Button>
+                        <font>
+                            <Font size="10.0" />
+                        </font></Button>
                     <Label minWidth="4" />
                     <Button onAction="#onListFavoritesButtonClicked" text="Favorites">
-                  <font>
-                     <Font size="10.0" />
-                  </font></Button>
+                          <font>
+                             <Font size="10.0" />
+                          </font></Button>
                 </HBox>
                 <Label text="--------------------------------------" />
                 <!--<Label minHeight="10"/>-->

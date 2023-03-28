@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.FormattableFlags;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -123,26 +124,6 @@ public class CampusMapController implements Initializable {
                 });
     }
 
-    private void setShowAllPOI(){
-        for(FloorMap floorMap : currentBaseMap.getFloorMaps()){
-            for (Layer layer: floorMap.getLayers()){
-                for(PointOfInterest poi : layer.getPoints()){
-                    informationList.getItems().add(new SearchResult(floorMap, poi));
-                }
-            }
-        }
-    }
-
-    @FXML
-    private void onAllPOIButtonClicked(ActionEvent actionEvent) {
-        setShowAllPOI();
-    }
-
-
-
-
-
-
     private void searchResultSelectionChanged(ObservableValue<? extends SearchResult> changed, SearchResult oldVal, SearchResult newVal) {
         selectPoi(newVal);
     }
@@ -156,6 +137,7 @@ public class CampusMapController implements Initializable {
                 showMap();
             }
 		}
+        setShowAllPOI();
     }
 
     private void showMap(){
@@ -251,13 +233,29 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {
-        zoom *= 0.8;
+        if (zoom > 0.5){
+            zoom *= 0.8;
+        }
+        else{
+            zoomIn.setDisable(false);
+        }
         showMap();
     }
 
     @FXML
     private void onZoomOutButtonClicked(ActionEvent actionEvent) {
-        zoom *= 1.2;
+        if (zoom < 2.1){
+            zoom *= 1.2;
+        }
+        else{
+            zoomOut.setDisable(false);
+        }
+        showMap();
+    }
+
+    @FXML
+    private void onZoomResetButtonClicked(ActionEvent actionEvent) {
+        zoom = 1;
         showMap();
     }
 
@@ -452,13 +450,36 @@ public class CampusMapController implements Initializable {
 
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
         informationList.getItems().clear();
-        for (Layer layer: currentFloorMap.getLayers()){
-            for(PointOfInterest poi : layer.getPoints()){
-                if (poi.isFavorite()) {
-                    informationList.getItems().add(poi);
+        for(BaseMap baseMap : mapConfig.getBaseMaps()){
+            for(FloorMap floorMap : baseMap.getFloorMaps()){
+                for (Layer layer: floorMap.getLayers()){
+                    for(PointOfInterest poi : layer.getPoints()){
+                        if (poi.isFavorite()) {
+                            informationList.getItems().add(new SearchResult(floorMap, poi));
+                        }
+                    }
                 }
             }
         }
     }
+
+    private void setShowAllPOI(){
+        informationList.getItems().clear();
+        for(BaseMap baseMap : mapConfig.getBaseMaps()){
+            for(FloorMap floorMap : baseMap.getFloorMaps()){
+                for (Layer layer: floorMap.getLayers()){
+                    for(PointOfInterest poi : layer.getPoints()){
+                        informationList.getItems().add(new SearchResult(floorMap, poi));
+                    }
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void onAllPOIButtonClicked(ActionEvent actionEvent) {
+        setShowAllPOI();
+    }
+
 
 }

@@ -45,43 +45,43 @@
                 <Label minWidth="110" />
                 <Button fx:id="login" mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" />
             </HBox>
-         <HBox prefHeight="34.0" prefWidth="250.0">
-            <children>
-               <ImageView fx:id="weatherIcon" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                  <HBox.margin>
-                     <Insets left="10.0" top="10.0" />
-                  </HBox.margin>
-                  <effect>
-                     <DropShadow />
-                  </effect>
-               </ImageView>
-               <Label fx:id="weatherInfo" text="Label">
-                  <HBox.margin>
-                     <Insets top="20.0" />
-                  </HBox.margin>
-                  <font>
-                     <Font size="15.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
-         <HBox prefHeight="100.0" prefWidth="200.0">
-            <children>
-               <ImageView fx:id="temperature" fitHeight="35.0" fitWidth="35.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
-                   <HBox.margin>
-                       <Insets left="15.0" top="10.0" />
-                   </HBox.margin>
-               </ImageView>
-               <Label fx:id="tempLabel" text="Label">
-                   <HBox.margin>
-                       <Insets left="5.0" top="25.0" />
-                   </HBox.margin>
-                  <font>
-                     <Font size="15.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
+            <HBox prefHeight="34.0" prefWidth="250.0">
+                <children>
+                    <ImageView fx:id="weatherIcon" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                        <HBox.margin>
+                            <Insets left="10.0" top="10.0" />
+                        </HBox.margin>
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                    </ImageView>
+                    <Label fx:id="weatherInfo" text="Label">
+                        <HBox.margin>
+                            <Insets top="20.0" />
+                        </HBox.margin>
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <children>
+                    <ImageView fx:id="temperature" fitHeight="35.0" fitWidth="35.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+                        <HBox.margin>
+                            <Insets left="15.0" top="10.0" />
+                        </HBox.margin>
+                    </ImageView>
+                    <Label fx:id="tempLabel" text="Label">
+                        <HBox.margin>
+                            <Insets left="5.0" top="25.0" />
+                        </HBox.margin>
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
             <Label minHeight="100" />
         </VBox>
     </center>

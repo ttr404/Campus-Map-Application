@@ -19,7 +19,7 @@
         {
           "x": 100,
           "y": 100,
-          "name": "My Test1",
+          "name": "WSC100",
           "roomNumber": "A100",
           "description": "Class room A100",
           "type": "ClassRoom"
@@ -27,84 +27,9 @@
         {
           "x": 200,
           "y": 200,
-          "name": "My Test2",
-          "roomNumber": "A200",
-          "description": "Class room A200",
-          "type": "ClassRoom"
-        }
-      ]
-    },
-    {
-      "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "internal",
-      "font": "Times New Roman",
-      "size": 16,
-      "points": [
-        {
-          "x": 100,
-          "y": 100,
-          "name": "My Test1",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
-        },
-        {
-          "x": 200,
-          "y": 200,
-          "name": "My Test2",
-          "roomNumber": "A200",
-          "description": "Class room A200",
-          "type": "ClassRoom"
-        }
-      ]
-    },
-    {
-      "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "internal",
-      "font": "Times New Roman",
-      "size": 16,
-      "points": [
-        {
-          "x": 100,
-          "y": 100,
-          "name": "My Test1",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
-        },
-        {
-          "x": 200,
-          "y": 200,
-          "name": "My Test2",
-          "roomNumber": "A200",
-          "description": "Class room A200",
-          "type": "ClassRoom"
-        }
-      ]
-    },
-    {
-      "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "internal",
-      "font": "Times New Roman",
-      "size": 16,
-      "points": [
-        {
-          "x": 100,
-          "y": 100,
-          "name": "My Test1",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
-        },
-        {
-          "x": 200,
-          "y": 200,
-          "name": "My Test2",
-          "roomNumber": "A200",
-          "description": "Class room A200",
+          "name": "WSC101",
+          "roomNumber": "A101",
+          "description": "Class room A101",
           "type": "ClassRoom"
         }
       ]

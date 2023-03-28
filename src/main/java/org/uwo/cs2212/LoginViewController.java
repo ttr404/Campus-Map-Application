@@ -52,6 +52,10 @@ public class LoginViewController {
     }
 
     public void onLoginGButtonClick(ActionEvent actionEvent) throws IOException {
+        Login();
+    }
+
+    public void Login() throws IOException {
         if (checkAccount()){
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
