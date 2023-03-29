@@ -178,37 +178,122 @@ public class CampusMapController implements Initializable {
 
     public void onClassrooms(ActionEvent actionEvent){
         filter();
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!classrooms.isSelected())&& poi.getType().toLowerCase().equals("classroom")){
+                    layer.setHideLayer(true);
+                }
+                if ((classrooms.isSelected())&& poi.getType().toLowerCase().equals("classroom")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
     }
 
     public void onStairwells(ActionEvent actionEvent){
         filter();
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!stairwells.isSelected())&& poi.getType().toLowerCase().equals("stairwell")){
+                    layer.setHideLayer(true);
+                }
+                if ((stairwells.isSelected())&& poi.getType().toLowerCase().equals("stairwell")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
     }
 
     public void onElevators(ActionEvent actionEvent){
         filter();
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!elevators.isSelected())&& poi.getType().toLowerCase().equals("elevator")){
+                    layer.setHideLayer(true);
+                }
+                if ((elevators.isSelected())&& poi.getType().toLowerCase().equals("elevator")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
     }
 
-    public void onWashrooms(ActionEvent actionEvent){
-        filter();
-    }
 
     public void onEntryAndExit(ActionEvent actionEvent){
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!entryAndExit.isSelected())&& poi.getType().toLowerCase().equals("entryAndExit")){
+                    layer.setHideLayer(true);
+                }
+                if ((entryAndExit.isSelected())&& poi.getType().toLowerCase().equals("entryAndExit")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
         filter();
     }
 
     public void onGenlabs(ActionEvent actionEvent){
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!genlabs.isSelected())&& poi.getType().toLowerCase().equals("genlab")){
+                    layer.setHideLayer(true);
+                }
+                if ((genlabs.isSelected())&& poi.getType().toLowerCase().equals("genlab")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
         filter();
     }
 
     public void onRestaurants(ActionEvent actionEvent){
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!restaurants.isSelected())&& poi.getType().toLowerCase().equals("restaurant")){
+                    layer.setHideLayer(true);
+                }
+                if ((restaurants.isSelected())&& poi.getType().toLowerCase().equals("restaurant")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
         filter();
     }
 
     public void onCS_Labs(ActionEvent actionEvent){
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!cs_Labs.isSelected())&& poi.getType().toLowerCase().equals("cs_labs")){
+                    layer.setHideLayer(true);
+                }
+                if ((cs_Labs.isSelected())&& poi.getType().toLowerCase().equals("cs_labs")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
         filter();
     }
 
     public void onCollaborative(ActionEvent actionEvent){
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((!collaborative.isSelected())&& poi.getType().toLowerCase().equals("collaborative")){
+                    layer.setHideLayer(true);
+                }
+                if ((collaborative.isSelected())&& poi.getType().toLowerCase().equals("collaborative")){
+                    layer.setHideLayer(false);
+                }
+            }
+        }
+        showMap();
         filter();
     }
 
