@@ -52,16 +52,7 @@ import javafx.scene.text.*;
 
 
 public class CampusMapController implements Initializable {
-    @FXML
-    private CheckBox classrooms;
-    @FXML
-    private CheckBox stairwells;
-    @FXML
-    private CheckBox elevators;
-    @FXML
-    private CheckBox washrooms;
-    @FXML
-    private CheckBox entryAndExit;
+
     @FXML
     private Button floor0;
     @FXML
@@ -99,6 +90,24 @@ public class CampusMapController implements Initializable {
     private ListView informationList;
     @FXML
     private ScrollPane mapPane;
+    @FXML
+    private CheckBox classrooms;
+    @FXML
+    private CheckBox stairwells;
+    @FXML
+    private CheckBox elevators;
+    @FXML
+    private CheckBox washrooms;
+    @FXML
+    private CheckBox entryAndExit;
+    @FXML
+    private CheckBox genlabs;
+    @FXML
+    private CheckBox restaurants;
+    @FXML
+    private CheckBox cs_Labs;
+    @FXML
+    private CheckBox collaborative;
 
     private double zoom = 1.0;
     private double imageWidth;
@@ -145,20 +154,23 @@ public class CampusMapController implements Initializable {
 
     private void filter(){
         informationList.getItems().clear();
-        for(FloorMap floorMap : currentBaseMap.getFloorMaps()){
-            for (Layer layer: floorMap.getLayers()){
-                for(PointOfInterest poi : layer.getPoints()){
-                    if ((classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
-                            || (stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
-                            || (elevators.isSelected() && poi.getType().toLowerCase().equals("elevator"))
-                            || (washrooms.isSelected() && poi.getType().toLowerCase().equals("washroom"))
-                            || (entryAndExit.isSelected() && poi.getType().toLowerCase().equals("entryAndExit"))
-                    ){
-                        informationList.getItems().add(new SearchResult(floorMap, poi));
-                    }
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if ((classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
+                        || (stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
+                        || (elevators.isSelected() && poi.getType().toLowerCase().equals("elevator"))
+                        || (washrooms.isSelected() && poi.getType().toLowerCase().equals("washroom"))
+                        || (entryAndExit.isSelected() && poi.getType().toLowerCase().equals("entryAndExit"))
+                        || (genlabs.isSelected() && poi.getType().toLowerCase().equals("genlab"))
+                        || (restaurants.isSelected() && poi.getType().toLowerCase().equals("restaurant"))
+                        || (cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
+                        || (collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
+                ){
+                    informationList.getItems().add(new SearchResult(currentFloorMap, poi));
                 }
             }
         }
+
     }
 
     public void onClassrooms(ActionEvent actionEvent){
@@ -198,6 +210,7 @@ public class CampusMapController implements Initializable {
     }
 
     private void setShowAllPOI(){
+        selectAllLayers();
         informationList.getItems().clear();
         for (Layer layer: currentFloorMap.getLayers()){
             for(PointOfInterest poi : layer.getPoints()){
@@ -585,6 +598,7 @@ public class CampusMapController implements Initializable {
             if(currentSelectedPoi != null){
                 currentSelectedPoi.setSelected(true);
             }
+            centralizeSelectedPoi();
             showMap();
             setFavouriteButtonState();
         }
@@ -623,6 +637,7 @@ public class CampusMapController implements Initializable {
     }
 
     public void onSearchButtonClicked(ActionEvent actionEvent) {
+        selectAllLayers();
         String text = searchText.getText().toLowerCase().trim();
         if (!text.equals("")){
             informationList.getItems().clear();
@@ -665,6 +680,7 @@ public class CampusMapController implements Initializable {
     }
 
     public void onFavoriteButtonClicked(ActionEvent actionEvent) {
+        selectAllLayers();
         if(currentSelectedPoi != null){
             currentSelectedPoi.setFavorite(!currentSelectedPoi.isFavorite());
             setFavouriteButtonState();
@@ -672,6 +688,7 @@ public class CampusMapController implements Initializable {
     }
 
     public void onClearButtonClicked(ActionEvent actionEvent) {
+        deselectAllLayers();
         searchText.setText("");
         informationList.getItems().clear();
     }
@@ -752,18 +769,31 @@ public class CampusMapController implements Initializable {
             throw new RuntimeException(ex);
         }
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
-
-//        try {
-//            returnBack("map-editing.fxml", "Map Editing Mode");
-//        } catch (IOException ex) {
-//            throw new RuntimeException(ex);
-//        }
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
-
     }
 
+    public void selectAllLayers(){
+        classrooms.setSelected(true);
+        stairwells.setSelected(true);
+        elevators.setSelected(true);
+        washrooms.setSelected(true);
+        entryAndExit.setSelected(true);
+        genlabs.setSelected(true);
+        restaurants.setSelected(true);
+        cs_Labs.setSelected(true);
+        collaborative.setSelected(true);
+    }
+
+    public void deselectAllLayers(){
+        classrooms.setSelected(false);
+        stairwells.setSelected(false);
+        elevators.setSelected(false);
+        washrooms.setSelected(false);
+        entryAndExit.setSelected(false);
+        genlabs.setSelected(false);
+        restaurants.setSelected(false);
+        cs_Labs.setSelected(false);
+        collaborative.setSelected(false);
+    }
 
 
 }

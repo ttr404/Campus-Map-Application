@@ -19,19 +19,7 @@ public class CampusMapApplication extends Application {
         LoginViewController.setStage(stage);
         FXMLLoader loginFxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("login-view.fxml"));
         Scene loginScene = new Scene(loginFxmlLoader.load(), 571, 400);
-        LoginViewController controller = loginFxmlLoader.getController();
-        loginScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().toString().equals("ENTER")){
-                    try {
-                        controller.logIn();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
+        pressEnter(loginFxmlLoader, loginScene);
         stage.setTitle("Login page");
         stage.setScene(loginScene);
         stage.setResizable(false);
@@ -41,5 +29,21 @@ public class CampusMapApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void pressEnter(FXMLLoader loginFxmlLoader, Scene loginScene){
+        LoginViewController controller = loginFxmlLoader.getController();
+        loginScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().toString().equals("ENTER")) {
+                    try {
+                        controller.logIn();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 }
