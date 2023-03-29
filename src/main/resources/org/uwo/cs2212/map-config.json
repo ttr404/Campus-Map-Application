@@ -16,6 +16,15 @@
         },
         {
           "configFileName": "middlesex-01-config.json"
+        },
+        {
+          "configFileName": "middlesex-02-config.json"
+        },
+        {
+          "configFileName": "middlesex-03-config.json"
+        },
+        {
+          "configFileName": "middlesex-04-config.json"
         }
       ]
     },
@@ -24,6 +33,15 @@
       "floorConfigs": [
         {
           "configFileName": "science-centre-00-config.json"
+        },
+        {
+          "configFileName": "science-centre-01-config.json"
+        },
+        {
+          "configFileName": "science-centre-02-config.json"
+        },
+        {
+          "configFileName": "science-centre-03-config.json"
         }
       ]
     },
@@ -32,6 +50,15 @@
       "floorConfigs": [
         {
           "configFileName": "physics-00-config.json"
+        },
+        {
+          "configFileName": "physics-01-config.json"
+        },
+        {
+          "configFileName": "physics-02-config.json"
+        },
+        {
+          "configFileName": "physics-03-config.json"
         }
       ]
     }

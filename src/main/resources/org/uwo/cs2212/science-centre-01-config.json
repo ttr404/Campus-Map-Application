@@ -1,0 +1,38 @@
+{
+  "name": "2nd floor",
+  "mapFileName": "science-centre-f1.png",
+  "showLegend": true,
+  "legendPosition": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "layers": [
+    {
+      "name": "Main Map",
+      "color": "BLACK",
+      "layerType": "base",
+      "font": "Times New Roman",
+      "size": 16,
+      "points": [
+        {
+          "x": 100,
+          "y": 100,
+          "name": "WSC100",
+          "roomNumber": "A100",
+          "description": "Class room A100",
+          "type": "ClassRoom"
+        },
+        {
+          "x": 200,
+          "y": 200,
+          "name": "WSC101",
+          "roomNumber": "A101",
+          "description": "Class room A101",
+          "type": "ClassRoom"
+        }
+      ]
+    }
+  ]
+}

@@ -37,7 +37,15 @@
           "y": 409,
           "name": "Man washroom",
           "roomNumber": "5B",
-          "description": "Middlesex college washroom 5B",
+          "description": "Middlesex college man washroom 5B",
+          "type": "WashRoom"
+        },
+        {
+          "x": 1129,
+          "y": 556.01,
+          "name": "Man washroom",
+          "roomNumber": "28E",
+          "description": "Middlesex college man washroom 28E",
           "type": "WashRoom"
         },
         {
@@ -45,7 +53,15 @@
           "y": 404,
           "name": "Woman washroom",
           "roomNumber": "4B",
-          "description": "Middlesex college washroom 4B",
+          "description": "Middlesex college woman washroom 4B",
+          "type": "WashRoom"
+        },
+        {
+          "x": 576.33,
+          "y": 364.11,
+          "name": "Unisex washroom",
+          "roomNumber": "4C",
+          "description": "Middlesex college unisex washroom 4C",
           "type": "WashRoom"
         },
         {
@@ -55,6 +71,70 @@
           "roomNumber": "19",
           "description": "Grad Club",
           "type": "Restaurant"
+        },
+        {
+          "x": 83.33,
+          "y": 589.95,
+          "name": "Stairs",
+          "roomNumber": "ST.1",
+          "description": "Stairs ST.1",
+          "type": "stairwells"
+        },
+        {
+          "x": 270.55,
+          "y": 533.84,
+          "name": "Stairs",
+          "roomNumber": "ST.2",
+          "description": "Stairs ST.2",
+          "type": "stairwells"
+        },
+        {
+          "x": 162.22,
+          "y": 576.06,
+          "name": "Stairs",
+          "roomNumber": "TA.2",
+          "description": "Stairs TA.2",
+          "type": "stairwells"
+        },
+        {
+          "x": 695.78,
+          "y": 488.56,
+          "name": "Stairs",
+          "roomNumber": "1A",
+          "description": "Stairs 1A",
+          "type": "stairwells"
+        },
+        {
+          "x": 826.89,
+          "y": 400.17,
+          "name": "Stairs",
+          "roomNumber": "ST.3",
+          "description": "Stairs ST.3",
+          "type": "stair"
+        },
+        {
+          "x": 1239,
+          "y": 601.84,
+          "name": "Stairs",
+          "roomNumber": "ST.5",
+          "description": "Stairs ST.5",
+          "type": "stair"
+        },
+        {
+          "x": 404.40,
+          "y": 288.84,
+          "name": "Stairs",
+          "roomNumber": "ST.6",
+          "description": "Stairs ST.6",
+          "type": "stairwells"
+        },
+        {
+          "x": 768.55,
+          "y": 371.34,
+          "name": "elevator",
+          "roomNumber": "EL.A",
+          "description": "elevator EL.A",
+          "type": "elevator"
         }
       ]
     }
