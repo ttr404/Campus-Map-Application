@@ -71,7 +71,7 @@ public class LoginViewController {
             stage.setY(70);
             stage.show();
         }
-        // add multiple user method here
+        // add multiple user function here
         else{
             error.setText("Invalid user name or password.");
             password.setText("");
@@ -146,7 +146,6 @@ public class LoginViewController {
         {
             hexString.insert(0, '0');
         }
-
         return hexString.toString();
     }
 

@@ -49,7 +49,7 @@
                     <Label minWidth="40" />
                     <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" style="-fx-background-color: #b3dee5;" />
                     <Label minWidth="3" />
-                    <Button fx:id="poiToggleButton" minWidth="50" style="-fx-background-color: #b3dee5;" text="Edit" />
+                    <Button fx:id="editButton" minWidth="50" onAction="#onEditButtonClick" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: #b3dee5;" text="Editing Mode " />
                     <Label minWidth="3" />
                     <Button fx:id="help" onAction="#helpButtonAction" style="-fx-background-color: #b3dee5;" text="Help" />
                     <Label minWidth="3" />
@@ -57,6 +57,7 @@
                     <Label minWidth="10" />
                 </HBox>
             </right>
+
             <bottom>
             </bottom>
         </BorderPane>
@@ -68,8 +69,8 @@
                 <Label minHeight="5" />
                 <ComboBox fx:id="mapSelector" style="-fx-background-color: #d9b3ff;" />
                 <Label minHeight="15" />
-                <Label text="Please input location to search..." />
-                <TextField fx:id="searchText" promptText="please input search key ..." />
+                <Label text="Please input location to search" />
+                <TextField fx:id="searchText" promptText="Search here" />
                 <Label minHeight="10" />
                 <HBox alignment="CENTER">
                    <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" style="-fx-background-color: #d9b3ff;" text="All POI">

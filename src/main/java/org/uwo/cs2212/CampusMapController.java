@@ -53,6 +53,16 @@ import javafx.scene.text.*;
 
 public class CampusMapController implements Initializable {
     @FXML
+    private CheckBox classrooms;
+    @FXML
+    private CheckBox stairwells;
+    @FXML
+    private CheckBox elevators;
+    @FXML
+    private CheckBox washrooms;
+    @FXML
+    private CheckBox entryAndExit;
+    @FXML
     private Button floor0;
     @FXML
     private Button signOut;
@@ -67,8 +77,6 @@ public class CampusMapController implements Initializable {
     @FXML
     private Button floor5;
     @FXML
-    private Button poiToggleButton;
-    @FXML
     private Button favoriteButton;
     @FXML
     private Button showAllPOI;
@@ -78,7 +86,8 @@ public class CampusMapController implements Initializable {
     private Button zoomOut;
     @FXML
     private Button help;
-
+    @FXML
+    private Button editButton;
     @FXML
     private Label helpLabel;
     @FXML Button about;
@@ -90,24 +99,6 @@ public class CampusMapController implements Initializable {
     private ListView informationList;
     @FXML
     private ScrollPane mapPane;
-    @FXML
-    private CheckBox classrooms;
-    @FXML
-    private CheckBox stairwells;
-    @FXML
-    private CheckBox elevators;
-    @FXML
-    private CheckBox washrooms;
-    @FXML
-    private CheckBox entryAndExit;
-    @FXML
-    private CheckBox genlabs;
-    @FXML
-    private CheckBox restaurants;
-    @FXML
-    private CheckBox cs_Labs;
-    @FXML
-    private CheckBox collaborative;
 
     private double zoom = 1.0;
     private double imageWidth;
@@ -317,6 +308,7 @@ public class CampusMapController implements Initializable {
     }
 
 
+
     @FXML
     private void helpButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -441,9 +433,20 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void returnBack(String file,String title) throws IOException {
+        int v = 1080;
+        int v1 = 720;
+
         Stage stage=new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
-        Scene scene = new Scene(fxmlLoader.load(), 571, 400);
+
+        if (file.compareTo("login-view.fxml")==0)
+        {
+            v = 571;
+            v1 = 400;
+        }
+
+        Scene scene = new Scene(fxmlLoader.load(), v, v1);
+
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -582,9 +585,7 @@ public class CampusMapController implements Initializable {
             if(currentSelectedPoi != null){
                 currentSelectedPoi.setSelected(true);
             }
-            centralizeSelectedPoi();
             showMap();
-
             setFavouriteButtonState();
         }
     }
@@ -634,7 +635,6 @@ public class CampusMapController implements Initializable {
                     }
                 }
             }
-            searchResults = informationList.getItems();
         }
     }
 
@@ -722,8 +722,48 @@ public class CampusMapController implements Initializable {
             mapPane.setHvalue(scrollX);
             mapPane.setVvalue(scrollY);
         }
+        for (Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi : layer.getPoints()){
+                if (poi.isFavorite()) {
+                    informationList.getItems().add(poi);
+                }
+            }
+        }
+    }
+
+    private MapEditingController loadMapEditingController(String fxmlFile) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+        MapEditingController mapEditingController = loader.getController();
+        return mapEditingController;
+    }
+
+    public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
+        try {
+            // Load the MapEditingController
+            MapEditingController mapEditingController = loadMapEditingController("map-editing.fxml");
+
+            // Set the MapConfig for the MapEditingController
+            mapEditingController.setMapConfig(mapConfig);
+
+            // Display the map-editing scene
+            returnBack("map-editing.fxml", "Map Editing Mode");
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
+
+//        try {
+//            returnBack("map-editing.fxml", "Map Editing Mode");
+//        } catch (IOException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
 
     }
+
 
 
 }
