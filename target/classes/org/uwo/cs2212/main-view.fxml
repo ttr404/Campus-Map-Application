@@ -98,27 +98,27 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <CheckBox fx:id="Classrooms" mnemonicParsing="false" onAction="#onClassrooms" text="Classrooms">
+                        <CheckBox fx:id="classrooms" mnemonicParsing="false" onAction="#onClassrooms" text="Classrooms">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="Stairwells" mnemonicParsing="false" onAction="#onStairwells" text="Stairwells">
+                        <CheckBox fx:id="stairwells" mnemonicParsing="false" onAction="#onStairwells" text="Stairwells">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="Elevators" mnemonicParsing="false" onAction="#onElevators" text="Elevators">
+                        <CheckBox fx:id="elevators" mnemonicParsing="false" onAction="#onElevators" text="Elevators">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="Washrooms" mnemonicParsing="false" onAction="#onWashrooms" text="Washrooms">
+                        <CheckBox fx:id="washrooms" mnemonicParsing="false" onAction="#onWashrooms" text="Washrooms">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="EntryAndExit" mnemonicParsing="false" onAction="#onEntryAndExit" text="Entry/Exit">
+                        <CheckBox fx:id="entryAndExit" mnemonicParsing="false" onAction="#onEntryAndExit" text="Entry/Exit">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -127,22 +127,22 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <CheckBox fx:id="Genlabs" mnemonicParsing="false" onAction="#onGenlabs" text="GenLabs">
+                        <CheckBox fx:id="genlabs" mnemonicParsing="false" onAction="#onGenlabs" text="GenLabs">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="Restaurants" mnemonicParsing="false" onAction="#onRestaurants" text="Restaurant">
+                        <CheckBox fx:id="restaurants" mnemonicParsing="false" onAction="#onRestaurants" text="Restaurant">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="CS_Labs" mnemonicParsing="false" onAction="#onCS_Labs" text="CS Labs">
+                        <CheckBox fx:id="cs_Labs" mnemonicParsing="false" onAction="#onCS_Labs" text="CS Labs">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="Collaborative" mnemonicParsing="false" onAction="#onCollaborative" text="Collaborative">
+                        <CheckBox fx:id="collaborative" mnemonicParsing="false" onAction="#onCollaborative" text="Collaborative">
                            <font>
                               <Font size="12.0" />
                            </font>
