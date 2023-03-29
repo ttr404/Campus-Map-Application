@@ -50,8 +50,10 @@ public class Weather {
             JSONObject jsonObject = new JSONObject(jsonData);
             return jsonObject;
         } catch (IOException e){
-            System.out.println("HTTP Connection Error!");
-            throw new RuntimeException(e);
+            System.out.println("HTTP Connection Error: " + e.getMessage());
+            JSONObject errorObject = new JSONObject();
+            errorObject.put("error", "No internet connection");
+            return errorObject;
         }
     }
 

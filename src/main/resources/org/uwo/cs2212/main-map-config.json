@@ -30,7 +30,7 @@
           "name": "My Test2",
           "roomNumber": "A200",
           "description": "Class room A200",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         }
       ]
     },
@@ -47,7 +47,7 @@
           "name": "Indigo",
           "roomNumber": "A100",
           "description": "Class room A100",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         },
         {
           "x": 200,
@@ -55,7 +55,7 @@
           "name": "My Test2",
           "roomNumber": "A200",
           "description": "Class room A200",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         }
       ]
     },
@@ -72,7 +72,7 @@
           "name": "ABC",
           "roomNumber": "A100",
           "description": "Class room A100",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         },
         {
           "x": 67,
@@ -80,7 +80,7 @@
           "name": "My Test2",
           "roomNumber": "A200",
           "description": "Class room A200",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         }
       ]
     },
@@ -97,7 +97,7 @@
           "name": "My Test1",
           "roomNumber": "A100",
           "description": "Class room A100",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         },
         {
           "x": 120,
@@ -105,7 +105,7 @@
           "name": "My Test2",
           "roomNumber": "A200",
           "description": "Class room A200",
-          "type": "ClassRoom"
+          "type": "WashRoom"
         }
       ]
     }

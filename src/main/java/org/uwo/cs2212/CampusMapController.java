@@ -97,8 +97,6 @@ public class CampusMapController implements Initializable {
     @FXML
     private CheckBox elevators;
     @FXML
-    private CheckBox washrooms;
-    @FXML
     private CheckBox entryAndExit;
     @FXML
     private CheckBox genlabs;
@@ -108,6 +106,8 @@ public class CampusMapController implements Initializable {
     private CheckBox cs_Labs;
     @FXML
     private CheckBox collaborative;
+    @FXML
+    private CheckBox user_POI;
 
     private double zoom = 1.0;
     private double imageWidth;
@@ -152,6 +152,10 @@ public class CampusMapController implements Initializable {
                 });
     }
 
+    public void setAdmin(boolean isAdmin) {
+        editButton.setVisible(isAdmin);
+    }
+
     private void filter(){
         informationList.getItems().clear();
         for (Layer layer: currentFloorMap.getLayers()){
@@ -159,7 +163,6 @@ public class CampusMapController implements Initializable {
                 if ((classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
                         || (stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
                         || (elevators.isSelected() && poi.getType().toLowerCase().equals("elevator"))
-                        || (washrooms.isSelected() && poi.getType().toLowerCase().equals("washroom"))
                         || (entryAndExit.isSelected() && poi.getType().toLowerCase().equals("entryAndExit"))
                         || (genlabs.isSelected() && poi.getType().toLowerCase().equals("genlab"))
                         || (restaurants.isSelected() && poi.getType().toLowerCase().equals("restaurant"))
@@ -447,7 +450,7 @@ public class CampusMapController implements Initializable {
     @FXML
     private void returnBack(String file,String title) throws IOException {
         int v = 1080;
-        int v1 = 720;
+        int v1 = 800;
 
         Stage stage=new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
@@ -775,24 +778,24 @@ public class CampusMapController implements Initializable {
         classrooms.setSelected(true);
         stairwells.setSelected(true);
         elevators.setSelected(true);
-        washrooms.setSelected(true);
         entryAndExit.setSelected(true);
         genlabs.setSelected(true);
         restaurants.setSelected(true);
         cs_Labs.setSelected(true);
         collaborative.setSelected(true);
+        user_POI.setSelected(true);
     }
 
     public void deselectAllLayers(){
         classrooms.setSelected(false);
         stairwells.setSelected(false);
         elevators.setSelected(false);
-        washrooms.setSelected(false);
         entryAndExit.setSelected(false);
         genlabs.setSelected(false);
         restaurants.setSelected(false);
         cs_Labs.setSelected(false);
         collaborative.setSelected(false);
+        user_POI.setSelected(false);
     }
 
 

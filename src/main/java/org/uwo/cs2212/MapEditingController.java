@@ -116,7 +116,7 @@ public class MapEditingController {
 
     private void returnBack(String file,String title) throws IOException {
         int v = 1080;
-        int v1 = 720;
+        int v1 = 800;
 
         Stage stage=new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));

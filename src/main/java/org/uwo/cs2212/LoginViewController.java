@@ -90,6 +90,15 @@ public class LoginViewController {
         return false;
     }
 
+    public boolean checkAdmin(){
+        UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
+        String encodePassword = toHexString(getSHA(password.getText()));
+        if (loginName.getText().equals("admin")){
+            return true;
+        }
+        return false;
+    }
+
     // Show the current weather on the login view
     public void showWeather() throws IOException {
         Weather currWeather = new Weather(43.009953, -81.273613);
