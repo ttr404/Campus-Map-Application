@@ -285,11 +285,10 @@ public class CampusMapController implements Initializable {
 
     public void onRestaurants(ActionEvent actionEvent){
         if (Restaurants.isSelected()){
-            informationList.getItems().clear(); // change that later
+            //informationList.getItems().clear(); // change that later
             for (Layer layer: currentFloorMap.getLayers()){
                 for(PointOfInterest poi : layer.getPoints()){
                     if (poi.getType().equals("Restaurant")){
-                        //informationList.getItems().add(new SearchResult(currentFloorMap, poi));
                         restaurants.add(new SearchResult(currentFloorMap, poi));
                     }
                 }
@@ -594,13 +593,29 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {
-        zoom *= 0.8;
+        if (zoom > 0.5){
+            zoom *= 0.8;
+        }
+        else{
+            zoomIn.setDisable(false);
+        }
         showMap();
     }
 
     @FXML
     private void onZoomOutButtonClicked(ActionEvent actionEvent) {
-        zoom *= 1.2;
+        if (zoom < 1.7){
+            zoom *= 1.2;
+        }
+        else{
+            zoomOut.setDisable(false);
+        }
+        showMap();
+    }
+
+    @FXML
+    private void onZoomResetButtonClicked(ActionEvent actionEvent) {
+        zoom = 1;
         showMap();
     }
 
@@ -804,5 +819,6 @@ public class CampusMapController implements Initializable {
             }
         }
     }
+
 
 }

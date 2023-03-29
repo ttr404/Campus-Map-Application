@@ -17,7 +17,7 @@
     <top>
         <BorderPane style="-fx-background-color: #e6f0ff;">
             <top>
-                <Label minHeight="20" />
+                <Label minHeight="10" />
             </top>
             <left>
                 <HBox>
@@ -27,12 +27,15 @@
                     <Button fx:id="zoomOut" onAction="#onZoomOutButtonClicked" style="-fx-background-color: #b3dee5;" text=" + " />
                     <Label minWidth="3" />
                     <Button fx:id="zoomIn" onAction="#onZoomInButtonClicked" style="-fx-background-color: #b3dee5;" text=" - " />
+                    <Label minWidth="3" />
+                    <Button fx:id="zoomReset" onAction="#onZoomResetButtonClicked" style="-fx-background-color: #b3dee5;" text=" reset " />
+                    <Label minWidth="3" />
                 </HBox>
             </left>
             <right>
                 <HBox>
                     <Button style="-fx-background-color: #b3dee5;" text="Floor:" />
-                    <Label minWidth="10" />
+                    <Label minWidth="3" />
                     <Button fx:id="floor0" onAction="#onFloorGButtonClick" style="-fx-background-color: #b3dee5;" text="G" />
                     <Label minWidth="3" />
                     <Button fx:id="floor1" onAction="#onFloor1ButtonClick" style="-fx-background-color: #b3dee5;" text="2" />
@@ -69,14 +72,12 @@
                 <TextField fx:id="searchText" promptText="please input search key ..." />
                 <Label minHeight="10" />
                 <HBox alignment="CENTER">
-               <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" style="-fx-background-color: #d9b3ff;" text="All POI">
-                  <font>
-                     <Font size="10.0" />
-                  </font>
-                  <HBox.margin>
-                     <Insets right="5.0" />
-                  </HBox.margin>
-               </Button>
+                   <Button fx:id="showAllPOI" mnemonicParsing="false" onAction="#onAllPOIButtonClicked" style="-fx-background-color: #d9b3ff;" text="All POI">
+                      <font>
+                         <Font size="10.0" />
+                      </font>
+                   </Button>
+                    <Label minWidth="4" />
                     <Button onAction="#onSearchButtonClicked" style="-fx-background-color: #d9b3ff;" text="Search">
                   <font>
                      <Font size="10.0" />

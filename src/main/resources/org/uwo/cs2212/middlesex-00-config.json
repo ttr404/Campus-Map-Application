@@ -13,24 +13,48 @@
       "name": "Main Map",
       "color": "BLACK",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "MC100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
+          "x": 353,
+          "y": 380,
+          "name": "MC17",
+          "roomNumber": "17",
+          "description": "Middlesex college classroom 17",
           "type": "ClassRoom"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "MC101",
-          "roomNumber": "A101",
-          "description": "Class room A200",
+          "x": 506,
+          "y": 420,
+          "name": "MC6",
+          "roomNumber": "6",
+          "description": "Middlesex college classroom 6",
           "type": "ClassRoom"
+        },
+        {
+          "x": 564,
+          "y": 409,
+          "name": "Man washroom",
+          "roomNumber": "5B",
+          "description": "Middlesex college washroom 5B",
+          "type": "WashRoom"
+        },
+        {
+          "x": 609,
+          "y": 404,
+          "name": "Woman washroom",
+          "roomNumber": "4B",
+          "description": "Middlesex college washroom 4B",
+          "type": "WashRoom"
+        },
+        {
+          "x": 664,
+          "y": 239,
+          "name": "Grad Club",
+          "roomNumber": "19",
+          "description": "Grad Club",
+          "type": "Restaurant"
         }
       ]
     }
