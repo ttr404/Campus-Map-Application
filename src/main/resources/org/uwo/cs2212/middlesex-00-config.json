@@ -31,7 +31,16 @@
           "roomNumber": "6",
           "description": "Middlesex college classroom 6",
           "type": "ClassRoom"
-        },
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLACK",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
         {
           "x": 564,
           "y": 409,
@@ -63,7 +72,81 @@
           "roomNumber": "4C",
           "description": "Middlesex college unisex washroom 4C",
           "type": "WashRoom"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLACK",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 83.33,
+          "y": 589.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "stairwell"
         },
+        {
+          "x": 270.55,
+          "y": 533.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "stairwell"
+        },
+        {
+          "x": 162.22,
+          "y": 576.06,
+          "name": "Stairwell",
+          "roomNumber": "TA.2",
+          "description": "Stairwell TA.2",
+          "type": "stairwell"
+        },
+        {
+          "x": 695.78,
+          "y": 488.56,
+          "name": "Stairwell",
+          "roomNumber": "1A",
+          "description": "Stairwell 1A",
+          "type": "stairwell"
+        },
+        {
+          "x": 826.89,
+          "y": 400.17,
+          "name": "Stairwell",
+          "roomNumber": "ST.3",
+          "description": "Stairwell ST.3",
+          "type": "stairwell"
+        },
+        {
+          "x": 1239,
+          "y": 601.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.5",
+          "description": "Stairwell ST.5",
+          "type": "stairwell"
+        },
+        {
+          "x": 404.40,
+          "y": 288.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.6",
+          "description": "Stairwell ST.6",
+          "type": "stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLACK",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
         {
           "x": 664,
           "y": 239,
@@ -71,63 +154,16 @@
           "roomNumber": "19",
           "description": "Grad Club",
           "type": "Restaurant"
-        },
-        {
-          "x": 83.33,
-          "y": 589.95,
-          "name": "Stairs",
-          "roomNumber": "ST.1",
-          "description": "Stairs ST.1",
-          "type": "stairwells"
-        },
-        {
-          "x": 270.55,
-          "y": 533.84,
-          "name": "Stairs",
-          "roomNumber": "ST.2",
-          "description": "Stairs ST.2",
-          "type": "stairwells"
-        },
-        {
-          "x": 162.22,
-          "y": 576.06,
-          "name": "Stairs",
-          "roomNumber": "TA.2",
-          "description": "Stairs TA.2",
-          "type": "stairwells"
-        },
-        {
-          "x": 695.78,
-          "y": 488.56,
-          "name": "Stairs",
-          "roomNumber": "1A",
-          "description": "Stairs 1A",
-          "type": "stairwells"
-        },
-        {
-          "x": 826.89,
-          "y": 400.17,
-          "name": "Stairs",
-          "roomNumber": "ST.3",
-          "description": "Stairs ST.3",
-          "type": "stair"
-        },
-        {
-          "x": 1239,
-          "y": 601.84,
-          "name": "Stairs",
-          "roomNumber": "ST.5",
-          "description": "Stairs ST.5",
-          "type": "stair"
-        },
-        {
-          "x": 404.40,
-          "y": 288.84,
-          "name": "Stairs",
-          "roomNumber": "ST.6",
-          "description": "Stairs ST.6",
-          "type": "stairwells"
-        },
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLACK",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
         {
           "x": 768.55,
           "y": 371.34,
