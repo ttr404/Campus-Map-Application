@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import org.json.*;
 
 public class Weather {
+    private final JSONObject cachedData;
     protected double latitude;
     protected double longitude;
     private String apiKey = "90989f1e4b8f4af54e30c4d7ad6a994c";
@@ -19,9 +20,16 @@ public class Weather {
     public Weather(double latitude, double longitude) throws IOException {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.cachedData = retrieveData();
     }
 
     public String getWeather(){
+        JSONObject data = retrieveData();
+
+        if (data.has("error")) {
+            return "---";
+        }
+
         JSONObject weather = retrieveData().getJSONArray("weather").getJSONObject(0);
         String currWeather = weather.getString("description");
         icon = weather.getString("icon");
@@ -29,6 +37,12 @@ public class Weather {
     }
 
     public Double getTemp(){
+        JSONObject data = retrieveData();
+
+        // Check if there's an error (no internet connection)
+        if (data.has("error")) {
+            return Double.NaN;
+        }
         JSONObject temp = (JSONObject) retrieveData().get("main");
         double celsius = temp.getDouble("temp");
         return celsius;
