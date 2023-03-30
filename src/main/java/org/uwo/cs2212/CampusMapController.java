@@ -74,7 +74,8 @@ public class CampusMapController implements Initializable {
     private Button editButton;
     @FXML
     private Label helpLabel;
-    @FXML Button about;
+    @FXML
+    private Button about;
     @FXML
     private ComboBox mapSelector;
     @FXML
@@ -195,7 +196,6 @@ public class CampusMapController implements Initializable {
     public void onElevators(ActionEvent actionEvent){
         checkBoxSelected();
     }
-
 
     public void onEntryAndExit(ActionEvent actionEvent){
         checkBoxSelected();
@@ -611,7 +611,6 @@ public class CampusMapController implements Initializable {
                     showPoiInList(poi);
                     return;
                 }
-
             }
         }
         selectPoi(new SearchResult(currentFloorMap, null));
@@ -645,6 +644,12 @@ public class CampusMapController implements Initializable {
         return false;
     }
 
+    /**
+     Converts a point in the window coordinate system to a point in the real map coordinate system.
+     Takes into account the current zoom level and scroll position.
+     @param windowPoint The point in the window coordinate system
+     @return The converted point in the real map coordinate system
+     */
     private Point2D WindowPointToRealPoint(Point2D windowPoint){
         double windowXValue = (imageWidth - mapPane.getViewportBounds().getWidth()/zoom) * mapPane.getHvalue();
         double windowYValue = (imageHeight - mapPane.getViewportBounds().getHeight()/zoom) * mapPane.getVvalue();
@@ -779,40 +784,27 @@ public class CampusMapController implements Initializable {
         }
     }
 
-    private MapEditingController loadMapEditingController(String fxmlFile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Parent root = loader.load();
-        MapEditingController mapEditingController = loader.getController();
-        return mapEditingController;
+    /**
+     Handles the on-click event of the Edit button.
+     Loads the MapEditingController and shows the new stage.
+     Sets the current floor map to the MapEditingController.
+     Closes the current stage.
+     @param actionEvent the event triggered by clicking the Edit button
+     @throws IOException if there is an issue with loading the MapEditingController or closing the current stage
+     */
+    public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
+        try {
+            // Load the MapEditingController and show the new stage
+            FXMLLoader fxmlLoader = returnBack("map-editing.fxml", "Map Editing Mode");
+
+            // Get the MapEditingController and set the currentFloorMap
+            MapEditingController mapEditingController = fxmlLoader.getController();
+            mapEditingController.setCurrentFloorMap(currentFloorMap);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
-
-//    public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
-//        try {
-//            // Load the MapEditingController
-//            MapEditingController mapEditingController = loadMapEditingController("map-editing.fxml");
-//            // Set the MapConfig for the MapEditingController
-//            mapEditingController.setCurrentFloorMap(currentFloorMap);
-//            // Display the map-editing scene
-//            returnBack("map-editing.fxml", "Map Editing Mode");
-//        } catch (IOException ex) {
-//            throw new RuntimeException(ex);
-//        }
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-//    }
-public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
-    try {
-        // Load the MapEditingController and show the new stage
-        FXMLLoader fxmlLoader = returnBack("map-editing.fxml", "Map Editing Mode");
-
-        // Get the MapEditingController and set the currentFloorMap
-        MapEditingController mapEditingController = fxmlLoader.getController();
-        mapEditingController.setCurrentFloorMap(currentFloorMap);
-    } catch (IOException ex) {
-        throw new RuntimeException(ex);
-    }
-    ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-}
-
 
     public void selectAllLayers(){
         classrooms.setSelected(true);
