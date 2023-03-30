@@ -1,9 +1,8 @@
 package org.uwo.cs2212;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -14,7 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.uwo.cs2212.model.*;
 
@@ -29,26 +28,20 @@ import java.util.*;
 import java.awt.*;
 
 // testing(Truman)
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 
 import javafx.fxml.FXMLLoader;
-import java.io.IOException;
+
 import java.util.List;
 
-import javafx.scene.text.*;
-
-
-
+import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
 
 public class CampusMapController implements Initializable {
@@ -329,7 +322,7 @@ public class CampusMapController implements Initializable {
         setShowAllPOI();
     }
 
-    private void showMap(){
+    protected void showMap(){
         try {
             URL mapUrl = CampusMapController.class.getResource(currentFloorMap.getMapFileName());
             URI uri = mapUrl.toURI();
@@ -358,10 +351,6 @@ public class CampusMapController implements Initializable {
         {}
     }
 
-    @FXML
-    private void onSettingsButtonClicked(ActionEvent actionEvent) { // delete this later
-        System.out.println("operate successful.");
-    }
     /** option*/
     @FXML
     private void onHelpButtonClicked(ActionEvent actionEvent) {
@@ -380,13 +369,13 @@ public class CampusMapController implements Initializable {
     private void aboutButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         String s ="About\n\n" +
-                "Campus Map Viewing App\n" +
+                "Western Campus Navigation App\n" +
                 "Version: 1.0.0\n" +
                 "Release Date: March 27, 2023\n" +
                 "\n" +
                 "Our Team\n" +
                 "\n" +
-                "  1) Boersen, Jarrett	Student	jboerse2@uwo.ca\n"+
+                "  1) Boersen, Jarrett	    Student	jboerse2@uwo.ca\n"+
                 "  2) Huang, Truman	    Student	yhuan939@uwo.ca\n"+
                 "  3) Xie, Yaopeng	    Student	yxie447@uwo.ca\n"+
                 "  4) Zhang, Binchi	    Student	bzhan484@uwo.ca\n"+
@@ -395,7 +384,7 @@ public class CampusMapController implements Initializable {
         "Contact Us\n\n" +
                 "  If you have any questions, feedback or suggestions,\n  please feel free to reach out to us at \n  info@campusmapapp.com.\n  We are always happy to hear from our users and \n  help you in any way we can.\n" +
                 "\n" +
-                "Thank you for using our campus map viewing app!";
+                "Thank you for using our Western Campus Navigation App!";
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
         VBox vbox = new VBox(new Label(s));
@@ -450,16 +439,16 @@ public class CampusMapController implements Initializable {
     private String getHelpText(String topic) {
         switch (topic) {
             case "Getting Started":
-                return "Getting started:\n\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide directions.\n\n" +
+                return "\n\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide directions.\n\n" +
                         "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top right of the screen.\n\n" +
                         "To change the map view into a specific building, click on the layers button located at the bottom left of the screen. You can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n";
             case "POI and Favorite":
-                return "POI and Favorite:\n\nTo view the available POI, click on the menu button located at the top left of the screen and select \"Points of Interest\".\n" +
+                return "\n\nTo view the available POI, click on the menu button located at the top left of the screen and select \"Points of Interest\".\n" +
                         "\nTo view a specific POI, click on the icon on the map or select it from the list of POI.\n" +
                         "\nTo add your own POI, click on the map at the desired location and select \"Add POI\". Enter the name of the POI and select the appropriate category.\n" +
                         "\nTo view your saved POI list, click on the menu button located at the top left of the screen and select \"My POI\".\n";
             case "Setting":
-                return "Setting:\n\nTo access app settings, click on the menu button located at the top left of the screen and select \"Settings\". Here, you can adjust settings such as units of measurement and language.\n" +
+                return "\n\nTo access app settings, click on the menu button located at the top left of the screen and select \"Settings\". Here, you can adjust settings such as units of measurement and language.\n" +
                         "\nTo clear your search history, click on the menu button located at the top left of the screen and select \"Clear History\".\n" +
                         "Contact Us:\n" +
                         "If you have any questions or issues with the app, please contact us at support@campusmapapp.com. We are always happy to help!\n" +
@@ -496,7 +485,7 @@ public class CampusMapController implements Initializable {
                 UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
                 // properly save the data
                 ConfigUtil.saveUserList(userlist,CampusMapApplication.class.getResource("user-account.json"));
-                returnBack("login-view.fxml","Login");
+                returnBack("login-view.fxml","Login Page");
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 stage.close();
             } catch (IOException ex) {
@@ -507,7 +496,11 @@ public class CampusMapController implements Initializable {
             // Handle no button click
             //Don't save the data, jump back to login page
             try {
-                returnBack("login-view.fxml","Login");
+                //now "enter" key can be user when re-login
+                    FXMLLoader loginFxmlLoader = returnBack("login-view.fxml", "Login Page");
+                    Stage loginStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+                    Scene loginScene = loginStage.getScene();
+                    pressEnter(loginFxmlLoader, loginScene);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -533,20 +526,35 @@ public class CampusMapController implements Initializable {
     }
 
     @FXML
-    private void returnBack(String file,String title) throws IOException {
+    private FXMLLoader returnBack(String file, String title) throws IOException {
         int v = 1080;
         int v1 = 800;
 
-        Stage stage=new Stage();
+        Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
 
-        if (file.compareTo("login-view.fxml")==0)
-        {
+        if (file.compareTo("login-view.fxml") == 0) {
             v = 571;
             v1 = 400;
         }
 
         Scene scene = new Scene(fxmlLoader.load(), v, v1);
+
+        if (file.compareTo("login-view.fxml") == 0) {
+            LoginViewController controller = fxmlLoader.getController();
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    if (keyEvent.getCode().toString().equals("ENTER")) {
+                        try {
+                            controller.logIn();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            });
+        }
 
         stage.setTitle(title);
         stage.setScene(scene);
@@ -554,7 +562,10 @@ public class CampusMapController implements Initializable {
         stage.setX(200);
         stage.setY(70);
         stage.show();
+
+        return fxmlLoader;
     }
+
 
     @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {
@@ -843,21 +854,33 @@ public class CampusMapController implements Initializable {
         return mapEditingController;
     }
 
-    public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
-        try {
-            // Load the MapEditingController
-            MapEditingController mapEditingController = loadMapEditingController("map-editing.fxml");
+//    public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
+//        try {
+//            // Load the MapEditingController
+//            MapEditingController mapEditingController = loadMapEditingController("map-editing.fxml");
+//            // Set the MapConfig for the MapEditingController
+//            mapEditingController.setCurrentFloorMap(currentFloorMap);
+//            // Display the map-editing scene
+//            returnBack("map-editing.fxml", "Map Editing Mode");
+//        } catch (IOException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+//    }
+public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
+    try {
+        // Load the MapEditingController and show the new stage
+        FXMLLoader fxmlLoader = returnBack("map-editing.fxml", "Map Editing Mode");
 
-            // Set the MapConfig for the MapEditingController
-            mapEditingController.setMapConfig(mapConfig);
-
-            // Display the map-editing scene
-            returnBack("map-editing.fxml", "Map Editing Mode");
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        // Get the MapEditingController and set the currentFloorMap
+        MapEditingController mapEditingController = fxmlLoader.getController();
+        mapEditingController.setCurrentFloorMap(currentFloorMap);
+    } catch (IOException ex) {
+        throw new RuntimeException(ex);
     }
+    ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+}
+
 
     public void selectAllLayers(){
         classrooms.setSelected(true);
