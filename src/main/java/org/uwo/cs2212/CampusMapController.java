@@ -458,8 +458,10 @@ public class CampusMapController implements Initializable {
         int v = 1080;
         int v1 = 800;
 
+
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
+        LoginViewController.setStage(stage);
 
         if (file.compareTo("login-view.fxml") == 0) {
             v = 571;

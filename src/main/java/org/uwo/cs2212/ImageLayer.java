@@ -28,10 +28,8 @@ public class ImageLayer extends Canvas {
             layer.getPoints().get(0).setSelected(true);
         }
 
+
         for(PointOfInterest poi: layer.getPoints()){
-            if (isHideLayer){
-                continue;
-            }
             if(isBaseLayer || !isHideLayer || poi.isSelected()){
                 if(poi.isSelected()){
                     graphic.setFont(boldFont);
