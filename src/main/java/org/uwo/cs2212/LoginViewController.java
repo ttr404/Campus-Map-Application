@@ -92,7 +92,7 @@ public class LoginViewController {
         }
         // add multiple user function here
         else {
-            error.setText("Invalid user name or password.");
+            error.setText("Invalid username or password.");
             password.setText("");
         }
     }
@@ -108,7 +108,7 @@ public class LoginViewController {
 
         // Check if the entered credentials match an account in the user list
         for (UserConfig userConfig : userlist.getAccountList()) {
-            if (loginName.getText().equals(userConfig.getUserName()) && encodePassword.equals(userConfig.getPassword())) {
+            if (loginName.getText().equals(userConfig.getUsername()) && encodePassword.equals(userConfig.getPassword())) {
                 return true;
             }
         }

@@ -28,7 +28,7 @@ public class CampusMapApplication extends Application {
         FXMLLoader loginFxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("login-view.fxml"));
         Scene loginScene = new Scene(loginFxmlLoader.load(), 571, 400);
         pressEnter(loginFxmlLoader, loginScene);
-        stage.setTitle("Login Page");
+        stage.setTitle("Login");
         stage.setScene(loginScene);
         stage.setResizable(false);
 //stage.initStyle(StageStyle.UNDECORATED);

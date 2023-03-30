@@ -27,8 +27,10 @@
                     <Label minWidth="3" />
                     <Button fx:id="zoomIn" onAction="#onZoomInButtonClicked" style="-fx-background-color: #b3dee5;" text=" - " />
                     <Label minWidth="3" />
-                    <Button fx:id="zoomReset" onAction="#onZoomResetButtonClicked" style="-fx-background-color: #b3dee5;" text="Reset " />
-                    <Label minWidth="3" />
+                    <Button fx:id="zoomReset" onAction="#onZoomResetButtonClicked" style="-fx-background-color: #b3dee5;" text=" Reset " />
+                    <Label minWidth="40.0" />
+               <Button fx:id="addPOI" onAction="#onAddPOIClicked" style="-fx-background-color: #b3dee5;" text="Add POI" />
+               <Label minWidth="3" />
                 </HBox>
             </left>
             <right>
@@ -142,7 +144,7 @@
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="user_POI" mnemonicParsing="false" text="User POIs">
+                        <CheckBox fx:id="user_POIs" mnemonicParsing="false" onAction="#onUserPOIs" text="User POIs">
                            <font>
                               <Font size="12.0" />
                            </font>

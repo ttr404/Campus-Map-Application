@@ -1,10 +1,13 @@
 package org.uwo.cs2212;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -40,6 +43,8 @@ import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 
 import java.util.List;
+
+import javafx.scene.text.*;
 
 import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
@@ -101,7 +106,7 @@ public class CampusMapController implements Initializable {
     @FXML
     private CheckBox collaborative;
     @FXML
-    private CheckBox user_POI;
+    private CheckBox user_POIs;
 
     private double zoom = 1.0;
     private double imageWidth;
@@ -162,6 +167,7 @@ public class CampusMapController implements Initializable {
                         || (restaurants.isSelected() && poi.getType().toLowerCase().equals("restaurant"))
                         || (cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
                         || (collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
+                        || (user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
                 ){
                     layer.setHideLayer(false);
                     informationList.getItems().add(new SearchResult(currentFloorMap, poi));
@@ -214,6 +220,10 @@ public class CampusMapController implements Initializable {
     }
 
     public void onCollaborative(ActionEvent actionEvent){
+        checkBoxSelected();
+    }
+
+    public void onUserPOIs(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
@@ -815,7 +825,7 @@ public class CampusMapController implements Initializable {
         restaurants.setSelected(true);
         cs_Labs.setSelected(true);
         collaborative.setSelected(true);
-        user_POI.setSelected(true);
+        user_POIs.setSelected(true);
     }
 
     public void deselectAllLayers(){
@@ -827,8 +837,77 @@ public class CampusMapController implements Initializable {
         restaurants.setSelected(false);
         cs_Labs.setSelected(false);
         collaborative.setSelected(false);
-        user_POI.setSelected(false);
+        user_POIs.setSelected(false);
     }
 
+    public void onAddPOIClicked(ActionEvent actionEvent) {
+        // Create a new stage to be a popup window and set the owner to the CampusMap view
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+        // Set the title of the popup window
+        stage.setTitle("New POI");
+
+        // name
+        // room number
+        // favourite
+        // description
+
+        // set the type as well to user created
+
+        // Create the labels and text-fields and put them in a corresponding vbox
+        Label nameLabel = new Label("Enter a name for the POI");
+        TextField name = new TextField();
+        name.setPromptText("Name");
+        VBox nameBox = new VBox(nameLabel, name);
+
+        Label roomNumberLabel = new Label("Enter a room number for the POI");
+        TextField roomNumber = new TextField();
+        roomNumber.setPromptText("Room number");
+        VBox roomNumberBox = new VBox(roomNumberLabel, roomNumber);
+
+        Label descriptionLabel = new Label("Enter a description for the POI");
+        TextField description = new TextField();
+        description.setPromptText("Description");
+        VBox descriptionBox = new VBox(descriptionLabel, description);
+
+        // Get the favourite icon and create a new image view for it
+        ImageView favouriteIcon = new ImageView(getClass().getResource("favorite1.png").toExternalForm());
+        favouriteIcon.setFitWidth(16);
+        favouriteIcon.setFitHeight(16);
+
+        // Create the favourite button
+        Button favourite = new Button("Set POI as a favourite", favouriteIcon); // TODO: Change icon on click
+
+        // Create the favourite button
+        Button savePOI = new Button("Save POI");
+
+        // Add a Vbox so the items automatically are laid out in the window
+        // Add all the elements and separate them with a spacer which is a blank label
+        VBox vbox = new VBox(nameBox, new Label(), roomNumberBox, new Label(), descriptionBox, new Label(), favourite, new Label(), savePOI);
+        // Set the padding and create the scene
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        Scene scene = new Scene(vbox);
+
+        // Add the scene to the stage (window) and set the size
+        stage.setScene(scene);
+        stage.setWidth(300);
+        stage.setHeight(500);
+        stage.setResizable(false);
+//        stage.setX(((Node) actionEvent.getSource()).getScene().getWindow().getX() + ((Node) actionEvent.getSource()).getScene().getWindow().getWidth() - stage.getWidth() );
+//        stage.setY(((Node) actionEvent.getSource()).getScene().getWindow().getY());
+        stage.show();
+
+        // Set the initial help text
+//        String helpText = getHelpText(helpTopic.getValue());
+//        helpLabel.setText(helpText); // Set the text of the helpLabel control
+//
+//        // Add an event listener to the helpTopic control to update the help text
+//        helpTopic.setOnAction(e -> {
+//            String selectedTopic = helpTopic.getValue();
+//            String selectedHelpText = getHelpText(selectedTopic);
+//            helpLabel.setText(selectedHelpText);
+//        });
+    }
 
 }

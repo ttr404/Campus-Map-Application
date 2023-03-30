@@ -46,7 +46,13 @@ public class Weather {
         JSONObject weather = retrieveData().getJSONArray("weather").getJSONObject(0);
         String currWeather = weather.getString("description");
         icon = weather.getString("icon");
-        return currWeather;
+
+        // Split the string apart in order to capitalize the first letter of the weather
+        String firstCharCurrWeather = currWeather.substring(0,1);
+        String remainingCurrWeather = currWeather.substring(1);
+
+        // Return the current weather with the first letter capitalized
+        return firstCharCurrWeather.toUpperCase() + remainingCurrWeather;
     }
 
     /**

@@ -29,13 +29,13 @@
                 <Label fx:id="error" textFill="RED" />
             </HBox>
             <Label minHeight="10" />
-            <HBox>
+            <HBox alignment="CENTER">
                 <Label minWidth="10" />
-                <Label minWidth="80" text="User Name:" />
+                <Label minWidth="80" text="Username:" />
                 <TextField fx:id="loginName" />
             </HBox>
             <Label minHeight="20" />
-            <HBox>
+            <HBox alignment="CENTER">
                 <Label minWidth="10" />
                 <Label minWidth="80" text="Password:" />
                 <PasswordField fx:id="password" />
@@ -43,9 +43,9 @@
             <Label minHeight="20" />
             <HBox>
                 <Label minWidth="90" />
-                <Button fx:id="login" mnemonicParsing="false" onAction="#onLoginGButtonClick" text="Login" style="-fx-background-color: #b3d9ff; -fx-background-radius: 1000em;"/>
+                <Button fx:id="login" mnemonicParsing="false" onAction="#onLoginGButtonClick" style="-fx-background-color: #b3d9ff; -fx-background-radius: 1000em;" text="Login" />
             </HBox>
-            <HBox prefHeight="34.0" prefWidth="250.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="250.0">
                 <children>
                     <ImageView fx:id="weatherIcon" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                         <HBox.margin>
@@ -65,7 +65,7 @@
                     </Label>
                 </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                 <children>
                     <ImageView fx:id="temperature" fitHeight="35.0" fitWidth="35.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
                         <HBox.margin>
