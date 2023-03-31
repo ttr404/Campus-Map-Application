@@ -369,6 +369,31 @@ public class MapEditingController {
                     break;
                 }
             }
+
+            if (!flag){
+                JSONArray jsonArray = new JSONArray();
+                JSONObject layer = new JSONObject()
+                        .put("name", "Main Map")
+                        .put("color", "BLACK");
+                if (roomSelector.getValue().toLowerCase().equals("washroom") || roomSelector.getValue().toLowerCase().equals("accessibility")){
+                    layer.put("layerType", "base");
+                }
+                else {
+                    layer.put("layerType", "internal");
+                }
+                layer.put("font", "Arial")
+                        .put("size", 16)
+                        .put("points", jsonArray);
+                JSONObject point = new JSONObject()
+                        .put("x", coordinateX)
+                        .put("y", coordinateY)
+                        .put("name", poiName.getText())
+                        .put("roomNumber", roomNumber.getText())
+                        .put("description", Description.getText())
+                        .put("type", roomSelector.getValue());
+                jsonArray.put(point);
+                jsonObject.getJSONArray("layers").put(layer);
+            }
         }
 
         FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
@@ -404,7 +429,7 @@ public class MapEditingController {
     @FXML
     private void calculateRealMousePosition(MouseEvent mouseEvent){
         coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
-        coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
+        coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
     }
 
 
