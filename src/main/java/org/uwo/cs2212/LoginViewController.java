@@ -18,6 +18,9 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * The LoginViewController class is responsible for managing the login view.
+ *
+ * @author
+ * @author
  */
 public class LoginViewController {
     @FXML

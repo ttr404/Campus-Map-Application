@@ -17,6 +17,8 @@ import org.uwo.cs2212.model.PointOfInterest;
  * zoom level and layer of points of interest. The class also contains a method that draws the points of interest on the
  * canvas, with their corresponding colors, fonts, sizes, and selected state. Additionally, the class provides a utility
  * method to check if a layer is a base layer, and to hide/show points of interest based on the layer's hideLayer flag.
+ *
+ * @author
  */
 public class ImageLayer extends Canvas {
 

@@ -3,6 +3,14 @@ package org.uwo.cs2212;
 import org.uwo.cs2212.model.FloorMap;
 import org.uwo.cs2212.model.PointOfInterest;
 
+/**
+ * The SearchResult class represents a search result containing a PointOfInterest object
+ * and the FloorMap object where the point of interest is located. It provides methods
+ * for getting and setting the PointOfInterest and FloorMap objects associated with the
+ * search result, as well as for generating a String representation of the search result.
+ *
+ * @author
+ */
 public class SearchResult {
     private PointOfInterest poi;
     private FloorMap floorMap;
@@ -57,5 +65,4 @@ public class SearchResult {
     public String toString(){
         return "Floor: " + floorMap.getName() + "\n" + poi.toString();
     }
-
 }

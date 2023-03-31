@@ -12,6 +12,9 @@ import org.json.*;
 
 /**
  * A class that retrieves weather information from the OpenWeatherMap API.
+ *
+ * @author Tingrui Zhang
+ * @author
  */
 public class Weather {
     private final JSONObject cachedData;

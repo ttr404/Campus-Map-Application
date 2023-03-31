@@ -25,15 +25,15 @@
           "type": "ClassRoom"
         },
         {
-          "x": 235,
-          "y": 14,
+          "x": 419,
+          "y": 470,
           "name": "MC316",
           "roomNumber": "316",
           "description": "MC 3F Classroom 316",
           "type": "ClassRoom"
         },
         {
-          "x": 382,
+          "x": 344,
           "y": 518,
           "name": "MC320",
           "roomNumber": "320",

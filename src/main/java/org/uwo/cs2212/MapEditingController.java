@@ -27,7 +27,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * This class is the controller for the Campus Map application. It handles the UI actions,
+ * such as zooming in and out, selecting points of interest (POIs), adding and deleting POIs,
+ * and loading maps for different floors. It also contains methods for converting between
+ * window and real map coordinate systems, as well as for handling mouse events.
+ *
+ * The CampusMapController class works in conjunction with the FloorMap, PointOfInterest,
+ * ImageLayer, and Layer classes, as well as the FXML view files to provide a complete map
+ * navigation and editing experience.
+ *
+ * @author Tingrui Zhang
+ * @author Binchi Zhang
+ *
+ */
 public class MapEditingController {
 
     @FXML
@@ -128,6 +141,16 @@ public class MapEditingController {
         }
     }
 
+    /**
+     * This method is responsible for loading and displaying the map
+     * of the currently selected floor. It takes the map file name from the
+     * currentFloorMap, loads the image, and creates an ImageView to display it.
+     * It also creates ImageLayer instances for each layer in the currentFloorMap,
+     * adjusting their size and position based on the zoom factor.
+     *
+     * <p> In case of any exceptions during the loading or processing of the map
+     * or layers, the exception is caught and no further action is taken. </p>
+     */
     protected void showMap(){
         try {
             URL mapUrl = CampusMapController.class.getResource(currentFloorMap.getMapFileName());
@@ -172,13 +195,6 @@ public class MapEditingController {
         }
         return false;
     }
-
-    /**
-     Converts a point in the window coordinate system to a point in the real map coordinate system.
-     Takes into account the current zoom level and scroll position.
-     @param windowPoint The point in the window coordinate system
-     @return The converted point in the real map coordinate system
-     */
 
 
     /**
@@ -229,6 +245,7 @@ public class MapEditingController {
     }
 
     /** This method is responsible for transitioning to a new view/window within the application.
+     *
      * @param file: The FXML file name for the target view.
      * @param title: The title for the new window.
      * @throws IOException
@@ -264,8 +281,9 @@ public class MapEditingController {
     }
 
     /**
-     Loads the map for editing by retrieving the map file, creating an ImageView of the map,
-     and adding layers to the map as ImageLayers.
+     * Loads the map for editing by retrieving the map file, creating an ImageView of the map,
+     * and adding layers to the map as ImageLayers.
+     *
      */
     private void loadMapForEditing() {
         if (currentFloorMap != null) {
@@ -353,8 +371,6 @@ public class MapEditingController {
             }
         }
 
-
-
         FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
         fileWriter.write(jsonObject.toString());
 
@@ -362,8 +378,13 @@ public class MapEditingController {
 
     }
 
-
-
+    /**
+     * Converts a point in the window coordinate system to a point in the real map coordinate system.
+     * Takes into account the current zoom level and scroll position.
+     *
+     @param windowPoint The point in the window coordinate system
+     @return The converted point in the real map coordinate system
+     */
     private Point2D WindowPointToRealPoint(Point2D windowPoint){
         double windowXValue = (imageWidth - scrollPane.getViewportBounds().getWidth()/zoom) * scrollPane.getHvalue();
         double windowYValue = (imageHeight - scrollPane.getViewportBounds().getHeight()/zoom) * scrollPane.getVvalue();
@@ -397,8 +418,9 @@ public class MapEditingController {
     }
 
     /**
-     Sets the current floor map and loads it for editing.
-     @param currentFloorMap the FloorMap object representing the current floor map
+     * Sets the current floor map and loads it for editing.
+     *
+     * @param currentFloorMap the FloorMap object representing the current floor map
      */
     public void setCurrentFloorMap(FloorMap currentFloorMap) {
         this.currentFloorMap = currentFloorMap;

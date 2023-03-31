@@ -39,16 +39,30 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-
 import javafx.fxml.FXMLLoader;
-
 import java.util.List;
-
 import javafx.scene.text.*;
-
 import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
-
+/**
+ * The CampusMapController class is the main controller for managing the campus map UI and
+ * its interactions. It provides functionality for displaying and interacting with floor maps,
+ * points of interest (POIs), and map layers. The class also enables zooming in and out, as well
+ * as adding, editing, and deleting POIs. It handles UI events such as button clicks and mouse events,
+ * and manages the state of the currently selected floor map and POI.
+ *
+ * The CampusMapController is responsible for loading floor maps and associated POI data from
+ * configuration files, managing the display of map elements such as POI circles, and providing
+ * methods for converting between window and real map coordinate systems. The crepresentlass uses the
+ * FloorMap, PointOfInterest, ImageLayer, and SearchResult classes to  and manipulate
+ * map-related data.
+ *
+ * @author Tingrui Zhang
+ * @author
+ * @author
+ * @author
+ * @author
+ */
 public class CampusMapController implements Initializable {
 
     @FXML

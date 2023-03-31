@@ -14,6 +14,10 @@ import java.nio.file.Path;
  * configuration objects such as MapConfig, FloorMap, and UserList from
  * and to JSON files. It makes use of the Jackson library for JSON
  * deserialization and serialization.
+ *
+ * @author
+ * @author
+ * @author
  */
 public class ConfigUtil {
     /**

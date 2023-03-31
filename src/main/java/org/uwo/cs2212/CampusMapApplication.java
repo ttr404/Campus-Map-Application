@@ -11,6 +11,10 @@ import java.io.IOException;
 
 /**The CampusMapApplication class is responsible for launching the application and setting up the login view.
  * This class extends the JavaFX Application class.
+ *
+ * @author
+ * @author
+ * @author
  */
 public class CampusMapApplication extends Application {
 

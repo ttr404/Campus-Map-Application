@@ -1,6 +1,9 @@
 package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
 
 public class PointOfInterest {
     private double x;
@@ -12,6 +15,8 @@ public class PointOfInterest {
     @JsonIgnore
     private boolean selected;
     private boolean favorite;
+    private Circle circle;
+
 
     public double getX() {
         return x;
