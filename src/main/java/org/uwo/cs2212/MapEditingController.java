@@ -432,9 +432,6 @@ public class MapEditingController {
         coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
     }
 
-
-
-
     public void onDeletePOIButtonClick(ActionEvent actionEvent) {
 
     }

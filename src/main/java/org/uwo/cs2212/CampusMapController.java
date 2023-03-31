@@ -1,7 +1,4 @@
 package org.uwo.cs2212;
-
-import com.fasterxml.jackson.databind.ser.Serializers;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,10 +22,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-import java.awt.*;
 
 // testing(Truman)
 import javafx.stage.Stage;
@@ -78,8 +73,6 @@ public class CampusMapController implements Initializable {
     @FXML
     private Button floor4;
     @FXML
-    private Button floor5;
-    @FXML
     private Button favoriteButton;
     @FXML
     private Button showAllPOI;
@@ -92,9 +85,11 @@ public class CampusMapController implements Initializable {
     @FXML
     private Button editButton;
     @FXML
-    private Label helpLabel;
-    @FXML
     private Button about;
+    @FXML
+    private Button search;
+    @FXML
+    private Button clear;
     @FXML
     private ComboBox mapSelector;
     @FXML
@@ -130,6 +125,8 @@ public class CampusMapController implements Initializable {
     private BaseMap currentBaseMap;
     private FloorMap currentFloorMap;
     private List<SearchResult> searchResults;
+    private Button currentSelectedFloorButton;
+    private Button[] floorButtons;
 
 
     /**
@@ -146,6 +143,8 @@ public class CampusMapController implements Initializable {
         showFloorButtons();
         showMap();
         setFavouriteButtonState();
+        floorButtons = new Button[]{floor0, floor1, floor2, floor3, floor4}; //initialize the floorButtons array
+
     }
 
     /**
@@ -163,6 +162,7 @@ public class CampusMapController implements Initializable {
         mapSelector.valueProperty().setValue(currentBaseMap.getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
             handleComboBoxValueChanged(ov, oldValue, newValue);
+
         });
     }
 
@@ -290,9 +290,16 @@ public class CampusMapController implements Initializable {
      * @param newValue  the new value of the base map combo box
      */
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
-        for(BaseMap baseMap: mapConfig.getBaseMaps()){
-            if (newValue.toString().equals(baseMap.getName())){
+        for(BaseMap baseMap: mapConfig.getBaseMaps()) {
+            if (newValue.toString().equals(baseMap.getName())) {
                 currentBaseMap = baseMap;
+
+                // Set the current floor map to the ground floor by default when switching maps
+                currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+
+                // Highlight the ground floor button by default when switching maps
+                highlightSelectedFloorButton(floorButtons[0]);
+
                 currentFloorMap = currentBaseMap.getFloorMaps().get(0);
                 showFloorButtons();
                 showMap();
@@ -300,6 +307,7 @@ public class CampusMapController implements Initializable {
 		}
         setShowAllPOI();
     }
+
 
     /**
      * Displays the map of the current floor on the map pane. The method loads the image file for the current floor, creates an ImageView object to display the image, and adds it to a new Group object. The method then creates an ImageLayer object for each layer on the current floor, and adds it to the Group object. Finally, the Group object is added to the map pane. If an error occurs while loading the image file or creating the ImageLayer objects, the method catches the exception and returns.
@@ -331,20 +339,6 @@ public class CampusMapController implements Initializable {
         }
         catch(Exception ex)
         {}
-    }
-
-    /** option*/
-    @FXML
-    private void onHelpButtonClicked(ActionEvent actionEvent) {
-        try {
-            URL configUrl = getClass().getResource("help_temp.pdf");
-            Desktop desk = Desktop.getDesktop();
-            desk.browse(configUrl.toURI());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -383,6 +377,7 @@ public class CampusMapController implements Initializable {
         stage.setWidth(300);
         stage.setHeight(500);
         stage.show();
+
     }
 
     /**
@@ -519,6 +514,7 @@ public class CampusMapController implements Initializable {
         stage.setY(((Node) event.getSource()).getScene().getWindow().getY()+200);
         stage.setWidth(400);
         stage.setHeight(200);
+        stage.setTitle("Sign Out"); // Set the title of the pop-up window
         stage.show();
     }
 
@@ -601,17 +597,41 @@ public class CampusMapController implements Initializable {
         showMap();
     }
 
+    private void highlightSelectedFloorButton(Button selectedButton) {
+        // Clear the style for the previously selected floor button
+        if (currentSelectedFloorButton != null) {
+            currentSelectedFloorButton.setStyle("");
+        }
+
+        // Set the style for the newly selected floor button
+        selectedButton.setStyle("-fx-background-color: #b3dee5; -fx-text-fill: white;");
+
+        // Update the current selected floor button
+        currentSelectedFloorButton = selectedButton;
+    }
+
+
     @FXML
     private void onFloorGButtonClick(ActionEvent actionEvent) {
         currentFloorMap = currentBaseMap.getFloorMaps().get(0);
         showMap();
+
+        Button clickedButton = (Button) actionEvent.getSource();
+        highlightSelectedFloorButton(clickedButton);
     }
+
+
 
     @FXML
     private void onFloor1ButtonClick(ActionEvent actionEvent) {
         if (currentBaseMap.getFloorMaps().size() >= 2){
             currentFloorMap = currentBaseMap.getFloorMaps().get(1);
             showMap();
+
+            Button clickedButton = (Button) actionEvent.getSource();
+            highlightSelectedFloorButton(clickedButton);
+
+
         }
     }
 
@@ -620,6 +640,9 @@ public class CampusMapController implements Initializable {
         if (currentBaseMap.getFloorMaps().size() >= 3){
             currentFloorMap = currentBaseMap.getFloorMaps().get(2);
             showMap();
+
+            Button clickedButton = (Button) actionEvent.getSource();
+            highlightSelectedFloorButton(clickedButton);
         }
     }
 
@@ -628,6 +651,9 @@ public class CampusMapController implements Initializable {
         if (currentBaseMap.getFloorMaps().size() >= 4){
             currentFloorMap = currentBaseMap.getFloorMaps().get(3);
             showMap();
+
+            Button clickedButton = (Button) actionEvent.getSource();
+            highlightSelectedFloorButton(clickedButton);
         }
     }
 
@@ -636,6 +662,9 @@ public class CampusMapController implements Initializable {
         if (currentBaseMap.getFloorMaps().size() >= 5){
             currentFloorMap = currentBaseMap.getFloorMaps().get(4);
             showMap();
+
+            Button clickedButton = (Button) actionEvent.getSource();
+            highlightSelectedFloorButton(clickedButton);
         }
     }
 
@@ -764,6 +793,7 @@ public class CampusMapController implements Initializable {
      * @param actionEvent an ActionEvent object representing the click event
      */
     public void onSearchButtonClicked(ActionEvent actionEvent) {
+
         selectAllLayers();
         checkBoxSelected();
         String text = searchText.getText().toLowerCase().trim();
@@ -930,6 +960,8 @@ public class CampusMapController implements Initializable {
             // Get the MapEditingController and set the currentFloorMap
             MapEditingController mapEditingController = fxmlLoader.getController();
             mapEditingController.setCurrentFloorMap(currentFloorMap);
+
+
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

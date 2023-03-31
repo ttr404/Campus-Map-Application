@@ -21,7 +21,7 @@
           "y": 380,
           "name": "MC17",
           "roomNumber": "17",
-          "description": "MC GF Classroom 17",
+          "description": "GF Classroom 17",
           "type": "ClassRoom"
         },
         {
@@ -29,7 +29,7 @@
           "y": 420,
           "name": "MC6",
           "roomNumber": "6",
-          "description": "MC GF Classroom 6",
+          "description": "GF Classroom 6",
           "type": "ClassRoom"
         }
       ]
@@ -46,7 +46,7 @@
           "y": 442,
           "name": "Men's washroom",
           "roomNumber": "5B",
-          "description": "MC GF Men's washroom",
+          "description": "GF Men's washroom",
           "type": "WashRoom"
         },
         {
@@ -54,7 +54,7 @@
           "y": 556.01,
           "name": "Men's washroom",
           "roomNumber": "28E",
-          "description": "MC GF Men's washroom",
+          "description": "GF Men's washroom",
           "type": "WashRoom"
         },
         {
@@ -62,7 +62,7 @@
           "y": 404,
           "name": "Women's washroom",
           "roomNumber": "4B",
-          "description": "MC GF Women's washroom",
+          "description": "GF Women's washroom",
           "type": "WashRoom"
         },
         {
@@ -70,15 +70,15 @@
           "y": 364.11,
           "name": "Unisex washroom",
           "roomNumber": "4C",
-          "description": "MC GF Barrier-free washroom",
+          "description": "GF Barrier-free Unisex washroom",
           "type": "Accessibility"
         },
         {
           "x": 572,
           "y": 198,
-          "name": "Barrier-free Entrance/Exit",
+          "name": "Entrance/Exit",
           "roomNumber": "EX.6",
-          "description": "MC GF Barrier-free Entrance/Exit",
+          "description": "GF Barrier-free Entrance/Exit",
           "type": "Accessibility"
         }
       ]

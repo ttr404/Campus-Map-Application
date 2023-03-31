@@ -21,7 +21,7 @@
           "y": 447,
           "name": "MC300",
           "roomNumber": "300",
-          "description": "MC 3F Classroom 300",
+          "description": "3F Classroom 300",
           "type": "ClassRoom"
         },
         {
@@ -29,7 +29,7 @@
           "y": 470,
           "name": "MC316",
           "roomNumber": "316",
-          "description": "MC 3F Classroom 316",
+          "description": "3F Classroom 316",
           "type": "ClassRoom"
         },
         {
@@ -37,7 +37,7 @@
           "y": 518,
           "name": "MC320",
           "roomNumber": "320",
-          "description": "MC 3F Classroom 320",
+          "description": "3F Classroom 320",
           "type": "ClassRoom"
         },
         {
@@ -45,7 +45,7 @@
           "y": 596,
           "name": "MC325",
           "roomNumber": "325",
-          "description": "MC 3F Collaborative room 325",
+          "description": "3F Collaborative room 325",
           "type": "Collaborative"
         },
         {
@@ -53,7 +53,7 @@
           "y": 289,
           "name": "MC342",
           "roomNumber": "342",
-          "description": "MC 3F Computer Lab 342",
+          "description": "3F Computer Lab 342",
           "type": "cs_labs"
         }
       ]
@@ -111,7 +111,7 @@
           "y": 442,
           "name": "Men's washroom",
           "roomNumber": "311",
-          "description": "MC 3F Men's washroom",
+          "description": "3F Men's washroom",
           "type": "WashRoom"
         },
         {
@@ -119,7 +119,7 @@
           "y": 423,
           "name": "Women's washroom",
           "roomNumber": "388",
-          "description": "MC 3F Women's washroom",
+          "description": "3F Women's washroom",
           "type": "WashRoom"
         }
       ]

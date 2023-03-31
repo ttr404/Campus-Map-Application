@@ -21,7 +21,7 @@
           "y": 583,
           "name": "MC105",
           "roomNumber": "105",
-          "description": "MC 1F Classroom 105",
+          "description": "1F Classroom 105",
           "type": "ClassRoom"
         },
         {
@@ -29,7 +29,7 @@
           "y": 495,
           "name": "MC105B",
           "roomNumber": "105",
-          "description": "MC 1F Classroom 105B",
+          "description": "1F Classroom 105B",
           "type": "ClassRoom"
         },
         {
@@ -37,7 +37,7 @@
           "y": 227,
           "name": "MC110",
           "roomNumber": "110",
-          "description": "MC 1F Classroom 110",
+          "description": "1F Classroom 110",
           "type": "ClassRoom"
         }
       ]
@@ -54,7 +54,7 @@
           "y": 442,
           "name": "Men's washroom",
           "roomNumber": "100",
-          "description": "MC 1F Men's washroom",
+          "description": "1F Men's washroom",
           "type": "WashRoom"
         },
         {
@@ -62,15 +62,15 @@
           "y": 556.01,
           "name": "Women's washroom",
           "roomNumber": "139",
-          "description": "MC 1F Women's washroom",
+          "description": "1F Women's washroom",
           "type": "WashRoom"
         },
         {
           "x": 1081,
           "y": 561.5,
-          "name": "Barrier-free door",
+          "name": "Entrance/Exit",
           "roomNumber": "EX.10",
-          "description": "MC 1F Barrier-free Entrance/Exit",
+          "description": "1F Barrier-free Entrance/Exit",
           "type": "Accessibility"
         }
       ]
@@ -85,7 +85,7 @@
         {
           "x": 699,
           "y": 515.5,
-          "name": "Main Entrance/Exit",
+          "name": "Entrance/Exit",
           "roomNumber": "EX.1",
           "description": "Main Entrance/Exit",
           "type": "entryAndExit"

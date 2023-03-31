@@ -12,6 +12,17 @@
     {
       "name": "Main Map",
       "color": "BLUE",
+      "layerType": "base",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
       "size": 16,

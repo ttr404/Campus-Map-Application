@@ -1,6 +1,5 @@
-
 {
-  "name": "Ground floor",
+  "name": "Ground Floor",
   "mapFileName": "physics-f0.png",
   "showLegend": true,
   "legendPosition": [
@@ -12,25 +11,132 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
+      "color": "BLUE",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "PAB100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
+          "x": 309,
+          "y": 246,
+          "name": "Entrance/Exit",
+          "roomNumber": "EX.3",
+          "description": "LG Barrier-free Entrance/Exit",
+          "type": "Accessibility"
+        },
+        {
+          "x": 584,
+          "y": 304,
+          "name": "Men's washroom",
+          "roomNumber": "18",
+          "description": "LG Barrier-free Men's washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 622,
+          "y": 266,
+          "name": "Women's washroom",
+          "roomNumber": "20",
+          "description": "LG Barrier-free Women's washroom",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x":690,
+          "y":582,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "elevator"
+        },
+        {
+          "x": 510.5,
+          "y": 278.5,
+          "name": "Elevator",
+          "roomNumber": "EL.B",
+          "description": "Elevator EL.B",
+          "type": "elevator"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 595.33,
+          "y": 637.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "stairwell"
+        },
+        {
+          "x": 315.55,
+          "y": 607.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "stairwell"
+        },
+        {
+          "x": 830.89,
+          "y": 241.17,
+          "name": "Stairwell",
+          "roomNumber": "ST.5",
+          "description": "Stairwell ST.5",
+          "type": "stairwell"
+        },
+        {
+          "x": 852,
+          "y": 613.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.6",
+          "description": "Stairwell ST.6",
+          "type": "stairwell"
+        },
+        {
+          "x": 603.40,
+          "y": 472.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.8",
+          "description": "Stairwell ST.8",
+          "type": "stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 803,
+          "y": 691,
+          "name": "PAB34",
+          "roomNumber": "34",
+          "description": "LG Classroom 34",
           "type": "ClassRoom"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "PAB101",
-          "roomNumber": "A101",
-          "description": "Class room A200",
+          "x": 659,
+          "y": 654,
+          "name": "PAB34",
+          "roomNumber": "34",
+          "description": "LG Classroom 34",
           "type": "ClassRoom"
         }
       ]

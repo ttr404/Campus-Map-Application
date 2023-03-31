@@ -21,7 +21,7 @@
           "y": 331,
           "name": "MC204",
           "roomNumber": "204",
-          "description": "MC 2F floor Classroom 204",
+          "description": "2F Classroom 204",
           "type": "ClassRoom"
         }
       ]
@@ -38,7 +38,7 @@
           "y": 529,
           "name": "MC230",
           "roomNumber": "230",
-          "description": "MC 2F Computer Lab 230",
+          "description": "2F Computer Lab 230",
           "type": "cs_labs"
         },
         {
@@ -46,7 +46,7 @@
           "y": 459,
           "name": "MC235",
           "roomNumber": "235",
-          "description": "MC 2F Computer Lab 235",
+          "description": "2F Computer Lab 235",
           "type": "cs_labs"
         },
         {
@@ -54,7 +54,7 @@
           "y": 384,
           "name": "MC240",
           "roomNumber": "240",
-          "description": "MC 2F Computer Lab 240",
+          "description": "2F Computer Lab 240",
           "type": "cs_labs"
         }
       ]
@@ -71,7 +71,7 @@
           "y": 562,
           "name": "MC220",
           "roomNumber": "220",
-          "description": "MC 2F Collaborative room 220",
+          "description": "2F Collaborative room 220",
           "type": "Collaborative"
         },
         {
@@ -79,7 +79,7 @@
           "y": 471,
           "name": "MC239",
           "roomNumber": "239",
-          "description": "MC 2F Collaborative room 239",
+          "description": "2F Collaborative room 239",
           "type": "Collaborative"
         }
       ]
@@ -137,7 +137,7 @@
           "y": 442,
           "name": "Women's washroom",
           "roomNumber": "205",
-          "description": "MC 2F Women's washroom",
+          "description": "2F Women's washroom",
           "type": "WashRoom"
         },
         {
@@ -145,7 +145,7 @@
           "y": 555.5,
           "name": "Unisex washroom",
           "roomNumber": "278",
-          "description": "MC 2F Unisex washroom",
+          "description": "2F Barrier-free Unisex washroom",
           "type": "Accessibility"
         }
       ]

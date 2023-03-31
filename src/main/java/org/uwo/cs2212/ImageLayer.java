@@ -51,12 +51,12 @@ public class ImageLayer extends Canvas {
                 if(poi.isSelected()){
                     graphic.setFont(boldFont);
                     graphic.fillOval(poi.getX()*zoom - 8, poi.getY()*zoom - 8, 16, 16);
-                    graphic.strokeText(poi.getName(), poi.getX()*zoom - 16, poi.getY()*zoom - 16);
+                    graphic.fillText(poi.getName(), poi.getX()*zoom - 16, poi.getY()*zoom - 16);
                 }
                 else{
                     graphic.setFont(normalFont);
                     graphic.fillOval(poi.getX()*zoom - 6, poi.getY()*zoom - 6, 12, 12);
-                    graphic.strokeText(poi.getName(), poi.getX()*zoom - 10, poi.getY()*zoom - 10);
+                    graphic.fillText(poi.getName(), poi.getX()*zoom - 10, poi.getY()*zoom - 10);
                 }
             }
         }

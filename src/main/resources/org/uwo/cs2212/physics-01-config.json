@@ -1,6 +1,5 @@
-
 {
-  "name": "2nd floor",
+  "name": "1st floor",
   "mapFileName": "physics-f1.png",
   "showLegend": true,
   "legendPosition": [
@@ -12,28 +11,200 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
+      "color": "blue",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "PAB100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
+          "x": 589,
+          "y": 109,
+          "name": "Entrance/Exit",
+          "roomNumber": "EX.4",
+          "description": "1F Barrier-free Entrance/Exit",
+          "type": "Accessibility"
+        },
+        {
+          "x": 509,
+          "y": 300,
+          "name": "Men's washroom",
+          "roomNumber": "131",
+          "description": "1F Barrier-free Men's washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 550,
+          "y": 304,
+          "name": "Women's washroom",
+          "roomNumber": "133",
+          "description": "1F Barrier-free Women's washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 524,
+          "y": 566,
+          "name": "Unisex washroom",
+          "roomNumber": "153",
+          "description": "1F Barrier-free Unisex washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 557,
+          "y": 543,
+          "name": "Unisex washroom",
+          "roomNumber": "154",
+          "description": "1F Barrier-free Unisex washroom",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x":616,
+          "y":575,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "elevator"
+        },
+        {
+          "x": 449.5,
+          "y": 289.5,
+          "name": "Elevator",
+          "roomNumber": "EL.B",
+          "description": "Elevator EL.B",
+          "type": "elevator"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 514.33,
+          "y": 640.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "stairwell"
+        },
+        {
+          "x": 266.55,
+          "y": 590.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "stairwell"
+        },
+        {
+          "x": 738,
+          "y": 252.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.5",
+          "description": "Stairwell ST.5",
+          "type": "stairwell"
+        },
+        {
+          "x":765 ,
+          "y":591 ,
+          "name": "Stairwell",
+          "roomNumber": "ST.6",
+          "description": "Stairwell ST.6",
+          "type": "stairwell"
+        },
+        {
+          "x": 532.40,
+          "y": 431.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.8",
+          "description": "Stairwell ST.8",
+          "type": "stairwell"
+        },
+        {
+          "x": 566.40,
+          "y": 423.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.9",
+          "description": "Stairwell ST.9",
+          "type": "stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 287,
+          "y": 657,
+          "name": "PAB106",
+          "roomNumber": "106",
+          "description": "1F Classroom 106",
           "type": "ClassRoom"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "PAB101",
-          "roomNumber": "A101",
-          "description": "Class room A200",
+          "x": 420,
+          "y": 643,
+          "name": "PAB100",
+          "roomNumber": "100",
+          "description": "1F Classroom 100",
+          "type": "ClassRoom"
+        },
+        {
+          "x": 613,
+          "y": 633,
+          "name": "PAB150",
+          "roomNumber": "150",
+          "description": "1F Classroom 150",
+          "type": "ClassRoom"
+        },
+        {
+          "x": 748,
+          "y": 656,
+          "name": "PAB148",
+          "roomNumber": "148",
+          "description": "1F Classroom 148",
+          "type": "ClassRoom"
+        },
+        {
+          "x": 378,
+          "y": 333,
+          "name": "PAB117",
+          "roomNumber": "117",
+          "description": "1F Classroom 117",
           "type": "ClassRoom"
         }
       ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 515,
+          "y": 721,
+          "name": "Entrance/Exit",
+          "roomNumber": "EX.1",
+          "description": "1F Main Entrance/Exit",
+          "type": "entryAndExit"
+        }
+      ]
     }
-  ]
+    ]
 }

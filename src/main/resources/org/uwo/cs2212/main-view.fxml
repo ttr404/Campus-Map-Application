@@ -37,15 +37,15 @@
                 <HBox>
                     <Button style="-fx-background-color: #b3dee5;" text="Floor:" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor0" onAction="#onFloorGButtonClick" style="-fx-background-color: #b3dee5;" text="G" />
+                    <Button fx:id="floor0" onAction="#onFloorGButtonClick" text="G" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor1" onAction="#onFloor1ButtonClick" style="-fx-background-color: #b3dee5;" text="1" />
+                    <Button fx:id="floor1" onAction="#onFloor1ButtonClick" text="1" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor2" onAction="#onFloor2ButtonClick" style="-fx-background-color: #b3dee5;" text="2" />
+                    <Button fx:id="floor2" onAction="#onFloor2ButtonClick" text="2" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor3" onAction="#onFloor3ButtonClick" style="-fx-background-color: #b3dee5;" text="3" />
+                    <Button fx:id="floor3" onAction="#onFloor3ButtonClick" text="3" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor4" onAction="#onFloor4ButtonClick" style="-fx-background-color: #b3dee5;" text="4" />
+                    <Button fx:id="floor4" onAction="#onFloor4ButtonClick" text="4" />
                     <Label minWidth="30" />
                     <Label minWidth="40" />
                     <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" style="-fx-background-color: #b3dee5;" />
@@ -80,12 +80,12 @@
                       </font>
                    </Button>
                     <Label minWidth="4" />
-                    <Button onAction="#onSearchButtonClicked" style="-fx-background-color: #d9b3ff;" text="Search">
+                    <Button fx:id="search" onAction="#onSearchButtonClicked" style="-fx-background-color: #d9b3ff;" text="Search">
                   <font>
                      <Font size="10.0" />
                   </font></Button>
                     <Label minWidth="4" />
-                    <Button onAction="#onClearButtonClicked" style="-fx-background-color: #d9b3ff;" text="Clear">
+                    <Button fx:id="clear" onAction="#onClearButtonClicked" style="-fx-background-color: #d9b3ff;" text="Clear">
                   <font>
                      <Font size="10.0" />
                   </font></Button>

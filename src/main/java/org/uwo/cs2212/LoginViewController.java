@@ -72,9 +72,6 @@ public class LoginViewController {
      * @throws IOException if there is an error while attempting to show the main view
      */
     public void logIn() throws IOException {
-//        if (!hasInternetConnection()) {
-//            showNoInternetConnectionAlert();
-//        }
         if (checkAccount()) {
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 800);
