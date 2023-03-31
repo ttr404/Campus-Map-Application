@@ -39,16 +39,30 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-
 import javafx.fxml.FXMLLoader;
-
 import java.util.List;
-
 import javafx.scene.text.*;
-
 import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
-
+/**
+ * The CampusMapController class is the main controller for managing the campus map UI and
+ * its interactions. It provides functionality for displaying and interacting with floor maps,
+ * points of interest (POIs), and map layers. The class also enables zooming in and out, as well
+ * as adding, editing, and deleting POIs. It handles UI events such as button clicks and mouse events,
+ * and manages the state of the currently selected floor map and POI.
+ *
+ * The CampusMapController is responsible for loading floor maps and associated POI data from
+ * configuration files, managing the display of map elements such as POI circles, and providing
+ * methods for converting between window and real map coordinate systems. The crepresentlass uses the
+ * FloorMap, PointOfInterest, ImageLayer, and SearchResult classes to  and manipulate
+ * map-related data.
+ *
+ * @author Tingrui Zhang
+ * @author
+ * @author
+ * @author
+ * @author
+ */
 public class CampusMapController implements Initializable {
 
     @FXML
@@ -118,7 +132,11 @@ public class CampusMapController implements Initializable {
     private List<SearchResult> searchResults;
 
 
-
+    /**
+     This method is called by the FXMLLoader when initialization is complete.
+     It initializes the map selector, search list view, displays all POI,
+     shows the floor buttons, shows the map, and sets the favourite button state.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mapConfig = ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json"));
@@ -128,33 +146,48 @@ public class CampusMapController implements Initializable {
         showFloorButtons();
         showMap();
         setFavouriteButtonState();
-
     }
 
+    /**
+     This method initializes the map selector ComboBox by adding all available BaseMaps to the dropdown list.
+     It sets the currentBaseMap and currentFloorMap to the first available BaseMap and its first FloorMap respectively.
+     It also sets a listener to the value property of the map selector ComboBox to handle changes to the selected BaseMap.
+     */
     private void initializeMapSelector() {
         for(BaseMap baseMap: mapConfig.getBaseMaps()){
             mapSelector.getItems().add(baseMap.getName());
         }
         currentBaseMap = mapConfig.getBaseMaps().get(0);
         currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+
         mapSelector.valueProperty().setValue(currentBaseMap.getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
             handleComboBoxValueChanged(ov, oldValue, newValue);
         });
     }
 
+    /**
+     Initializes the search ListView by setting a listener for changes in the selected item and calling the
+     searchResultSelectionChanged method when a selection is made.
+     */
     private void initializeSearchListView(){ // need to change this to a different listview (Show all poi)
         MultipleSelectionModel<SearchResult> lvSelModel = informationList.getSelectionModel();
         lvSelModel.selectedItemProperty().addListener(
                 (changed, oldVal, newVal) -> {
                     searchResultSelectionChanged(changed, oldVal, newVal);
                 });
-    }
+        }
 
     public void setAdmin(boolean isAdmin) {
         editButton.setVisible(isAdmin);
     }
 
+    /**
+     * Updates the checkboxes and the informationList based on which checkboxes are selected.
+     * If a checkbox is selected, show the corresponding POI types on the map and add them to the informationList.
+     * If a checkbox is not selected, hide the corresponding POI types on the map.
+     * Also, clear the informationList and add the relevant POIs based on the selected checkboxes.
+     */
     private void checkBoxSelected(){
         informationList.getItems().clear();
         for (Layer layer: currentFloorMap.getLayers()){
@@ -227,6 +260,9 @@ public class CampusMapController implements Initializable {
         checkBoxSelected();
     }
 
+    /**
+     * Shows or hides all points of interest based on the current filter settings. The method selects all layers and checks the corresponding checkboxes, clears the informationList, and then adds all points of interest in the current floor map to the informationList as SearchResult objects.
+     */
     private void setShowAllPOI(){
         selectAllLayers();
         checkBoxSelected();
@@ -236,7 +272,6 @@ public class CampusMapController implements Initializable {
                 informationList.getItems().add(new SearchResult(currentFloorMap, poi));
             }
         }
-
     }
 
     @FXML
@@ -248,6 +283,12 @@ public class CampusMapController implements Initializable {
         selectPoi(newVal);
     }
 
+    /**
+     * Handles the change event for the base map combo box. The method sets the currentBaseMap variable to the BaseMap object selected by the user, and sets the currentFloorMap variable to the first floor map in the currentBaseMap. The method then calls the showFloorButtons() and showMap() methods to display the floor buttons and the map of the current floor, respectively. Finally, the method calls the setShowAllPOI() method to show or hide all points of interest based on the current filter settings.
+     * @param ov        the ObservableValue object representing the base map combo box
+     * @param oldValue  the old value of the base map combo box
+     * @param newValue  the new value of the base map combo box
+     */
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
         for(BaseMap baseMap: mapConfig.getBaseMaps()){
             if (newValue.toString().equals(baseMap.getName())){
@@ -260,6 +301,9 @@ public class CampusMapController implements Initializable {
         setShowAllPOI();
     }
 
+    /**
+     * Displays the map of the current floor on the map pane. The method loads the image file for the current floor, creates an ImageView object to display the image, and adds it to a new Group object. The method then creates an ImageLayer object for each layer on the current floor, and adds it to the Group object. Finally, the Group object is added to the map pane. If an error occurs while loading the image file or creating the ImageLayer objects, the method catches the exception and returns.
+     */
     protected void showMap(){
         try {
             URL mapUrl = CampusMapController.class.getResource(currentFloorMap.getMapFileName());
@@ -303,6 +347,11 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    /**
+     * Handles the click event for the about button by displaying an about dialog to the user. The method creates a new stage and sets up a Label control to display information about the app and its creators. The method then displays the dialog and returns.
+     * @param event the ActionEvent object representing the about button click event
+     * @throws IOException if the FXML file for the about dialog cannot be loaded
+     */
     @FXML
     private void aboutButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -335,8 +384,11 @@ public class CampusMapController implements Initializable {
         stage.show();
     }
 
-
-
+    /**
+     * Handles the click event for the help button by displaying a help dialog to the user. The method creates a new stage and sets up a ChoiceBox control for selecting the help topic, and a Label control for displaying the help text. The method sets the initial help text based on the default value of the ChoiceBox control, and adds an event listener to the control to update the help text based on the selected value. The method then displays the dialog and returns.
+     * @param event the ActionEvent object representing the help button click event
+     * @throws IOException if the FXML file for the help dialog cannot be loaded
+     */
     @FXML
     private void helpButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -398,6 +450,11 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    /**
+     * Handles the sign-out button click event by displaying a confirmation dialog to the user. The dialog asks if the user wants to save changes to the user account data, and provides options to save, not save, or cancel. The method sets up event handlers for the buttons, and takes appropriate action based on the user's choice. If the user chooses to save, the method saves the user account data and returns to the login page. If the user chooses not to save, the method returns to the login page without saving. If the user chooses to cancel, the method closes the confirmation dialog and returns.
+     * @param event the ActionEvent object representing the sign-out button click event
+     * @throws IOException if the FXML file for the login view cannot be loaded
+     */
     @FXML
     private void signOut(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -463,6 +520,13 @@ public class CampusMapController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Returns the user to the previous view by loading the FXML file and creating a new stage for it. The method sets the stage for the LoginViewController and creates a new scene with the specified FXML file and dimensions. If the FXML file is for the login view, the method also sets up a key event handler to handle the Enter key and log the user in. The method returns an FXMLLoader object for the loaded FXML file.
+     * @param file the name of the FXML file to be loaded
+     * @param title the title of the new stage
+     * @return an FXMLLoader object for the loaded FXML file
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     private FXMLLoader returnBack(String file, String title) throws IOException {
         int v = 1080;
@@ -612,6 +676,10 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    /**
+     * Handles a mouse click event on the map. This method calculates the real-world mouse position based on the mouse event, and then iterates through all points of interest on the current floor map to determine if the mouse click hits a point of interest. If a point of interest is hit, the method selects the point of interest, shows it in the informationList ListView, and returns. If no point of interest is hit, the method deselects any currently selected POI and returns.
+     * @param mouseEvent the MouseEvent object representing the mouse click event
+     */
     public void onMapClicked(MouseEvent mouseEvent) {
         Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
         for(Layer layer: currentFloorMap.getLayers()){
@@ -626,6 +694,11 @@ public class CampusMapController implements Initializable {
         selectPoi(new SearchResult(currentFloorMap, null));
     }
 
+    /**
+     * Selects a Point of Interest (POI) based on the given SearchResult object. The method sets the currentFloorMap to the floor map associated with the SearchResult object. It also updates the selected state of the currentSelectedPoi and the newly selected POI. If the newly selected POI is not within the viewport, this method centralizes the POI on the map. It then shows the map, sets the favourite button state, and returns.
+     * @param searchResult the SearchResult object containing the POI to be selected
+     * @throws NullPointerException if the SearchResult object is null
+     */
     private void selectPoi(SearchResult searchResult){
         if(searchResult != null){
             currentFloorMap = searchResult.getFloorMap();
@@ -646,6 +719,7 @@ public class CampusMapController implements Initializable {
         informationList.getItems().clear();
         informationList.getItems().add(new SearchResult(currentFloorMap, poi));
     }
+
 
     private boolean hitTest(Point2D mousePosition, PointOfInterest poi){
         if (mousePosition.getX() <= poi.getX()+6/zoom && mousePosition.getX() >= poi.getX()-6/zoom && mousePosition.getY() <= poi.getY()+6/zoom && mousePosition.getY() >= poi.getY()-6/zoom){
@@ -680,6 +754,13 @@ public class CampusMapController implements Initializable {
         return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
     }
 
+    /**
+     * This method is called when the search button is clicked. It searches for the text entered in the search text field in
+     * all the layers of the current base map and adds the search results to the informationList ListView. If the text field
+     * is empty, no search results are displayed.
+     *
+     * @param actionEvent an ActionEvent object representing the click event
+     */
     public void onSearchButtonClicked(ActionEvent actionEvent) {
         selectAllLayers();
         checkBoxSelected();
@@ -698,6 +779,13 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    /**
+     * Checks if a string contains a target string, ignoring case.
+     *
+     * @param target the target string to search for
+     * @param text the text string to search in
+     * @return true if the target string is found in the text string, false otherwise
+     */
     private static boolean contains(String target, String text){
         if(target != null && target.toLowerCase().contains(text)){
             return true;
@@ -705,6 +793,12 @@ public class CampusMapController implements Initializable {
         return false;
     }
 
+    /**
+     Sets the state of the favorite button based on the current selected point of interest.
+     If there is no selected point of interest, the favorite button is disabled and set to the default state (not a favorite).
+     If there is a selected point of interest, the favorite button is enabled and set to the appropriate state (favorite or not favorite)
+     based on the selected point of interest's favorite status.
+     */
     private void setFavouriteButtonState() {
         ImageView imageView;
         if (currentSelectedPoi != null) {
@@ -754,6 +848,30 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    /**
+     * Centralizes the currently selected Point of Interest (POI) on the map by scrolling the view to show the POI in the center of the screen.
+     * If the currentSelectedPoi is null, this method does nothing.
+     * If the currentSelectedPoi is not null and lies within the viewport, this method returns without doing anything.
+     *
+     * If the currentSelectedPoi is not null and lies outside the viewport,
+     * this method calculates the desired scroll position for both the horizontal
+     * and vertical scroll bars based on the currentSelectedPoi's position and the
+     * dimensions of the viewport and the map image. If the currentSelectedPoi is
+     * closer to the left edge of the viewport, the method sets the horizontal scroll bar to 0;
+     * if it is closer to the right edge, the method sets the horizontal scroll bar to 1;
+     * otherwise, it calculates the scroll position based on the currentSelectedPoi's
+     * distance from the left edge of the viewport and the total width of the map image.
+     *
+     * Similarly, if the currentSelectedPoi is closer to the top edge of the viewport,
+     * the method sets the vertical scroll bar to 0; if it is closer to the bottom edge,
+     * the method sets the vertical scroll bar to 1; otherwise, it calculates the scroll position
+     * based on the currentSelectedPoi's distance from the top edge of the viewport and the total height of the map image.
+     *
+     * Finally, this method sets the scroll positions of the mapPane's horizontal and vertical scroll bars
+     * to the calculated values. It then loops through all the points of interest that are marked as
+     * favorites in the currentFloorMap's layers and adds them to the informationList ListView.
+     * @throws NullPointerException if any of the objects referenced within the method are null.
+     */
     private void centralizeSelectedPoi(){
         if(currentSelectedPoi != null){
             Point2D windowTopLeft = WindowPointToRealPoint(new Point2D(0, 0));

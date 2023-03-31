@@ -1,5 +1,5 @@
 {
-  "name": "3rd floor",
+  "name": "2nd floor",
   "mapFileName": "middlesex-f2.png",
   "showLegend": true,
   "legendPosition": [
@@ -11,26 +11,167 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "base",
-      "font": "Times New Roman",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "MC200",
-          "roomNumber": "A100",
-          "description": "Class room A100",
+          "x": 699,
+          "y": 331,
+          "name": "MC204",
+          "roomNumber": "204",
+          "description": "MC 2F floor Classroom 204",
           "type": "ClassRoom"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 78,
+          "y": 529,
+          "name": "MC230",
+          "roomNumber": "230",
+          "description": "MC 2F Computer Lab 230",
+          "type": "cs_labs"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "MC201",
-          "roomNumber": "A101",
-          "description": "Class room A200",
-          "type": "ClassRoom"
+          "x": 156,
+          "y": 459,
+          "name": "MC235",
+          "roomNumber": "235",
+          "description": "MC 2F Computer Lab 235",
+          "type": "cs_labs"
+        },
+        {
+          "x": 342,
+          "y": 384,
+          "name": "MC240",
+          "roomNumber": "240",
+          "description": "MC 2F Computer Lab 240",
+          "type": "cs_labs"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 236,
+          "y": 562,
+          "name": "MC220",
+          "roomNumber": "220",
+          "description": "MC 2F Collaborative room 220",
+          "type": "Collaborative"
+        },
+        {
+          "x": 243,
+          "y": 471,
+          "name": "MC239",
+          "roomNumber": "239",
+          "description": "MC 2F Collaborative room 239",
+          "type": "Collaborative"
+        }
+      ]
+    },
+      {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 90,
+          "y": 591.5,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "stairwell"
+        },
+        {
+          "x": 275,
+          "y": 550,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "stairwell"
+        },
+        {
+          "x": 825,
+          "y": 418.5,
+          "name": "Stairwell",
+          "roomNumber": "ST.3",
+          "description": "Stairwell ST.3",
+          "type": "stairwell"
+        },
+        {
+          "x": 1244.5,
+          "y": 609.5,
+          "name": "Stairwell",
+          "roomNumber": "ST.5",
+          "description": "Stairwell ST.5",
+          "type": "stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "base",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 572,
+          "y": 442,
+          "name": "Women's washroom",
+          "roomNumber": "205",
+          "description": "MC 2F Women's washroom",
+          "type": "WashRoom"
+        },
+        {
+          "x": 1134.5,
+          "y": 555.5,
+          "name": "Unisex washroom",
+          "roomNumber": "278",
+          "description": "MC 2F Unisex washroom",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x": 768.55,
+          "y": 371.34,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "elevator"
+        },
+        {
+          "x": 1098.5,
+          "y": 528.5,
+          "name": "Elevator",
+          "roomNumber": "EL.C",
+          "description": "Elevator EL.C",
+          "type": "elevator"
         }
       ]
     }

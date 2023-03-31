@@ -6,15 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.uwo.cs2212.model.MapConfig;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 /**The CampusMapApplication class is responsible for launching the application and setting up the login view.
  * This class extends the JavaFX Application class.
+ *
+ * @author
+ * @author
+ * @author
  */
 public class CampusMapApplication extends Application {
 

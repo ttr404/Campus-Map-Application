@@ -3,7 +3,7 @@ package org.uwo.cs2212.model;
 import java.util.List;
 
 public class FloorMap {
-    private  String name;
+    private String name;
     private String mapFileName;
     private boolean showLegend;
     private List<Double> legendPosition;

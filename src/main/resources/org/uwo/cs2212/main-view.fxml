@@ -39,13 +39,13 @@
                     <Label minWidth="3" />
                     <Button fx:id="floor0" onAction="#onFloorGButtonClick" style="-fx-background-color: #b3dee5;" text="G" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor1" onAction="#onFloor1ButtonClick" style="-fx-background-color: #b3dee5;" text="2" />
+                    <Button fx:id="floor1" onAction="#onFloor1ButtonClick" style="-fx-background-color: #b3dee5;" text="1" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor2" onAction="#onFloor2ButtonClick" style="-fx-background-color: #b3dee5;" text="3" />
+                    <Button fx:id="floor2" onAction="#onFloor2ButtonClick" style="-fx-background-color: #b3dee5;" text="2" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor3" onAction="#onFloor3ButtonClick" style="-fx-background-color: #b3dee5;" text="4" />
+                    <Button fx:id="floor3" onAction="#onFloor3ButtonClick" style="-fx-background-color: #b3dee5;" text="3" />
                     <Label minWidth="3" />
-                    <Button fx:id="floor4" onAction="#onFloor4ButtonClick" style="-fx-background-color: #b3dee5;" text="5" />
+                    <Button fx:id="floor4" onAction="#onFloor4ButtonClick" style="-fx-background-color: #b3dee5;" text="4" />
                     <Label minWidth="30" />
                     <Label minWidth="40" />
                     <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" style="-fx-background-color: #b3dee5;" />
@@ -100,17 +100,17 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <CheckBox fx:id="classrooms" mnemonicParsing="false" onAction="#onClassrooms" text="Classrooms">
+                        <CheckBox fx:id="classrooms" mnemonicParsing="false" onAction="#onClassrooms" text="Classroom">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="stairwells" mnemonicParsing="false" onAction="#onStairwells" text="Stairwells">
+                        <CheckBox fx:id="stairwells" mnemonicParsing="false" onAction="#onStairwells" text="Stairwell">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="elevators" mnemonicParsing="false" onAction="#onElevators" text="Elevators">
+                        <CheckBox fx:id="elevators" mnemonicParsing="false" onAction="#onElevators" text="Elevator">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="genlabs" mnemonicParsing="false" onAction="#onGenlabs" text="GenLabs">
+                        <CheckBox fx:id="genlabs" mnemonicParsing="false" onAction="#onGenlabs" text="GenLab">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -129,12 +129,12 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <CheckBox fx:id="restaurants" mnemonicParsing="false" onAction="#onRestaurants" text="Restaurants">
+                        <CheckBox fx:id="restaurants" mnemonicParsing="false" onAction="#onRestaurants" text="Restaurant">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="cs_Labs" mnemonicParsing="false" onAction="#onCS_Labs" text="CS Labs">
+                        <CheckBox fx:id="cs_Labs" mnemonicParsing="false" onAction="#onCS_Labs" text="CS Lab">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -144,7 +144,7 @@
                               <Font size="12.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="user_POIs" mnemonicParsing="false" onAction="#onUserPOIs" text="User POIs">
+                        <CheckBox fx:id="user_POIs" mnemonicParsing="false" onAction="#onUserPOIs" text="User POI">
                            <font>
                               <Font size="12.0" />
                            </font>

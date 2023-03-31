@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.UserConfig;
@@ -21,6 +18,9 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * The LoginViewController class is responsible for managing the login view.
+ *
+ * @author
+ * @author
  */
 public class LoginViewController {
     @FXML
@@ -43,7 +43,6 @@ public class LoginViewController {
 
     /**
      * Set the stage for the login view.
-     *
      * @param stage a Stage object representing the stage for the login view
      */
     public static void setStage(Stage stage) {
@@ -52,7 +51,6 @@ public class LoginViewController {
 
     /**
      * Initialize the login view, set the button width, and show the current weather.
-     *
      * @throws IOException if there is an error while attempting to display the weather
      */
     public void initialize() throws IOException {
@@ -62,7 +60,6 @@ public class LoginViewController {
 
     /**
      * Trigger the login process when the login button is clicked.
-     *
      * @param actionEvent an ActionEvent object representing the click event
      * @throws IOException if there is an error while attempting to log in
      */
@@ -72,10 +69,12 @@ public class LoginViewController {
 
     /**
      * Handle the login process, show the main view if the login is successful, or display an error message if not.
-     *
      * @throws IOException if there is an error while attempting to show the main view
      */
     public void logIn() throws IOException {
+//        if (!hasInternetConnection()) {
+//            showNoInternetConnectionAlert();
+//        }
         if (checkAccount()) {
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 800);
@@ -90,6 +89,7 @@ public class LoginViewController {
             stage.setY(70);
             stage.show();
         }
+
         // add multiple user function here
         else {
             error.setText("Invalid username or password.");
@@ -99,7 +99,6 @@ public class LoginViewController {
 
     /**
      * Check if the user entered the correct credentials.
-     *
      * @return a boolean value representing whether the user entered the correct credentials
      */
     public boolean checkAccount() {
@@ -117,7 +116,6 @@ public class LoginViewController {
 
     /**
      * Check if the user is an administrator.
-     *
      * @return a boolean value representing whether the user is an administrator
      */
     public boolean checkAdmin() {
@@ -131,7 +129,6 @@ public class LoginViewController {
 
     /**
      * Show the current weather on the login view.
-     *
      * @throws IOException if there is an error while attempting to display the weather
      */
     public void showWeather() throws IOException {
@@ -161,7 +158,6 @@ public class LoginViewController {
 
     /**
      * Calculate the SHA-256 hash of a given input string.
-     *
      * @param input a String object representing the input to hash
      * @return a byte array representing the SHA-256 hash of the input
      */
@@ -182,7 +178,6 @@ public class LoginViewController {
 
     /**
      * Convert a byte array to a hexadecimal string.
-     *
      * @param hash a byte array to convert to a hexadecimal string
      * @return a String object representing the hexadecimal value of the input byte array
      */

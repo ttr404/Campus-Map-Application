@@ -1,16 +1,35 @@
 package org.uwo.cs2212;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.uwo.cs2212.model.Layer;
 import org.uwo.cs2212.model.PointOfInterest;
 
-
+/**
+ * This class represents an ImageLayer used to draw points of interest on the map. It extends the JavaFX Canvas class to
+ * allow for drawing on the image.
+ * The ImageLayer class contains a constructor method that initializes a new ImageLayer object with a given width, height,
+ * zoom level and layer of points of interest. The class also contains a method that draws the points of interest on the
+ * canvas, with their corresponding colors, fonts, sizes, and selected state. Additionally, the class provides a utility
+ * method to check if a layer is a base layer, and to hide/show points of interest based on the layer's hideLayer flag.
+ *
+ * @author
+ */
 public class ImageLayer extends Canvas {
 
+    /**
+     * Initializes a new ImageLayer object with the given width, height, zoom level, and layer of points of interest.
+     *
+     * @param width the width of the canvas
+     * @param height the height of the canvas
+     * @param zoom the zoom level of the canvas
+     * @param layer the layer of points of interest to draw on the canvas
+     */
     public ImageLayer(double width, double height, double zoom, Layer layer) {
         super(width * zoom, height * zoom);
         GraphicsContext graphic = getGraphicsContext2D();
@@ -23,11 +42,9 @@ public class ImageLayer extends Canvas {
         boolean isBaseLayer = ImageLayer.isBaseLayer(layer);
         boolean isHideLayer = layer.isHideLayer();
 
-
         if(isHideLayer){
             layer.getPoints().get(0).setSelected(true);
         }
-
 
         for(PointOfInterest poi: layer.getPoints()){
             if(isBaseLayer || !isHideLayer || poi.isSelected()){
@@ -44,7 +61,30 @@ public class ImageLayer extends Canvas {
             }
         }
     }
-    private static boolean isBaseLayer(Layer layer){
+//    private MapEditingController controller;
+//    public ImageLayer(MapEditingController controller) {
+//        this.controller = controller;
+//        setOnMouseClicked(event -> {
+//            // Convert the mouse event's scene coordinates to local coordinates
+//            Point2D realMousePosition = sceneToLocal(event.getSceneX(), event.getSceneY());
+//
+//            // Find the clicked POI
+//            PointOfInterest clickedPoi = controller.findClickedPoi(realMousePosition);
+//
+//            // If a POI was clicked, show the POI information in a pop-up window
+//            if (clickedPoi != null) {
+//                controller.showPoiInfoPopup(clickedPoi);
+//            }
+//        });
+//    }
+
+    /**
+     * Checks if the given layer is a base layer or not. A base layer is a layer that contains the base map image and is always shown.
+     *
+     * @param layer the layer to check
+     * @return true if the layer is a base layer, false otherwise
+     */
+        private static boolean isBaseLayer(Layer layer){
         if (layer != null && layer.getLayerType() != null && "base".equals(layer.getLayerType().trim().toLowerCase())){
             return true;
         }

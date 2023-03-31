@@ -1,5 +1,5 @@
 {
-  "name": "5th floor",
+  "name": "4th floor",
   "mapFileName": "middlesex-f4.png",
   "showLegend": true,
   "legendPosition": [
@@ -11,28 +11,45 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "base",
-      "font": "Times New Roman",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "MC200",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
+          "x": 835.5,
+          "y": 418.5,
+          "name": "Stairwell",
+          "roomNumber": "ST.3",
+          "description": "Stairwell ST.3",
+          "type": "stairwell"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "MC201",
-          "roomNumber": "A101",
-          "description": "Class room A200",
-          "type": "ClassRoom"
+          "x": 1244.5,
+          "y": 609.5,
+          "name": "Stairwell",
+          "roomNumber": "ST.5",
+          "description": "Stairwell ST.5",
+          "type": "stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 1098.5,
+          "y": 528.5,
+          "name": "Elevator",
+          "roomNumber": "EL.C",
+          "description": "Elevator EL.C",
+          "type": "elevator"
         }
       ]
     }
-  ]
+    ]
 }

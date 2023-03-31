@@ -12,6 +12,9 @@ import org.json.*;
 
 /**
  * A class that retrieves weather information from the OpenWeatherMap API.
+ *
+ * @author Tingrui Zhang
+ * @author
  */
 public class Weather {
     private final JSONObject cachedData;
@@ -31,6 +34,7 @@ public class Weather {
         this.longitude = longitude;
         this.cachedData = retrieveData();
     }
+
 
     /**
      * Retrieves the current weather description for the location specified in the constructor.
