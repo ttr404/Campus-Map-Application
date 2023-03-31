@@ -375,6 +375,7 @@ public class CampusMapController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
         VBox vbox = new VBox(new Label(s));
+        vbox.setPadding(new Insets(10));
         Scene scene = new Scene(vbox, 300, 100);
         stage.setScene(scene);
         stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - 300);
@@ -404,6 +405,7 @@ public class CampusMapController implements Initializable {
         helpLabel.setWrapText(true); // Wrap text to multiple lines
 
         VBox vbox = new VBox(new Label("Help Page"), helpTopic, helpLabel);
+        vbox.setPadding(new Insets(10));
         Scene scene = new Scene(vbox);
 
         stage.setScene(scene);
