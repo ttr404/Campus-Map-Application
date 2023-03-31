@@ -55,6 +55,8 @@ public class ConfigUtil {
 
                     // Load the FloorMap object using the configuration file URL
                     FloorMap floorMap = loadFloorMap(floorMapUrl);
+                    floorMap.setConfigFileName(floorConfig.getConfigFileName());
+
 
                     // Add the loaded FloorMap object to the BaseMap object
                     baseMap.getFloorMaps().add(floorMap);

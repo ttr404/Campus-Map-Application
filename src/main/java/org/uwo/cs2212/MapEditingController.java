@@ -16,16 +16,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.uwo.cs2212.model.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MapEditingController {
@@ -47,9 +47,7 @@ public class MapEditingController {
     @FXML
     private TextField roomNumber;
     @FXML
-    private TextField RoomType;
-    @FXML
-    private TextField Description;
+    private TextArea Description;
     @FXML
     private ComboBox<String> roomSelector;
     @FXML
@@ -62,6 +60,8 @@ public class MapEditingController {
     private PointOfInterest currentSelectedPoi;
     private FloorMap currentFloorMap;
     private Image currentFloorMap2;
+    private double coordinateX;
+    private double coordinateY;
 
 
     @FXML
@@ -179,25 +179,7 @@ public class MapEditingController {
      @param windowPoint The point in the window coordinate system
      @return The converted point in the real map coordinate system
      */
-    private Point2D WindowPointToRealPoint(Point2D windowPoint){
-        double windowXValue = (imageWidth - scrollPane.getViewportBounds().getWidth()/zoom) * scrollPane.getHvalue();
-        double windowYValue = (imageHeight - scrollPane.getViewportBounds().getHeight()/zoom) * scrollPane.getVvalue();
-        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue+")");
-        double mouseX = windowXValue + windowPoint.getX()/zoom;
-        double mouseY = windowYValue + windowPoint.getY()/zoom;
-        if (scrollPane.getViewportBounds().getHeight() >= imageHeight){
-            mouseY = windowPoint.getY()/zoom;
-        }
-        if (scrollPane.getViewportBounds().getWidth() >= imageWidth){
-            mouseX = windowPoint.getX()/zoom;
-        }
-        System.out.println("mouse real position:(" + mouseX + ", " + mouseY+")");
-        return new Point2D(mouseX, mouseY);
-    }
 
-    private Point2D calculateRealMousePosition(MouseEvent mouseEvent){
-        return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
-    }
 
     /**
      * Handles the event when the "Zoom In" button is clicked in the UI.
@@ -335,9 +317,78 @@ public class MapEditingController {
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
     }
 
-    public void onAddPOIButtonClick(ActionEvent actionEvent) {
+    public void onAddPOIButtonClick(ActionEvent actionEvent) throws IOException {
+        boolean flag = false; // use flag for create new instance
+
+        BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
+        String json = reader.lines().collect(Collectors.joining());
+        reader.close();
+
+        JSONObject jsonObject = new JSONObject(json);
+
+        if (!poiName.getText().isEmpty() && !roomNumber.getText().isEmpty() && roomSelector.getValue() != null){
+            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++) {
+
+                if (jsonObject.getJSONArray("layers")
+                        .getJSONObject(i)
+                        .getJSONArray("points")
+                        .getJSONObject(0)
+                        .getString("type")
+                        .toLowerCase()
+                        .equals(roomSelector.getValue().toLowerCase())){
+                    JSONObject point = new JSONObject()
+                            .put("x", coordinateX)
+                            .put("y", coordinateY)
+                            .put("name", poiName.getText())
+                            .put("roomNumber", roomNumber.getText())
+                            .put("description", Description.getText())
+                            .put("type", roomSelector.getValue());
+                    jsonObject.getJSONArray("layers")
+                            .getJSONObject(i)
+                            .getJSONArray("points")
+                            .put(point);
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+
+
+        FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
+        fileWriter.write(jsonObject.toString());
+
+        fileWriter.close();
 
     }
+
+
+
+    private Point2D WindowPointToRealPoint(Point2D windowPoint){
+        double windowXValue = (imageWidth - scrollPane.getViewportBounds().getWidth()/zoom) * scrollPane.getHvalue();
+        double windowYValue = (imageHeight - scrollPane.getViewportBounds().getHeight()/zoom) * scrollPane.getVvalue();
+        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue+")");
+        double mouseX = windowXValue + windowPoint.getX()/zoom;
+        double mouseY = windowYValue + windowPoint.getY()/zoom;
+        if (scrollPane.getViewportBounds().getHeight() >= imageHeight){
+            mouseY = windowPoint.getY()/zoom;
+        }
+        if (scrollPane.getViewportBounds().getWidth() >= imageWidth){
+            mouseX = windowPoint.getX()/zoom;
+        }
+        System.out.println("mouse real position:(" + mouseX + ", " + mouseY+")");
+        return new Point2D(mouseX, mouseY);
+    }
+
+    @FXML
+    private void calculateRealMousePosition(MouseEvent mouseEvent){
+        coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
+        coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
+    }
+
+
+
+
     public void onDeletePOIButtonClick(ActionEvent actionEvent) {
 
     }

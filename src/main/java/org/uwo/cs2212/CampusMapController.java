@@ -145,6 +145,7 @@ public class CampusMapController implements Initializable {
         }
         currentBaseMap = mapConfig.getBaseMaps().get(0);
         currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+
         mapSelector.valueProperty().setValue(currentBaseMap.getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
             handleComboBoxValueChanged(ov, oldValue, newValue);
