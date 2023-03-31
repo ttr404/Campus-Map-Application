@@ -1,5 +1,5 @@
 {
-  "name": "2nd floor",
+  "name": "1st floor",
   "mapFileName": "middlesex-f1.png",
   "showLegend": true,
   "legendPosition": [
@@ -11,28 +11,153 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "base",
-      "font": "Times New Roman",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "MC200",
-          "roomNumber": "A100",
-          "description": "Class room A100",
+          "x": 215,
+          "y": 583,
+          "name": "MC105",
+          "roomNumber": "105",
+          "description": "MC 1F Classroom 105",
           "type": "ClassRoom"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "MC201",
-          "roomNumber": "A101",
-          "description": "Class room A200",
+          "x": 136,
+          "y": 495,
+          "name": "MC105B",
+          "roomNumber": "105",
+          "description": "MC 1F Classroom 105B",
           "type": "ClassRoom"
+        },
+        {
+          "x": 697,
+          "y": 227,
+          "name": "MC110",
+          "roomNumber": "110",
+          "description": "MC 1F Classroom 110",
+          "type": "ClassRoom"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "base",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x": 572,
+          "y": 442,
+          "name": "Men's washroom",
+          "roomNumber": "100",
+          "description": "MC 1F Men's washroom",
+          "type": "WashRoom"
+        },
+        {
+          "x": 1129,
+          "y": 556.01,
+          "name": "Women's washroom",
+          "roomNumber": "139",
+          "description": "MC 1F Women's washroom",
+          "type": "WashRoom"
+        },
+        {
+          "x": 1081,
+          "y": 561.5,
+          "name": "Barrier-free door",
+          "roomNumber": "EX.10",
+          "description": "MC 1F Barrier-free Entrance/Exit",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x": 699,
+          "y": 515.5,
+          "name": "Main Entrance/Exit",
+          "roomNumber": "EX.1",
+          "description": "Main Entrance/Exit",
+          "type": "entryAndExit"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 83.33,
+          "y": 589.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "stairwell"
+        },
+        {
+          "x": 270.55,
+          "y": 533.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "stairwell"
+        },
+        {
+          "x": 826.89,
+          "y": 400.17,
+          "name": "Stairwell",
+          "roomNumber": "ST.3",
+          "description": "Stairwell ST.3",
+          "type": "stairwell"
+        },
+        {
+          "x": 1239,
+          "y": 601.84,
+          "name": "Stairwell",
+          "roomNumber": "ST.5",
+          "description": "Stairwell ST.5",
+          "type": "stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Main Map",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x": 768.55,
+          "y": 371.34,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "elevator"
+        },
+        {
+          "x": 1098.5,
+          "y": 528.5,
+          "name": "Elevator",
+          "roomNumber": "EL.C",
+          "description": "Elevator EL.C",
+          "type": "elevator"
         }
       ]
     }
   ]
 }
+

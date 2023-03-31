@@ -32,6 +32,7 @@ public class Weather {
         this.cachedData = retrieveData();
     }
 
+
     /**
      * Retrieves the current weather description for the location specified in the constructor.
      * @return a String representing the current weather description, or "---" if there was an error retrieving the data

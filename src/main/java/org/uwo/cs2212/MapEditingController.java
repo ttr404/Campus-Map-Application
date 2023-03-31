@@ -66,7 +66,7 @@ public class MapEditingController {
 
     @FXML
     private void initialize() {
-        ObservableList<String> roomsToSelect = FXCollections.observableArrayList("", "Classrooms", "CS Labs", "Collaborative Room", "Elevators", "Entry/Exit", "GenLabs", "Restaurant", "Stairwells");
+        ObservableList<String> roomsToSelect = FXCollections.observableArrayList("", "Accessibility","Washroom","Classroom", "CS Lab", "Collaborative Room", "Elevator", "Entry/Exit", "GenLab", "Restaurant", "Stairwell");
         roomSelector.setItems(roomsToSelect);
         //     scrollPane.setOnMouseClicked(this::onMapClicked);
         // pois = new ArrayList<>();

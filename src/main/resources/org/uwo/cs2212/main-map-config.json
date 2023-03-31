@@ -106,6 +106,14 @@
           "roomNumber": "A200",
           "description": "Class room A200",
           "type": "WashRoom"
+        },
+        {
+          "x": 1056,
+          "y": 253,
+          "name": "My Test5",
+          "roomNumber": "A200",
+          "description": "Class room A200",
+          "type": "WashRoom"
         }
       ]
     }

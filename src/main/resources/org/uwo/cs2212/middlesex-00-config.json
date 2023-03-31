@@ -1,5 +1,5 @@
 {
-  "name": "Ground floor",
+  "name": "Ground Floor",
   "mapFileName": "middlesex-f0.png",
   "showLegend": true,
   "legendPosition": [
@@ -11,8 +11,8 @@
   "layers": [
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "base",
+      "color": "BLUE",
+      "layerType": "internal",
       "font": "Arial",
       "size": 16,
       "points": [
@@ -21,7 +21,7 @@
           "y": 380,
           "name": "MC17",
           "roomNumber": "17",
-          "description": "Middlesex college classroom 17",
+          "description": "MC GF Classroom 17",
           "type": "ClassRoom"
         },
         {
@@ -29,40 +29,40 @@
           "y": 420,
           "name": "MC6",
           "roomNumber": "6",
-          "description": "Middlesex college classroom 6",
+          "description": "MC GF Classroom 6",
           "type": "ClassRoom"
         }
       ]
     },
     {
       "name": "Main Map",
-      "color": "BLACK",
-      "layerType": "internal",
+      "color": "BLUE",
+      "layerType": "base",
       "font": "Arial",
       "size": 16,
       "points":[
         {
-          "x": 564,
-          "y": 409,
-          "name": "Man washroom",
+          "x": 572,
+          "y": 442,
+          "name": "Men's washroom",
           "roomNumber": "5B",
-          "description": "Middlesex college man washroom 5B",
+          "description": "MC GF Men's washroom",
           "type": "WashRoom"
         },
         {
           "x": 1129,
           "y": 556.01,
-          "name": "Man washroom",
+          "name": "Men's washroom",
           "roomNumber": "28E",
-          "description": "Middlesex college man washroom 28E",
+          "description": "MC GF Men's washroom",
           "type": "WashRoom"
         },
         {
           "x": 609,
           "y": 404,
-          "name": "Woman washroom",
+          "name": "Women's washroom",
           "roomNumber": "4B",
-          "description": "Middlesex college woman washroom 4B",
+          "description": "MC GF Women's washroom",
           "type": "WashRoom"
         },
         {
@@ -70,14 +70,22 @@
           "y": 364.11,
           "name": "Unisex washroom",
           "roomNumber": "4C",
-          "description": "Middlesex college unisex washroom 4C",
-          "type": "WashRoom"
+          "description": "MC GF Barrier-free washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 572,
+          "y": 198,
+          "name": "Barrier-free Entrance/Exit",
+          "roomNumber": "EX.6",
+          "description": "MC GF Barrier-free Entrance/Exit",
+          "type": "Accessibility"
         }
       ]
     },
     {
       "name": "Main Map",
-      "color": "BLACK",
+      "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
       "size": 16,
@@ -96,22 +104,6 @@
           "name": "Stairwell",
           "roomNumber": "ST.2",
           "description": "Stairwell ST.2",
-          "type": "stairwell"
-        },
-        {
-          "x": 162.22,
-          "y": 576.06,
-          "name": "Stairwell",
-          "roomNumber": "TA.2",
-          "description": "Stairwell TA.2",
-          "type": "stairwell"
-        },
-        {
-          "x": 695.78,
-          "y": 488.56,
-          "name": "Stairwell",
-          "roomNumber": "1A",
-          "description": "Stairwell 1A",
           "type": "stairwell"
         },
         {
@@ -142,7 +134,7 @@
     },
     {
       "name": "Main Map",
-      "color": "BLACK",
+      "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
       "size": 16,
@@ -152,14 +144,14 @@
           "y": 239,
           "name": "Grad Club",
           "roomNumber": "19",
-          "description": "Grad Club",
+          "description": "Grad Club Restaurant",
           "type": "Restaurant"
         }
       ]
     },
     {
       "name": "Main Map",
-      "color": "BLACK",
+      "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
       "size": 16,
@@ -167,10 +159,18 @@
         {
           "x": 768.55,
           "y": 371.34,
-          "name": "elevator",
+          "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "elevator EL.A",
+          "description": "Elevator EL.A",
           "type": "elevator"
+        },
+        {
+        "x": 1098.5,
+        "y": 528.5,
+        "name": "Elevator",
+        "roomNumber": "EL.C",
+        "description": "Elevator EL.C",
+        "type": "elevator"
         }
       ]
     }
