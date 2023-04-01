@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -75,6 +76,10 @@ public class MapEditingController {
     private Image currentFloorMap2;
     private double coordinateX;
     private double coordinateY;
+    private String roomName = "";
+    private String roomType = "";
+    private String poiRoomNumber = "";
+    private String roomDescription = "";
 
 
     @FXML
@@ -106,40 +111,7 @@ public class MapEditingController {
 //        }
 //    }
 
-    private void selectPoi(PointOfInterest selectedPoi) {
-        if (currentSelectedPoi != null) {
-            // Remove highlighting from the previously selected POI Circle
-            if (currentSelectedPoiCircle != null) {
-                currentSelectedPoiCircle.setStroke(Color.BLACK);
-                currentSelectedPoiCircle.setStrokeWidth(1);
-            }
-        }
-        currentSelectedPoi = selectedPoi;
 
-        if (currentSelectedPoi != null) {
-            // Highlight the newly selected POI Circle
-            for (Node node : scrollPane.getChildrenUnmodifiable()) {
-                if (node instanceof Circle) {
-                    Circle circle = (Circle) node;
-                    PointOfInterest poi = (PointOfInterest) circle.getUserData();
-
-                    if (poi == currentSelectedPoi) {
-                        currentSelectedPoiCircle = circle;
-                        circle.setStroke(Color.YELLOW);
-                        circle.setStrokeWidth(3);
-                        break;
-                    }
-                }
-            }
-        } else {
-            // Deselect the previously selected POI Circle if no POI is selected
-            if (currentSelectedPoiCircle != null) {
-                currentSelectedPoiCircle.setStroke(Color.BLACK);
-                currentSelectedPoiCircle.setStrokeWidth(1);
-                currentSelectedPoiCircle = null;
-            }
-        }
-    }
 
     /**
      * This method is responsible for loading and displaying the map
@@ -221,6 +193,38 @@ public class MapEditingController {
         showMap();
     }
 
+    @FXML
+    private void onEditorMapClicked(MouseEvent mouseEvent) {
+        Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
+        for(Layer layer: currentFloorMap.getLayers()){
+            for(PointOfInterest poi: layer.getPoints()) {
+                if (hitTest(realMousePosition, poi)) {
+                    roomName = poi.getName();
+                    roomType = poi.getType();
+                    poiRoomNumber = poi.getRoomNumber();
+                    roomDescription = poi.getDescription();
+                    selectPoi(new SearchResult(currentFloorMap, poi));
+                    return;
+                }
+            }
+        }
+        selectPoi(new SearchResult(currentFloorMap, null));
+    }
+
+    private void selectPoi(SearchResult searchResult){
+        if(searchResult != null){
+            currentFloorMap = searchResult.getFloorMap();
+            if(currentSelectedPoi != null){
+                currentSelectedPoi.setSelected(false);
+            }
+            currentSelectedPoi = searchResult.getPoi();
+            if(currentSelectedPoi != null){
+                currentSelectedPoi.setSelected(true);
+            }
+            showMap();
+        }
+    }
+
     /**
      * Handles the event when the "Zoom Out" button is clicked in the UI.
      *
@@ -280,6 +284,7 @@ public class MapEditingController {
         stage.show();
     }
 
+
     /**
      * Loads the map for editing by retrieving the map file, creating an ImageView of the map,
      * and adding layers to the map as ImageLayers.
@@ -336,7 +341,16 @@ public class MapEditingController {
     }
 
     public void onAddPOIButtonClick(ActionEvent actionEvent) throws IOException {
-        boolean flag = false; // use flag for create new instance
+        boolean flag = false;
+
+        if (coordinateX == 0 && coordinateY == 0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No coordinate selected");
+            alert.setContentText("Please select a coordinate on the map");
+            alert.showAndWait();
+            return;
+        }
 
         BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
         String json = reader.lines().collect(Collectors.joining());
@@ -346,7 +360,20 @@ public class MapEditingController {
 
         if (!poiName.getText().isEmpty() && !roomNumber.getText().isEmpty() && roomSelector.getValue() != null){
             for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++) {
-
+                for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
+                    JSONObject checkPOI = jsonObject.getJSONArray("layers")
+                            .getJSONObject(i)
+                            .getJSONArray("points")
+                            .getJSONObject(j);
+                    if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("POI already exists");
+                        alert.setContentText("Please enter a different POI name or room number");
+                        alert.showAndWait();
+                        return;
+                    }
+                }
                 if (jsonObject.getJSONArray("layers")
                         .getJSONObject(i)
                         .getJSONArray("points")
@@ -369,7 +396,6 @@ public class MapEditingController {
                     break;
                 }
             }
-
             if (!flag){
                 JSONArray jsonArray = new JSONArray();
                 JSONObject layer = new JSONObject()
@@ -394,12 +420,30 @@ public class MapEditingController {
                 jsonArray.put(point);
                 jsonObject.getJSONArray("layers").put(layer);
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("POI added");
+            alert.setContentText("POI has been added to the map");
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please fill in all the fields");
+            alert.showAndWait();
+            return;
         }
 
         FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
+
+
 
     }
 
@@ -427,15 +471,134 @@ public class MapEditingController {
     }
 
     @FXML
-    private void calculateRealMousePosition(MouseEvent mouseEvent){
+    private Point2D calculateRealMousePosition(MouseEvent mouseEvent){
         coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
         coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
+        return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
     }
 
-    public void onDeletePOIButtonClick(ActionEvent actionEvent) {
 
-    }
-    public void onEditPOIButtonClick(ActionEvent actionEvent) {
+    public void onDeletePOIButtonClick(ActionEvent actionEvent) throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
+        String json = reader.lines().collect(Collectors.joining());
+        reader.close();
+
+        JSONObject jsonObject = new JSONObject(json);
+
+        if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()){
+            outerloop:
+            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++){
+                innerloop:
+                for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
+                    JSONObject checkPOI = jsonObject.getJSONArray("layers")
+                            .getJSONObject(i)
+                            .getJSONArray("points")
+                            .getJSONObject(j);
+
+                    if (checkPOI.getString("name").toLowerCase().equals(roomName.toLowerCase())
+                            && checkPOI.getString("roomNumber").toLowerCase().equals(poiRoomNumber.toLowerCase())
+                            && checkPOI.getString("type").toLowerCase().equals(roomType.toLowerCase())){
+                        jsonObject.getJSONArray("layers")
+                                .getJSONObject(i)
+                                .getJSONArray("points")
+                                .remove(j);
+                        break outerloop;
+                    }
+                    roomName = "";
+                    roomType = "";
+                    poiRoomNumber = "";
+
+                }
+                }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("POI deleted");
+            alert.setContentText("POI has been deleted from the map");
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+            alert.showAndWait();
+            } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("The POI you are trying to delete does not exist");
+            alert.showAndWait();
+            return;
+        }
+
+        FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
+        fileWriter.write(jsonObject.toString());
+
+        fileWriter.close();
+        }
+        
+    public void onEditPOIButtonClick(ActionEvent actionEvent) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
+        String json = reader.lines().collect(Collectors.joining());
+        reader.close();
+
+        JSONObject jsonObject = new JSONObject(json);
+
+        if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()){
+            if (poiName.getText().isEmpty() || roomNumber.getText().isEmpty() || roomSelector.getValue() == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("Please fill in all the fields");
+                alert.showAndWait();
+                return;
+            }
+            outerloop:
+            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++){
+                innerloop:
+                for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
+                    JSONObject checkPOI = jsonObject.getJSONArray("layers")
+                            .getJSONObject(i)
+                            .getJSONArray("points")
+                            .getJSONObject(j);
+
+                    if (checkPOI.getString("name").toLowerCase().equals(roomName.toLowerCase())
+                            && checkPOI.getString("roomNumber").toLowerCase().equals(poiRoomNumber.toLowerCase())
+                            && checkPOI.getString("type").toLowerCase().equals(roomType.toLowerCase())){
+                        jsonObject.getJSONArray("layers")
+                                .getJSONObject(i)
+                                .getJSONArray("points")
+                                .getJSONObject(j)
+                                .put("x", coordinateX)
+                                .put("y", coordinateY)
+                                .put("name", poiName.getText())
+                                .put("roomNumber", roomNumber.getText())
+                                .put("description", Description.getText())
+                                .put("type", roomSelector.getValue());
+                                break outerloop;
+                    }
+                }
+            }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("POI edited");
+            alert.setContentText("POI has been edited");
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please select a POI to edit");
+            alert.showAndWait();
+            return;
+        }
+
+        FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
+        fileWriter.write(jsonObject.toString());
+
+        fileWriter.close();
 
     }
 

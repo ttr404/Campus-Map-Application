@@ -53,7 +53,7 @@ import static org.uwo.cs2212.CampusMapApplication.pressEnter;
  * map-related data.
  *
  * @author Tingrui Zhang
- * @author
+ * @author Binchi Zhang
  * @author
  * @author
  * @author
@@ -221,7 +221,6 @@ public class CampusMapController implements Initializable {
         }
         showMap();
     }
-
 
 
     public void onClassrooms(ActionEvent actionEvent){
