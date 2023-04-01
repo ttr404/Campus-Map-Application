@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.uwo.cs2212.model.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,8 +37,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 import java.util.List;
+
 import javafx.scene.text.*;
 import static org.uwo.cs2212.CampusMapApplication.pressEnter;
+
 
 /**
  * The CampusMapController class is the main controller for managing the campus map UI and
@@ -713,17 +716,82 @@ public class CampusMapController implements Initializable {
      */
     public void onMapClicked(MouseEvent mouseEvent) {
         Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
-        for(Layer layer: currentFloorMap.getLayers()){
-            for(PointOfInterest poi: layer.getPoints()) {
+        Point2D windowPoint = new Point2D(mouseEvent.getX(), mouseEvent.getY());
+        Point2D realMapPoint = WindowPointToRealPoint(windowPoint);
+        for (Layer layer : currentFloorMap.getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
                     selectPoi(new SearchResult(currentFloorMap, poi));
+
+                    //pop-up window
+                    Stage stage = new Stage();
+                    String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initOwner((Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
+                    Label label = new Label(s);
+                    label.setStyle("-fx-font-size: 12px; -fx-text-fill: #333333;");
+                    VBox vbox = new VBox(label);
+                    stage.setTitle(poi.getName());
+                    vbox.setStyle("-fx-background-color: #d9eff2;");
+                    vbox.setPadding(new Insets(10));
+                    Scene scene = new Scene(vbox, 300, 100);
+                    stage.setScene(scene);
+
+                    // Calculate the window position of the POI
+                    Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
+                    Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
+                    //
+                    Node node = (Node) mouseEvent.getSource();
+                    Point2D poiPosition = new Point2D(poi.getX(),poi.getY());
+                    Point2D poiScreenPosition = node.localToScreen(poiPosition);
+
+                    // Set the pop-up window position
+                    double popUpWindowWidth = 200;
+                    double popUpWindowHeight = 170;
+                    double popUpWindowX = poiScreenPosition.getX() - popUpWindowWidth / 2;
+                    double popUpWindowY = poiScreenPosition.getY() - popUpWindowHeight / 2;
+
+                    stage.setX(popUpWindowX);
+                    stage.setY(popUpWindowY);
+
+                    stage.setWidth(200);
+                    stage.setHeight(170);
+                    stage.show();
+
                     showPoiInList(poi);
-                    return;
                 }
             }
         }
         selectPoi(new SearchResult(currentFloorMap, null));
     }
+
+
+
+
+    private Point2D RealPointToWindowPoint(Point2D realPoint) {
+        double windowXValue = (imageWidth - mapPane.getViewportBounds().getWidth() / zoom) * mapPane.getHvalue();
+        double windowYValue = (imageHeight - mapPane.getViewportBounds().getHeight() / zoom) * mapPane.getVvalue();
+        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue + ")");
+
+        double realX = realPoint.getX();
+        double realY = realPoint.getY();
+
+        if (mapPane.getViewportBounds().getHeight() >= imageHeight) {
+            windowYValue = 0;
+        }
+        if (mapPane.getViewportBounds().getWidth() >= imageWidth) {
+            windowXValue = 0;
+        }
+
+        double windowX = (realX - windowXValue) * zoom;
+        double windowY = (realY - windowYValue) * zoom;
+
+        System.out.println("windowPoint:(" + windowX + ", " + windowY + ")");
+        return new Point2D(windowX, windowY);
+    }
+
+
+
 
     /**
      * Selects a Point of Interest (POI) based on the given SearchResult object. The method sets the currentFloorMap to the floor map associated with the SearchResult object. It also updates the selected state of the currentSelectedPoi and the newly selected POI. If the newly selected POI is not within the viewport, this method centralizes the POI on the map. It then shows the map, sets the favourite button state, and returns.
