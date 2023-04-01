@@ -25,7 +25,7 @@
                   <Button fx:id="zoomIN" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" prefHeight="26.0" prefWidth="25.0" text="-" textAlignment="RIGHT" />
               </items>
             </ToolBar>
-            <ScrollPane fx:id="scrollPane" prefHeight="411.0" prefWidth="724.0" onMouseClicked="#calculateRealMousePosition">
+            <ScrollPane fx:id="scrollPane" prefHeight="411.0" prefWidth="724.0" onMouseClicked="#onEditorMapClicked">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
               </content>
