@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.uwo.cs2212.model.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,19 +23,14 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.*;
-
-// testing(Truman)
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
-import java.util.List;
-import javafx.scene.text.*;
 import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
 /**
@@ -54,7 +48,7 @@ import static org.uwo.cs2212.CampusMapApplication.pressEnter;
  *
  * @author Tingrui Zhang
  * @author Binchi Zhang
- * @author
+ * @author Truman Huang
  * @author
  * @author
  */
@@ -349,36 +343,52 @@ public class CampusMapController implements Initializable {
     @FXML
     private void aboutButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        String s ="About\n\n" +
+        String s = "About\n\n" +
                 "Western Campus Navigation App\n" +
-                "Version: 1.0.0\n" +
-                "Release Date: March 27, 2023\n" +
+                "Version: 1.3.4\n" +
+                "Release Date: April 5, 2023\n" +
                 "\n" +
                 "Our Team\n" +
                 "\n" +
-                "  1) Boersen, Jarrett	    Student	jboerse2@uwo.ca\n"+
-                "  2) Huang, Truman	    Student	yhuan939@uwo.ca\n"+
-                "  3) Xie, Yaopeng	    Student	yxie447@uwo.ca\n"+
-                "  4) Zhang, Binchi	    Student	bzhan484@uwo.ca\n"+
-                "  5) Zhang, Tingrui	    Student	tzhan425@uwo.ca\n\n"+
+                "  1) Boersen, Jarrett        Student\n       jboerse2@uwo.ca\n" +
+                "  2) Huang, Truman          Student\n        yhuan939@uwo.ca\n" +
+                "  3) Xie, Yaopeng            Student\n       yxie447@uwo.ca\n" +
+                "  4) Zhang, Binchi           Student\n       bzhan484@uwo.ca\n" +
+                "  5) Zhang, Tingrui          Student\n       tzhan425@uwo.ca\n\n" +
 
-        "Contact Us\n\n" +
-                "  If you have any questions, feedback or suggestions,\n  please feel free to reach out to us at \n  info@campusmapapp.com.\n  We are always happy to hear from our users and \n  help you in any way we can.\n" +
+                "Contact Us\n\n" +
+                "  If you have any questions, feedback or suggestions, please feel free to reach out to us at bzhan484@uwo.com. We are always happy to hear from our users and help you in any way we can.\n" +
                 "\n" +
                 "Thank you for using our Western Campus Navigation App!";
+
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
-        VBox vbox = new VBox(new Label(s));
+
+        // Create a Label with wrapped text and a fixed width
+        Label aboutLabel = new Label(s);
+        aboutLabel.setWrapText(true);
+        aboutLabel.setMaxWidth(260);
+
+        VBox vbox = new VBox(aboutLabel);
         vbox.setPadding(new Insets(10));
-        Scene scene = new Scene(vbox, 300, 100);
+
+        // Wrap the VBox in a ScrollPane
+        ScrollPane scrollPane = new ScrollPane(vbox);
+        scrollPane.setFitToWidth(true);
+
+        Scene scene = new Scene(scrollPane, 300, 100);
         stage.setScene(scene);
         stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - 300);
         stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
         stage.setWidth(300);
         stage.setHeight(500);
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        stage.getIcons().add(icon);
+        stage.setTitle("About");
         stage.show();
-
     }
+
+
 
     /**
      * Handles the click event for the help button by displaying a help dialog to the user. The method creates a new stage and sets up a ChoiceBox control for selecting the help topic, and a Label control for displaying the help text. The method sets the initial help text based on the default value of the ChoiceBox control, and adds an event listener to the control to update the help text based on the selected value. The method then displays the dialog and returns.
@@ -393,21 +403,28 @@ public class CampusMapController implements Initializable {
 
         // Create a ChoiceBox control to select the help topic
         ChoiceBox<String> helpTopic = new ChoiceBox<>();
-        helpTopic.getItems().addAll("Getting Started", "POI and Favorite","Setting");
+        helpTopic.getItems().addAll("Getting Started", "Search Function", "POI and Favorite", "Editing Mode");
         helpTopic.setValue("Getting Started"); // Set the default value
-        //helpTopic.setPrefWidth(200);
         Label helpLabel = new Label();
         helpLabel.setWrapText(true); // Wrap text to multiple lines
 
-        VBox vbox = new VBox(new Label("Help Page"), helpTopic, helpLabel);
+        VBox vbox = new VBox(new Label("Help Page\n"), helpTopic, helpLabel);
         vbox.setPadding(new Insets(10));
-        Scene scene = new Scene(vbox);
+
+        // Wrap the VBox in a ScrollPane
+        ScrollPane scrollPane = new ScrollPane(vbox);
+        scrollPane.setFitToWidth(true);
+
+        Scene scene = new Scene(scrollPane);
 
         stage.setScene(scene);
         stage.setWidth(300);
         stage.setHeight(500);
-        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - stage.getWidth() );
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - stage.getWidth());
         stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        stage.getIcons().add(icon);
+        stage.setTitle("Help");
         stage.show();
 
         // Set the initial help text
@@ -422,26 +439,44 @@ public class CampusMapController implements Initializable {
         });
     }
 
+
     // Helper method to get the help text for a given topic
     private String getHelpText(String topic) {
         switch (topic) {
             case "Getting Started":
-                return "\n\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide directions.\n\n" +
-                        "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top right of the screen.\n\n" +
-                        "To change the map view into a specific building, click on the layers button located at the bottom left of the screen. You can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n";
+                return "\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide some related information.\n\n" +
+                        "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top left of the screen. Use reset button to return default size\n\n" +
+                        "To change the map view into a specific building, click on the choice box located under the button of 'Sign Out'. \n\nYou can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n"+
+                        "For each building, select the floor button of your direction";
             case "POI and Favorite":
-                return "\n\nTo view the available POI, click on the menu button located at the top left of the screen and select \"Points of Interest\".\n" +
-                        "\nTo view a specific POI, click on the icon on the map or select it from the list of POI.\n" +
-                        "\nTo add your own POI, click on the map at the desired location and select \"Add POI\". Enter the name of the POI and select the appropriate category.\n" +
-                        "\nTo view your saved POI list, click on the menu button located at the top left of the screen and select \"My POI\".\n";
-            case "Setting":
-                return "\n\nTo access app settings, click on the menu button located at the top left of the screen and select \"Settings\". Here, you can adjust settings such as units of measurement and language.\n" +
-                        "\nTo clear your search history, click on the menu button located at the top left of the screen and select \"Clear History\".\n" +
-                        "Contact Us:\n" +
-                        "If you have any questions or issues with the app, please contact us at support@campusmapapp.com. We are always happy to help!\n" +
-                        "\n" +
-                        "Thank you for using our campus map viewing app. We hope this help menu has been helpful in navigating the app. If you have any feedback or suggestions, please don't hesitate to reach out to us.\n" +
-                        "\n";
+                return "\nTo use the favorite and POI (point of interest) function in a map navigation app, follow these steps:\n\n"+
+                        "1. To add a POI to your map, click on the desired point on the map and then click the \"Add POI\" button located at the top of the screen.\n\n"+
+                        "2. Fill in the name and any relevant details about the POI, such as a room number and description. User can also add this new POI to favorite at the same time\n\n"+
+                        "3. Click \"Save\" to add the POI to your map.\n\n"+
+                        "4. To add a location to your favorites, either click on a POI point on the map or click on a search result from the list.\n\n"+
+                        "5. Once you have selected a location, click the \"Favorite\" button to add it to your favorites list. This button should be highlighted or easily visible when click on the appropriate POI.\n\n"+
+                        "6. To access your favorites, click on the \"Favorites\" button or icon in the app. This will display a list of all the locations you have saved as favorites.\n\n"+
+                        "7. To remove a POI or favorite from your list, click on the item and then click the \"Favorite\" button.\n\n"+
+                        "By using the favorite and POI functions in a map navigation app, you can quickly and easily save important locations and points of interest for future reference. This can make it easier to navigate to these locations in the future.";
+
+
+            case "Editing Mode":
+                return "\nTo use the Editing mode in a map navigation app, follow these steps:\n\n" +
+                        "1. Log in to your admin account.\n"+
+                        "2. Find the \"Editing\" mode button in the app and click on it.\n"+
+                        "3. Once you are in Editing mode, you can add, delete, or edit POIs on the map.\n"+
+                        "4. To add a new POI, select a location on the map and click the \"Add POI\" button located at the top of the screen.\n"+
+                        "5. Fill in the required details, including the POI name, room number, and room type by selecting a choice from the drop-down box.\n"+
+                        "6. To delete or edit an existing POI, select the POI on the map and click either the \"Delete\" or \"Edit\" button.\n"+
+                        "7. If you choose to edit the POI, make any necessary changes to the details and then click \"Edit\" to save the changes\n"+
+                        "8. Click \"Close\" to save the change of POI and return to the main page.\n\n"+
+                        "Using the Editing mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information. This can improve the accuracy and usefulness of the app for all users.";
+            case "Search Function":
+                return "\nTo use the search function in a map navigation app, follow these steps:\n\n"+
+                        "1. Type in your desired destination or point of interest and click search. For example, you could search for a specific class room, lab name, or type of place (e.g., \"lab101\").\n\n"+
+                        "2. The app will display a list of results that match your search terms. Select the result you want to navigate to in the search list below.\n\n"+
+                        "3. If you want to quickly find a specific type of point of interest, look for the checkboxes on the map that correspond to different categories, such as washroom or class room.\n\n"+
+                        "4. Finally, if you have any favorite locations saved in the app, you can access them by tapping on the \"Favorites\" button. This will show you a list of all the locations you have saved, so you can easily navigate to them without having to search for them again.";
             default:
                 return "";
         }
@@ -514,7 +549,9 @@ public class CampusMapController implements Initializable {
         stage.setY(((Node) event.getSource()).getScene().getWindow().getY()+200);
         stage.setWidth(400);
         stage.setHeight(200);
-        stage.setTitle("Sign Out"); // Set the title of the pop-up window
+        stage.setTitle("Sign Out");// Set the title of the pop-up window
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png")); // set the title icon
+        stage.getIcons().add(icon);
         stage.show();
     }
 
@@ -563,6 +600,8 @@ public class CampusMapController implements Initializable {
         stage.setResizable(false);
         stage.setX(200);
         stage.setY(70);
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        stage.getIcons().add(icon);
         stage.show();
 
         return fxmlLoader;
@@ -1073,7 +1112,8 @@ public class CampusMapController implements Initializable {
         stage.setWidth(300);
         stage.setHeight(500);
         stage.setResizable(false);
-
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        stage.getIcons().add(icon);
         stage.show();
 
 

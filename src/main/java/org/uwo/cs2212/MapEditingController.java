@@ -18,7 +18,6 @@ import javafx.stage.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.uwo.cs2212.model.*;
-
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -339,6 +338,8 @@ public class MapEditingController {
         // Set the X and Y position of the new window
         stage.setX(200);
         stage.setY(70);
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        stage.getIcons().add(icon);
         // Display the new window
         stage.show();
     }
