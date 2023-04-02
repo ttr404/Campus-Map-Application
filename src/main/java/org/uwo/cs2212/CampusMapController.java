@@ -323,9 +323,12 @@ public class CampusMapController implements Initializable {
             imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
+
+
             for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
+
             }
             if (user_POIs.isSelected() && CurrentUser.getCurrentFloorMap().getUserLayer() != null){
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, CurrentUser.getCurrentFloorMap().getUserLayer());

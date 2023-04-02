@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +34,9 @@ public class CampusMapApplication extends Application {
         stage.setTitle("Login");
         stage.setScene(loginScene);
         stage.setResizable(false);
+
+        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        stage.getIcons().add(icon);
 
         stage.show();
     }

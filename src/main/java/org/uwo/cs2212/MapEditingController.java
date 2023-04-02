@@ -118,10 +118,27 @@ public class MapEditingController {
             imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
+            Image coordinate = new Image(getClass().getResourceAsStream("map-marker.png"));
+            ImageView coordinateView = new ImageView(coordinate);
+
             for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
+                for(PointOfInterest poi: layer.getPoints()){
+                    if ((int) Math.round(poi.getX()) >= (coordinateX - 5)
+                            && (int) Math.round(poi.getX()) <= (coordinateX + 5)
+                            && (int) Math.round(poi.getY()) >= (coordinateY - 5)
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 5)) {
+                        coordinateView.setVisible(false);
+                    }
+                }
             }
+
+            coordinateView.setLayoutX(coordinateX - 15);
+            coordinateView.setLayoutY(coordinateY - 29);
+            coordinateView.setFitWidth(30);
+            coordinateView.setPreserveRatio(true);
+            root.getChildren().add(coordinateView);
 
             scrollPane.setContent(root);
         }
@@ -531,6 +548,7 @@ public class MapEditingController {
     private Point2D calculateRealMousePosition(MouseEvent mouseEvent){
         coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
         coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
+        showMap();
         return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
     }
 
