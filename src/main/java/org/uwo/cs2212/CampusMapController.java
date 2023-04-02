@@ -1,10 +1,10 @@
 package org.uwo.cs2212;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.uwo.cs2212.model.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.*;
+
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.scene.layout.VBox;
@@ -31,6 +33,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+
+import java.util.List;
+
 import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
 /**
@@ -39,10 +45,10 @@ import static org.uwo.cs2212.CampusMapApplication.pressEnter;
  * points of interest (POIs), and map layers. The class also enables zooming in and out, as well
  * as adding, editing, and deleting POIs. It handles UI events such as button clicks and mouse events,
  * and manages the state of the currently selected floor map and POI.
- *
+ * -----
  * The CampusMapController is responsible for loading floor maps and associated POI data from
  * configuration files, managing the display of map elements such as POI circles, and providing
- * methods for converting between window and real map coordinate systems. The crepresentlass uses the
+ * methods for converting between window and real map coordinate systems. The class uses the
  * FloorMap, PointOfInterest, ImageLayer, and SearchResult classes to  and manipulate
  * map-related data.
  *
@@ -118,12 +124,17 @@ public class CampusMapController implements Initializable {
     private Button[] floorButtons;
     private ContextMenu poiPopup;
 
-
+    /**
+     * This variable is used to determine if the map was clicked. This is set when the
+     * AddPOI button is pressed so that the program can determine where the map was
+     * clicked to add a POI.
+     */
+    private boolean mapClicked = false;
 
     /**
-     This method is called by the FXMLLoader when initialization is complete.
-     It initializes the map selector, search list view, displays all POI,
-     shows the floor buttons, shows the map, and sets the favourite button state.
+     * This method is called by the FXMLLoader when initialization is complete.
+     * It initializes the map selector, search list view, displays all POI,
+     * shows the floor buttons, shows the map, and sets the favourite button state.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -138,12 +149,12 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     This method initializes the map selector ComboBox by adding all available BaseMaps to the dropdown list.
-     It sets the currentBaseMap and currentFloorMap to the first available BaseMap and its first FloorMap respectively.
-     It also sets a listener to the value property of the map selector ComboBox to handle changes to the selected BaseMap.
+     * This method initializes the map selector ComboBox by adding all available BaseMaps to the dropdown list.
+     * It sets the currentBaseMap and currentFloorMap to the first available BaseMap and its first FloorMap respectively.
+     * It also sets a listener to the value property of the map selector ComboBox to handle changes to the selected BaseMap.
      */
     private void initializeMapSelector() {
-        for(BaseMap baseMap: CurrentUser.getMapConfig().getBaseMaps()){
+        for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()) {
             mapSelector.getItems().add(baseMap.getName());
         }
         CurrentUser.setCurrentBaseMap(CurrentUser.getMapConfig().getBaseMaps().get(0));
@@ -152,21 +163,20 @@ public class CampusMapController implements Initializable {
         mapSelector.valueProperty().setValue(CurrentUser.getCurrentBaseMap().getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
             handleComboBoxValueChanged(ov, oldValue, newValue);
-
         });
     }
 
     /**
-     Initializes the search ListView by setting a listener for changes in the selected item and calling the
-     searchResultSelectionChanged method when a selection is made.
+     * Initializes the search ListView by setting a listener for changes in the selected item and calling the
+     * searchResultSelectionChanged method when a selection is made.
      */
-    private void initializeSearchListView(){ // need to change this to a different listview (Show all poi)
+    private void initializeSearchListView() { // need to change this to a different listview (Show all poi)
         MultipleSelectionModel<SearchResult> lvSelModel = informationList.getSelectionModel();
         lvSelModel.selectedItemProperty().addListener(
                 (changed, oldVal, newVal) -> {
                     searchResultSelectionChanged(changed, oldVal, newVal);
                 });
-        }
+    }
 
     /**
      * Updates the checkboxes and the informationList based on which checkboxes are selected.
@@ -174,10 +184,10 @@ public class CampusMapController implements Initializable {
      * If a checkbox is not selected, hide the corresponding POI types on the map.
      * Also, clear the informationList and add the relevant POIs based on the selected checkboxes.
      */
-    private void checkBoxSelected(){
+    private void checkBoxSelected() {
         informationList.getItems().clear();
-        for (Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
-            for(PointOfInterest poi : layer.getPoints()){
+        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
                 if ((classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
                         || (stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
                         || (elevators.isSelected() && poi.getType().toLowerCase().equals("elevator"))
@@ -187,7 +197,7 @@ public class CampusMapController implements Initializable {
                         || (cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
                         || (collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
                         || (user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
-                ){
+                ) {
                     layer.setHideLayer(false);
                     informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
 
@@ -201,7 +211,7 @@ public class CampusMapController implements Initializable {
                         || (!cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
                         || (!collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
                         || (!user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
-                ){
+                ) {
                     layer.setHideLayer(true);
                 }
             }
@@ -210,35 +220,35 @@ public class CampusMapController implements Initializable {
     }
 
 
-    public void onClassrooms(ActionEvent actionEvent){
+    public void onClassrooms(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onStairwells(ActionEvent actionEvent){
+    public void onStairwells(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onElevators(ActionEvent actionEvent){
+    public void onElevators(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onEntryAndExit(ActionEvent actionEvent){
+    public void onEntryAndExit(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onGenlabs(ActionEvent actionEvent){
+    public void onGenlabs(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onRestaurants(ActionEvent actionEvent){
+    public void onRestaurants(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onCS_Labs(ActionEvent actionEvent){
+    public void onCS_Labs(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
-    public void onCollaborative(ActionEvent actionEvent){
+    public void onCollaborative(ActionEvent actionEvent) {
         checkBoxSelected();
     }
 
@@ -247,14 +257,16 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Shows or hides all points of interest based on the current filter settings. The method selects all layers and checks the corresponding checkboxes, clears the informationList, and then adds all points of interest in the current floor map to the informationList as SearchResult objects.
+     * Shows or hides all points of interest based on the current filter settings. The method selects all
+     * layers and checks the corresponding checkboxes, clears the informationList, and then adds all points
+     * of interest in the current floor map to the informationList as SearchResult objects.
      */
-    private void setShowAllPOI(){
+    private void setShowAllPOI() {
         selectAllLayers();
         checkBoxSelected();
         informationList.getItems().clear();
-        for (Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
-            for(PointOfInterest poi : layer.getPoints()){
+        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
                 informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
             }
         }
@@ -270,13 +282,18 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Handles the change event for the base map combo box. The method sets the currentBaseMap variable to the BaseMap object selected by the user, and sets the currentFloorMap variable to the first floor map in the currentBaseMap. The method then calls the showFloorButtons() and showMap() methods to display the floor buttons and the map of the current floor, respectively. Finally, the method calls the setShowAllPOI() method to show or hide all points of interest based on the current filter settings.
-     * @param ov        the ObservableValue object representing the base map combo box
-     * @param oldValue  the old value of the base map combo box
-     * @param newValue  the new value of the base map combo box
+     * Handles the change event for the base map combo box. The method sets the currentBaseMap variable to the
+     * BaseMap object selected by the user, and sets the currentFloorMap variable to the first floor map in the
+     * currentBaseMap. The method then calls the showFloorButtons() and showMap() methods to display the floor
+     * buttons and the map of the current floor, respectively. Finally, the method calls the setShowAllPOI() method
+     * to show or hide all points of interest based on the current filter settings.
+     *
+     * @param ov       the ObservableValue object representing the base map combo box
+     * @param oldValue the old value of the base map combo box
+     * @param newValue the new value of the base map combo box
      */
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
-        for(BaseMap baseMap: CurrentUser.getMapConfig().getBaseMaps()) {
+        for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()) {
             if (newValue.toString().equals(baseMap.getName())) {
                 CurrentUser.setCurrentBaseMap(baseMap);
 
@@ -290,15 +307,18 @@ public class CampusMapController implements Initializable {
                 showFloorButtons();
                 showMap();
             }
-		}
+        }
         setShowAllPOI();
     }
 
-
     /**
-     * Displays the map of the current floor on the map pane. The method loads the image file for the current floor, creates an ImageView object to display the image, and adds it to a new Group object. The method then creates an ImageLayer object for each layer on the current floor, and adds it to the Group object. Finally, the Group object is added to the map pane. If an error occurs while loading the image file or creating the ImageLayer objects, the method catches the exception and returns.
+     * Displays the map of the current floor on the map pane. The method loads the image file for the current floor,
+     * creates an ImageView object to display the image, and adds it to a new Group object. The method then creates
+     * an ImageLayer object for each layer on the current floor, and adds it to the Group object. Finally, the Group
+     * object is added to the map pane. If an error occurs while loading the image file or creating the ImageLayer
+     * objects, the method catches the exception and returns.
      */
-    protected void showMap(){
+    protected void showMap() {
         try {
             URL mapUrl = CampusMapController.class.getResource(CurrentUser.getCurrentFloorMap().getMapFileName());
             URI uri = mapUrl.toURI();
@@ -318,25 +338,26 @@ public class CampusMapController implements Initializable {
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
 
-
-            for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
+            for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
-
             }
-            if (user_POIs.isSelected() && CurrentUser.getCurrentFloorMap().getUserLayer() != null){
+
+            if (user_POIs.isSelected() && CurrentUser.getCurrentFloorMap().getUserLayer() != null) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, CurrentUser.getCurrentFloorMap().getUserLayer());
                 root.getChildren().add(imageLayer);
             }
 
             mapPane.setContent(root);
+        } catch (Exception ex) {
         }
-        catch(Exception ex)
-        {}
     }
 
     /**
-     * Handles the click event for the about button by displaying an about dialog to the user. The method creates a new stage and sets up a Label control to display information about the app and its creators. The method then displays the dialog and returns.
+     * Handles the click event for the about button by displaying an about dialog to the user. The method creates
+     * a new stage and sets up a Label control to display information about the app and its creators. The method
+     * then displays the dialog and returns.
+     *
      * @param event the ActionEvent object representing the about button click event
      * @throws IOException if the FXML file for the about dialog cannot be loaded
      */
@@ -388,10 +409,13 @@ public class CampusMapController implements Initializable {
         stage.show();
     }
 
-
-
     /**
-     * Handles the click event for the help button by displaying a help dialog to the user. The method creates a new stage and sets up a ChoiceBox control for selecting the help topic, and a Label control for displaying the help text. The method sets the initial help text based on the default value of the ChoiceBox control, and adds an event listener to the control to update the help text based on the selected value. The method then displays the dialog and returns.
+     * Handles the click event for the help button by displaying a help dialog to the user. The method creates a
+     * new stage and sets up a ChoiceBox control for selecting the help topic, and a Label control for displaying
+     * the help text. The method sets the initial help text based on the default value of the ChoiceBox control,
+     * and adds an event listener to the control to update the help text based on the selected value. The method
+     * then displays the dialog and returns.
+     *
      * @param event the ActionEvent object representing the help button click event
      * @throws IOException if the FXML file for the help dialog cannot be loaded
      */
@@ -439,43 +463,42 @@ public class CampusMapController implements Initializable {
         });
     }
 
-
     // Helper method to get the help text for a given topic
     private String getHelpText(String topic) {
         switch (topic) {
             case "Getting Started":
                 return "\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide some related information.\n\n" +
                         "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top left of the screen. Use reset button to return default size\n\n" +
-                        "To change the map view into a specific building, click on the choice box located under the button of 'Sign Out'. \n\nYou can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n"+
+                        "To change the map view into a specific building, click on the choice box located under the button of 'Sign Out'. \n\nYou can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n" +
                         "For each building, select the floor button of your direction";
             case "POI and Favorite":
-                return "\nTo use the favorite and POI (point of interest) function in a map navigation app, follow these steps:\n\n"+
-                        "1. To add a POI to your map, click on the desired point on the map and then click the \"Add POI\" button located at the top of the screen.\n\n"+
-                        "2. Fill in the name and any relevant details about the POI, such as a room number and description. User can also add this new POI to favorite at the same time\n\n"+
-                        "3. Click \"Save\" to add the POI to your map.\n\n"+
-                        "4. To add a location to your favorites, either click on a POI point on the map or click on a search result from the list.\n\n"+
-                        "5. Once you have selected a location, click the \"Favorite\" button to add it to your favorites list. This button should be highlighted or easily visible when click on the appropriate POI.\n\n"+
-                        "6. To access your favorites, click on the \"Favorites\" button or icon in the app. This will display a list of all the locations you have saved as favorites.\n\n"+
-                        "7. To remove a POI or favorite from your list, click on the item and then click the \"Favorite\" button.\n\n"+
+                return "\nTo use the favorite and POI (point of interest) function in a map navigation app, follow these steps:\n\n" +
+                        "1. To add a POI to your map, click on the desired point on the map and then click the \"Add POI\" button located at the top of the screen.\n\n" +
+                        "2. Fill in the name and any relevant details about the POI, such as a room number and description. User can also add this new POI to favorite at the same time\n\n" +
+                        "3. Click \"Save\" to add the POI to your map.\n\n" +
+                        "4. To add a location to your favorites, either click on a POI point on the map or click on a search result from the list.\n\n" +
+                        "5. Once you have selected a location, click the \"Favorite\" button to add it to your favorites list. This button should be highlighted or easily visible when click on the appropriate POI.\n\n" +
+                        "6. To access your favorites, click on the \"Favorites\" button or icon in the app. This will display a list of all the locations you have saved as favorites.\n\n" +
+                        "7. To remove a POI or favorite from your list, click on the item and then click the \"Favorite\" button.\n\n" +
                         "By using the favorite and POI functions in a map navigation app, you can quickly and easily save important locations and points of interest for future reference. This can make it easier to navigate to these locations in the future.";
 
 
             case "Editing Mode":
                 return "\nTo use the Editing mode in a map navigation app, follow these steps:\n\n" +
-                        "1. Log in to your admin account.\n"+
-                        "2. Find the \"Editing\" mode button in the app and click on it.\n"+
-                        "3. Once you are in Editing mode, you can add, delete, or edit POIs on the map.\n"+
-                        "4. To add a new POI, select a location on the map and click the \"Add POI\" button located at the top of the screen.\n"+
-                        "5. Fill in the required details, including the POI name, room number, and room type by selecting a choice from the drop-down box.\n"+
-                        "6. To delete or edit an existing POI, select the POI on the map and click either the \"Delete\" or \"Edit\" button.\n"+
-                        "7. If you choose to edit the POI, make any necessary changes to the details and then click \"Edit\" to save the changes\n"+
-                        "8. Click \"Close\" to save the change of POI and return to the main page.\n\n"+
+                        "1. Log in to your admin account.\n" +
+                        "2. Find the \"Editing\" mode button in the app and click on it.\n" +
+                        "3. Once you are in Editing mode, you can add, delete, or edit POIs on the map.\n" +
+                        "4. To add a new POI, select a location on the map and click the \"Add POI\" button located at the top of the screen.\n" +
+                        "5. Fill in the required details, including the POI name, room number, and room type by selecting a choice from the drop-down box.\n" +
+                        "6. To delete or edit an existing POI, select the POI on the map and click either the \"Delete\" or \"Edit\" button.\n" +
+                        "7. If you choose to edit the POI, make any necessary changes to the details and then click \"Edit\" to save the changes\n" +
+                        "8. Click \"Close\" to save the change of POI and return to the main page.\n\n" +
                         "Using the Editing mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information. This can improve the accuracy and usefulness of the app for all users.";
             case "Search Function":
-                return "\nTo use the search function in a map navigation app, follow these steps:\n\n"+
-                        "1. Type in your desired destination or point of interest and click search. For example, you could search for a specific class room, lab name, or type of place (e.g., \"lab101\").\n\n"+
-                        "2. The app will display a list of results that match your search terms. Select the result you want to navigate to in the search list below.\n\n"+
-                        "3. If you want to quickly find a specific type of point of interest, look for the checkboxes on the map that correspond to different categories, such as washroom or class room.\n\n"+
+                return "\nTo use the search function in a map navigation app, follow these steps:\n\n" +
+                        "1. Type in your desired destination or point of interest and click search. For example, you could search for a specific class room, lab name, or type of place (e.g., \"lab101\").\n\n" +
+                        "2. The app will display a list of results that match your search terms. Select the result you want to navigate to in the search list below.\n\n" +
+                        "3. If you want to quickly find a specific type of point of interest, look for the checkboxes on the map that correspond to different categories, such as washroom or class room.\n\n" +
                         "4. Finally, if you have any favorite locations saved in the app, you can access them by tapping on the \"Favorites\" button. This will show you a list of all the locations you have saved, so you can easily navigate to them without having to search for them again.";
             default:
                 return "";
@@ -483,14 +506,20 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Handles the sign-out button click event by displaying a confirmation dialog to the user. The dialog asks if the user wants to save changes to the user account data, and provides options to save, not save, or cancel. The method sets up event handlers for the buttons, and takes appropriate action based on the user's choice. If the user chooses to save, the method saves the user account data and returns to the login page. If the user chooses not to save, the method returns to the login page without saving. If the user chooses to cancel, the method closes the confirmation dialog and returns.
+     * Handles the sign-out button click event by displaying a confirmation dialog to the user. The dialog asks
+     * if the user wants to save changes to the user account data, and provides options to save, not save, or cancel.
+     * The method sets up event handlers for the buttons, and takes appropriate action based on the user's choice.
+     * If the user chooses to save, the method saves the user account data and returns to the login page.
+     * If the user chooses not to save, the method returns to the login page without saving.
+     * If the user chooses to cancel, the method closes the confirmation dialog and returns.
+     *
      * @param event the ActionEvent object representing the sign-out button click event
      * @throws IOException if the FXML file for the login view cannot be loaded
      */
     @FXML
     private void signOut(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        String s ="";
+        String s = "";
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
 
@@ -511,9 +540,9 @@ public class CampusMapController implements Initializable {
             try {
                 UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
                 // properly save the data
-                ConfigUtil.saveUserList(userlist,CampusMapApplication.class.getResource("user-account.json"));
-                returnBack("login-view.fxml","Login Page");
-                ((Node)(event.getSource())).getScene().getWindow().hide();
+                ConfigUtil.saveUserList(userlist, CampusMapApplication.class.getResource("user-account.json"));
+                returnBack("login-view.fxml", "Login Page");
+                ((Node) (event.getSource())).getScene().getWindow().hide();
                 stage.close();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -524,14 +553,14 @@ public class CampusMapController implements Initializable {
             //Don't save the data, jump back to login page
             try {
                 //now "enter" key can be user when re-login
-                    FXMLLoader loginFxmlLoader = returnBack("login-view.fxml", "Login Page");
-                    Stage loginStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-                    Scene loginScene = loginStage.getScene();
-                    pressEnter(loginFxmlLoader, loginScene);
+                FXMLLoader loginFxmlLoader = returnBack("login-view.fxml", "Login Page");
+                Stage loginStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+                Scene loginScene = loginStage.getScene();
+                pressEnter(loginFxmlLoader, loginScene);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
             stage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -539,14 +568,15 @@ public class CampusMapController implements Initializable {
             stage.close();
         });
         // Create an HBox container to hold the buttons
-        HBox hbox = new HBox( dontSaveButton, saveButton, cancelButton);
+        HBox hbox = new HBox(dontSaveButton, saveButton, cancelButton);
         hbox.setTranslateY(50);
         hbox.setSpacing(-5); // Set spacing between buttons
         VBox vbox = new VBox(new Label(s), hbox); // Add HBox to VBox container
         Scene scene = new Scene(vbox, 280, 100);
         stage.setScene(scene);
-        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth()-650);
-        stage.setY(((Node) event.getSource()).getScene().getWindow().getY()+200);
+        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() +
+                ((Node) event.getSource()).getScene().getWindow().getWidth() - 650);
+        stage.setY(((Node) event.getSource()).getScene().getWindow().getY() + 200);
         stage.setWidth(400);
         stage.setHeight(200);
         stage.setTitle("Sign Out");// Set the title of the pop-up window
@@ -556,8 +586,12 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Returns the user to the previous view by loading the FXML file and creating a new stage for it. The method sets the stage for the LoginViewController and creates a new scene with the specified FXML file and dimensions. If the FXML file is for the login view, the method also sets up a key event handler to handle the Enter key and log the user in. The method returns an FXMLLoader object for the loaded FXML file.
-     * @param file the name of the FXML file to be loaded
+     * Returns the user to the previous view by loading the FXML file and creating a new stage for it. The method sets
+     * the stage for the LoginViewController and creates a new scene with the specified FXML file and dimensions. If
+     * the FXML file is for the login view, the method also sets up a key event handler to handle the Enter key and
+     * log the user in. The method returns an FXMLLoader object for the loaded FXML file.
+     *
+     * @param file  the name of the FXML file to be loaded
      * @param title the title of the new stage
      * @return an FXMLLoader object for the loaded FXML file
      * @throws IOException if the FXML file cannot be loaded
@@ -610,10 +644,9 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onZoomInButtonClicked(ActionEvent actionEvent) {
-        if (zoom > 0.5){
+        if (zoom > 0.5) {
             zoom *= 0.8;
-        }
-        else{
+        } else {
             zoomIn.setDisable(false);
         }
         showMap();
@@ -621,10 +654,9 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onZoomOutButtonClicked(ActionEvent actionEvent) {
-        if (zoom < 1.7){
+        if (zoom < 1.7) {
             zoom *= 1.2;
-        }
-        else{
+        } else {
             zoomOut.setDisable(false);
         }
         showMap();
@@ -659,11 +691,9 @@ public class CampusMapController implements Initializable {
         highlightSelectedFloorButton(clickedButton);
     }
 
-
-
     @FXML
     private void onFloor1ButtonClick(ActionEvent actionEvent) {
-        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 2){
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 2) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(1));
             showMap();
 
@@ -674,7 +704,7 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloor2ButtonClick(ActionEvent actionEvent) {
-        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 3){
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 3) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(2));
             showMap();
 
@@ -685,7 +715,7 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloor3ButtonClick(ActionEvent actionEvent) {
-        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 4){
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 4) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(3));
             showMap();
 
@@ -696,7 +726,7 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloor4ButtonClick(ActionEvent actionEvent) {
-        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 5){
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 5) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(4));
             showMap();
 
@@ -705,37 +735,33 @@ public class CampusMapController implements Initializable {
         }
     }
 
-    private void showFloorButtons(){
+    private void showFloorButtons() {
         int floorCount = CurrentUser.getCurrentBaseMap().getFloorMaps().size();
-        if (floorCount <= 1){
+        if (floorCount <= 1) {
             floor0.setVisible(false);
             floor1.setVisible(false);
             floor2.setVisible(false);
             floor3.setVisible(false);
             floor4.setVisible(false);
-        }
-        else if (floorCount == 2){
+        } else if (floorCount == 2) {
             floor0.setVisible(true);
             floor1.setVisible(true);
             floor2.setVisible(false);
             floor3.setVisible(false);
             floor4.setVisible(false);
-        }
-        else if (floorCount == 3){
+        } else if (floorCount == 3) {
             floor0.setVisible(true);
             floor1.setVisible(true);
             floor2.setVisible(true);
             floor3.setVisible(false);
             floor4.setVisible(false);
-        }
-        else if (floorCount == 4){
+        } else if (floorCount == 4) {
             floor0.setVisible(true);
             floor1.setVisible(true);
             floor2.setVisible(true);
             floor3.setVisible(true);
             floor4.setVisible(false);
-        }
-        else{
+        } else {
             floor0.setVisible(true);
             floor1.setVisible(true);
             floor2.setVisible(true);
@@ -745,13 +771,20 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Handles a mouse click event on the map. This method calculates the real-world mouse position based on the mouse event, and then iterates through all points of interest on the current floor map to determine if the mouse click hits a point of interest. If a point of interest is hit, the method selects the point of interest, shows it in the informationList ListView, and returns. If no point of interest is hit, the method deselects any currently selected POI and returns.
+     * Handles a mouse click event on the map. This method calculates the real-world mouse position based on the
+     * mouse event, and then iterates through all points of interest on the current floor map to determine if
+     * the mouse click hits a point of interest. If a point of interest is hit, the method selects the
+     * point of interest, shows it in the informationList ListView, and returns. If no point of interest is hit,
+     * the method deselects any currently selected POI and returns. It is also used to open the POI editor if the
+     * AddPOI button was pressed
+     *
      * @param mouseEvent the MouseEvent object representing the mouse click event
+     * @throws IOException
      */
-    public void onMapClicked(MouseEvent mouseEvent) {
+    public void onMapClicked(MouseEvent mouseEvent) throws IOException {
         Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
-        for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
-            for(PointOfInterest poi: layer.getPoints()) {
+        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                     showPoiInList(poi);
@@ -765,7 +798,8 @@ public class CampusMapController implements Initializable {
                     menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
 
                     // Set the content for the ContextMenu
-                    String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
+                    String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() +
+                            "\nDescription:" + "  " + poi.getDescription();
                     menuItem = new MenuItem(s);
                     menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
                     poiPopup.getItems().add(menuItem);
@@ -776,11 +810,12 @@ public class CampusMapController implements Initializable {
 
                     // Show the context menu at the POI position
                     poiPopup.show(mapPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
-                    return;                }
+                    return;
+                }
             }
         }
-        if (CurrentUser.getCurrentFloorMap().getUserLayer() != null && user_POIs.isSelected()){
-            for(PointOfInterest poi: CurrentUser.getCurrentFloorMap().getUserLayer().getPoints()) {
+        if (CurrentUser.getCurrentFloorMap().getUserLayer() != null && user_POIs.isSelected()) {
+            for (PointOfInterest poi : CurrentUser.getCurrentFloorMap().getUserLayer().getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                     showPoiInList(poi);
@@ -789,21 +824,33 @@ public class CampusMapController implements Initializable {
             }
         }
         selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
+
+        // If mapClicked is true then call the openPOIPopup to open the POI popup window to add a new POI.
+        // Pass along the current realMousePosition
+        if (mapClicked) {
+            openPOIPopup(realMousePosition);
+            // Reset mapClicked so the button has to be pressed again
+            mapClicked = false;
+        }
     }
 
     /**
-     * Selects a Point of Interest (POI) based on the given SearchResult object. The method sets the currentFloorMap to the floor map associated with the SearchResult object. It also updates the selected state of the currentSelectedPoi and the newly selected POI. If the newly selected POI is not within the viewport, this method centralizes the POI on the map. It then shows the map, sets the favourite button state, and returns.
+     * Selects a Point of Interest (POI) based on the given SearchResult object. The method sets the currentFloorMap
+     * to the floor map associated with the SearchResult object. It also updates the selected state of the
+     * currentSelectedPoi and the newly selected POI. If the newly selected POI is not within the viewport,
+     * this method centralizes the POI on the map. It then shows the map, sets the favourite button state, and returns.
+     *
      * @param searchResult the SearchResult object containing the POI to be selected
      * @throws NullPointerException if the SearchResult object is null
      */
-    private void selectPoi(SearchResult searchResult){
-        if(searchResult != null){
+    private void selectPoi(SearchResult searchResult) {
+        if (searchResult != null) {
             CurrentUser.setCurrentFloorMap(searchResult.getFloorMap());
-            if(CurrentUser.getCurrentSelectedPoi() != null){
+            if (CurrentUser.getCurrentSelectedPoi() != null) {
                 CurrentUser.getCurrentSelectedPoi().setSelected(false);
             }
             CurrentUser.setCurrentSelectedPoi(searchResult.getPoi());
-            if(CurrentUser.getCurrentSelectedPoi() != null){
+            if (CurrentUser.getCurrentSelectedPoi() != null) {
                 CurrentUser.getCurrentSelectedPoi().setSelected(true);
             }
             centralizeSelectedPoi();
@@ -818,43 +865,47 @@ public class CampusMapController implements Initializable {
     }
 
 
-    private boolean hitTest(Point2D mousePosition, PointOfInterest poi){
-        if (mousePosition.getX() <= poi.getX()+6/zoom && mousePosition.getX() >= poi.getX()-6/zoom && mousePosition.getY() <= poi.getY()+6/zoom && mousePosition.getY() >= poi.getY()-6/zoom){
+    private boolean hitTest(Point2D mousePosition, PointOfInterest poi) {
+        if (mousePosition.getX() <= poi.getX() + 6
+                / zoom && mousePosition.getX() >= poi.getX() - 6
+                / zoom && mousePosition.getY() <= poi.getY() + 6
+                / zoom && mousePosition.getY() >= poi.getY() - 6 / zoom) {
             return true;
         }
         return false;
     }
 
     /**
-     Converts a point in the window coordinate system to a point in the real map coordinate system.
-     Takes into account the current zoom level and scroll position.
-     @param windowPoint The point in the window coordinate system
-     @return The converted point in the real map coordinate system
+     * Converts a point in the window coordinate system to a point in the real map coordinate system.
+     * Takes into account the current zoom level and scroll position.
+     *
+     * @param windowPoint The point in the window coordinate system
+     * @return The converted point in the real map coordinate system
      */
-    private Point2D WindowPointToRealPoint(Point2D windowPoint){
-        double windowXValue = (imageWidth - mapPane.getViewportBounds().getWidth()/zoom) * mapPane.getHvalue();
-        double windowYValue = (imageHeight - mapPane.getViewportBounds().getHeight()/zoom) * mapPane.getVvalue();
-        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue+")");
-        double mouseX = windowXValue + windowPoint.getX()/zoom;
-        double mouseY = windowYValue + windowPoint.getY()/zoom;
-        if (mapPane.getViewportBounds().getHeight() >= imageHeight){
-            mouseY = windowPoint.getY()/zoom;
+    private Point2D WindowPointToRealPoint(Point2D windowPoint) {
+        double windowXValue = (imageWidth - mapPane.getViewportBounds().getWidth() / zoom) * mapPane.getHvalue();
+        double windowYValue = (imageHeight - mapPane.getViewportBounds().getHeight() / zoom) * mapPane.getVvalue();
+        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue + ")");
+        double mouseX = windowXValue + windowPoint.getX() / zoom;
+        double mouseY = windowYValue + windowPoint.getY() / zoom;
+        if (mapPane.getViewportBounds().getHeight() >= imageHeight) {
+            mouseY = windowPoint.getY() / zoom;
         }
-        if (mapPane.getViewportBounds().getWidth() >= imageWidth){
-            mouseX = windowPoint.getX()/zoom;
+        if (mapPane.getViewportBounds().getWidth() >= imageWidth) {
+            mouseX = windowPoint.getX() / zoom;
         }
-        System.out.println("mouse real position:(" + mouseX + ", " + mouseY+")");
+        System.out.println("mouse real position:(" + mouseX + ", " + mouseY + ")");
         return new Point2D(mouseX, mouseY);
     }
 
-    private Point2D calculateRealMousePosition(MouseEvent mouseEvent){
+    private Point2D calculateRealMousePosition(MouseEvent mouseEvent) {
         return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
     }
 
     /**
-     * This method is called when the search button is clicked. It searches for the text entered in the search text field in
-     * all the layers of the current base map and adds the search results to the informationList ListView. If the text field
-     * is empty, no search results are displayed.
+     * This method is called when the search button is clicked. It searches for the text entered in the search
+     * text field in all the layers of the current base map and adds the search results to the informationList
+     * ListView. If the text field is empty, no search results are displayed.
      *
      * @param actionEvent an ActionEvent object representing the click event
      */
@@ -863,12 +914,13 @@ public class CampusMapController implements Initializable {
         selectAllLayers();
         checkBoxSelected();
         String text = searchText.getText().toLowerCase().trim();
-        if (!text.equals("")){
+        if (!text.equals("")) {
             informationList.getItems().clear();
-            for(FloorMap floorMap : CurrentUser.getCurrentBaseMap().getFloorMaps()){
-                for (Layer layer: floorMap.getLayers()){
-                    for(PointOfInterest poi : layer.getPoints()){
-                        if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text)  || contains(poi.getType(), text)  || contains(poi.getDescription(), text)) {
+            for (FloorMap floorMap : CurrentUser.getCurrentBaseMap().getFloorMaps()) {
+                for (Layer layer : floorMap.getLayers()) {
+                    for (PointOfInterest poi : layer.getPoints()) {
+                        if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text) ||
+                                contains(poi.getType(), text) || contains(poi.getDescription(), text)) {
                             informationList.getItems().add(new SearchResult(floorMap, poi));
                         }
                     }
@@ -881,21 +933,22 @@ public class CampusMapController implements Initializable {
      * Checks if a string contains a target string, ignoring case.
      *
      * @param target the target string to search for
-     * @param text the text string to search in
+     * @param text   the text string to search in
      * @return true if the target string is found in the text string, false otherwise
      */
-    private static boolean contains(String target, String text){
-        if(target != null && target.toLowerCase().contains(text)){
+    private static boolean contains(String target, String text) {
+        if (target != null && target.toLowerCase().contains(text)) {
             return true;
         }
         return false;
     }
 
     /**
-     Sets the state of the favorite button based on the current selected point of interest.
-     If there is no selected point of interest, the favorite button is disabled and set to the default state (not a favorite).
-     If there is a selected point of interest, the favorite button is enabled and set to the appropriate state (favorite or not favorite)
-     based on the selected point of interest's favorite status.
+     * Sets the state of the favorite button based on the current selected point of interest.
+     * If there is no selected point of interest, the favorite button is disabled and set to
+     * the default state (not a favorite).
+     * If there is a selected point of interest, the favorite button is enabled and set to the
+     * appropriate state (favorite or not favorite) based on the selected point of interest's favorite status.
      */
     private void setFavouriteButtonState() {
         ImageView imageView;
@@ -918,7 +971,7 @@ public class CampusMapController implements Initializable {
 
     public void onFavoriteButtonClicked(ActionEvent actionEvent) {
         selectAllLayers();
-        if(CurrentUser.getCurrentSelectedPoi() != null){
+        if (CurrentUser.getCurrentSelectedPoi() != null) {
             CurrentUser.getCurrentSelectedPoi().setFavorite(!CurrentUser.getCurrentSelectedPoi().isFavorite());
             setFavouriteButtonState();
         }
@@ -933,10 +986,10 @@ public class CampusMapController implements Initializable {
 
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
         informationList.getItems().clear();
-        for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()){
-            for (FloorMap floorMap : baseMap.getFloorMaps()){
-                for (Layer layer: floorMap.getLayers()){
-                    for(PointOfInterest poi : layer.getPoints()){
+        for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()) {
+            for (FloorMap floorMap : baseMap.getFloorMaps()) {
+                for (Layer layer : floorMap.getLayers()) {
+                    for (PointOfInterest poi : layer.getPoints()) {
                         if (poi.isFavorite()) {
                             informationList.getItems().add(new SearchResult(floorMap, poi));
                         }
@@ -947,10 +1000,12 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Centralizes the currently selected Point of Interest (POI) on the map by scrolling the view to show the POI in the center of the screen.
+     * Centralizes the currently selected Point of Interest (POI) on the map by scrolling
+     * the view to show the POI in the center of the screen.
      * If the currentSelectedPoi is null, this method does nothing.
-     * If the currentSelectedPoi is not null and lies within the viewport, this method returns without doing anything.
-     *
+     * If the currentSelectedPoi is not null and lies within the viewport, this method
+     * returns without doing anything.
+     * ------
      * If the currentSelectedPoi is not null and lies outside the viewport,
      * this method calculates the desired scroll position for both the horizontal
      * and vertical scroll bars based on the currentSelectedPoi's position and the
@@ -959,50 +1014,57 @@ public class CampusMapController implements Initializable {
      * if it is closer to the right edge, the method sets the horizontal scroll bar to 1;
      * otherwise, it calculates the scroll position based on the currentSelectedPoi's
      * distance from the left edge of the viewport and the total width of the map image.
-     *
+     * ------
      * Similarly, if the currentSelectedPoi is closer to the top edge of the viewport,
      * the method sets the vertical scroll bar to 0; if it is closer to the bottom edge,
      * the method sets the vertical scroll bar to 1; otherwise, it calculates the scroll position
-     * based on the currentSelectedPoi's distance from the top edge of the viewport and the total height of the map image.
-     *
+     * based on the currentSelectedPoi's distance from the top edge of the viewport and the total
+     * height of the map image.
+     * -----
      * Finally, this method sets the scroll positions of the mapPane's horizontal and vertical scroll bars
      * to the calculated values. It then loops through all the points of interest that are marked as
      * favorites in the currentFloorMap's layers and adds them to the informationList ListView.
+     *
      * @throws NullPointerException if any of the objects referenced within the method are null.
      */
-    private void centralizeSelectedPoi(){
-        if(CurrentUser.getCurrentSelectedPoi() != null){
+    private void centralizeSelectedPoi() {
+        if (CurrentUser.getCurrentSelectedPoi() != null) {
             Point2D windowTopLeft = WindowPointToRealPoint(new Point2D(0, 0));
-            Point2D windowBottomRight = WindowPointToRealPoint(new Point2D(mapPane.getViewportBounds().getWidth(), mapPane.getViewportBounds().getHeight()));
-            if (CurrentUser.getCurrentSelectedPoi().getX() <= windowBottomRight.getX() && CurrentUser.getCurrentSelectedPoi().getX() >= windowTopLeft.getX()
-                    && CurrentUser.getCurrentSelectedPoi().getY() <= windowBottomRight.getY() && CurrentUser.getCurrentSelectedPoi().getY() >= windowTopLeft.getY()){
+            Point2D windowBottomRight = WindowPointToRealPoint(new Point2D(mapPane.getViewportBounds().getWidth(),
+                    mapPane.getViewportBounds().getHeight()));
+            if (CurrentUser.getCurrentSelectedPoi().getX() <= windowBottomRight.getX() &&
+                    CurrentUser.getCurrentSelectedPoi().getX() >= windowTopLeft.getX()
+                    && CurrentUser.getCurrentSelectedPoi().getY() <= windowBottomRight.getY() &&
+                    CurrentUser.getCurrentSelectedPoi().getY() >= windowTopLeft.getY()) {
                 return;
             }
             double scrollX = 0;
             double scrollY = 0;
-            if(CurrentUser.getCurrentSelectedPoi().getX() < (windowBottomRight.getX()-windowTopLeft.getX())/2){
+            if (CurrentUser.getCurrentSelectedPoi().getX() < (windowBottomRight.getX() - windowTopLeft.getX()) / 2) {
                 scrollX = 0;
-            }
-            else if (CurrentUser.getCurrentSelectedPoi().getX() > imageWidth-(windowBottomRight.getX()-windowTopLeft.getX())/2){
+            } else if (CurrentUser.getCurrentSelectedPoi().getX() > imageWidth -
+                    (windowBottomRight.getX() - windowTopLeft.getX()) / 2) {
                 scrollX = 1;
+            } else {
+                scrollX = (CurrentUser.getCurrentSelectedPoi().getX() -
+                        (windowBottomRight.getX() - windowTopLeft.getX()) / 2) / (imageWidth -
+                        (windowBottomRight.getX() - windowTopLeft.getX()));
             }
-            else{
-                scrollX = (CurrentUser.getCurrentSelectedPoi().getX() - (windowBottomRight.getX()-windowTopLeft.getX())/2)/(imageWidth-(windowBottomRight.getX()-windowTopLeft.getX()));
-            }
-            if(CurrentUser.getCurrentSelectedPoi().getY() < (windowBottomRight.getY()-windowTopLeft.getY())/2){
+            if (CurrentUser.getCurrentSelectedPoi().getY() < (windowBottomRight.getY() - windowTopLeft.getY()) / 2) {
                 scrollY = 0;
-            }
-            else if (CurrentUser.getCurrentSelectedPoi().getY() > imageHeight-(windowBottomRight.getY()-windowTopLeft.getY())/2){
+            } else if (CurrentUser.getCurrentSelectedPoi().getY() > imageHeight -
+                    (windowBottomRight.getY() - windowTopLeft.getY()) / 2) {
                 scrollY = 1;
-            }
-            else{
-                scrollY = (CurrentUser.getCurrentSelectedPoi().getY() - (windowBottomRight.getY()-windowTopLeft.getY())/2)/(imageHeight-(windowBottomRight.getY()-windowTopLeft.getY()));
+            } else {
+                scrollY = (CurrentUser.getCurrentSelectedPoi().getY() -
+                        (windowBottomRight.getY() - windowTopLeft.getY()) / 2)
+                        / (imageHeight - (windowBottomRight.getY() - windowTopLeft.getY()));
             }
             mapPane.setHvalue(scrollX);
             mapPane.setVvalue(scrollY);
         }
-        for (Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
-            for(PointOfInterest poi : layer.getPoints()){
+        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
                 if (poi.isFavorite()) {
                     informationList.getItems().add(poi);
                 }
@@ -1011,12 +1073,13 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     Handles the on-click event of the Edit button.
-     Loads the MapEditingController and shows the new stage.
-     Sets the current floor map to the MapEditingController.
-     Closes the current stage.
-     @param actionEvent the event triggered by clicking the Edit button
-     @throws IOException if there is an issue with loading the MapEditingController or closing the current stage
+     * Handles the on-click event of the Edit button.
+     * Loads the MapEditingController and shows the new stage.
+     * Sets the current floor map to the MapEditingController.
+     * Closes the current stage.
+     *
+     * @param actionEvent the event triggered by clicking the Edit button
+     * @throws IOException if there is an issue with loading the MapEditingController or closing the current stage
      */
     public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
         try {
@@ -1034,7 +1097,7 @@ public class CampusMapController implements Initializable {
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 
-    public void selectAllLayers(){
+    public void selectAllLayers() {
         classrooms.setSelected(true);
         stairwells.setSelected(true);
         elevators.setSelected(true);
@@ -1046,7 +1109,7 @@ public class CampusMapController implements Initializable {
         user_POIs.setSelected(true);
     }
 
-    public void deselectAllLayers(){
+    public void deselectAllLayers() {
         classrooms.setSelected(false);
         stairwells.setSelected(false);
         elevators.setSelected(false);
@@ -1058,65 +1121,52 @@ public class CampusMapController implements Initializable {
         user_POIs.setSelected(false);
     }
 
+    /**
+     * This method is called when the Add POI button was clicked
+     *
+     * @param actionEvent Pass the action event data along
+     */
     public void onAddPOIClicked(ActionEvent actionEvent) {
-        // Create a new stage to be a popup window and set the owner to the CampusMap view
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-        // Set the title of the popup window
-        stage.setTitle("New POI");
+        mapClicked = true;
+    }
 
-        // name
-        // room number
-        // favourite
-        // description
+    /**
+     * This method is used to create/call the popup window to create a new POI
+     *
+     * @param realMousePosition This is the current position of the mouse on the map
+     *                          (takes into account zoom, size, etc.)
+     * @throws IOException
+     */
+    private void openPOIPopup(Point2D realMousePosition) throws IOException {
+        // Create the new stage (window)
+        Stage poiPopupStage = new Stage();
 
-        // set the type as well to user created
+        // Load in the fxml file to a new scene and pass the stage to the controller
+        FXMLLoader popupFxmlLoader = new FXMLLoader(getClass().getResource("poi-popup.fxml"));
+        Scene poiPopupScene = new Scene(popupFxmlLoader.load());
+        PoiPopupController.setStage(poiPopupStage);
 
-        // Create the labels and text-fields and put them in a corresponding vbox
-        Label nameLabel = new Label("Enter a name for the POI");
-        TextField name = new TextField();
-        name.setPromptText("Name");
-        VBox nameBox = new VBox(nameLabel, name);
+        // Pass along the mouse position so it can be saved as the POI location
+        PoiPopupController.setCoords(realMousePosition);
 
-        Label roomNumberLabel = new Label("Enter a room number for the POI");
-        TextField roomNumber = new TextField();
-        roomNumber.setPromptText("Room number");
-        VBox roomNumberBox = new VBox(roomNumberLabel, roomNumber);
+        // Set the window's title
+        poiPopupStage.setTitle("New POI");
+        // Set the max and min heights and widths
+        poiPopupStage.setMinHeight(400);
+        poiPopupStage.setMinWidth(280);
+        poiPopupStage.setMaxHeight(500);
+        poiPopupStage.setMaxWidth(600);
 
-        Label descriptionLabel = new Label("Enter a description for the POI");
-        TextField description = new TextField();
-        description.setPromptText("Description");
-        VBox descriptionBox = new VBox(descriptionLabel, description);
-
-        // Get the favourite icon and create a new image view for it
-        ImageView favouriteIcon = new ImageView(getClass().getResource("favorite1.png").toExternalForm());
-        favouriteIcon.setFitWidth(16);
-        favouriteIcon.setFitHeight(16);
-
-        // Create the favourite button
-        Button favourite = new Button("Set POI as a favourite", favouriteIcon); // TODO: Change icon on click
-
-        // Create the favourite button
-        Button savePOI = new Button("Save POI");
-
-        // Add a Vbox so the items automatically are laid out in the window
-        // Add all the elements and separate them with a spacer which is a blank label
-        VBox vbox = new VBox(nameBox, new Label(), roomNumberBox, new Label(), descriptionBox, new Label(), favourite, new Label(), savePOI);
-        // Set the padding and create the scene
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        Scene scene = new Scene(vbox);
-
-        // Add the scene to the stage (window) and set the size
-        stage.setScene(scene);
-        stage.setWidth(300);
-        stage.setHeight(500);
-        stage.setResizable(false);
+        // Add the program icon to the window
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
-        stage.getIcons().add(icon);
-        stage.show();
+        poiPopupStage.getIcons().add(icon);
 
-
+        // Add the scene to the stage
+        poiPopupStage.setScene(poiPopupScene);
+        // Make the popup window block control of the main window
+        poiPopupStage.initModality(Modality.APPLICATION_MODAL);
+        // Show the window
+        poiPopupStage.show();
     }
 
 }

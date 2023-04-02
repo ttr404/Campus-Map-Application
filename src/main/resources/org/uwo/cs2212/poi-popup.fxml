@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="400.0" minWidth="280.0" prefHeight="280.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.PoiPopupController">
+   <children>
+      <VBox layoutX="90.0" layoutY="77.0" prefHeight="200.0" prefWidth="279.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <Label text="Enter a name">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="NameField" promptText="Name" />
+            <Label text="Enter a room number">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="RoomNumberField" promptText="Room Number">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Label text="Enter a description">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextArea fx:id="DescriptionField" prefHeight="200.0" prefWidth="200.0" promptText="Description">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextArea>
+            <Button fx:id="favouriteButton" mnemonicParsing="false" onAction="#OnFavouriteClicked" text="Set as a Favourite">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#OnSaveClicked" text="Save" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
