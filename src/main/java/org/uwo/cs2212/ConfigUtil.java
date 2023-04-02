@@ -71,10 +71,12 @@ public class ConfigUtil {
                     if(userLayer != null){
                         floorMap.setUserLayer(userLayer);
                     }
+                    
 
-                    if (CurrentUser.getUserData().getFavoritePois() != null){
+                    if (CurrentUser.getUserData() != null && CurrentUser.getUserData().getFavoritePois() != null){
                         updateFavorite(baseMap, floorMap);
                     }
+
 
                     // Add the loaded FloorMap object to the BaseMap object
                     baseMap.getFloorMaps().add(floorMap);
