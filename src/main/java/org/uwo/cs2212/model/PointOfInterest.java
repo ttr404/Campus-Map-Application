@@ -1,8 +1,7 @@
 package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import org.json.JSONObject;
 
 
 public class PointOfInterest {
@@ -85,4 +84,5 @@ public class PointOfInterest {
     public String toString(){
         return type + ":" + name + " \n" + roomNumber + "\n" + description;
     }
+
 }

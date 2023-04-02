@@ -1,5 +1,9 @@
 package org.uwo.cs2212.model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Layer {
@@ -66,4 +70,7 @@ public class Layer {
     public void setHideLayer(boolean hideLayer) {
         this.hideLayer = hideLayer;
     }
+
 }
+
+

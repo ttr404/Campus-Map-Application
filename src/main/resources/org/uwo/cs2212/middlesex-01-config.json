@@ -105,7 +105,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.1",
           "description": "Stairwell ST.1",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 270.55,
@@ -113,7 +113,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.2",
           "description": "Stairwell ST.2",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 826.89,
@@ -121,7 +121,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.3",
           "description": "Stairwell ST.3",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 1239,
@@ -129,7 +129,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.5",
           "description": "Stairwell ST.5",
-          "type": "stairwell"
+          "type": "Stairwell"
         }
       ]
     },
@@ -146,7 +146,7 @@
           "name": "Elevator",
           "roomNumber": "EL.A",
           "description": "Elevator EL.A",
-          "type": "elevator"
+          "type": "Elevator"
         },
         {
           "x": 1098.5,
@@ -154,7 +154,7 @@
           "name": "Elevator",
           "roomNumber": "EL.C",
           "description": "Elevator EL.C",
-          "type": "elevator"
+          "type": "Elevator"
         }
       ]
     }

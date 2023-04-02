@@ -95,8 +95,6 @@ public class LoginViewController {
 
             stage.show();
         }
-
-        // add multiple user function here
         else {
             error.setText("Invalid username or password.");
             password.setText("");

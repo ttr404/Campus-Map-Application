@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Locale;
 
 /**
  * The ConfigUtil class provides utility methods for loading and saving
@@ -89,8 +88,6 @@ public class ConfigUtil {
             throw new RuntimeException(e);
         }
     }
-
-
 
     /**
      * Loads a FloorMap object from the specified JSON file.

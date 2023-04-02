@@ -122,6 +122,8 @@ public class CampusMapController implements Initializable {
     private double imageHeight;
     private Button currentSelectedFloorButton;
     private Button[] floorButtons;
+    private ContextMenu poiPopup;
+
 
 
     /**
@@ -710,44 +712,29 @@ public class CampusMapController implements Initializable {
             for(PointOfInterest poi: layer.getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
+                    showPoiInList(poi);
 
-                    //pop-up window
-                    Stage stage = new Stage();
+                    /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
+
+                    // Create the ContextMenu
+                    poiPopup = new ContextMenu();
+                    poiPopup.setStyle("-fx-background-color: transparent;");
+                    MenuItem menuItem = new MenuItem();
+                    menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
+
+                    // Set the content for the ContextMenu
                     String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.initOwner((Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
-                    Label label = new Label(s);
-                    label.setStyle("-fx-font-size: 12px; -fx-text-fill: #333333;");
-                    VBox vbox = new VBox(label);
-                    stage.setTitle(poi.getName());
-                    vbox.setStyle("-fx-background-color: #d9eff2;");
-                    vbox.setPadding(new Insets(10));
-                    Scene scene = new Scene(vbox, 300, 100);
-                    stage.setScene(scene);
+                    menuItem = new MenuItem(s);
+                    menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
+                    poiPopup.getItems().add(menuItem);
 
                     // Calculate the window position of the POI
                     Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
                     Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
-                    //
-                    Node node = (Node) mouseEvent.getSource();
-                    Point2D poiPosition = new Point2D(poi.getX(),poi.getY());
-                    Point2D poiScreenPosition = node.localToScreen(poiPosition);
 
-                    // Set the pop-up window position
-                    double popUpWindowWidth = 200;
-                    double popUpWindowHeight = 170;
-                    double popUpWindowX = poiScreenPosition.getX() - popUpWindowWidth / 2;
-                    double popUpWindowY = poiScreenPosition.getY() - popUpWindowHeight / 2;
-
-                    stage.setX(popUpWindowX);
-                    stage.setY(popUpWindowY);
-
-                    stage.setWidth(200);
-                    stage.setHeight(170);
-                    stage.show();
-                    showPoiInList(poi);
-                    return;
-                }
+                    // Show the context menu at the POI position
+                    poiPopup.show(mapPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                    return;                }
             }
         }
         if (CurrentUser.getCurrentFloorMap().getUserLayer() != null && user_POIs.isSelected()){

@@ -1,5 +1,5 @@
 {
-  "name": "3rd floor",
+  "name": "2nd floor",
   "mapFileName": "science-centre-f2.png",
   "showLegend": true,
   "legendPosition": [
@@ -10,26 +10,85 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
-      "color": "BLACK",
+      "name": "Base layer",
+      "color": "BLUE",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "WSC100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
+          "x": 469,
+          "y": 366,
+          "name": "Men's washroom",
+          "roomNumber": "254A",
+          "description": "2F Barrier-free Men's washroom",
+          "type": "Accessibility"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "WSC101",
-          "roomNumber": "A101",
-          "description": "Class room A101",
+          "x": 459,
+          "y": 421,
+          "name": "Women's washroom",
+          "roomNumber": "255",
+          "description": "2F Barrier-free Women's washroom",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Elevator layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 556,
+          "y": 288,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "Elevator"
+        }
+      ]
+    },
+    {
+      "name": "Stairwell layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 564.33,
+          "y": 636.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "Stairwell"
+        },
+        {
+          "x": 199.33,
+          "y": 268.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "Stairwell"
+        }
+      ]
+    },
+    {
+      "name": "Classroom layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 246,
+          "y": 172,
+          "name": "WSC240",
+          "roomNumber": "240",
+          "description": "2F Classroom 240",
           "type": "ClassRoom"
         }
       ]

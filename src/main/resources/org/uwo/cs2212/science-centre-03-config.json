@@ -1,5 +1,5 @@
 {
-  "name": "4th floor",
+  "name": "3rd floor",
   "mapFileName": "science-centre-f3.png",
   "showLegend": true,
   "legendPosition": [
@@ -10,27 +10,69 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
-      "color": "BLACK",
+      "name": "Base layer",
+      "color": "BLUE",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "WSC100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
+          "x": 469,
+          "y": 366,
+          "name": "Men's washroom",
+          "roomNumber": "354A",
+          "description": "3F Barrier-free Men's washroom",
+          "type": "Accessibility"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "WSC101",
-          "roomNumber": "A101",
-          "description": "Class room A101",
-          "type": "ClassRoom"
+          "x": 459,
+          "y": 421,
+          "name": "Women's washroom",
+          "roomNumber": "356",
+          "description": "3F Barrier-free Women's washroom",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Elevator layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 556,
+          "y": 288,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "Elevator"
+        }
+      ]
+    },
+    {
+      "name": "Stairwell layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 564.33,
+          "y": 636.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "Stairwell"
+        },
+        {
+          "x": 199.33,
+          "y": 268.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "Stairwell"
         }
       ]
     }

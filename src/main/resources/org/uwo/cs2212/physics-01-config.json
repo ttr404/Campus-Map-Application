@@ -10,7 +10,7 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
+      "name": "Base layer",
       "color": "blue",
       "layerType": "base",
       "font": "Arial",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Elevator layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -71,7 +71,7 @@
           "name": "Elevator",
           "roomNumber": "EL.A",
           "description": "Elevator EL.A",
-          "type": "elevator"
+          "type": "Elevator"
         },
         {
           "x": 449.5,
@@ -79,12 +79,12 @@
           "name": "Elevator",
           "roomNumber": "EL.B",
           "description": "Elevator EL.B",
-          "type": "elevator"
+          "type": "Elevator"
         }
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Stairwell layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -96,7 +96,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.1",
           "description": "Stairwell ST.1",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 266.55,
@@ -104,7 +104,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.2",
           "description": "Stairwell ST.2",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 738,
@@ -112,7 +112,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.5",
           "description": "Stairwell ST.5",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x":765 ,
@@ -120,7 +120,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.6",
           "description": "Stairwell ST.6",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 532.40,
@@ -128,7 +128,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.8",
           "description": "Stairwell ST.8",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 566.40,
@@ -136,12 +136,12 @@
           "name": "Stairwell",
           "roomNumber": "ST.9",
           "description": "Stairwell ST.9",
-          "type": "stairwell"
+          "type": "Stairwell"
         }
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Classroom layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -190,7 +190,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Entry layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",

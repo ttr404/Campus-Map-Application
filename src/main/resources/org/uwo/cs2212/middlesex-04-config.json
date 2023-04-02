@@ -10,18 +10,7 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
-      "color": "BLUE",
-      "layerType": "base",
-      "font": "Arial",
-      "size": 16,
-      "points": [
-        {
-        }
-      ]
-    },
-    {
-      "name": "Main Map",
+      "name": "Stairwell layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -33,7 +22,7 @@
           "name": "Stairwell",
           "roomNumber": "ST.3",
           "description": "Stairwell ST.3",
-          "type": "stairwell"
+          "type": "Stairwell"
         },
         {
           "x": 1244.5,
@@ -41,12 +30,12 @@
           "name": "Stairwell",
           "roomNumber": "ST.5",
           "description": "Stairwell ST.5",
-          "type": "stairwell"
+          "type": "Stairwell"
         }
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Elevator layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -58,7 +47,7 @@
           "name": "Elevator",
           "roomNumber": "EL.C",
           "description": "Elevator EL.C",
-          "type": "elevator"
+          "type": "Elevator"
         }
       ]
     }

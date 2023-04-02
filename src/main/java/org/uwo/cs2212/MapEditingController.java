@@ -13,10 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.uwo.cs2212.model.*;
@@ -80,37 +78,13 @@ public class MapEditingController {
     private String roomType = "";
     private String poiRoomNumber = "";
     private String roomDescription = "";
-
+    private ContextMenu poiPopup;
 
     @FXML
     private void initialize() {
         ObservableList<String> roomsToSelect = FXCollections.observableArrayList("", "Accessibility","Washroom","Classroom", "CS Lab", "Collaborative Room", "Elevator", "Entry/Exit", "GenLab", "Restaurant", "Stairwell");
         roomSelector.setItems(roomsToSelect);
-        //     scrollPane.setOnMouseClicked(this::onMapClicked);
-        // pois = new ArrayList<>();
-
     }
-//    protected void showPoiInfoPopup(PointOfInterest poi) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("POI Information");
-//        alert.setHeaderText(poi.getName());
-//        String content = "Room Number: " + poi.getRoomNumber() + "\n"
-//                + "Room Type: " + poi.getType() + "\n"
-//                + "Description: " + poi.getDescription();
-//        alert.setContentText(content);
-//        alert.showAndWait();
-//    }
-
-//    public void onMapClicked(MouseEvent event) {
-//        Point2D windowPosition = new Point2D(event.getX(), event.getY());
-//        Point2D realMousePosition = currentFloorMap.screenToLocal(windowPosition);
-//        PointOfInterest clickedPoi = findClickedPoi(realMousePosition);
-//
-//        if (clickedPoi != null) {
-//            showPoiInfo(clickedPoi); // Show the information dialog when a POI is clicked
-//        }
-//    }
-
 
 
     /**
@@ -122,10 +96,12 @@ public class MapEditingController {
      *
      * <p> In case of any exceptions during the loading or processing of the map
      * or layers, the exception is caught and no further action is taken. </p>
+     *
+     * @return
      */
     protected void showMap(){
         try {
-            URL mapUrl = CampusMapController.class.getResource(currentFloorMap.getMapFileName());
+            URL mapUrl = CampusMapController.class.getResource(CurrentUser.getCurrentFloorMap().getMapFileName());
             URI uri = mapUrl.toURI();
             InputStream stream = new FileInputStream(new File(uri));
             Image image = new Image(stream);
@@ -142,25 +118,36 @@ public class MapEditingController {
             imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
-            for(Layer layer: currentFloorMap.getLayers()){
+            for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
             }
+
             scrollPane.setContent(root);
         }
         catch(Exception ex)
         {}
     }
 
-    protected PointOfInterest findClickedPoi(Point2D realMousePosition) {
-        for (PointOfInterest poi : pois) {
-            if (hitTest(realMousePosition, poi)) {
-                return poi;
-            }
-        }
-        return null;
+    /**
+     * Sets the current floor map and loads it for editing.
+     *
+     * @param currentFloorMap the FloorMap object representing the current floor map
+     */
+    public void setCurrentFloorMap(FloorMap currentFloorMap) {
+        this.currentFloorMap = currentFloorMap;
+        loadMapForEditing();
     }
 
+    /**
+     * Checks whether a given point of interest (POI) is "hit" by a mouse click at the given real-world position, taking into account
+     * the current zoom level of the map. If the distance between the POI and the mouse position is less than or equal to 6 pixels
+     * (scaled according to the current zoom level), the POI is considered hit and this method returns true. Otherwise, it returns false.
+     *
+     @param mousePosition the real-world position of the mouse click
+     @param poi the point of interest to check for a hit
+     @return true if the POI is hit by the mouse click, false otherwise
+     */
     private boolean hitTest(Point2D mousePosition, PointOfInterest poi){
         if (mousePosition.getX() <= poi.getX()+6/zoom && mousePosition.getX() >= poi.getX()-6/zoom && mousePosition.getY() <= poi.getY()+6/zoom && mousePosition.getY() >= poi.getY()-6/zoom){
             return true;
@@ -168,49 +155,73 @@ public class MapEditingController {
         return false;
     }
 
-
-    /**
-     * Handles the event when the "Zoom In" button is clicked in the UI.
-     *
-     * This method updates the zoom level of the campus map and displays the updated map.
-     * If the current zoom level is already at its maximum (0.5), the "Zoom In" button is disabled.
-     *
-     * @param actionEvent an ActionEvent object representing the click event
-     */
-    @FXML
-    private void onZoomInButtonClick(ActionEvent actionEvent) {
-        // Check if zoom level is greater than 0.5
-        if (zoom > 0.5){
-            // Reduce zoom level by a factor of 0.8
-            zoom *= 0.8;
-        }
-        else{
-            // Disable "Zoom In" button if current zoom level is at maximum
-            zoomIN.setDisable(false);
-        }
-
-        // Create a new CampusMapController object and call the showMap method to display the updated map
-        showMap();
+    private boolean isClickWithinMapBounds(MouseEvent mouseEvent) {
+        Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
+        return realMousePosition.getX() >= 0 && realMousePosition.getX() <= imageWidth
+                && realMousePosition.getY() >= 0 && realMousePosition.getY() <= imageHeight;
     }
 
+
+    /**
+     * Handles mouse clicks on the editor map by determining the real-world position of the click and checking if any point of interest
+     * (POI) is located at that position. If a POI is found, its name, type, room number, and description are stored in the corresponding
+     * fields, and the POI is selected. If no POI is found, the current POI is deselected. The map is then updated to show the selected
+     * POI, if any.
+     *
+     * @param mouseEvent the MouseEvent object representing the mouse click event
+     */
     @FXML
     private void onEditorMapClicked(MouseEvent mouseEvent) {
+        if (poiPopup != null && poiPopup.isShowing()) {
+            poiPopup.hide();
+        }
+        // Calculate the real mouse position
         Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
-        for(Layer layer: currentFloorMap.getLayers()){
-            for(PointOfInterest poi: layer.getPoints()) {
-                if (hitTest(realMousePosition, poi)) {
-                    roomName = poi.getName();
-                    roomType = poi.getType();
-                    poiRoomNumber = poi.getRoomNumber();
-                    roomDescription = poi.getDescription();
-                    selectPoi(new SearchResult(currentFloorMap, poi));
-                    return;
+
+            for (Layer layer : currentFloorMap.getLayers()) {
+                for (PointOfInterest poi : layer.getPoints()) {
+                    if (hitTest(realMousePosition, poi)) {
+                        roomName = poi.getName();
+                        roomType = poi.getType();
+                        poiRoomNumber = poi.getRoomNumber();
+                        roomDescription = poi.getDescription();
+                        selectPoi(new SearchResult(currentFloorMap, poi));
+
+                        /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
+
+                        // Create the ContextMenu
+                        poiPopup = new ContextMenu();
+                        poiPopup.setStyle("-fx-background-color: transparent;");
+                        MenuItem menuItem = new MenuItem();
+                        menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
+
+                        // Set the content for the ContextMenu
+                        String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
+                        menuItem = new MenuItem(s);
+                        menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
+                        poiPopup.getItems().add(menuItem);
+
+                        // Calculate the window position of the POI
+                        Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
+                        Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
+
+                        // Show the context menu at the POI position
+                        poiPopup.show(scrollPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                        return;
+                    }
                 }
-            }
         }
         selectPoi(new SearchResult(currentFloorMap, null));
     }
 
+
+    /**
+     * Selects a point of interest (POI) and updates the current floor map to the floor map associated with the POI's location.
+     * If a POI is currently selected, its "selected" property is set to false before selecting the new POI. If a POI is selected,
+     * its "selected" property is set to true. Finally, the map is updated to show the new floor map and the selected POI.
+     *
+     * @param searchResult the SearchResult object representing the selected POI and its associated floor map
+     */
     private void selectPoi(SearchResult searchResult){
         if(searchResult != null){
             currentFloorMap = searchResult.getFloorMap();
@@ -226,6 +237,33 @@ public class MapEditingController {
     }
 
     /**
+     * Handles the event when the "Zoom In" button is clicked in the UI.
+     *
+     * This method updates the zoom level of the campus map and displays the updated map.
+     * If the current zoom level is already at its maximum (0.5), the "Zoom In" button is disabled.
+     *
+     * @param actionEvent an ActionEvent object representing the click event
+     */
+    @FXML
+    private void onZoomInButtonClick(ActionEvent actionEvent) {
+        if (poiPopup != null && poiPopup.isShowing()) {
+            poiPopup.hide();
+        }
+        // Check if zoom level is greater than 0.5
+        if (zoom > 0.5){
+            // Reduce zoom level by a factor of 0.8
+            zoom *= 0.8;
+        }
+        else{
+            // Disable "Zoom In" button if current zoom level is at maximum
+            zoomIN.setDisable(false);
+        }
+
+
+        // Create a new CampusMapController object and call the showMap method to display the updated map
+        showMap();
+    }
+    /**
      * Handles the event when the "Zoom Out" button is clicked in the UI.
      *
      * This method updates the zoom level of the campus map and displays the updated map.
@@ -235,6 +273,9 @@ public class MapEditingController {
      */
     @FXML
     private void onZoomOutButtonClick(ActionEvent actionEvent) {
+        if (poiPopup != null && poiPopup.isShowing()) {
+            poiPopup.hide();
+        }
         // Check if zoom level is less than 1.7
         if (zoom < 1.7){
             // Increase zoom level by a factor of 1.2
@@ -244,6 +285,7 @@ public class MapEditingController {
             // Disable "Zoom Out" button if current zoom level is at minimum
             zoomOUT.setDisable(false);
         }
+
         // Create a new CampusMapController object and call the showMap method to display the updated map
         showMap();
     }
@@ -284,11 +326,9 @@ public class MapEditingController {
         stage.show();
     }
 
-
     /**
      * Loads the map for editing by retrieving the map file, creating an ImageView of the map,
      * and adding layers to the map as ImageLayers.
-     *
      */
     private void loadMapForEditing() {
         if (currentFloorMap != null) {
@@ -340,6 +380,19 @@ public class MapEditingController {
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
     }
 
+
+    /**
+     * Adds a new point of interest (POI) to the current floor map configuration file. The new POI's name, room number, description,
+     * and type are obtained from the corresponding text fields and combo box in the GUI. If any of these fields are empty, an error
+     * dialog is shown indicating that all fields must be filled. If a POI with the same name or room number already exists in the
+     * configuration file, an error dialog is shown indicating that a different name or room number must be used. If a layer exists in
+     * the configuration file with the same type as the new POI, the new POI is added to that layer's list of points. If no such layer
+     * exists, a new layer is created and the new POI is added to that layer's list of points. If the POI is successfully added, an
+     * information dialog is shown indicating success.
+     *
+     @param actionEvent the action event that triggered this method
+     @throws IOException if an I/O error occurs while reading from or writing to the configuration file
+     */
     public void onAddPOIButtonClick(ActionEvent actionEvent) throws IOException {
         boolean flag = false;
 
@@ -433,7 +486,7 @@ public class MapEditingController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("Please fill in all the fields");
+            alert.setContentText("Please fill all the fields");
             alert.showAndWait();
             return;
         }
@@ -442,10 +495,8 @@ public class MapEditingController {
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
-
-
-
     }
+
 
     /**
      * Converts a point in the window coordinate system to a point in the real map coordinate system.
@@ -470,6 +521,12 @@ public class MapEditingController {
         return new Point2D(mouseX, mouseY);
     }
 
+    /**
+     * Calculates the real-world position of the mouse based on the given mouse event.
+     *
+     * @param mouseEvent the mouse event containing the mouse position in window coordinate.
+     * @return a Point2D object representing the real-world position of the mouse
+     */
     @FXML
     private Point2D calculateRealMousePosition(MouseEvent mouseEvent){
         coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
@@ -477,7 +534,15 @@ public class MapEditingController {
         return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
     }
 
-
+    /**
+     * Deletes a point of interest (POI) from the current floor map configuration file. The POI to be deleted is determined by
+     * the values of the roomName, roomType, and poiRoomNumber fields, which must be set prior to calling this method. If the
+     * POI is found and deleted, an information dialog is shown indicating success. If the POI is not found, an error dialog
+     * is shown indicating that the POI could not be deleted.
+     *
+     @param actionEvent the action event that triggered this method
+     @throws IOException if an I/O error occurs while reading from or writing to the configuration file
+     */
     public void onDeletePOIButtonClick(ActionEvent actionEvent) throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
@@ -505,12 +570,12 @@ public class MapEditingController {
                                 .remove(j);
                         break outerloop;
                     }
-                    roomName = "";
-                    roomType = "";
-                    poiRoomNumber = "";
+                }
+            }
+            roomName = "";
+            roomType = "";
+            poiRoomNumber = "";
 
-                }
-                }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText("POI deleted");
@@ -520,7 +585,7 @@ public class MapEditingController {
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
             alert.showAndWait();
-            } else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
@@ -533,8 +598,19 @@ public class MapEditingController {
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
-        }
-        
+    }
+
+    /**
+     * Edits a point of interest (POI) in the current floor map configuration file. The POI to be edited is determined by the
+     * values of the roomName, roomType, and poiRoomNumber fields, which must be set prior to calling this method. The new
+     * values for the POI's name, room number, description, and type are obtained from the corresponding text fields and combo box
+     * in the GUI. If any of these fields are empty, an error dialog is shown indicating that all fields must be filled. If the
+     * POI is found and edited, an information dialog is shown indicating success. If the POI is not found, an error dialog
+     * is shown indicating that a POI must be selected for editing.
+     *
+     @param actionEvent the action event that triggered this method
+     @throws IOException if an I/O error occurs while reading from or writing to the configuration file
+     */
     public void onEditPOIButtonClick(ActionEvent actionEvent) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
         String json = reader.lines().collect(Collectors.joining());
@@ -547,7 +623,7 @@ public class MapEditingController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error");
-                alert.setContentText("Please fill in all the fields");
+                alert.setContentText("Please enter at least one field");
                 alert.showAndWait();
                 return;
             }
@@ -559,6 +635,15 @@ public class MapEditingController {
                             .getJSONObject(i)
                             .getJSONArray("points")
                             .getJSONObject(j);
+
+                    if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("POI already exists");
+                        alert.setContentText("Please enter a different POI name or room number");
+                        alert.showAndWait();
+                        return;
+                    }
 
                     if (checkPOI.getString("name").toLowerCase().equals(roomName.toLowerCase())
                             && checkPOI.getString("roomNumber").toLowerCase().equals(poiRoomNumber.toLowerCase())
@@ -573,14 +658,14 @@ public class MapEditingController {
                                 .put("roomNumber", roomNumber.getText())
                                 .put("description", Description.getText())
                                 .put("type", roomSelector.getValue());
-                                break outerloop;
+                        break outerloop;
                     }
                 }
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("POI edited");
-            alert.setContentText("POI has been edited");
+   //         alert.setTitle("Success");
+            alert.setHeaderText("POI has been successfully edited");
+     //       alert.setContentText("POI has been edited");
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
@@ -588,27 +673,16 @@ public class MapEditingController {
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
+            alert.setTitle("Error!");
+   //         alert.setHeaderText("Error!");
             alert.setContentText("Please select a POI to edit");
             alert.showAndWait();
             return;
         }
-
         FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName());
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
 
-    }
-
-    /**
-     * Sets the current floor map and loads it for editing.
-     *
-     * @param currentFloorMap the FloorMap object representing the current floor map
-     */
-    public void setCurrentFloorMap(FloorMap currentFloorMap) {
-        this.currentFloorMap = currentFloorMap;
-        loadMapForEditing();
     }
 }

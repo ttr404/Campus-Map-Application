@@ -1,5 +1,5 @@
 {
-  "name": "2nd floor",
+  "name": "1st floor",
   "mapFileName": "science-centre-f1.png",
   "showLegend": true,
   "legendPosition": [
@@ -10,27 +10,102 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
-      "color": "BLACK",
+      "name": "Base layer",
+      "color": "BLUE",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "WSC100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
+          "x": 470,
+          "y": 370,
+          "name": "Men's washroom",
+          "roomNumber": "154A",
+          "description": "1F Barrier-free Men's washroom",
+          "type": "Accessibility"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "WSC101",
-          "roomNumber": "A101",
-          "description": "Class room A101",
-          "type": "ClassRoom"
+          "x": 459,
+          "y": 427,
+          "name": "Women's washroom",
+          "roomNumber": "155",
+          "description": "1F Barrier-free Women's washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 688,
+          "y": 542,
+          "name": "Unisex washroom",
+          "roomNumber": "181",
+          "description": "1F Barrier-free Unisex washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 188,
+          "y": 313.5,
+          "name": "Entrance/Exit",
+          "roomNumber": "EX.2",
+          "description": "1F Barrier-free Entrance/Exit",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Elevator layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 556,
+          "y": 288,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "Elevator"
+        }
+      ]
+    },
+    {
+      "name": "Entry layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points":[
+        {
+          "x": 512,
+          "y": 684.5,
+          "name": "Entrance/Exit",
+          "roomNumber": "EX.1",
+          "description": "Main Entrance/Exit",
+          "type": "entryAndExit"
+        }
+      ]
+    },
+    {
+      "name": "Stairwell layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 564.33,
+          "y": 636.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "Stairwell"
+        },
+        {
+          "x": 207.33,
+          "y": 268.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.2",
+          "description": "Stairwell ST.2",
+          "type": "Stairwell"
         }
       ]
     }

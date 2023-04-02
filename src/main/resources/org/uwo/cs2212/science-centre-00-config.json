@@ -10,27 +10,94 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
-      "color": "BLACK",
+      "name": "Base layer",
+      "color": "BLUE",
       "layerType": "base",
-      "font": "Times New Roman",
+      "font": "Arial",
       "size": 16,
       "points": [
         {
-          "x": 100,
-          "y": 100,
-          "name": "WSC100",
-          "roomNumber": "A100",
-          "description": "Class room A100",
-          "type": "ClassRoom"
+          "x": 659,
+          "y": 563,
+          "name": "Men's washroom",
+          "roomNumber": "60",
+          "description": "GF Barrier-free Men's washroom",
+          "type": "Accessibility"
         },
         {
-          "x": 200,
-          "y": 200,
-          "name": "WSC101",
-          "roomNumber": "A101",
-          "description": "Class room A101",
+          "x": 785,
+          "y": 597,
+          "name": "Women's washroom",
+          "roomNumber": "63A",
+          "description": "GF Barrier-free Women's washroom",
+          "type": "Accessibility"
+        },
+        {
+          "x": 729,
+          "y": 690.5,
+          "name": "Entrance/Exit",
+          "roomNumber": "EX.6",
+          "description": "GF Barrier-free Entrance/Exit",
+          "type": "Accessibility"
+        }
+      ]
+    },
+    {
+      "name": "Classroom layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 1028,
+          "y": 462,
+          "name": "WSC55",
+          "roomNumber": "55",
+          "description": "GF Classroom 55",
           "type": "ClassRoom"
+        }
+      ]
+    },
+    {
+      "name": "Elevator layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 604,
+          "y": 306,
+          "name": "Elevator",
+          "roomNumber": "EL.A",
+          "description": "Elevator EL.A",
+          "type": "Elevator"
+        }
+      ]
+    },
+    {
+      "name": "Stairwell layer",
+      "color": "BLUE",
+      "layerType": "internal",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 609.33,
+          "y": 696.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.1",
+          "description": "Stairwell ST.1",
+          "type": "Stairwell"
+        },
+        {
+          "x": 568.33,
+          "y": 280.95,
+          "name": "Stairwell",
+          "roomNumber": "ST.3",
+          "description": "Stairwell ST.3",
+          "type": "Stairwell"
         }
       ]
     }
