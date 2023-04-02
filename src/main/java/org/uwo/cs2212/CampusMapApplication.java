@@ -8,6 +8,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 /**The CampusMapApplication class is responsible for launching the application and setting up the login view.
  * This class extends the JavaFX Application class.
@@ -24,6 +25,7 @@ public class CampusMapApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
+
         LoginViewController.setStage(stage);
         FXMLLoader loginFxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("login-view.fxml"));
         Scene loginScene = new Scene(loginFxmlLoader.load(), 571, 400);
@@ -31,7 +33,7 @@ public class CampusMapApplication extends Application {
         stage.setTitle("Login");
         stage.setScene(loginScene);
         stage.setResizable(false);
-//stage.initStyle(StageStyle.UNDECORATED);
+
         stage.show();
     }
 

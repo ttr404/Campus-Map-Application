@@ -1,0 +1,45 @@
+{
+  "userLayers": [
+    {
+      "floorName": "Ground Floor",
+      "baseName": "Middlesex College Building",
+      "name": "User layer",
+      "color": "RED",
+      "layerType": "user_POI",
+      "font": "Arial",
+      "size": 16,
+      "points": [
+        {
+          "x": 500,
+          "y": 500,
+          "name": "userPOI1",
+          "roomNumber": "17",
+          "description": "MC GF Classroom 17",
+          "type": "ClassRoom"
+        },
+        {
+          "x": 600,
+          "y": 420,
+          "name": "userPOI2",
+          "roomNumber": "6",
+          "description": "MC GF Classroom 6",
+          "type": "ClassRoom"
+        }
+      ]
+    }
+  ],
+  "favoritePois": [
+    {
+      "baseMapName": "Middlesex College Building",
+      "floorMapName": "Ground Floor",
+      "layerName": "Classroom layer",
+      "poiName": "MC17"
+    },
+    {
+      "baseMapName": "Middlesex College Building",
+      "floorMapName": "Ground Floor",
+      "layerName": "User layer",
+      "poiName": "userPOI1"
+    }
+  ]
+}

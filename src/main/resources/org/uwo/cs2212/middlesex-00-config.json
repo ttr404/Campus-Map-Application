@@ -10,7 +10,7 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
+      "name": "Classroom layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -21,7 +21,7 @@
           "y": 380,
           "name": "MC17",
           "roomNumber": "17",
-          "description": "GF Classroom 17",
+          "description": "MC GF Classroom 17",
           "type": "ClassRoom"
         },
         {
@@ -29,13 +29,13 @@
           "y": 420,
           "name": "MC6",
           "roomNumber": "6",
-          "description": "GF Classroom 6",
+          "description": "MC GF Classroom 6",
           "type": "ClassRoom"
         }
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Base layer",
       "color": "BLUE",
       "layerType": "base",
       "font": "Arial",
@@ -46,7 +46,7 @@
           "y": 442,
           "name": "Men's washroom",
           "roomNumber": "5B",
-          "description": "GF Men's washroom",
+          "description": "MC GF Men's washroom",
           "type": "WashRoom"
         },
         {
@@ -54,7 +54,7 @@
           "y": 556.01,
           "name": "Men's washroom",
           "roomNumber": "28E",
-          "description": "GF Men's washroom",
+          "description": "MC GF Men's washroom",
           "type": "WashRoom"
         },
         {
@@ -62,7 +62,7 @@
           "y": 404,
           "name": "Women's washroom",
           "roomNumber": "4B",
-          "description": "GF Women's washroom",
+          "description": "MC GF Women's washroom",
           "type": "WashRoom"
         },
         {
@@ -70,21 +70,21 @@
           "y": 364.11,
           "name": "Unisex washroom",
           "roomNumber": "4C",
-          "description": "GF Barrier-free Unisex washroom",
+          "description": "MC GF Barrier-free washroom",
           "type": "Accessibility"
         },
         {
           "x": 572,
           "y": 198,
-          "name": "Entrance/Exit",
+          "name": "Barrier-free Entrance/Exit",
           "roomNumber": "EX.6",
-          "description": "GF Barrier-free Entrance/Exit",
+          "description": "MC GF Barrier-free Entrance/Exit",
           "type": "Accessibility"
         }
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Stairwell layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -133,7 +133,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Restaurant layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -150,7 +150,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Elevator layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",

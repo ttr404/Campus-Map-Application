@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 
 /**
  * The ConfigUtil class provides utility methods for loading and saving
@@ -48,6 +49,11 @@ public class ConfigUtil {
             // Map the JSON data to a MapConfig object
             MapConfig mapConfig = objectMapper.readValue(mapJsonData, MapConfig.class);
 
+            URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
+            if(currentUserUrl != null){
+                CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerUrl()));
+            }
+
             // Iterate through the BaseMap objects in the MapConfig object
             for (BaseMap baseMap : mapConfig.getBaseMaps()) {
 
@@ -61,6 +67,14 @@ public class ConfigUtil {
                     FloorMap floorMap = loadFloorMap(floorMapUrl);
                     floorMap.setConfigFileName(floorConfig.getConfigFileName());
 
+                    UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
+                    if(userLayer != null){
+                        floorMap.setUserLayer(userLayer);
+                    }
+
+                    if (CurrentUser.getUserData().getFavoritePois() != null){
+                        updateFavorite(baseMap, floorMap);
+                    }
 
                     // Add the loaded FloorMap object to the BaseMap object
                     baseMap.getFloorMaps().add(floorMap);
@@ -73,6 +87,8 @@ public class ConfigUtil {
             throw new RuntimeException(e);
         }
     }
+
+
 
     /**
      * Loads a FloorMap object from the specified JSON file.
@@ -144,6 +160,53 @@ public class ConfigUtil {
         }
     }
 
+    public static UserData loadUserLayers(URL url) {
+        try {
+            // Read the JSON file data to a byte array
+            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+
+            // Create an ObjectMapper instance for handling JSON deserialization
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Map the JSON data to a userLayerList object
+            UserData userLayers = objectMapper.readValue(mapJsonData, UserData.class);
+
+            // Return the populated userLayerList object
+            return userLayers;
+        } catch (IOException e) {
+            // Handle IOException and rethrow as a RuntimeException
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            // Handle URISyntaxException and rethrow as a RuntimeException
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveUserData(UserData userData, URL url) {
+        try {
+            // Convert the URL to a Path object representing the file path
+            Path filePath = Path.of(url.toURI());
+
+            // Create an ObjectMapper instance for handling JSON serialization
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Enable pretty-printing (indentation) of the JSON output
+            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+            // Convert the userData object to a JSON string
+            String userJsonData = objectMapper.writeValueAsString(userData);
+
+            // Write the JSON string back to the file
+            Files.writeString(filePath, userJsonData);
+        } catch (IOException e) {
+            // Handle IOException and rethrow as a RuntimeException
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            // Handle URISyntaxException and rethrow as a RuntimeException
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Saves the provided UserList object to the specified JSON file.
      * This method serializes the UserList object into a JSON string
@@ -179,5 +242,34 @@ public class ConfigUtil {
             // Handle URISyntaxException and rethrow as a RuntimeException
             throw new RuntimeException(e);
         }
+    }
+
+    private static void updateFavorite(BaseMap baseMap, FloorMap floorMap){
+        for(Layer layer : floorMap.getLayers()){
+            for (PointOfInterest poi : layer.getPoints()){
+                for(FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()){
+                    if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
+                            && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())
+                            && favorite.getLayerName().toLowerCase().equals(layer.getName().toLowerCase())
+                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())){
+                        poi.setFavorite(true);
+                    }
+                }
+            }
+        }
+
+        if(floorMap.getUserLayer() != null && floorMap.getUserLayer().getPoints()!= null){
+            for (PointOfInterest poi : floorMap.getUserLayer().getPoints()){
+                for(FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()){
+                    if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
+                            && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())
+                            && favorite.getLayerName().toLowerCase().equals(floorMap.getUserLayer().getName().toLowerCase())
+                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())){
+                        poi.setFavorite(true);
+                    }
+                }
+            }
+        }
+
     }
 }

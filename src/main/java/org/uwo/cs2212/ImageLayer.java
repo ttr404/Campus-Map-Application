@@ -17,8 +17,6 @@ import org.uwo.cs2212.model.PointOfInterest;
  * zoom level and layer of points of interest. The class also contains a method that draws the points of interest on the
  * canvas, with their corresponding colors, fonts, sizes, and selected state. Additionally, the class provides a utility
  * method to check if a layer is a base layer, and to hide/show points of interest based on the layer's hideLayer flag.
- *
- * @author
  */
 public class ImageLayer extends Canvas {
 
@@ -42,9 +40,9 @@ public class ImageLayer extends Canvas {
         boolean isBaseLayer = ImageLayer.isBaseLayer(layer);
         boolean isHideLayer = layer.isHideLayer();
 
-        if(isHideLayer){
-            layer.getPoints().get(0).setSelected(true);
-        }
+        //if(isHideLayer){
+            //layer.getPoints().get(0).setSelected(true);
+        //}
 
         for(PointOfInterest poi: layer.getPoints()){
             if(isBaseLayer || !isHideLayer || poi.isSelected()){
@@ -61,22 +59,6 @@ public class ImageLayer extends Canvas {
             }
         }
     }
-//    private MapEditingController controller;
-//    public ImageLayer(MapEditingController controller) {
-//        this.controller = controller;
-//        setOnMouseClicked(event -> {
-//            // Convert the mouse event's scene coordinates to local coordinates
-//            Point2D realMousePosition = sceneToLocal(event.getSceneX(), event.getSceneY());
-//
-//            // Find the clicked POI
-//            PointOfInterest clickedPoi = controller.findClickedPoi(realMousePosition);
-//
-//            // If a POI was clicked, show the POI information in a pop-up window
-//            if (clickedPoi != null) {
-//                controller.showPoiInfoPopup(clickedPoi);
-//            }
-//        });
-//    }
 
     /**
      * Checks if the given layer is a base layer or not. A base layer is a layer that contains the base map image and is always shown.

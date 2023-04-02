@@ -1,5 +1,7 @@
 package org.uwo.cs2212.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class FloorMap {
@@ -9,6 +11,8 @@ public class FloorMap {
     private List<Double> legendPosition;
     private List<Layer> layers;
     private String configFileName;
+    @JsonIgnore
+    private UserLayer userLayer;
 
     public String getConfigFileName() {
         return configFileName;
@@ -56,5 +60,13 @@ public class FloorMap {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public UserLayer getUserLayer() {
+        return userLayer;
+    }
+
+    public void setUserLayer(UserLayer userLayer) {
+        this.userLayer = userLayer;
     }
 }

@@ -10,8 +10,11 @@ import javafx.stage.Stage;
 import org.uwo.cs2212.model.UserConfig;
 import org.uwo.cs2212.model.UserList;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -73,17 +76,23 @@ public class LoginViewController {
      */
     public void logIn() throws IOException {
         if (checkAccount()) {
+            CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
+            URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
+            if(currentUserUrl != null){
+                CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerUrl()));
+            }
+
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 800);
 
             CampusMapController campusMapController = fxmlLoader.getController();
-            campusMapController.setAdmin(checkAdmin());
 
             stage.setTitle("Western Campus Map");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setX(200);
             stage.setY(70);
+
             stage.show();
         }
 
@@ -105,24 +114,13 @@ public class LoginViewController {
         // Check if the entered credentials match an account in the user list
         for (UserConfig userConfig : userlist.getAccountList()) {
             if (loginName.getText().equals(userConfig.getUsername()) && encodePassword.equals(userConfig.getPassword())) {
+                CurrentUser.setUsername(loginName.getText());
                 return true;
             }
         }
         return false;
     }
 
-    /**
-     * Check if the user is an administrator.
-     * @return a boolean value representing whether the user is an administrator
-     */
-    public boolean checkAdmin() {
-        UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
-        String encodePassword = toHexString(getSHA(password.getText()));
-        if (loginName.getText().equals("admin")) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Show the current weather on the login view.

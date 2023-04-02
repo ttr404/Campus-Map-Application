@@ -10,7 +10,7 @@
   ],
   "layers": [
     {
-      "name": "Main Map",
+      "name": "Classroom layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Base layer",
       "color": "BLUE",
       "layerType": "base",
       "font": "Arial",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Entry layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Stairwell layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -134,7 +134,7 @@
       ]
     },
     {
-      "name": "Main Map",
+      "name": "Elevator layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",

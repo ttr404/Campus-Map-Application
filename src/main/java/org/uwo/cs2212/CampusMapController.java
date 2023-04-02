@@ -120,11 +120,6 @@ public class CampusMapController implements Initializable {
     private double zoom = 1.0;
     private double imageWidth;
     private double imageHeight;
-    private PointOfInterest currentSelectedPoi;
-    private MapConfig mapConfig;
-    private BaseMap currentBaseMap;
-    private FloorMap currentFloorMap;
-    private List<SearchResult> searchResults;
     private Button currentSelectedFloorButton;
     private Button[] floorButtons;
 
@@ -136,7 +131,6 @@ public class CampusMapController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mapConfig = ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json"));
         initializeMapSelector();
         initializeSearchListView();
         setShowAllPOI();
@@ -144,7 +138,7 @@ public class CampusMapController implements Initializable {
         showMap();
         setFavouriteButtonState();
         floorButtons = new Button[]{floor0, floor1, floor2, floor3, floor4}; //initialize the floorButtons array
-
+        editButton.setVisible(CurrentUser.isAdmin());
     }
 
     /**
@@ -153,13 +147,13 @@ public class CampusMapController implements Initializable {
      It also sets a listener to the value property of the map selector ComboBox to handle changes to the selected BaseMap.
      */
     private void initializeMapSelector() {
-        for(BaseMap baseMap: mapConfig.getBaseMaps()){
+        for(BaseMap baseMap: CurrentUser.getMapConfig().getBaseMaps()){
             mapSelector.getItems().add(baseMap.getName());
         }
-        currentBaseMap = mapConfig.getBaseMaps().get(0);
-        currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+        CurrentUser.setCurrentBaseMap(CurrentUser.getMapConfig().getBaseMaps().get(0));
+        CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(0));
 
-        mapSelector.valueProperty().setValue(currentBaseMap.getName());
+        mapSelector.valueProperty().setValue(CurrentUser.getCurrentBaseMap().getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
             handleComboBoxValueChanged(ov, oldValue, newValue);
 
@@ -178,10 +172,6 @@ public class CampusMapController implements Initializable {
                 });
         }
 
-    public void setAdmin(boolean isAdmin) {
-        editButton.setVisible(isAdmin);
-    }
-
     /**
      * Updates the checkboxes and the informationList based on which checkboxes are selected.
      * If a checkbox is selected, show the corresponding POI types on the map and add them to the informationList.
@@ -190,7 +180,7 @@ public class CampusMapController implements Initializable {
      */
     private void checkBoxSelected(){
         informationList.getItems().clear();
-        for (Layer layer: currentFloorMap.getLayers()){
+        for (Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
             for(PointOfInterest poi : layer.getPoints()){
                 if ((classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
                         || (stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
@@ -203,7 +193,7 @@ public class CampusMapController implements Initializable {
                         || (user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
                 ){
                     layer.setHideLayer(false);
-                    informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                    informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
 
                 }
                 if ((!classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
@@ -214,6 +204,7 @@ public class CampusMapController implements Initializable {
                         || (!restaurants.isSelected() && poi.getType().toLowerCase().equals("restaurant"))
                         || (!cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
                         || (!collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
+                        || (!user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
                 ){
                     layer.setHideLayer(true);
                 }
@@ -266,9 +257,9 @@ public class CampusMapController implements Initializable {
         selectAllLayers();
         checkBoxSelected();
         informationList.getItems().clear();
-        for (Layer layer: currentFloorMap.getLayers()){
+        for (Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
             for(PointOfInterest poi : layer.getPoints()){
-                informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+                informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
             }
         }
     }
@@ -289,17 +280,17 @@ public class CampusMapController implements Initializable {
      * @param newValue  the new value of the base map combo box
      */
     private void handleComboBoxValueChanged(ObservableValue ov, Object oldValue, Object newValue) {
-        for(BaseMap baseMap: mapConfig.getBaseMaps()) {
+        for(BaseMap baseMap: CurrentUser.getMapConfig().getBaseMaps()) {
             if (newValue.toString().equals(baseMap.getName())) {
-                currentBaseMap = baseMap;
+                CurrentUser.setCurrentBaseMap(baseMap);
 
                 // Set the current floor map to the ground floor by default when switching maps
-                currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+                CurrentUser.setCurrentFloorMap(baseMap.getFloorMaps().get(0));
 
                 // Highlight the ground floor button by default when switching maps
                 highlightSelectedFloorButton(floorButtons[0]);
 
-                currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+                CurrentUser.setCurrentFloorMap(baseMap.getFloorMaps().get(0));
                 showFloorButtons();
                 showMap();
             }
@@ -313,7 +304,7 @@ public class CampusMapController implements Initializable {
      */
     protected void showMap(){
         try {
-            URL mapUrl = CampusMapController.class.getResource(currentFloorMap.getMapFileName());
+            URL mapUrl = CampusMapController.class.getResource(CurrentUser.getCurrentFloorMap().getMapFileName());
             URI uri = mapUrl.toURI();
             InputStream stream = new FileInputStream(new File(uri));
             Image image = new Image(stream);
@@ -330,10 +321,15 @@ public class CampusMapController implements Initializable {
             imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
-            for(Layer layer: currentFloorMap.getLayers()){
+            for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
             }
+            if (user_POIs.isSelected() && CurrentUser.getCurrentFloorMap().getUserLayer() != null){
+                ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, CurrentUser.getCurrentFloorMap().getUserLayer());
+                root.getChildren().add(imageLayer);
+            }
+
             mapPane.setContent(root);
         }
         catch(Exception ex)
@@ -612,7 +608,7 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloorGButtonClick(ActionEvent actionEvent) {
-        currentFloorMap = currentBaseMap.getFloorMaps().get(0);
+        CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(0));
         showMap();
 
         Button clickedButton = (Button) actionEvent.getSource();
@@ -623,21 +619,19 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloor1ButtonClick(ActionEvent actionEvent) {
-        if (currentBaseMap.getFloorMaps().size() >= 2){
-            currentFloorMap = currentBaseMap.getFloorMaps().get(1);
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 2){
+            CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(1));
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
             highlightSelectedFloorButton(clickedButton);
-
-
         }
     }
 
     @FXML
     private void onFloor2ButtonClick(ActionEvent actionEvent) {
-        if (currentBaseMap.getFloorMaps().size() >= 3){
-            currentFloorMap = currentBaseMap.getFloorMaps().get(2);
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 3){
+            CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(2));
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
@@ -647,8 +641,8 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloor3ButtonClick(ActionEvent actionEvent) {
-        if (currentBaseMap.getFloorMaps().size() >= 4){
-            currentFloorMap = currentBaseMap.getFloorMaps().get(3);
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 4){
+            CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(3));
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
@@ -658,8 +652,8 @@ public class CampusMapController implements Initializable {
 
     @FXML
     private void onFloor4ButtonClick(ActionEvent actionEvent) {
-        if (currentBaseMap.getFloorMaps().size() >= 5){
-            currentFloorMap = currentBaseMap.getFloorMaps().get(4);
+        if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 5){
+            CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(4));
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
@@ -668,7 +662,7 @@ public class CampusMapController implements Initializable {
     }
 
     private void showFloorButtons(){
-        int floorCount = currentBaseMap.getFloorMaps().size();
+        int floorCount = CurrentUser.getCurrentBaseMap().getFloorMaps().size();
         if (floorCount <= 1){
             floor0.setVisible(false);
             floor1.setVisible(false);
@@ -712,16 +706,60 @@ public class CampusMapController implements Initializable {
      */
     public void onMapClicked(MouseEvent mouseEvent) {
         Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
-        for(Layer layer: currentFloorMap.getLayers()){
+        for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
             for(PointOfInterest poi: layer.getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
-                    selectPoi(new SearchResult(currentFloorMap, poi));
+                    selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
+
+                    //pop-up window
+                    Stage stage = new Stage();
+                    String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initOwner((Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
+                    Label label = new Label(s);
+                    label.setStyle("-fx-font-size: 12px; -fx-text-fill: #333333;");
+                    VBox vbox = new VBox(label);
+                    stage.setTitle(poi.getName());
+                    vbox.setStyle("-fx-background-color: #d9eff2;");
+                    vbox.setPadding(new Insets(10));
+                    Scene scene = new Scene(vbox, 300, 100);
+                    stage.setScene(scene);
+
+                    // Calculate the window position of the POI
+                    Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
+                    Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
+                    //
+                    Node node = (Node) mouseEvent.getSource();
+                    Point2D poiPosition = new Point2D(poi.getX(),poi.getY());
+                    Point2D poiScreenPosition = node.localToScreen(poiPosition);
+
+                    // Set the pop-up window position
+                    double popUpWindowWidth = 200;
+                    double popUpWindowHeight = 170;
+                    double popUpWindowX = poiScreenPosition.getX() - popUpWindowWidth / 2;
+                    double popUpWindowY = poiScreenPosition.getY() - popUpWindowHeight / 2;
+
+                    stage.setX(popUpWindowX);
+                    stage.setY(popUpWindowY);
+
+                    stage.setWidth(200);
+                    stage.setHeight(170);
+                    stage.show();
                     showPoiInList(poi);
                     return;
                 }
             }
         }
-        selectPoi(new SearchResult(currentFloorMap, null));
+        if (CurrentUser.getCurrentFloorMap().getUserLayer() != null && user_POIs.isSelected()){
+            for(PointOfInterest poi: CurrentUser.getCurrentFloorMap().getUserLayer().getPoints()) {
+                if (hitTest(realMousePosition, poi)) {
+                    selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
+                    showPoiInList(poi);
+                    return;
+                }
+            }
+        }
+        selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
     }
 
     /**
@@ -731,13 +769,13 @@ public class CampusMapController implements Initializable {
      */
     private void selectPoi(SearchResult searchResult){
         if(searchResult != null){
-            currentFloorMap = searchResult.getFloorMap();
-            if(currentSelectedPoi != null){
-                currentSelectedPoi.setSelected(false);
+            CurrentUser.setCurrentFloorMap(searchResult.getFloorMap());
+            if(CurrentUser.getCurrentSelectedPoi() != null){
+                CurrentUser.getCurrentSelectedPoi().setSelected(false);
             }
-            currentSelectedPoi = searchResult.getPoi();
-            if(currentSelectedPoi != null){
-                currentSelectedPoi.setSelected(true);
+            CurrentUser.setCurrentSelectedPoi(searchResult.getPoi());
+            if(CurrentUser.getCurrentSelectedPoi() != null){
+                CurrentUser.getCurrentSelectedPoi().setSelected(true);
             }
             centralizeSelectedPoi();
             showMap();
@@ -747,7 +785,7 @@ public class CampusMapController implements Initializable {
 
     private void showPoiInList(PointOfInterest poi) {
         informationList.getItems().clear();
-        informationList.getItems().add(new SearchResult(currentFloorMap, poi));
+        informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
     }
 
 
@@ -798,7 +836,7 @@ public class CampusMapController implements Initializable {
         String text = searchText.getText().toLowerCase().trim();
         if (!text.equals("")){
             informationList.getItems().clear();
-            for(FloorMap floorMap : currentBaseMap.getFloorMaps()){
+            for(FloorMap floorMap : CurrentUser.getCurrentBaseMap().getFloorMaps()){
                 for (Layer layer: floorMap.getLayers()){
                     for(PointOfInterest poi : layer.getPoints()){
                         if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text)  || contains(poi.getType(), text)  || contains(poi.getDescription(), text)) {
@@ -832,9 +870,9 @@ public class CampusMapController implements Initializable {
      */
     private void setFavouriteButtonState() {
         ImageView imageView;
-        if (currentSelectedPoi != null) {
+        if (CurrentUser.getCurrentSelectedPoi() != null) {
             favoriteButton.setDisable(false);
-            if (currentSelectedPoi.isFavorite()) {
+            if (CurrentUser.getCurrentSelectedPoi().isFavorite()) {
                 imageView = new ImageView(getClass().getResource("favorite1.png").toExternalForm());
 
             } else {
@@ -851,8 +889,8 @@ public class CampusMapController implements Initializable {
 
     public void onFavoriteButtonClicked(ActionEvent actionEvent) {
         selectAllLayers();
-        if(currentSelectedPoi != null){
-            currentSelectedPoi.setFavorite(!currentSelectedPoi.isFavorite());
+        if(CurrentUser.getCurrentSelectedPoi() != null){
+            CurrentUser.getCurrentSelectedPoi().setFavorite(!CurrentUser.getCurrentSelectedPoi().isFavorite());
             setFavouriteButtonState();
         }
     }
@@ -866,7 +904,7 @@ public class CampusMapController implements Initializable {
 
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
         informationList.getItems().clear();
-        for (BaseMap baseMap : mapConfig.getBaseMaps()){
+        for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()){
             for (FloorMap floorMap : baseMap.getFloorMaps()){
                 for (Layer layer: floorMap.getLayers()){
                     for(PointOfInterest poi : layer.getPoints()){
@@ -904,37 +942,37 @@ public class CampusMapController implements Initializable {
      * @throws NullPointerException if any of the objects referenced within the method are null.
      */
     private void centralizeSelectedPoi(){
-        if(currentSelectedPoi != null){
+        if(CurrentUser.getCurrentSelectedPoi() != null){
             Point2D windowTopLeft = WindowPointToRealPoint(new Point2D(0, 0));
             Point2D windowBottomRight = WindowPointToRealPoint(new Point2D(mapPane.getViewportBounds().getWidth(), mapPane.getViewportBounds().getHeight()));
-            if (currentSelectedPoi.getX() <= windowBottomRight.getX() && currentSelectedPoi.getX() >= windowTopLeft.getX()
-                    && currentSelectedPoi.getY() <= windowBottomRight.getY() && currentSelectedPoi.getY() >= windowTopLeft.getY()){
+            if (CurrentUser.getCurrentSelectedPoi().getX() <= windowBottomRight.getX() && CurrentUser.getCurrentSelectedPoi().getX() >= windowTopLeft.getX()
+                    && CurrentUser.getCurrentSelectedPoi().getY() <= windowBottomRight.getY() && CurrentUser.getCurrentSelectedPoi().getY() >= windowTopLeft.getY()){
                 return;
             }
             double scrollX = 0;
             double scrollY = 0;
-            if(currentSelectedPoi.getX() < (windowBottomRight.getX()-windowTopLeft.getX())/2){
+            if(CurrentUser.getCurrentSelectedPoi().getX() < (windowBottomRight.getX()-windowTopLeft.getX())/2){
                 scrollX = 0;
             }
-            else if (currentSelectedPoi.getX() > imageWidth-(windowBottomRight.getX()-windowTopLeft.getX())/2){
+            else if (CurrentUser.getCurrentSelectedPoi().getX() > imageWidth-(windowBottomRight.getX()-windowTopLeft.getX())/2){
                 scrollX = 1;
             }
             else{
-                scrollX = (currentSelectedPoi.getX() - (windowBottomRight.getX()-windowTopLeft.getX())/2)/(imageWidth-(windowBottomRight.getX()-windowTopLeft.getX()));
+                scrollX = (CurrentUser.getCurrentSelectedPoi().getX() - (windowBottomRight.getX()-windowTopLeft.getX())/2)/(imageWidth-(windowBottomRight.getX()-windowTopLeft.getX()));
             }
-            if(currentSelectedPoi.getY() < (windowBottomRight.getY()-windowTopLeft.getY())/2){
+            if(CurrentUser.getCurrentSelectedPoi().getY() < (windowBottomRight.getY()-windowTopLeft.getY())/2){
                 scrollY = 0;
             }
-            else if (currentSelectedPoi.getY() > imageHeight-(windowBottomRight.getY()-windowTopLeft.getY())/2){
+            else if (CurrentUser.getCurrentSelectedPoi().getY() > imageHeight-(windowBottomRight.getY()-windowTopLeft.getY())/2){
                 scrollY = 1;
             }
             else{
-                scrollY = (currentSelectedPoi.getY() - (windowBottomRight.getY()-windowTopLeft.getY())/2)/(imageHeight-(windowBottomRight.getY()-windowTopLeft.getY()));
+                scrollY = (CurrentUser.getCurrentSelectedPoi().getY() - (windowBottomRight.getY()-windowTopLeft.getY())/2)/(imageHeight-(windowBottomRight.getY()-windowTopLeft.getY()));
             }
             mapPane.setHvalue(scrollX);
             mapPane.setVvalue(scrollY);
         }
-        for (Layer layer: currentFloorMap.getLayers()){
+        for (Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
             for(PointOfInterest poi : layer.getPoints()){
                 if (poi.isFavorite()) {
                     informationList.getItems().add(poi);
@@ -958,7 +996,7 @@ public class CampusMapController implements Initializable {
 
             // Get the MapEditingController and set the currentFloorMap
             MapEditingController mapEditingController = fxmlLoader.getController();
-            mapEditingController.setCurrentFloorMap(currentFloorMap);
+            mapEditingController.setCurrentFloorMap(CurrentUser.getCurrentFloorMap());
 
 
         } catch (IOException ex) {
@@ -1045,20 +1083,10 @@ public class CampusMapController implements Initializable {
         stage.setWidth(300);
         stage.setHeight(500);
         stage.setResizable(false);
-//        stage.setX(((Node) actionEvent.getSource()).getScene().getWindow().getX() + ((Node) actionEvent.getSource()).getScene().getWindow().getWidth() - stage.getWidth() );
-//        stage.setY(((Node) actionEvent.getSource()).getScene().getWindow().getY());
+
         stage.show();
 
-        // Set the initial help text
-//        String helpText = getHelpText(helpTopic.getValue());
-//        helpLabel.setText(helpText); // Set the text of the helpLabel control
-//
-//        // Add an event listener to the helpTopic control to update the help text
-//        helpTopic.setOnAction(e -> {
-//            String selectedTopic = helpTopic.getValue();
-//            String selectedHelpText = getHelpText(selectedTopic);
-//            helpLabel.setText(selectedHelpText);
-//        });
+
     }
 
 }

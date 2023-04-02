@@ -14,8 +14,8 @@ public class PointOfInterest {
     private String type;
     @JsonIgnore
     private boolean selected;
+    @JsonIgnore
     private boolean favorite;
-    private Circle circle;
 
 
     public double getX() {
@@ -83,6 +83,6 @@ public class PointOfInterest {
     }
     @Override
     public String toString(){
-        return type + ":" + name + " " + roomNumber + "\n" + description;
+        return type + ":" + name + " \n" + roomNumber + "\n" + description;
     }
 }
