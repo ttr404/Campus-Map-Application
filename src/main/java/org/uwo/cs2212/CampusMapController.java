@@ -123,8 +123,8 @@ public class CampusMapController implements Initializable {
     private Button currentSelectedFloorButton;
     private Button[] floorButtons;
     private ContextMenu poiPopup;
-    private double coordinateX;
-    private double coordinateY;
+    private double coordinateX = 0;
+    private double coordinateY = 0;
 
     /**
      * This variable is used to determine if the map was clicked. This is set when the
@@ -353,6 +353,10 @@ public class CampusMapController implements Initializable {
                         coordinateView.setVisible(false);
                     }
                 }
+            }
+
+            if (coordinateX == 0 && coordinateY == 0) {
+                coordinateView.setVisible(false);
             }
 
             coordinateView.setLayoutX(coordinateX - 15);
