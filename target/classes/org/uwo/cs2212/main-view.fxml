@@ -28,6 +28,8 @@
                     <Button fx:id="zoomIn" onAction="#onZoomInButtonClicked" style="-fx-background-color: #b3dee5;" text=" - " />
                     <Label minWidth="3" />
                     <Button fx:id="zoomReset" onAction="#onZoomResetButtonClicked" style="-fx-background-color: #b3dee5;" text=" Reset " />
+                    <Label minWidth="3" />
+               <Button fx:id="clearIcon" onAction="#onClearIconButtonClicked" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: #b3dee5;" text="Clear" />
                     <Label minWidth="40.0" />
                <Button fx:id="addPOI" onAction="#onAddPOIClicked" style="-fx-background-color: #b3dee5;" text="Add POI" />
                <Label minWidth="3" />

@@ -1,7 +1,6 @@
 package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.json.JSONObject;
 
 
 public class PointOfInterest {
@@ -82,7 +81,7 @@ public class PointOfInterest {
     }
     @Override
     public String toString(){
-        return type + ":" + name + " \n" + roomNumber + "\n" + description;
+        return type + ":" + name + " \n" + description;
     }
 
     /**

@@ -14,7 +14,7 @@ import org.json.*;
  * A class that retrieves weather information from the OpenWeatherMap API.
  *
  * @author Tingrui Zhang
- * @author
+ * @author Binchi Zhang
  */
 public class Weather {
     private final JSONObject cachedData;
@@ -25,8 +25,9 @@ public class Weather {
 
     /**
      * Constructs a new Weather object with the specified latitude and longitude.
-     * @param latitude the latitude of the location for which to retrieve weather information
-     * @param longitude the longitude of the location for which to retrieve weather information
+     *
+     * @param latitude       the latitude of the location for which to retrieve weather information
+     * @param longitude      the longitude of the location for which to retrieve weather information
      * @throws IOException if there was an error retrieving the weather data
      */
     public Weather(double latitude, double longitude) throws IOException {

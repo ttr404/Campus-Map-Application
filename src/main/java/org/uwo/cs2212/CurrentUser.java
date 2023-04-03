@@ -72,17 +72,20 @@ public class CurrentUser {
 
     /**
      * This function allow the application to get the user's json file url
+     *
      * @return the url of current user's json file
      */
     public static URL getCurrentUserLayerUrl(){
         if (isAdmin()){
             return null;
         }
-        return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json"); // TODO: Switch this from the target dir to the resource one?
+
+        return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json");
     }
 
     /**
      * Add the poi data into the user's layer
+     *
      * @param baseMap the base map of the user layer
      * @param floorMap the floor map of the user layer
      * @param poi the poi will be added into the user layer

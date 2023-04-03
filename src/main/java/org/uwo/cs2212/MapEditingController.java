@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
 import javafx.scene.shape.Circle;
 import javafx.stage.*;
 import org.json.JSONArray;
@@ -85,7 +86,6 @@ public class MapEditingController {
         roomSelector.setItems(roomsToSelect);
     }
 
-
     /**
      * This method is responsible for loading and displaying the map
      * of the currently selected floor. It takes the map file name from the
@@ -123,6 +123,7 @@ public class MapEditingController {
             for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
+
                 for(PointOfInterest poi: layer.getPoints()){
                     if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
                             && (int) Math.round(poi.getX()) <= (coordinateX + 7)
@@ -170,13 +171,6 @@ public class MapEditingController {
         }
         return false;
     }
-
-    private boolean isClickWithinMapBounds(MouseEvent mouseEvent) {
-        Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
-        return realMousePosition.getX() >= 0 && realMousePosition.getX() <= imageWidth
-                && realMousePosition.getY() >= 0 && realMousePosition.getY() <= imageHeight;
-    }
-
 
     /**
      * Handles mouse clicks on the editor map by determining the real-world position of the click and checking if any point of interest
@@ -515,6 +509,9 @@ public class MapEditingController {
         fileWriter.close();
 
     }
+    private ImageLayer imageLayer;
+    private double currentZoom;
+    private Layer layer;
 
 
     /**
@@ -618,6 +615,7 @@ public class MapEditingController {
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
+
     }
 
     /**

@@ -1,9 +1,7 @@
 package org.uwo.cs2212;
 
-import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -59,6 +57,7 @@ public class ImageLayer extends Canvas {
             }
         }
     }
+
 
     /**
      * Checks if the given layer is a base layer or not. A base layer is a layer that contains the base map image and is always shown.

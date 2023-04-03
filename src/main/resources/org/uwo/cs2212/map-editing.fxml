@@ -11,8 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+
+<?import javafx.scene.image.ImageView?>
 <AnchorPane prefHeight="411.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditingController">
-   <children>
+    <children>
       <HBox layoutX="-1.0" prefHeight="0.0" prefWidth="947.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ToolBar prefHeight="37.0" HBox.hgrow="ALWAYS">

@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
-import java.net.URL;
 
 /**The CampusMapApplication class is responsible for launching the application and setting up the login view.
  * This class extends the JavaFX Application class.
@@ -21,8 +20,9 @@ import java.net.URL;
 public class CampusMapApplication extends Application {
 
     /** Set up the login view and display it.
-     @param stage a Stage object representing the application window
-     @throws IOException if there is an error while attempting to load the login view
+     *
+     * @param stage a Stage object representing the application window
+     * @throws IOException if there is an error while attempting to load the login view
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -47,11 +47,13 @@ public class CampusMapApplication extends Application {
     }
 
     /** Look for the Enter key to be pressed while the login view is active.
-     @param loginFxmlLoader a FXMLLoader object representing the loader for the login view FXML file
-     @param loginScene a Scene object representing the login view scene
+     *
+     * @param loginFxmlLoader a FXMLLoader object representing the loader for the login view FXML file
+     * @param loginScene a Scene object representing the login view scene
      */
     public static void pressEnter(FXMLLoader loginFxmlLoader, Scene loginScene){
         LoginViewController controller = loginFxmlLoader.getController();
+
         loginScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
