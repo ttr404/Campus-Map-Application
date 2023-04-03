@@ -1201,7 +1201,7 @@ public class CampusMapController implements Initializable {
         PoiPopupController.setStage(poiPopupStage);
 
         // Pass along the mouse position, so it can be saved as the POI location
-        PoiPopupController.setCoords(realMousePosition);
+        PoiPopupController.setCoords(coordinateX, coordinateY);
 
         // Set the window's title
         poiPopupStage.setTitle("New POI");

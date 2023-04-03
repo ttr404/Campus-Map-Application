@@ -37,9 +37,13 @@ public class PoiPopupController implements Initializable {
      */
     boolean favourite = true;
     /**
-     * This variable is used to store the coordinates of the POI
+     * This variable is used to store the x coordinate of the POI
      */
-    private static Point2D poiCoords;
+    private static double xCoord;
+    /**
+     * This variable is used to store the y coordinate of the POI
+     */
+    private static double yCoord;
     /**
      * This variable is used to store the stage for the popup view
      */
@@ -76,10 +80,12 @@ public class PoiPopupController implements Initializable {
     /**
      * This method is used to set the coordinates of the POI being added
      *
-     * @param coords The coordinates to be saved with the POI
+     * @param xCoord The x coordinates to be saved for the POI
+     * @param yCoord The y coordinates to be saved for the POI
      */
-    public static void setCoords(Point2D coords) {
-        PoiPopupController.poiCoords = coords;
+    public static void setCoords(double xCoord, double yCoord) {
+        PoiPopupController.xCoord = xCoord;
+        PoiPopupController.yCoord = yCoord;
     }
 
     /**
@@ -148,8 +154,8 @@ public class PoiPopupController implements Initializable {
         poi.setRoomNumber(roomNumber);
         poi.setDescription(description);
         poi.setFavorite(favourite);
-        poi.setX(poiCoords.getX());
-        poi.setY(poiCoords.getY());
+        poi.setX(xCoord);
+        poi.setY(yCoord);
         // Set the type for the POI
         poi.setType("User");
 
