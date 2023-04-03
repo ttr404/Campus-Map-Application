@@ -359,8 +359,8 @@ public class CampusMapController implements Initializable {
                 coordinateView.setVisible(false);
             }
 
-            coordinateView.setLayoutX(coordinateX - 15);
-            coordinateView.setLayoutY(coordinateY - 29);
+            coordinateView.setLayoutX(coordinateX * zoom - 15);
+            coordinateView.setLayoutY(coordinateY * zoom - 29);
             coordinateView.setFitWidth(30);
             coordinateView.setPreserveRatio(true);
             root.getChildren().add(coordinateView);
