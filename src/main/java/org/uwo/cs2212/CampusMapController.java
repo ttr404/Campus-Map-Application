@@ -310,6 +310,8 @@ public class CampusMapController implements Initializable {
                 showMap();
             }
         }
+        coordinateX = 0;
+        coordinateY = 0;
         setShowAllPOI();
     }
 
@@ -707,6 +709,8 @@ public class CampusMapController implements Initializable {
     @FXML
     private void onFloorGButtonClick(ActionEvent actionEvent) {
         CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(0));
+        coordinateX = 0;
+        coordinateY = 0;
         showMap();
 
         Button clickedButton = (Button) actionEvent.getSource();
@@ -717,6 +721,8 @@ public class CampusMapController implements Initializable {
     private void onFloor1ButtonClick(ActionEvent actionEvent) {
         if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 2) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(1));
+            coordinateX = 0;
+            coordinateY = 0;
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
@@ -728,6 +734,8 @@ public class CampusMapController implements Initializable {
     private void onFloor2ButtonClick(ActionEvent actionEvent) {
         if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 3) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(2));
+            coordinateX = 0;
+            coordinateY = 0;
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
@@ -739,6 +747,8 @@ public class CampusMapController implements Initializable {
     private void onFloor3ButtonClick(ActionEvent actionEvent) {
         if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 4) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(3));
+            coordinateX = 0;
+            coordinateY = 0;
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
@@ -750,6 +760,8 @@ public class CampusMapController implements Initializable {
     private void onFloor4ButtonClick(ActionEvent actionEvent) {
         if (CurrentUser.getCurrentBaseMap().getFloorMaps().size() >= 5) {
             CurrentUser.setCurrentFloorMap(CurrentUser.getCurrentBaseMap().getFloorMaps().get(4));
+            coordinateX = 0;
+            coordinateY = 0;
             showMap();
 
             Button clickedButton = (Button) actionEvent.getSource();
