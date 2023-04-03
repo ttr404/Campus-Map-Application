@@ -101,7 +101,7 @@ public class CurrentUser {
         // Used to store if the user data saved successfully
         boolean saveSuccessful = true;
 
-        if(isAdmin()){
+        if(isAdmin()){ // TODO: Remove
             return true;
         }
         URL tmpUrl = CurrentUser.getCurrentUserLayerUrl();
@@ -109,8 +109,10 @@ public class CurrentUser {
             tmpUrl = CurrentUser.class.getResource("empty-user-layer.json"); // TODO: Switch this from the target dir to the resource one?
             String path = tmpUrl.getPath();
             path = path.replace("empty-user-layer.json", "user-layer-" + CurrentUser.getUsername().trim().toLowerCase() + ".json");
+            path = path.replace("%20", " ");
             try {
                 File file = new File(path);
+                System.out.println(path);
                 file.createNewFile();
                 tmpUrl = CurrentUser.getCurrentUserLayerUrl();
             } catch (MalformedURLException e) {

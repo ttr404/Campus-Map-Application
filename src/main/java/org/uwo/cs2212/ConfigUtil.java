@@ -3,6 +3,8 @@ package org.uwo.cs2212;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.uwo.cs2212.model.*;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -31,11 +33,11 @@ public class ConfigUtil {
      * @param url The URL of the JSON file containing the map configuration
      *            data to be loaded.
      * @return The MapConfig object containing the map configuration data
-     *         from the JSON file, including the associated FloorMap objects.
+     * from the JSON file, including the associated FloorMap objects.
      * @throws RuntimeException If there is an IOException or
-     *         URISyntaxException while reading the JSON file, mapping the
-     *         JSON data to the MapConfig object, or loading the FloorMap
-     *         objects.
+     *                          URISyntaxException while reading the JSON file, mapping the
+     *                          JSON data to the MapConfig object, or loading the FloorMap
+     *                          objects.
      */
     public static MapConfig loadMapConfig(URL url) {
         try {
@@ -49,8 +51,23 @@ public class ConfigUtil {
             MapConfig mapConfig = objectMapper.readValue(mapJsonData, MapConfig.class);
 
             URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
-            if(currentUserUrl != null){
-                CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerUrl()));
+            if (currentUserUrl != null) {
+                File file = new File(currentUserUrl.toURI());
+                // Check if the file contains data
+                if (file.length() > 0) {
+                    CurrentUser.setUserData(ConfigUtil.loadUserLayers(currentUserUrl));
+                } else {
+                    // Delete the file if it is blank to prevent crashes
+                    try {
+                        if (file.delete()) {
+                            System.out.println(file.getName() + " is deleted!");
+                        } else {
+                            System.out.println("Delete operation is failed.");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             // Iterate through the BaseMap objects in the MapConfig object
@@ -67,12 +84,12 @@ public class ConfigUtil {
                     floorMap.setConfigFileName(floorConfig.getConfigFileName());
 
                     UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
-                    if(userLayer != null){
+                    if (userLayer != null) {
                         floorMap.setUserLayer(userLayer);
                     }
-                    
 
-                    if (CurrentUser.getUserData() != null && CurrentUser.getUserData().getFavoritePois() != null){
+
+                    if (CurrentUser.getUserData() != null && CurrentUser.getUserData().getFavoritePois() != null) {
                         updateFavorite(baseMap, floorMap);
                     }
 
@@ -97,10 +114,10 @@ public class ConfigUtil {
      * @param url The URL of the JSON file containing the floor map
      *            configuration data to be loaded.
      * @return The FloorMap object containing the floor map configuration
-     *         data from the JSON file.
+     * data from the JSON file.
      * @throws RuntimeException If there is an IOException or
-     *         URISyntaxException while reading the JSON file or mapping
-     *         the JSON data to the FloorMap object.
+     *                          URISyntaxException while reading the JSON file or mapping
+     *                          the JSON data to the FloorMap object.
      */
     public static FloorMap loadFloorMap(URL url) {
         try {
@@ -132,10 +149,10 @@ public class ConfigUtil {
      * @param url The URL of the JSON file containing the user data
      *            to be loaded.
      * @return The UserList object containing the user data from the
-     *         JSON file.
+     * JSON file.
      * @throws RuntimeException If there is an IOException or
-     *         URISyntaxException while reading the JSON file or
-     *         mapping the JSON data to the UserList object.
+     *                          URISyntaxException while reading the JSON file or
+     *                          mapping the JSON data to the UserList object.
      */
     public static UserList loadUserList(URL url) {
         try {
@@ -213,10 +230,10 @@ public class ConfigUtil {
      *
      * @param userList The UserList object containing the user data
      *                 to be saved.
-     * @param url The URL of the JSON file where the user data should
-     *            be saved.
+     * @param url      The URL of the JSON file where the user data should
+     *                 be saved.
      * @throws RuntimeException If there is an IOException or
-     *         URISyntaxException while writing the JSON data to the file.
+     *                          URISyntaxException while writing the JSON data to the file.
      */
     public static void saveUserList(UserList userList, URL url) {
         try {
@@ -243,27 +260,27 @@ public class ConfigUtil {
         }
     }
 
-    private static void updateFavorite(BaseMap baseMap, FloorMap floorMap){
-        for(Layer layer : floorMap.getLayers()){
-            for (PointOfInterest poi : layer.getPoints()){ // TODO: This can be simplifed and FavouritePoi likely can be removed
-                for(FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()){
+    private static void updateFavorite(BaseMap baseMap, FloorMap floorMap) {
+        for (Layer layer : floorMap.getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) { // TODO: This can be simplifed and FavouritePoi likely can be removed
+                for (FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()) {
                     if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
                             && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())
                             && favorite.getLayerName().toLowerCase().equals(layer.getName().toLowerCase())
-                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())){
+                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())) {
                         poi.setFavorite(true);
                     }
                 }
             }
         }
 
-        if(floorMap.getUserLayer() != null && floorMap.getUserLayer().getPoints()!= null){
-            for (PointOfInterest poi : floorMap.getUserLayer().getPoints()){
-                for(FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()){
+        if (floorMap.getUserLayer() != null && floorMap.getUserLayer().getPoints() != null) {
+            for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
+                for (FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()) {
                     if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
                             && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())
                             && favorite.getLayerName().toLowerCase().equals(floorMap.getUserLayer().getName().toLowerCase())
-                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())){
+                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())) {
                         poi.setFavorite(true);
                     }
                 }

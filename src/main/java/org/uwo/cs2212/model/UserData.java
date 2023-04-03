@@ -19,8 +19,12 @@ public class UserData {
     }
 
     public void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi){
+        // Used to store if a new userLayer had to be created
+        boolean newUserLayerCreated = false;
+
         UserLayer userLayer = findUserLayer(baseMap, floorMap, this);
         if (userLayer == null){
+            newUserLayerCreated = true;
             userLayer = new UserLayer();
             userLayer.setBaseName(baseMap.getName());
             userLayer.setFloorName(floorMap.getName());
@@ -36,9 +40,13 @@ public class UserData {
         // Add the poi to the userLayer
         userLayer.getPoints().add(poi);
 
-        // If userLayers is empty create a new list and add the userLayer to the list
+        // If userLayers is empty create a new list
         if(userLayers == null){
             userLayers = new ArrayList<>();
+        }
+
+        // If a new user layer was created then add it to the userLayers
+        if (newUserLayerCreated) {
             userLayers.add(userLayer);
         } else { // Otherwise, update the existing layer
             updateUserLayers(userLayer);

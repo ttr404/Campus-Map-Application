@@ -699,6 +699,13 @@ public class CampusMapController implements Initializable {
         showMap();
     }
     public void onClearIconButtonClicked(ActionEvent actionEvent) {
+        clearPinIcon();
+    }
+
+    /**
+     * This method is used to clear the pin icon from the map
+     */
+    public void clearPinIcon() {
         coordinateX = 0;
         coordinateY = 0;
         showMap();
@@ -1234,6 +1241,11 @@ public class CampusMapController implements Initializable {
         // Add the program icon to the window
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
         poiPopupStage.getIcons().add(icon);
+
+        // add a listener to the setOnHiding() method
+        poiPopupStage.setOnHiding(event -> {
+            clearPinIcon();
+        });
 
         // Add the scene to the stage
         poiPopupStage.setScene(poiPopupScene);
