@@ -94,9 +94,12 @@ public class CurrentUser {
         userData.addPoi(baseMap, floorMap, poi);
     }
 
-    public static void saveUserData()  {
+    public static boolean saveUserData()  {
+        // Used to store if the user data saved successfully
+        boolean saveSuccessful = true;
+
         if(isAdmin()){
-            return;
+            return true;
         }
         URL tmpUrl = CurrentUser.getCurrentUserLayerUrl();
         if (tmpUrl == null){
@@ -108,8 +111,10 @@ public class CurrentUser {
                 file.createNewFile();
                 tmpUrl = CurrentUser.getCurrentUserLayerUrl();
             } catch (MalformedURLException e) {
+                saveSuccessful = false;
                 e.printStackTrace();
             } catch (IOException e) {
+                saveSuccessful = false;
                 e.printStackTrace();
             }
         }
@@ -128,5 +133,8 @@ public class CurrentUser {
 
         userData.setFavoritePois(favoritePois);
         ConfigUtil.saveUserData(userData, tmpUrl);
+
+        // Returns true if no errors occurred
+        return saveSuccessful;
     }
 }

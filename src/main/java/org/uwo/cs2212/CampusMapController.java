@@ -809,8 +809,8 @@ public class CampusMapController implements Initializable {
      * mouse event, and then iterates through all points of interest on the current floor map to determine if
      * the mouse click hits a point of interest. If a point of interest is hit, the method selects the
      * point of interest, shows it in the informationList ListView, and returns. If no point of interest is hit,
-     * the method deselects any currently selected POI and returns. It is also used to open the POI editor if the
-     * AddPOI button was pressed
+     * the method deselects any currently selected POI and returns. It is also used to set that the pop-up window
+     * should show when the Add POI button is pressed by setting mapClicked to true
      *
      * @param mouseEvent the MouseEvent object representing the mouse click event
      * @throws IOException
@@ -823,49 +823,52 @@ public class CampusMapController implements Initializable {
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                     showPoiInList(poi);
 
-                    /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
-
-                    // Create the ContextMenu
-                    poiPopup = new ContextMenu();
-                    poiPopup.setStyle("-fx-background-color: transparent;");
-                    MenuItem menuItem = new MenuItem();
-                    menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
-
-                    // Set the content for the ContextMenu
-                    String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() +
-                            "\nDescription:" + "  " + poi.getDescription();
-                    menuItem = new MenuItem(s);
-                    menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
-                    poiPopup.getItems().add(menuItem);
-
-                    // Calculate the window position of the POI
-                    Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
-                    Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
-
-                    // Show the context menu at the POI position
-                    poiPopup.show(mapPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                    poiDetailsPopup(mouseEvent, poi);
                     return;
                 }
             }
         }
+
+        // User created POIs
         if (CurrentUser.getCurrentFloorMap().getUserLayer() != null && user_POIs.isSelected()) {
             for (PointOfInterest poi : CurrentUser.getCurrentFloorMap().getUserLayer().getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                     showPoiInList(poi);
+
+                    poiDetailsPopup(mouseEvent, poi);
+
                     return;
                 }
             }
         }
         selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
 
-        // If mapClicked is true then call the openPOIPopup to open the POI popup window to add a new POI.
-        // Pass along the current realMousePosition
-        if (mapClicked) {
-            openPOIPopup(realMousePosition);
-            // Reset mapClicked so the button has to be pressed again
-            mapClicked = false;
-        }
+        mapClicked = true;
+    }
+
+    private void poiDetailsPopup(MouseEvent mouseEvent, PointOfInterest poi) {
+        /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
+
+        // Create the ContextMenu
+        poiPopup = new ContextMenu();
+        poiPopup.setStyle("-fx-background-color: transparent;");
+        MenuItem menuItem = new MenuItem();
+        menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
+
+        // Set the content for the ContextMenu
+        String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() +
+                "\nDescription:" + "  " + poi.getDescription();
+        menuItem = new MenuItem(s);
+        menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
+        poiPopup.getItems().add(menuItem);
+
+        // Calculate the window position of the POI
+        Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
+        Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
+
+        // Show the context menu at the POI position
+        poiPopup.show(mapPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
     }
 
     /**
@@ -1015,7 +1018,8 @@ public class CampusMapController implements Initializable {
             currentPOI.setFavorite(!currentPOI.isFavorite());
             if (currentPOI.getType().toLowerCase().contains("user")) {
                 System.out.println("POI type: " + currentPOI.getType());
-                CurrentUser.getUserData().removeFavourite(currentPOI, currentPOI.getName(), CurrentUser.getCurrentBaseMap().getName(), CurrentUser.getCurrentFloorMap().getName());
+                CurrentUser.getUserData().removeFavourite(currentPOI, currentPOI.getName(),
+                        CurrentUser.getCurrentBaseMap().getName(), CurrentUser.getCurrentFloorMap().getName());
             }
             setFavouriteButtonState();
         }
@@ -1176,22 +1180,26 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * This method is called when the Add POI button was clicked
+     * This method is called when the Add POI button was clicked, it calls the popup window
      *
      * @param actionEvent Pass the action event data along
+     * @throws IOException
      */
-    public void onAddPOIClicked(ActionEvent actionEvent) {
-        mapClicked = true;
+    public void onAddPOIClicked(ActionEvent actionEvent) throws IOException {
+        // If mapClicked is true then call the openPOIPopup to open the POI popup window to add a new POI.
+        // Pass along the current realMousePosition
+        if (mapClicked) {
+            openPOIPopup();
+            // Reset mapClicked so the button has to be pressed again
+            mapClicked = false;
+        }
     }
 
     /**
      * This method is used to create/call the popup window to create a new POI
-     *
-     * @param realMousePosition This is the current position of the mouse on the map
-     *                          (takes into account zoom, size, etc.)
      * @throws IOException
      */
-    private void openPOIPopup(Point2D realMousePosition) throws IOException {
+    private void openPOIPopup() throws IOException {
         // Create the new stage (window)
         Stage poiPopupStage = new Stage();
 

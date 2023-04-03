@@ -146,6 +146,9 @@ public class PoiPopupController implements Initializable {
      * @param description The description for the POI
      */
     private void save(String name, String roomNumber, String description) {
+        // Used to store if the user data saved successfully
+        boolean saveSuccessful = true;
+
         // Create a new POI
         PointOfInterest poi = new PointOfInterest();
 
@@ -161,8 +164,18 @@ public class PoiPopupController implements Initializable {
 
         // Call the method to add the POI to the current user's data object
         CurrentUser.addPoi(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), poi);
-        // Save the object to a JSON file
-        CurrentUser.saveUserData();
+        // Save the object to a JSON file and store if the method saved successfully
+        saveSuccessful = CurrentUser.saveUserData();
+
+        // Show a successfully saved method
+        if (saveSuccessful) {
+            // Create an error message box
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Save POI");
+            alert.setHeaderText("Successfully saved the POI!");
+            alert.setContentText("The POI was successfully added to your list of POIs.");
+            alert.showAndWait();
+        }
     }
 
     /**
