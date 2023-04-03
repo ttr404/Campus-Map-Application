@@ -544,71 +544,75 @@ public class CampusMapController implements Initializable {
      */
     @FXML
     private void signOut(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        String s = "";
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
-
-        // Create three buttons
-        Button saveButton = new Button("Save");
-        saveButton.setPrefSize(60, 30); // Set button size
-        saveButton.setTranslateX(100); // Set button X position
-        Button dontSaveButton = new Button("Don't save");
-        dontSaveButton.setPrefSize(90, 30); // Set button size
-        dontSaveButton.setTranslateX(20); // Set button X position
-        Button cancelButton = new Button("Cancel");
-        cancelButton.setPrefSize(60, 30); // Set button size
-        cancelButton.setTranslateX(180); // Set button X position
-
-        // Add event handlers to the buttons
-        saveButton.setOnAction(e -> {
-            // Handle yes button click
-            try {
-                UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
-                // properly save the data
-                ConfigUtil.saveUserList(userlist, CampusMapApplication.class.getResource("user-account.json"));
-                returnBack("login-view.fxml", "Login Page");
-                ((Node) (event.getSource())).getScene().getWindow().hide();
-                stage.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        dontSaveButton.setOnAction(e -> {
-            // Handle no button click
-            //Don't save the data, jump back to login page
-            try {
-                //now "enter" key can be user when re-login
-                FXMLLoader loginFxmlLoader = returnBack("login-view.fxml", "Login Page");
-                Stage loginStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-                Scene loginScene = loginStage.getScene();
-                pressEnter(loginFxmlLoader, loginScene);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-            stage.close();
-        });
-        cancelButton.setOnAction(e -> {
-            // Handle cancel button click
-            stage.close();
-        });
-        // Create an HBox container to hold the buttons
-        HBox hbox = new HBox(dontSaveButton, saveButton, cancelButton);
-        hbox.setTranslateY(50);
-        hbox.setSpacing(-5); // Set spacing between buttons
-        VBox vbox = new VBox(new Label(s), hbox); // Add HBox to VBox container
-        Scene scene = new Scene(vbox, 280, 100);
-        stage.setScene(scene);
-        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() +
-                ((Node) event.getSource()).getScene().getWindow().getWidth() - 650);
-        stage.setY(((Node) event.getSource()).getScene().getWindow().getY() + 200);
-        stage.setWidth(400);
-        stage.setHeight(200);
-        stage.setTitle("Sign Out");// Set the title of the pop-up window
-        Image icon = new Image(getClass().getResourceAsStream("western-logo.png")); // set the title icon
-        stage.getIcons().add(icon);
-        stage.show();
+        returnBack("login-view.fxml", "Login Page");
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+        /** save button **/
+//        Stage stage = new Stage();
+//        String s = "";
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+//
+//        // Create three buttons
+//        Button saveButton = new Button("Save");
+//        saveButton.setPrefSize(60, 30); // Set button size
+//        saveButton.setTranslateX(100); // Set button X position
+//        Button dontSaveButton = new Button("Don't save");
+//        dontSaveButton.setPrefSize(90, 30); // Set button size
+//        dontSaveButton.setTranslateX(20); // Set button X position
+//        Button cancelButton = new Button("Cancel");
+//        cancelButton.setPrefSize(60, 30); // Set button size
+//        cancelButton.setTranslateX(180); // Set button X position
+//
+//        // Add event handlers to the buttons
+//        saveButton.setOnAction(e -> {
+//            // Handle yes button click
+//            try {
+//                UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
+//                // properly save the data
+//                ConfigUtil.saveUserList(userlist, CampusMapApplication.class.getResource("user-account.json"));
+//                returnBack("login-view.fxml", "Login Page");
+//                ((Node) (event.getSource())).getScene().getWindow().hide();
+//                stage.close();
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//        });
+//        dontSaveButton.setOnAction(e -> {
+//            // Handle no button click
+//            //Don't save the data, jump back to login page
+//            try {
+//                //now "enter" key can be user when re-login
+//                FXMLLoader loginFxmlLoader = returnBack("login-view.fxml", "Login Page");
+//                Stage loginStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+//                Scene loginScene = loginStage.getScene();
+//                pressEnter(loginFxmlLoader, loginScene);
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//            ((Node) (event.getSource())).getScene().getWindow().hide();
+//            stage.close();
+//        });
+//        cancelButton.setOnAction(e -> {
+//            // Handle cancel button click
+//            stage.close();
+//        });
+//        // Create an HBox container to hold the buttons
+//        HBox hbox = new HBox(dontSaveButton, saveButton, cancelButton);
+//        hbox.setTranslateY(50);
+//        hbox.setSpacing(-5); // Set spacing between buttons
+//        VBox vbox = new VBox(new Label(s), hbox); // Add HBox to VBox container
+//        Scene scene = new Scene(vbox, 280, 100);
+//        stage.setScene(scene);
+//        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() +
+//                ((Node) event.getSource()).getScene().getWindow().getWidth() - 650);
+//        stage.setY(((Node) event.getSource()).getScene().getWindow().getY() + 200);
+//        stage.setWidth(400);
+//        stage.setHeight(200);
+//        stage.setTitle("Sign Out");// Set the title of the pop-up window
+//        Image icon = new Image(getClass().getResourceAsStream("western-logo.png")); // set the title icon
+//        stage.getIcons().add(icon);
+//        stage.show();
+        /** END **/
     }
 
     /**
