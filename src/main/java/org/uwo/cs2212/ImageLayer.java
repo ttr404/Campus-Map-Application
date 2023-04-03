@@ -1,12 +1,16 @@
 package org.uwo.cs2212;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.uwo.cs2212.model.Layer;
 import org.uwo.cs2212.model.PointOfInterest;
+
 
 /**
  * This class represents an ImageLayer used to draw points of interest on the map. It extends the JavaFX Canvas class to
@@ -16,6 +20,7 @@ import org.uwo.cs2212.model.PointOfInterest;
  * canvas, with their corresponding colors, fonts, sizes, and selected state. Additionally, the class provides a utility
  * method to check if a layer is a base layer, and to hide/show points of interest based on the layer's hideLayer flag.
  */
+
 public class ImageLayer extends Canvas {
 
     /**
@@ -57,8 +62,7 @@ public class ImageLayer extends Canvas {
             }
         }
     }
-
-
+    
     /**
      * Checks if the given layer is a base layer or not. A base layer is a layer that contains the base map image and is always shown.
      *
