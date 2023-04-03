@@ -123,6 +123,8 @@ public class CampusMapController implements Initializable {
     private Button currentSelectedFloorButton;
     private Button[] floorButtons;
     private ContextMenu poiPopup;
+    private double coordinateX;
+    private double coordinateY;
 
     /**
      * This variable is used to determine if the map was clicked. This is set when the
@@ -337,11 +339,27 @@ public class CampusMapController implements Initializable {
             imageView.setFitWidth(image.getWidth() * zoom);
             imageView.setPreserveRatio(true);
             root.getChildren().add(imageView);
+            Image coordinate = new Image(getClass().getResourceAsStream("map-marker.png"));
+            ImageView coordinateView = new ImageView(coordinate);
 
             for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
+                for(PointOfInterest poi: layer.getPoints()){
+                    if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
+                            && (int) Math.round(poi.getX()) <= (coordinateX + 7)
+                            && (int) Math.round(poi.getY()) >= (coordinateY - 7)
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)) {
+                        coordinateView.setVisible(false);
+                    }
+                }
             }
+
+            coordinateView.setLayoutX(coordinateX - 15);
+            coordinateView.setLayoutY(coordinateY - 29);
+            coordinateView.setFitWidth(30);
+            coordinateView.setPreserveRatio(true);
+            root.getChildren().add(coordinateView);
 
             if (user_POIs.isSelected() && CurrentUser.getCurrentFloorMap().getUserLayer() != null) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, CurrentUser.getCurrentFloorMap().getUserLayer());
@@ -899,6 +917,9 @@ public class CampusMapController implements Initializable {
     }
 
     private Point2D calculateRealMousePosition(MouseEvent mouseEvent) {
+        coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
+        coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
+        showMap();
         return WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
     }
 

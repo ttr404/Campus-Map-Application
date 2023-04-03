@@ -124,10 +124,10 @@ public class MapEditingController {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
                 for(PointOfInterest poi: layer.getPoints()){
-                    if ((int) Math.round(poi.getX()) >= (coordinateX - 5)
-                            && (int) Math.round(poi.getX()) <= (coordinateX + 5)
-                            && (int) Math.round(poi.getY()) >= (coordinateY - 5)
-                            && (int) Math.round(poi.getY()) <= (coordinateY + 5)) {
+                    if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
+                            && (int) Math.round(poi.getX()) <= (coordinateX + 7)
+                            && (int) Math.round(poi.getY()) >= (coordinateY - 7)
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)) {
                         coordinateView.setVisible(false);
                     }
                 }
@@ -513,6 +513,7 @@ public class MapEditingController {
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
+
     }
 
 
