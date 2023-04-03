@@ -78,7 +78,7 @@ public class CurrentUser {
         if (isAdmin()){
             return null;
         }
-        return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json");
+        return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json"); // TODO: Switch this from the target dir to the resource one?
     }
 
     /**
@@ -100,7 +100,7 @@ public class CurrentUser {
         }
         URL tmpUrl = CurrentUser.getCurrentUserLayerUrl();
         if (tmpUrl == null){
-            tmpUrl = CurrentUser.class.getResource("empty-user-layer.json");
+            tmpUrl = CurrentUser.class.getResource("empty-user-layer.json"); // TODO: Switch this from the target dir to the resource one?
             String path = tmpUrl.getPath();
             path = path.replace("empty-user-layer.json", "user-layer-" + CurrentUser.getUsername().trim().toLowerCase() + ".json");
             try {
@@ -125,6 +125,7 @@ public class CurrentUser {
                 }
             }
         }
+
         userData.setFavoritePois(favoritePois);
         ConfigUtil.saveUserData(userData, tmpUrl);
     }

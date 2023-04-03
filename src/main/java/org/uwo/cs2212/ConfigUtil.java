@@ -245,7 +245,7 @@ public class ConfigUtil {
 
     private static void updateFavorite(BaseMap baseMap, FloorMap floorMap){
         for(Layer layer : floorMap.getLayers()){
-            for (PointOfInterest poi : layer.getPoints()){
+            for (PointOfInterest poi : layer.getPoints()){ // TODO: This can be simplifed and FavouritePoi likely can be removed
                 for(FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()){
                     if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
                             && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())

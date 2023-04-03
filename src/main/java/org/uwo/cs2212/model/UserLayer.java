@@ -1,6 +1,6 @@
 package org.uwo.cs2212.model;
 
-public class UserLayer extends Layer{
+public class UserLayer extends Layer {
     private String floorName;
     private String baseName;
 
@@ -18,5 +18,15 @@ public class UserLayer extends Layer{
 
     public void setBaseName(String baseName) {
         this.baseName = baseName;
+    }
+
+    /**
+     * This method is used to check if 2 UserLayers are equal to each other
+     *
+     * @param other The other UserLayer to be checked
+     * @return Returns true if they are equal, otherwise, it returns false
+     */
+    public boolean equals(UserLayer other) {
+        return this.floorName.equals(other.floorName) && this.baseName.equals(other.baseName);
     }
 }

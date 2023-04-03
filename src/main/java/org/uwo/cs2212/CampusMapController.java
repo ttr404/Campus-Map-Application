@@ -55,7 +55,7 @@ import static org.uwo.cs2212.CampusMapApplication.pressEnter;
  * @author Tingrui Zhang
  * @author Binchi Zhang
  * @author Truman Huang
- * @author
+ * @author Jarrett Boersen
  * @author
  */
 public class CampusMapController implements Initializable {
@@ -1008,8 +1008,15 @@ public class CampusMapController implements Initializable {
 
     public void onFavoriteButtonClicked(ActionEvent actionEvent) {
         selectAllLayers();
-        if (CurrentUser.getCurrentSelectedPoi() != null) {
-            CurrentUser.getCurrentSelectedPoi().setFavorite(!CurrentUser.getCurrentSelectedPoi().isFavorite());
+
+        PointOfInterest currentPOI = CurrentUser.getCurrentSelectedPoi();
+
+        if (currentPOI != null) {
+            currentPOI.setFavorite(!currentPOI.isFavorite());
+            if (currentPOI.getType().toLowerCase().contains("user")) {
+                System.out.println("POI type: " + currentPOI.getType());
+                CurrentUser.getUserData().removeFavourite(currentPOI, currentPOI.getName(), CurrentUser.getCurrentBaseMap().getName(), CurrentUser.getCurrentFloorMap().getName());
+            }
             setFavouriteButtonState();
         }
     }
@@ -1027,6 +1034,16 @@ public class CampusMapController implements Initializable {
             for (FloorMap floorMap : baseMap.getFloorMaps()) {
                 for (Layer layer : floorMap.getLayers()) {
                     for (PointOfInterest poi : layer.getPoints()) {
+                        if (poi.isFavorite()) {
+                            informationList.getItems().add(new SearchResult(floorMap, poi));
+                        }
+                    }
+                }
+
+                // Make sure the list of UserLayers isn't empty
+                if (floorMap.getUserLayer() != null) {
+                    // Loop through the user-created POIs and check if they are a favourite
+                    for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) { // TODO: Could be simplified potential if UserLayer and Layer are combined (UserLayer should be a Layer)
                         if (poi.isFavorite()) {
                             informationList.getItems().add(new SearchResult(floorMap, poi));
                         }
@@ -1183,7 +1200,7 @@ public class CampusMapController implements Initializable {
         Scene poiPopupScene = new Scene(popupFxmlLoader.load());
         PoiPopupController.setStage(poiPopupStage);
 
-        // Pass along the mouse position so it can be saved as the POI location
+        // Pass along the mouse position, so it can be saved as the POI location
         PoiPopupController.setCoords(realMousePosition);
 
         // Set the window's title

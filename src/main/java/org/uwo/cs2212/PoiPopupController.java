@@ -9,6 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.uwo.cs2212.model.BaseMap;
+import org.uwo.cs2212.model.FloorMap;
 import org.uwo.cs2212.model.PointOfInterest;
 
 import java.io.FileWriter;
@@ -46,6 +48,17 @@ public class PoiPopupController implements Initializable {
     private static Stage stage;
 
     /**
+     * This variable is used to store the current base map so the POI
+     * can be saved based on the base map
+     */
+    private static BaseMap currentBaseMap;
+    /**
+     * This variable is used to store the current floor map so the POI
+     * can be saved based on the floor map
+     */
+    private static FloorMap currentFloopMap;
+
+    /**
      * This method called automatically by javafx and is used to load some things when window is initialized.
      */
     @Override
@@ -72,8 +85,27 @@ public class PoiPopupController implements Initializable {
     }
 
     /**
+     * This method is used to set the current BaseMap (which building/campus map is active)
+     *
+     * @param currentBaseMap The BaseMap object to be stored
+     */
+    public static void setCurrentBaseMap(BaseMap currentBaseMap) {
+        PoiPopupController.currentBaseMap = currentBaseMap;
+    }
+
+    /**
+     * This method is used to set the current FloopMap (which floor of the BaseMap is active)
+     *
+     * @param currentFloopMap The FloopMap object to be stored
+     */
+    public static void setCurrentFloopMap(FloorMap currentFloopMap) {
+        PoiPopupController.currentFloopMap = currentFloopMap;
+    }
+
+    /**
      * This method is called when the favourite button is clicked which calls the setFavouriteButtonState
      * method to toggle the favourite state
+     *
      * @param actionEvent
      */
     public void OnFavouriteClicked(ActionEvent actionEvent) {
@@ -83,6 +115,7 @@ public class PoiPopupController implements Initializable {
     /**
      * This method is called when the save button is clicked this collects all the data the user
      * entered then runs the save method
+     *
      * @param actionEvent
      */
     public void OnSaveClicked(ActionEvent actionEvent) {
@@ -115,16 +148,21 @@ public class PoiPopupController implements Initializable {
 
         poi.setType("User");
 
-        ObjectMapper mapper = new ObjectMapper();
+
+        CurrentUser.addPoi(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), poi);
+
+        CurrentUser.saveUserData();
+
+//        ObjectMapper mapper = new ObjectMapper();
 
 //        try {
 
-            //FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + CurrentUser.getUsername().getPoiFileName());
+        //FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + CurrentUser.getUsername().getPoiFileName());
 
-            // Writing to a file
-            //mapper.writeValue(fileWriter, poi );
+        // Writing to a file
+        //mapper.writeValue(fileWriter, poi );
 
-            System.out.println(poi);
+        System.out.println(poi);
 
 //        } catch (IOException e) {
 //            e.printStackTrace();

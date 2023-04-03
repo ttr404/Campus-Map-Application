@@ -13,7 +13,7 @@ public class PointOfInterest {
     private String type;
     @JsonIgnore
     private boolean selected;
-    @JsonIgnore
+    // TODO: Keep ignore removed?
     private boolean favorite;
 
 
@@ -85,4 +85,13 @@ public class PointOfInterest {
         return type + ":" + name + " \n" + roomNumber + "\n" + description;
     }
 
+    /**
+     * This method is used to check if 2 PointOfInterests are equal to each other
+     *
+     * @param other The other PointOfInterest to be checked
+     * @return Returns true if they are equal, otherwise, it returns false
+     */
+    public boolean equals(PointOfInterest other) {
+        return type.equals(other.type) && name.equals(other.name) && roomNumber.equals(other.roomNumber) && description.equals(other.description);
+    }
 }
