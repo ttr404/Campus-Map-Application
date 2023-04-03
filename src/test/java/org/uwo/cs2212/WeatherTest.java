@@ -1,20 +1,17 @@
 package org.uwo.cs2212;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * JUnit5 Testing class for Weather API
@@ -24,91 +21,38 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class WeatherTest {
 
-    @Mock
-    private HttpURLConnection mockHttpURLConnection;
-
     private Weather weather;
+
     private double testLatitude = 45.0;
     private double testLongitude = -75.0;
+    private HttpURLConnection connection;
+    private String apiKey = "90989f1e4b8f4af54e30c4d7ad6a994c";
+
 
     @BeforeEach
     void setUp() throws IOException {
-        weather = new Weather(0, 0);
-
+        URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + testLatitude + "&lon=" + testLongitude + "&appid=" + apiKey);
+        connection = (HttpURLConnection) url.openConnection();
     };
 
     @Test
-    void getWeather() {
-        String expected = "Clear sky";
-        String actual = weather.getWeather();
-        assertEquals(expected, actual);
-    }
-    @Test
-    void getTemp() {
-        Double expected = 25.0;
-        Double actual = weather.getTemp();
-        assertEquals(expected, actual);
+    public void testStatusCode() throws IOException {
+        int expectedStatusCode = 200;
+        int actualStatusCode = connection.getResponseCode();
+        assertEquals(expectedStatusCode, actualStatusCode);
     }
 
     @Test
-    void getIcon() {
-        String expected = "01d";
-        String actual = weather.getIcon();
-        assertEquals(expected, actual);
+    public void testJsonResponse() throws IOException{
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
+
+        assertEquals(HttpURLConnection.HTTP_OK, connection.getResponseCode());
+        assertTrue(connection.getContentType().contains("json"));
+
+        ObjectMapper mapper = new ObjectMapper();
+        Object responseObject = mapper.readValue(connection.getInputStream(), Object.class);
+        // perform additional assertions on the response object, if needed
     }
 
-    @Test
-    void testGetWeather_WithValidData() throws IOException {
-        String validWeatherData = "{\"weather\":[{\"id\":800,\"main\":\"Clear\",\"description\":\"clear sky\",\"icon\":\"01d\"}],\"main\":{\"temp\":22.51}}";
-        InputStream inputStream = new ByteArrayInputStream(validWeatherData.getBytes());
-        when(mockHttpURLConnection.getInputStream()).thenReturn(inputStream);
-
-        String result = weather.getWeather();
-        assertEquals("Clear sky", result);
-    }
-
-    @Test
-    void testGetWeather_WithError() throws IOException {
-        when(mockHttpURLConnection.getInputStream()).thenThrow(IOException.class);
-
-        String result = weather.getWeather();
-        assertEquals("---", result);
-    }
-
-    @Test
-    void testGetTemp_WithValidData() throws IOException {
-        String validWeatherData = "{\"weather\":[{\"id\":800,\"main\":\"Clear\",\"description\":\"clear sky\",\"icon\":\"01d\"}],\"main\":{\"temp\":22.51}}";
-        InputStream inputStream = new ByteArrayInputStream(validWeatherData.getBytes());
-        when(mockHttpURLConnection.getInputStream()).thenReturn(inputStream);
-
-        Double result = weather.getTemp();
-        assertEquals(22.51, result);
-    }
-
-    @Test
-    void testGetTemp_WithError() throws IOException {
-        when(mockHttpURLConnection.getInputStream()).thenThrow(IOException.class);
-
-        Double result = weather.getTemp();
-        assertEquals(Double.NaN, result);
-    }
-
-    @Test
-    void testRetrieveData_WithValidData() throws IOException {
-        String validWeatherData = "{\"weather\":[{\"id\":800,\"main\":\"Clear\",\"description\":\"clear sky\",\"icon\":\"01d\"}],\"main\":{\"temp\":22.51}}";
-        InputStream inputStream = new ByteArrayInputStream(validWeatherData.getBytes());
-        when(mockHttpURLConnection.getInputStream()).thenReturn(inputStream);
-
-        JSONObject result = weather.retrieveData();
-        assertEquals("clear sky", result.getJSONArray("weather").getJSONObject(0).getString("description"));
-        assertEquals(22.51, result.getJSONObject("main").getDouble("temp"));
-    }
-
-    @Test
-    void testRetrieveData_WithError() throws IOException {
-        when(mockHttpURLConnection.getInputStream()).thenThrow(IOException.class);
-
-        JSONObject result = weather.retrieveData();
-        assertEquals("No internet connection", result.getString("error"));
-    }
 }

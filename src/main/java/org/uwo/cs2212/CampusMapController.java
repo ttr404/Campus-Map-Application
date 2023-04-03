@@ -854,8 +854,16 @@ public class CampusMapController implements Initializable {
                 if (hitTest(realMousePosition, poi)) {
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                     showPoiInList(poi);
+                    if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
+                            && (int) Math.round(poi.getX()) <= (coordinateX + 7)
+                            && (int) Math.round(poi.getY()) >= (coordinateY - 7)
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)){
+                        coordinateX = 0;
+                        coordinateY = 0;
+                    }
 
                     poiDetailsPopup(mouseEvent, poi);
+                    showMap();
 
                     return;
                 }
@@ -864,6 +872,7 @@ public class CampusMapController implements Initializable {
         selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
 
         mapClicked = true;
+
     }
 
     private void poiDetailsPopup(MouseEvent mouseEvent, PointOfInterest poi) {
