@@ -134,6 +134,10 @@ public class MapEditingController {
                 }
             }
 
+            if (coordinateX == 0 && coordinateY == 0){
+                coordinateView.setVisible(false);
+            }
+
             coordinateView.setLayoutX(coordinateX * zoom - 15);
             coordinateView.setLayoutY(coordinateY * zoom - 29);
             coordinateView.setFitWidth(30);
