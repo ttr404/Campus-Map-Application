@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.BaseMap;
@@ -119,54 +117,46 @@ public class PoiPopupController implements Initializable {
      * @param actionEvent
      */
     public void OnSaveClicked(ActionEvent actionEvent) {
-
+        // If the user didn't enter the required information inform them
         if (NameField.getText().equals("") || RoomNumberField.getText().equals("")) {
-            System.out.println("Error you can't continue because you need a name and room number");
-        } else {
-            System.out.println(NameField.getText());
-            System.out.println(RoomNumberField.getText());
-            System.out.println(DescriptionField.getText());
-            System.out.println(favourite);
-            System.out.println("x = " + poiCoords.getX());
-            System.out.println("y = " + poiCoords.getY());
-
+            // Create an error message box
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Save POI");
+            alert.setHeaderText("Unable to save POI!");
+            alert.setContentText("Some of the required POI information was missing. To save it please enter both a name and room Number.");
+            alert.showAndWait();
+        } else { // Otherwise, save and close the Add POI pop-up
             save(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText());
 
             stage.close();
         }
     }
 
+    /**
+     * This method is used to create a POI using the given information and call the required helper methods to save it
+     *
+     * @param name The name of the POI
+     * @param roomNumber The room number for the POI
+     * @param description The description for the POI
+     */
     private void save(String name, String roomNumber, String description) {
+        // Create a new POI
         PointOfInterest poi = new PointOfInterest();
 
+        // Add the information
         poi.setName(name);
         poi.setRoomNumber(roomNumber);
         poi.setDescription(description);
         poi.setFavorite(favourite);
         poi.setX(poiCoords.getX());
         poi.setY(poiCoords.getY());
-
+        // Set the type for the POI
         poi.setType("User");
 
-
+        // Call the method to add the POI to the current user's data object
         CurrentUser.addPoi(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), poi);
-
+        // Save the object to a JSON file
         CurrentUser.saveUserData();
-
-//        ObjectMapper mapper = new ObjectMapper();
-
-//        try {
-
-        //FileWriter fileWriter = new FileWriter("./src/main/resources/org/uwo/cs2212/" + CurrentUser.getUsername().getPoiFileName());
-
-        // Writing to a file
-        //mapper.writeValue(fileWriter, poi );
-
-        System.out.println(poi);
-
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     /**
