@@ -60,6 +60,8 @@ import static org.uwo.cs2212.CampusMapApplication.pressEnter;
  */
 public class CampusMapController implements Initializable {
 
+    public Button zoomReset;
+    public Button clearIcon;
     @FXML
     private Button floor0;
     @FXML
@@ -351,7 +353,7 @@ public class CampusMapController implements Initializable {
                     if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
                             && (int) Math.round(poi.getX()) <= (coordinateX + 7)
                             && (int) Math.round(poi.getY()) >= (coordinateY - 7)
-                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)) {
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)){
                         coordinateView.setVisible(false);
                     }
                 }
@@ -456,7 +458,7 @@ public class CampusMapController implements Initializable {
         Label helpLabel = new Label();
         helpLabel.setWrapText(true); // Wrap text to multiple lines
 
-        VBox vbox = new VBox(new Label("Help Page\n"), helpTopic, helpLabel);
+        VBox vbox = new VBox(new Label(""), helpTopic, helpLabel);
         vbox.setPadding(new Insets(10));
 
         // Wrap the VBox in a ScrollPane
@@ -689,6 +691,12 @@ public class CampusMapController implements Initializable {
     @FXML
     private void onZoomResetButtonClicked(ActionEvent actionEvent) {
         zoom = 1;
+        zoomReset.setDisable(false);
+        showMap();
+    }
+    public void onClearIconButtonClicked(ActionEvent actionEvent) {
+        coordinateX = 0;
+        coordinateY = 0;
         showMap();
     }
 
@@ -1222,5 +1230,6 @@ public class CampusMapController implements Initializable {
         // Show the window
         poiPopupStage.show();
     }
+
 
 }
