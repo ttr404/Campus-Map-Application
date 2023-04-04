@@ -1,0 +1,152 @@
+package org.uwo.cs2212;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.uwo.cs2212.model.BaseMap;
+import org.uwo.cs2212.model.FloorMap;
+import org.uwo.cs2212.model.PointOfInterest;
+import org.uwo.cs2212.model.UserData;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ *
+ * @author Tingrui Zhang
+ */
+class CurrentUserTest {
+
+    private BaseMap baseMap;
+    private FloorMap floorMap;
+    private PointOfInterest poi;
+
+    @BeforeEach
+    void setUp() {
+        baseMap = new BaseMap();
+        baseMap.setName("Test BaseMap");
+        floorMap = new FloorMap();
+        floorMap.setName("Test FloorMap");
+        poi = new PointOfInterest();
+        poi.setName("Test POI");
+    }
+
+    @Test
+    void testIsAdmin() {
+        CurrentUser.setUsername("admin");
+        assertTrue(CurrentUser.isAdmin());
+        CurrentUser.setUsername("Admin");
+        assertTrue(CurrentUser.isAdmin());
+        CurrentUser.setUsername("user");
+        assertFalse(CurrentUser.isAdmin());
+        CurrentUser.setUsername(null);
+        assertFalse(CurrentUser.isAdmin());
+    }
+
+    @Test
+    void testUsernameGetterAndSetter() {
+        CurrentUser.setUsername("testUser");
+        assertEquals("testUser", CurrentUser.getUsername());
+        CurrentUser.setUsername(null);
+        assertNull(CurrentUser.getUsername());
+    }
+
+    @Test
+    void testCurrentSelectedPoiGetterAndSetter() {
+        CurrentUser.setCurrentSelectedPoi(poi);
+        assertEquals(poi, CurrentUser.getCurrentSelectedPoi());
+        CurrentUser.setCurrentSelectedPoi(null);
+        assertNull(CurrentUser.getCurrentSelectedPoi());
+    }
+
+    @Test
+    void testUserDataGetterAndSetter() {
+        UserData userData = new UserData();
+        CurrentUser.setUserData(userData);
+        assertEquals(userData, CurrentUser.getUserData());
+        CurrentUser.setUserData(null);
+        assertNull(CurrentUser.getUserData());
+    }
+
+    @Test
+    void testAddPoi() {
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setUserData(null);
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        UserData userData = CurrentUser.getUserData();
+        assertNotNull(userData);
+        assertEquals(1, userData.getUserLayers().size());
+    }
+
+    @Test
+    void testAddPoiToExistingUserLayer() {
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setUserData(null);
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        PointOfInterest anotherPoi = new PointOfInterest();
+        anotherPoi.setName("Another Test POI");
+        CurrentUser.addPoi(baseMap, floorMap, anotherPoi);
+        UserData userData = CurrentUser.getUserData();
+        assertNotNull(userData);
+        assertEquals(1, userData.getUserLayers().size());
+        assertEquals(2, userData.getUserLayers().get(0).getPoints().size());
+    }
+
+    @Test
+    void testAddPoiWithNullBaseMap() {
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setUserData(null);
+        CurrentUser.addPoi(null, floorMap, poi);
+        UserData userData = CurrentUser.getUserData();
+        assertNull(userData);
+    }
+
+    @Test
+    void testAddPoiWithNullFloorMap() {
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setUserData(null);
+        CurrentUser.addPoi(baseMap, null, poi);
+        UserData userData = CurrentUser.getUserData();
+        assertNull(userData);
+    }
+
+    @Test
+    void testAddPoiWithNullPoi() {
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setUserData(null);
+        CurrentUser.addPoi(baseMap, floorMap, null);
+        UserData userData = CurrentUser.getUserData();
+        assertNull(userData);
+    }
+    @Test
+    void testSaveUserData() {
+        CurrentUser.setUsername("testUser");
+        UserData userData = new UserData();
+        CurrentUser.setUserData(userData);
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        assertTrue(CurrentUser.saveUserData());
+    }
+
+    @Test
+    void testSaveUserDataWithNoUsername() {
+        CurrentUser.setUsername(null);
+        UserData userData = new UserData();
+        CurrentUser.setUserData(userData);
+        assertFalse(CurrentUser.saveUserData());
+    }
+
+    @Test
+    void testSaveUserDataWithNoUserData() {
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setUserData(null);
+        assertFalse(CurrentUser.saveUserData());
+    }
+
+    @Test
+    void testSaveUserDataWithAdminUser() {
+        CurrentUser.setUsername("admin");
+        UserData userData = new UserData();
+        CurrentUser.setUserData(userData);
+        assertTrue(CurrentUser.saveUserData());
+    }
+
+}
+

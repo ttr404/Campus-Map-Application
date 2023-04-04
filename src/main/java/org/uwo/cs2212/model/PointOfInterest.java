@@ -81,7 +81,7 @@ public class PointOfInterest {
     }
     @Override
     public String toString(){
-        return type + ":" + name + " \n" + description;
+        return "Room Type: " + type +"\n" + "Room Name: " + name + " \n" + description;
     }
 
     /**
@@ -91,6 +91,11 @@ public class PointOfInterest {
      * @return Returns true if they are equal, otherwise, it returns false
      */
     public boolean equals(PointOfInterest other) {
+        // Add null check for the 'type' variable
+        if (type == null) {
+            return other.type == null;
+        }
+
         return type.equals(other.type) && name.equals(other.name) && roomNumber.equals(other.roomNumber) && description.equals(other.description);
     }
 }

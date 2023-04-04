@@ -61,7 +61,6 @@ public class CurrentUser {
         CurrentUser.currentFloorMap = currentFloorMap;
     }
 
-
     public static UserData getUserData() {
         return userData;
     }
@@ -97,6 +96,14 @@ public class CurrentUser {
         userData.addPoi(baseMap, floorMap, poi);
     }
 
+    /**
+     * Saves the user data to a file, by calling the saveUserData method from the ConfigUtil class. The user data includes the list
+     * of favorite points of interest, which are extracted from the mapConfig object. The method also creates a new user layer file,
+     * if one does not already exist, and updates the current user layer URL accordingly. The method returns a boolean value indicating
+     * whether the user data was saved successfully or not.
+     *
+     * @return true if the user data was saved successfully, false otherwise
+     */
     public static boolean saveUserData()  {
         // Used to store if the user data saved successfully
         boolean saveSuccessful = true;

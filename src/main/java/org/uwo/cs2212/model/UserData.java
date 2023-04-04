@@ -9,7 +9,10 @@ import java.util.List;
 public class UserData {
     private List<UserLayer> userLayers;
     private List<FavoritePoi> favoritePois;
-
+    public UserData() {
+        this.userLayers = new ArrayList<>();
+        this.favoritePois = new ArrayList<>();
+    }
     public List<UserLayer> getUserLayers() {
         return userLayers;
     }

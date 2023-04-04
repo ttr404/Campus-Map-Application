@@ -27,6 +27,10 @@ public class UserLayer extends Layer {
      * @return Returns true if they are equal, otherwise, it returns false
      */
     public boolean equals(UserLayer other) {
+        // Add null check for the 'other' variable
+        if (other == null){
+            return false;
+        }
         return this.floorName.equals(other.floorName) && this.baseName.equals(other.baseName);
     }
 }

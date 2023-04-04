@@ -15,8 +15,10 @@ public class SearchResult {
     private PointOfInterest poi;
     private FloorMap floorMap;
 
+
     /**
      * Creates a new SearchResult object representing a point of interest on a specific floor map.
+     *
      * @param floorMap the FloorMap object where the point of interest is located
      * @param poi the PointOfInterest object representing the point of interest
      */
@@ -27,6 +29,7 @@ public class SearchResult {
 
     /**
      * Returns the PointOfInterest object associated with this search result.
+     *
      * @return the PointOfInterest object
      */
     public PointOfInterest getPoi() {
@@ -35,6 +38,7 @@ public class SearchResult {
 
     /**
      * Sets the PointOfInterest object associated with this search result.
+     *
      * @param poi the PointOfInterest object to set
      */
     public void setPoi(PointOfInterest poi) {
@@ -43,6 +47,7 @@ public class SearchResult {
 
     /**
      * Returns the FloorMap object associated with this search result.
+     *
      * @return the FloorMap object
      */
     public FloorMap getFloorMap() {
@@ -51,6 +56,7 @@ public class SearchResult {
 
     /**
      * Sets the FloorMap object associated with this search result.
+     *
      * @param floorMap the FloorMap object to set
      */
     public void setFloorMap(FloorMap floorMap) {
@@ -59,10 +65,16 @@ public class SearchResult {
 
     /**
      * Returns a String representation of this search result in the format "Floor: [floor map name]\n[point of interest information]".
+     *
      * @return a String representation of this search result
      */
     @Override
     public String toString(){
-        return "Floor: " + floorMap.getName() + "\n" + poi.toString();
+        // Handling Null cases
+        String floorMapName = floorMap != null ? floorMap.getName() : "null";
+        String poiName = poi != null ? poi.toString() : "null";
+
+        return "Floor: " + floorMapName + "\n" + poiName;
     }
+
 }

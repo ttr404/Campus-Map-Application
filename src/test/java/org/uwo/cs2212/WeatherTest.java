@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * JUnit5 Testing class for Weather API
  *
- * @author Tingrui Zhang
+ * @author Binchi Zhang
  */
 @ExtendWith(MockitoExtension.class)
 class WeatherTest {

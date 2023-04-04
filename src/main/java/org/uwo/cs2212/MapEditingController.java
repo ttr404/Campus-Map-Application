@@ -134,6 +134,7 @@ public class MapEditingController {
                 }
             }
 
+            // bug fixed
             if (coordinateX == 0 && coordinateY == 0){
                 coordinateView.setVisible(false);
             }

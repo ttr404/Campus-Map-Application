@@ -539,13 +539,13 @@ public class CampusMapController implements Initializable {
      * If the user chooses not to save, the method returns to the login page without saving.
      * If the user chooses to cancel, the method closes the confirmation dialog and returns.
      *
-     * @param event the ActionEvent object representing the sign-out button click event
+     * @param actionEvent the ActionEvent object representing the sign-out button click event
      * @throws IOException if the FXML file for the login view cannot be loaded
      */
     @FXML
-    private void signOut(ActionEvent event) throws IOException {
+    private void signOut(ActionEvent actionEvent) throws IOException {
         returnBack("login-view.fxml", "Login Page");
-        ((Node) (event.getSource())).getScene().getWindow().hide();
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
         /** save button **/
 //        Stage stage = new Stage();
 //        String s = "";
