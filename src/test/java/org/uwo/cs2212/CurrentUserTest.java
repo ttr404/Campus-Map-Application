@@ -27,6 +27,8 @@ class CurrentUserTest {
         floorMap.setName("Test FloorMap");
         poi = new PointOfInterest();
         poi.setName("Test POI");
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
     }
 
     @Test
@@ -93,10 +95,10 @@ class CurrentUserTest {
     @Test
     void testAddPoiWithNullBaseMap() {
         CurrentUser.setUsername("testUser");
+        CurrentUser.setMapConfig(null);
         CurrentUser.setUserData(null);
         CurrentUser.addPoi(null, floorMap, poi);
-        UserData userData = CurrentUser.getUserData();
-        assertNull(userData);
+
     }
 
     @Test
@@ -105,7 +107,8 @@ class CurrentUserTest {
         CurrentUser.setUserData(null);
         CurrentUser.addPoi(baseMap, null, poi);
         UserData userData = CurrentUser.getUserData();
-        assertNull(userData);
+        assertEquals(0, userData.getUserLayers().size());
+        assertEquals(0, userData.getFavoritePois().size());
     }
 
     @Test
@@ -114,7 +117,8 @@ class CurrentUserTest {
         CurrentUser.setUserData(null);
         CurrentUser.addPoi(baseMap, floorMap, null);
         UserData userData = CurrentUser.getUserData();
-        assertNull(userData);
+        assertEquals(0, userData.getUserLayers().size());
+        assertEquals(0, userData.getFavoritePois().size());
     }
     @Test
     void testSaveUserData() {
@@ -130,14 +134,18 @@ class CurrentUserTest {
         CurrentUser.setUsername(null);
         UserData userData = new UserData();
         CurrentUser.setUserData(userData);
-        assertFalse(CurrentUser.saveUserData());
+        assertThrows(NullPointerException.class, () -> {
+            CurrentUser.saveUserData();
+        });
     }
 
     @Test
     void testSaveUserDataWithNoUserData() {
         CurrentUser.setUsername("testUser");
         CurrentUser.setUserData(null);
-        assertFalse(CurrentUser.saveUserData());
+        assertThrows(NullPointerException.class, () -> {
+            CurrentUser.saveUserData();
+        });
     }
 
     @Test

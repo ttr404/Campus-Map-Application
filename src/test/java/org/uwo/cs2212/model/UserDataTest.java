@@ -2,6 +2,8 @@ package org.uwo.cs2212.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.uwo.cs2212.CampusMapApplication;
+import org.uwo.cs2212.ConfigUtil;
 import org.uwo.cs2212.CurrentUser;
 
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ class UserDataTest {
         floorMap.setName("Test FloorMap");
         poi = new PointOfInterest();
         poi.setName("Test POI");
+        CurrentUser.setUsername("testUser");
+        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
     }
 
     @Test
@@ -105,6 +109,8 @@ class UserDataTest {
         PointOfInterest poi = new PointOfInterest();
         poi.setName("TestFavoritePoi");
         poi.setFavorite(true);
+
+        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
 
         // Add a favorite POI
         userData.addPoi(baseMap, floorMap, poi);
@@ -192,11 +198,13 @@ class UserDataTest {
         FavoritePoi favoritePoi = new FavoritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
         userData.getFavoritePois().add(favoritePoi);
 
+
         // Attempt to remove the favorite POI with incorrect base and floor map names
         userData.removeFavourite(poi, poi.getName(), "IncorrectBaseMap", "IncorrectFloorMap");
 
         // Check if the favorite POI still exists
-        assertTrue(userData.getFavoritePois().contains(favoritePoi));
+        assertTrue(userData.getFavoritePois().get(0).getPoiName().equals("TestFavoritePoi"));
+
         assertTrue(poi.isFavorite());
     }
 

@@ -93,6 +93,9 @@ public class CurrentUser {
         if (userData == null){
             userData = new UserData();
         }
+        if (baseMap == null || floorMap == null || poi == null){
+            return;
+        }
         userData.addPoi(baseMap, floorMap, poi);
     }
 
