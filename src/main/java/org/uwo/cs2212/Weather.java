@@ -20,7 +20,7 @@ public class Weather {
     private final JSONObject cachedData;
     protected double latitude;
     protected double longitude;
-    private String apiKey = "90989f1e4b8f4af54e30c4d7ad6a994c";
+    private final String apiKey = "90989f1e4b8f4af54e30c4d7ad6a994c";
     private String icon;
 
     /**

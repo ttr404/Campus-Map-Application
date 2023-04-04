@@ -7,8 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -115,9 +114,9 @@ class LayerTest {
     @Test
     void testHideLayer() {
         layer.setHideLayer(true);
-        assertEquals(true, layer.isHideLayer());
+        assertTrue(layer.isHideLayer());
 
         layer.setHideLayer(false);
-        assertEquals(false, layer.isHideLayer());
+        assertFalse(layer.isHideLayer());
     }
 }

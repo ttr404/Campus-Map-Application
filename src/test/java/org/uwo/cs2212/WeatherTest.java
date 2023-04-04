@@ -23,17 +23,17 @@ class WeatherTest {
 
     private Weather weather;
 
-    private double testLatitude = 45.0;
-    private double testLongitude = -75.0;
+    private final double testLatitude = 45.0;
+    private final double testLongitude = -75.0;
     private HttpURLConnection connection;
-    private String apiKey = "90989f1e4b8f4af54e30c4d7ad6a994c";
+    private final String apiKey = "90989f1e4b8f4af54e30c4d7ad6a994c";
 
 
     @BeforeEach
     void setUp() throws IOException {
         URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + testLatitude + "&lon=" + testLongitude + "&appid=" + apiKey);
         connection = (HttpURLConnection) url.openConnection();
-    };
+    }
 
     @Test
     public void testStatusCode() throws IOException {

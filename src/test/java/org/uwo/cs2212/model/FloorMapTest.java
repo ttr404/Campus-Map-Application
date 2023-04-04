@@ -7,8 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -56,10 +55,10 @@ class FloorMapTest {
     @Test
     void testShowLegend() {
         floorMap.setShowLegend(true);
-        assertEquals(true, floorMap.isShowLegend());
+        assertTrue(floorMap.isShowLegend());
 
         floorMap.setShowLegend(false);
-        assertEquals(false, floorMap.isShowLegend());
+        assertFalse(floorMap.isShowLegend());
     }
 
     @Test

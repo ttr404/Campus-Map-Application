@@ -31,13 +31,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 
-import java.util.List;
-
-import static org.uwo.cs2212.CampusMapApplication.pressEnter;
 
 /**
  * The CampusMapController class is the main controller for managing the campus map UI and
@@ -192,29 +188,29 @@ public class CampusMapController implements Initializable {
         informationList.getItems().clear();
         for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
             for (PointOfInterest poi : layer.getPoints()) {
-                if ((classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
-                        || (stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
-                        || (elevators.isSelected() && poi.getType().toLowerCase().equals("elevator"))
-                        || (entryAndExit.isSelected() && poi.getType().trim().toLowerCase().equals("entryandexit"))
-                        || (genlabs.isSelected() && poi.getType().toLowerCase().equals("genlab"))
-                        || (restaurants.isSelected() && poi.getType().toLowerCase().equals("restaurant"))
-                        || (cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
-                        || (collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
-                        || (user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
+                if ((classrooms.isSelected() && poi.getType().equalsIgnoreCase("classroom"))
+                        || (stairwells.isSelected() && poi.getType().equalsIgnoreCase("stairwell"))
+                        || (elevators.isSelected() && poi.getType().equalsIgnoreCase("elevator"))
+                        || (entryAndExit.isSelected() && poi.getType().trim().equalsIgnoreCase("entryandexit"))
+                        || (genlabs.isSelected() && poi.getType().equalsIgnoreCase("genlab"))
+                        || (restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
+                        || (cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
+                        || (collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
+                        || (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_pois"))
                 ) {
                     layer.setHideLayer(false);
                     informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
 
                 }
-                if ((!classrooms.isSelected() && poi.getType().toLowerCase().equals("classroom"))
-                        || (!stairwells.isSelected() && poi.getType().toLowerCase().equals("stairwell"))
-                        || (!elevators.isSelected() && poi.getType().toLowerCase().equals("elevator"))
-                        || (!entryAndExit.isSelected() && poi.getType().trim().toLowerCase().equals("entryandexit"))
-                        || (!genlabs.isSelected() && poi.getType().toLowerCase().equals("genlab"))
-                        || (!restaurants.isSelected() && poi.getType().toLowerCase().equals("restaurant"))
-                        || (!cs_Labs.isSelected() && poi.getType().toLowerCase().equals("cs_labs"))
-                        || (!collaborative.isSelected() && poi.getType().toLowerCase().equals("collaborative"))
-                        || (!user_POIs.isSelected() && poi.getType().toLowerCase().equals("user_pois"))
+                if ((!classrooms.isSelected() && poi.getType().equalsIgnoreCase("classroom"))
+                        || (!stairwells.isSelected() && poi.getType().equalsIgnoreCase("stairwell"))
+                        || (!elevators.isSelected() && poi.getType().equalsIgnoreCase("elevator"))
+                        || (!entryAndExit.isSelected() && poi.getType().trim().equalsIgnoreCase("entryandexit"))
+                        || (!genlabs.isSelected() && poi.getType().equalsIgnoreCase("genlab"))
+                        || (!restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
+                        || (!cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
+                        || (!collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
+                        || (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_pois"))
                 ) {
                     layer.setHideLayer(true);
                 }
@@ -380,12 +376,12 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Handles the click event for the about button by displaying an about dialog to the user. The method creates
+     * Handles the click event for the about button by displaying an about text to the user. The method creates
      * a new stage and sets up a Label control to display information about the app and its creators. The method
      * then displays the dialog and returns.
      *
      * @param event the ActionEvent object representing the about button click event
-     * @throws IOException if the FXML file for the about dialog cannot be loaded
+     * @throws IOException if the FXML file for about text cannot be loaded
      */
     @FXML
     private void aboutButtonAction(ActionEvent event) throws IOException {
@@ -409,7 +405,7 @@ public class CampusMapController implements Initializable {
                 "Thank you for using our Western Campus Navigation App!";
 
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
 
         // Create a Label with wrapped text and a fixed width
         Label aboutLabel = new Label(s);
@@ -449,7 +445,7 @@ public class CampusMapController implements Initializable {
     private void helpButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
 
         // Create a ChoiceBox control to select the help topic
         ChoiceBox<String> helpTopic = new ChoiceBox<>();
@@ -493,126 +489,82 @@ public class CampusMapController implements Initializable {
     private String getHelpText(String topic) {
         switch (topic) {
             case "Getting Started":
-                return "\nTo view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide some related information.\n\n" +
-                        "To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top left of the screen. Use reset button to return default size\n\n" +
-                        "To change the map view into a specific building, click on the choice box located under the button of 'Sign Out'. \n\nYou can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building\n\n" +
-                        "For each building, select the floor button of your direction";
+                return """
+
+                        To view the map, simply open the app and the campus map will be display. To search for a specific location, click on the search bar at the top of the screen and type in the name of the location you are looking for. The map will display the location and provide some related information.
+
+                        To zoom in and out of the map, use the “+” and “-” zoom buttons located at the top left of the screen. Use reset button to return default size
+
+                        To change the map view into a specific building, click on the choice box located under the button of 'Sign Out'.\s
+
+                        You can select from a variety of building, including Middlesex College, Western Science Centre and Physics and Astronomy Building
+
+                        For each building, select the floor button of your direction""";
             case "POI and Favorite":
-                return "\nTo use the favorite and POI (point of interest) function in a map navigation app, follow these steps:\n\n" +
-                        "1. To add a POI to your map, click on the desired point on the map and then click the \"Add POI\" button located at the top of the screen.\n\n" +
-                        "2. Fill in the name and any relevant details about the POI, such as a room number and description. User can also add this new POI to favorite at the same time\n\n" +
-                        "3. Click \"Save\" to add the POI to your map.\n\n" +
-                        "4. To add a location to your favorites, either click on a POI point on the map or click on a search result from the list.\n\n" +
-                        "5. Once you have selected a location, click the \"Favorite\" button to add it to your favorites list. This button should be highlighted or easily visible when click on the appropriate POI.\n\n" +
-                        "6. To access your favorites, click on the \"Favorites\" button or icon in the app. This will display a list of all the locations you have saved as favorites.\n\n" +
-                        "7. To remove a POI or favorite from your list, click on the item and then click the \"Favorite\" button.\n\n" +
-                        "By using the favorite and POI functions in a map navigation app, you can quickly and easily save important locations and points of interest for future reference. This can make it easier to navigate to these locations in the future.";
+                return """
+
+                        To use the favorite and POI (point of interest) function in a map navigation app, follow these steps:
+
+                        1. To add a POI to your map, click on the desired point on the map and then click the "Add POI" button located at the top of the screen.
+
+                        2. Fill in the name and any relevant details about the POI, such as a room number and description. User can also add this new POI to favorite at the same time
+
+                        3. Click "Save" to add the POI to your map.
+
+                        4. To add a location to your favorites, either click on a POI point on the map or click on a search result from the list.
+
+                        5. Once you have selected a location, click the "Favorite" button to add it to your favorites list. This button should be highlighted or easily visible when click on the appropriate POI.
+
+                        6. To access your favorites, click on the "Favorites" button or icon in the app. This will display a list of all the locations you have saved as favorites.
+
+                        7. To remove a POI or favorite from your list, click on the item and then click the "Favorite" button.
+
+                        By using the favorite and POI functions in a map navigation app, you can quickly and easily save important locations and points of interest for future reference. This can make it easier to navigate to these locations in the future.""";
 
 
             case "Editing Mode":
-                return "\nTo use the Editing mode in a map navigation app, follow these steps:\n\n" +
-                        "1. Log in to your admin account.\n" +
-                        "2. Find the \"Editing\" mode button in the app and click on it.\n" +
-                        "3. Once you are in Editing mode, you can add, delete, or edit POIs on the map.\n" +
-                        "4. To add a new POI, select a location on the map and click the \"Add POI\" button located at the top of the screen.\n" +
-                        "5. Fill in the required details, including the POI name, room number, and room type by selecting a choice from the drop-down box.\n" +
-                        "6. To delete or edit an existing POI, select the POI on the map and click either the \"Delete\" or \"Edit\" button.\n" +
-                        "7. If you choose to edit the POI, make any necessary changes to the details and then click \"Edit\" to save the changes\n" +
-                        "8. Click \"Close\" to save the change of POI and return to the main page.\n\n" +
-                        "Using the Editing mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information. This can improve the accuracy and usefulness of the app for all users.";
+                return """
+
+                        To use the Editing mode in a map navigation app, follow these steps:
+
+                        1. Log in to your admin account.
+                        2. Find the "Editing" mode button in the app and click on it.
+                        3. Once you are in Editing mode, you can add, delete, or edit POIs on the map.
+                        4. To add a new POI, select a location on the map and click the "Add POI" button located at the top of the screen.
+                        5. Fill in the required details, including the POI name, room number, and room type by selecting a choice from the drop-down box.
+                        6. To delete or edit an existing POI, select the POI on the map and click either the "Delete" or "Edit" button.
+                        7. If you choose to edit the POI, make any necessary changes to the details and then click "Edit" to save the changes
+                        8. Click "Close" to save the change of POI and return to the main page.
+
+                        Using the Editing mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information. This can improve the accuracy and usefulness of the app for all users.""";
             case "Search Function":
-                return "\nTo use the search function in a map navigation app, follow these steps:\n\n" +
-                        "1. Type in your desired destination or point of interest and click search. For example, you could search for a specific class room, lab name, or type of place (e.g., \"lab101\").\n\n" +
-                        "2. The app will display a list of results that match your search terms. Select the result you want to navigate to in the search list below.\n\n" +
-                        "3. If you want to quickly find a specific type of point of interest, look for the checkboxes on the map that correspond to different categories, such as washroom or class room.\n\n" +
-                        "4. Finally, if you have any favorite locations saved in the app, you can access them by tapping on the \"Favorites\" button. This will show you a list of all the locations you have saved, so you can easily navigate to them without having to search for them again.";
+                return """
+
+                        To use the search function in a map navigation app, follow these steps:
+
+                        1. Type in your desired destination or point of interest and click search. For example, you could search for a specific class room, lab name, or type of place (e.g., "lab101").
+
+                        2. The app will display a list of results that match your search terms. Select the result you want to navigate to in the search list below.
+
+                        3. If you want to quickly find a specific type of point of interest, look for the checkboxes on the map that correspond to different categories, such as washroom or class room.
+
+                        4. Finally, if you have any favorite locations saved in the app, you can access them by tapping on the "Favorites" button. This will show you a list of all the locations you have saved, so you can easily navigate to them without having to search for them again.""";
             default:
                 return "";
         }
     }
 
     /**
-     * Handles the sign-out button click event by displaying a confirmation dialog to the user. The dialog asks
-     * if the user wants to save changes to the user account data, and provides options to save, not save, or cancel.
-     * The method sets up event handlers for the buttons, and takes appropriate action based on the user's choice.
-     * If the user chooses to save, the method saves the user account data and returns to the login page.
-     * If the user chooses not to save, the method returns to the login page without saving.
-     * If the user chooses to cancel, the method closes the confirmation dialog and returns.
+     * Signs the user out and returns them to the login page. This method changes the view to the login page and hides the
+     * current window.
      *
-     * @param actionEvent the ActionEvent object representing the sign-out button click event
-     * @throws IOException if the FXML file for the login view cannot be loaded
+     * @param actionEvent the ActionEvent object representing the event that triggered the sign out action
+     * @throws IOException if an error occurs while loading the login page view
      */
     @FXML
     private void signOut(ActionEvent actionEvent) throws IOException {
         returnBack("login-view.fxml", "Login Page");
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-        /** save button **/
-//        Stage stage = new Stage();
-//        String s = "";
-//        stage.initModality(Modality.APPLICATION_MODAL);
-//        stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
-//
-//        // Create three buttons
-//        Button saveButton = new Button("Save");
-//        saveButton.setPrefSize(60, 30); // Set button size
-//        saveButton.setTranslateX(100); // Set button X position
-//        Button dontSaveButton = new Button("Don't save");
-//        dontSaveButton.setPrefSize(90, 30); // Set button size
-//        dontSaveButton.setTranslateX(20); // Set button X position
-//        Button cancelButton = new Button("Cancel");
-//        cancelButton.setPrefSize(60, 30); // Set button size
-//        cancelButton.setTranslateX(180); // Set button X position
-//
-//        // Add event handlers to the buttons
-//        saveButton.setOnAction(e -> {
-//            // Handle yes button click
-//            try {
-//                UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
-//                // properly save the data
-//                ConfigUtil.saveUserList(userlist, CampusMapApplication.class.getResource("user-account.json"));
-//                returnBack("login-view.fxml", "Login Page");
-//                ((Node) (event.getSource())).getScene().getWindow().hide();
-//                stage.close();
-//            } catch (IOException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//        });
-//        dontSaveButton.setOnAction(e -> {
-//            // Handle no button click
-//            //Don't save the data, jump back to login page
-//            try {
-//                //now "enter" key can be user when re-login
-//                FXMLLoader loginFxmlLoader = returnBack("login-view.fxml", "Login Page");
-//                Stage loginStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-//                Scene loginScene = loginStage.getScene();
-//                pressEnter(loginFxmlLoader, loginScene);
-//            } catch (IOException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//            ((Node) (event.getSource())).getScene().getWindow().hide();
-//            stage.close();
-//        });
-//        cancelButton.setOnAction(e -> {
-//            // Handle cancel button click
-//            stage.close();
-//        });
-//        // Create an HBox container to hold the buttons
-//        HBox hbox = new HBox(dontSaveButton, saveButton, cancelButton);
-//        hbox.setTranslateY(50);
-//        hbox.setSpacing(-5); // Set spacing between buttons
-//        VBox vbox = new VBox(new Label(s), hbox); // Add HBox to VBox container
-//        Scene scene = new Scene(vbox, 280, 100);
-//        stage.setScene(scene);
-//        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() +
-//                ((Node) event.getSource()).getScene().getWindow().getWidth() - 650);
-//        stage.setY(((Node) event.getSource()).getScene().getWindow().getY() + 200);
-//        stage.setWidth(400);
-//        stage.setHeight(200);
-//        stage.setTitle("Sign Out");// Set the title of the pop-up window
-//        Image icon = new Image(getClass().getResourceAsStream("western-logo.png")); // set the title icon
-//        stage.getIcons().add(icon);
-//        stage.show();
-        /** END **/
     }
 
     /**
@@ -711,6 +663,12 @@ public class CampusMapController implements Initializable {
         showMap();
     }
 
+    /**
+     * Highlights the selected floor button and clears the highlight from the previously selected floor button. This method
+     * sets the background color and text color for the selected button and removes the styling from the previous one.
+     *
+     * @param selectedButton the Button object representing the newly selected floor button
+     */
     private void highlightSelectedFloorButton(Button selectedButton) {
         // Clear the style for the previously selected floor button
         if (currentSelectedFloorButton != null) {
@@ -875,6 +833,12 @@ public class CampusMapController implements Initializable {
 
     }
 
+    /**
+     * Displays a popup window with details about the given PointOfInterest object.
+     *
+     * @param mouseEvent the mouse event that triggered the popup
+     * @param poi the PointOfInterest to display details for
+     */
     private void poiDetailsPopup(MouseEvent mouseEvent, PointOfInterest poi) {
         /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
 
@@ -923,21 +887,29 @@ public class CampusMapController implements Initializable {
             setFavouriteButtonState();
         }
     }
-
+    /**
+     * Shows the given PointOfInterest in the informationList ListView.
+     * Clears the previous items in the list and adds a new SearchResult object containing the given poi.
+     *
+     * @param poi the PointOfInterest to show in the list
+     */
     private void showPoiInList(PointOfInterest poi) {
         informationList.getItems().clear();
         informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
     }
 
-
+    /**
+     * Determines if the given mouse position hits the given point of interest.
+     *
+     * @param mousePosition The mouse position as a Point2D object.
+     * @param poi The point of interest as a PointOfInterest object.
+     * @return True if the mouse position hits the point of interest, false otherwise.
+     */
     private boolean hitTest(Point2D mousePosition, PointOfInterest poi) {
-        if (mousePosition.getX() <= poi.getX() + 6
+        return mousePosition.getX() <= poi.getX() + 6
                 / zoom && mousePosition.getX() >= poi.getX() - 6
                 / zoom && mousePosition.getY() <= poi.getY() + 6
-                / zoom && mousePosition.getY() >= poi.getY() - 6 / zoom) {
-            return true;
-        }
-        return false;
+                / zoom && mousePosition.getY() >= poi.getY() - 6 / zoom;
     }
 
     /**
@@ -963,6 +935,14 @@ public class CampusMapController implements Initializable {
         return new Point2D(mouseX, mouseY);
     }
 
+    /**
+     * Calculates the real mouse position based on the window coordinates of the mouse event.
+     * Updates the class variables 'coordinateX' and 'coordinateY' with the real X and Y values.
+     * Calls the 'showMap' method to redraw the map.
+     *
+     * @param mouseEvent the MouseEvent object containing the window coordinates of the mouse
+     * @return the Point2D object representing the real coordinates of the mouse
+     */
     private Point2D calculateRealMousePosition(MouseEvent mouseEvent) {
         coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
         coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
@@ -1005,10 +985,7 @@ public class CampusMapController implements Initializable {
      * @return true if the target string is found in the text string, false otherwise
      */
     private static boolean contains(String target, String text) {
-        if (target != null && target.toLowerCase().contains(text)) {
-            return true;
-        }
-        return false;
+        return target != null && target.toLowerCase().contains(text);
     }
 
     /**
@@ -1037,6 +1014,14 @@ public class CampusMapController implements Initializable {
         favoriteButton.setGraphic(imageView);
     }
 
+
+    /**
+     * Handles the event when the favorite button is clicked. Toggles the favorite state of the
+     * currently selected POI and updates the favorite button state accordingly. If the currently
+     * selected POI is a user-defined POI, also removes it from the user's favorites list in the user data.
+     *
+     * @param actionEvent the event triggered by clicking the favorite button
+     */
     public void onFavoriteButtonClicked(ActionEvent actionEvent) {
         selectAllLayers();
 
@@ -1053,6 +1038,11 @@ public class CampusMapController implements Initializable {
         }
     }
 
+    /**
+     * Clears the current selection by deselecting all layers, unchecking all checkboxes, clearing the search text, and clearing the information list.
+     *
+     * @param actionEvent the event that triggered the button click
+     */
     public void onClearButtonClicked(ActionEvent actionEvent) {
         deselectAllLayers();
         checkBoxSelected();
@@ -1060,13 +1050,29 @@ public class CampusMapController implements Initializable {
         informationList.getItems().clear();
     }
 
+    /**
+     * Populates the informationList with favorite Points of Interest (POIs) when the "List Favorites" button is clicked.
+     *
+     * This method clears the current content of the informationList and iterates through all the BaseMaps, FloorMaps, Layers,
+     * and UserLayers to find favorite POIs. If a POI is marked as a favorite, it is added to the informationList as a SearchResult.
+     *
+     * @param actionEvent the event object representing the button click
+     */
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
+        // Clear the current content of the informationList
         informationList.getItems().clear();
+
+        // Iterate through all BaseMaps
         for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()) {
+            // Iterate through all FloorMaps in each BaseMap
             for (FloorMap floorMap : baseMap.getFloorMaps()) {
+                // Iterate through all Layers in each FloorMap
                 for (Layer layer : floorMap.getLayers()) {
+                    // Iterate through all Points of Interest (POIs) in each Layer
                     for (PointOfInterest poi : layer.getPoints()) {
+                        // Check if the POI is marked as a favorite
                         if (poi.isFavorite()) {
+                            // Add the favorite POI to the informationList as a SearchResult
                             informationList.getItems().add(new SearchResult(floorMap, poi));
                         }
                     }
@@ -1075,8 +1081,10 @@ public class CampusMapController implements Initializable {
                 // Make sure the list of UserLayers isn't empty
                 if (floorMap.getUserLayer() != null) {
                     // Loop through the user-created POIs and check if they are a favourite
-                    for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) { // TODO: Could be simplified potential if UserLayer and Layer are combined (UserLayer should be a Layer)
+                    for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
+                        // Check if the user-created POI is marked as a favorite
                         if (poi.isFavorite()) {
+                            // Add the favorite user-created POI to the informationList as a SearchResult
                             informationList.getItems().add(new SearchResult(floorMap, poi));
                         }
                     }
@@ -1084,6 +1092,7 @@ public class CampusMapController implements Initializable {
             }
         }
     }
+
 
     /**
      * Centralizes the currently selected Point of Interest (POI) on the map by scrolling
@@ -1224,8 +1233,15 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * This method is used to create/call the popup window to create a new POI
-     * @throws IOException
+     * Opens a new window with a form to create a new Point of Interest (POI).
+     *
+     * This method creates a new window displaying a form for the user to input
+     * details about a new POI. It passes the current mouse coordinates to the
+     * controller, sets the window properties (size, title, and icon), and configures
+     * the stage to be displayed as a modal window. The method also sets a listener
+     * to clear the pin icon when the window is closed.
+     *
+     * @throws IOException if the FXML file for the POI popup window cannot be loaded
      */
     private void openPOIPopup() throws IOException {
         // Create the new stage (window)
@@ -1248,13 +1264,11 @@ public class CampusMapController implements Initializable {
         poiPopupStage.setMaxWidth(600);
 
         // Add the program icon to the window
-        Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("western-logo.png")));
         poiPopupStage.getIcons().add(icon);
 
         // add a listener to the setOnHiding() method
-        poiPopupStage.setOnHiding(event -> {
-            clearPinIcon();
-        });
+        poiPopupStage.setOnHiding(event -> clearPinIcon());
 
         // Add the scene to the stage
         poiPopupStage.setScene(poiPopupScene);
@@ -1263,6 +1277,5 @@ public class CampusMapController implements Initializable {
         // Show the window
         poiPopupStage.show();
     }
-
 
 }

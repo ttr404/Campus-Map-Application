@@ -108,8 +108,7 @@ public class ConfigUtil {
 
     /**
      * Loads a FloorMap object from the specified JSON file.
-     * This method reads the JSON file from the given URL, parses it,
-     * and maps the JSON data to a FloorMap object.
+     * This method reads the JSON file from the given URL, parses it, and maps the JSON data to a FloorMap object.
      *
      * @param url The URL of the JSON file containing the floor map
      *            configuration data to be loaded.
@@ -143,15 +142,11 @@ public class ConfigUtil {
 
     /**
      * Loads a UserList object from the specified JSON file.
-     * This method reads the JSON file from the given URL, parses it,
-     * and maps the JSON data to a UserList object.
+     * This method reads the JSON file from the given URL, parses it,and maps the JSON data to a UserList object.
      *
-     * @param url The URL of the JSON file containing the user data
-     *            to be loaded.
-     * @return The UserList object containing the user data from the
-     * JSON file.
-     * @throws RuntimeException If there is an IOException or
-     *                          URISyntaxException while reading the JSON file or
+     * @param url The URL of the JSON file containing the user data to be loaded.
+     * @return The UserList object containing the user data from the JSON file.
+     * @throws RuntimeException If there is an IOException or URISyntaxException while reading the JSON file or
      *                          mapping the JSON data to the UserList object.
      */
     public static UserList loadUserList(URL url) {
@@ -176,6 +171,14 @@ public class ConfigUtil {
         }
     }
 
+
+    /**
+     * Loads the user layers from a JSON file at the specified URL and returns a UserData object containing the user layers.
+     *
+     * @param url the URL of the JSON file containing the user layers data
+     * @return UserData object containing the user layers
+     * @throws RuntimeException if an IOException or URISyntaxException occurs during the load operation
+     */
     public static UserData loadUserLayers(URL url) {
         try {
             // Read the JSON file data to a byte array
@@ -198,6 +201,13 @@ public class ConfigUtil {
         }
     }
 
+    /**
+     * Saves the given UserData object to the specified file URL as a JSON string.
+     *
+     * @param userData the UserData object to be saved
+     * @param url      the URL of the file where the UserData object will be saved
+     * @throws RuntimeException if an IOException or URISyntaxException occurs during the save operation
+     */
     public static void saveUserData(UserData userData, URL url) {
         try {
             // Convert the URL to a Path object representing the file path
@@ -260,32 +270,45 @@ public class ConfigUtil {
         }
     }
 
+    /**
+     * Updates the favorite status of Points of Interest (POIs) in the given BaseMap and FloorMap
+     * based on the current user's list of favorite POIs.
+     *
+     * @param baseMap the BaseMap containing the FloorMap
+     * @param floorMap the FloorMap containing the layers with POIs to update
+     */
     private static void updateFavorite(BaseMap baseMap, FloorMap floorMap) {
+        // Loop through all the layers in the floorMap
         for (Layer layer : floorMap.getLayers()) {
-            for (PointOfInterest poi : layer.getPoints()) { // TODO: This can be simplifed and FavouritePoi likely can be removed
+            // Loop through all the POIs in the layer
+            for (PointOfInterest poi : layer.getPoints()) {
+                // Loop through all the favorite POIs of the current user
                 for (FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()) {
-                    if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
-                            && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())
-                            && favorite.getLayerName().toLowerCase().equals(layer.getName().toLowerCase())
-                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())) {
+                    // If the favorite POI matches the baseMap, floorMap, layer, and POI names, set the POI as a favorite
+                    if (favorite.getBaseMapName().equalsIgnoreCase(baseMap.getName())
+                            && favorite.getFloorMapName().equalsIgnoreCase(floorMap.getName())
+                            && favorite.getLayerName().equalsIgnoreCase(layer.getName())
+                            && favorite.getPoiName().equalsIgnoreCase(poi.getName())) {
                         poi.setFavorite(true);
                     }
                 }
             }
         }
 
+        // If the floorMap has a userLayer with POIs, loop through the user-created POIs
         if (floorMap.getUserLayer() != null && floorMap.getUserLayer().getPoints() != null) {
             for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
+                // Loop through all the favorite POIs of the current user
                 for (FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()) {
-                    if (favorite.getBaseMapName().toLowerCase().equals(baseMap.getName().toLowerCase())
-                            && favorite.getFloorMapName().toLowerCase().equals(floorMap.getName().toLowerCase())
-                            && favorite.getLayerName().toLowerCase().equals(floorMap.getUserLayer().getName().toLowerCase())
-                            && favorite.getPoiName().toLowerCase().equals(poi.getName().toLowerCase())) {
+                    // If the favorite POI matches the baseMap, floorMap, userLayer, and POI names, set the POI as a favorite
+                    if (favorite.getBaseMapName().equalsIgnoreCase(baseMap.getName())
+                            && favorite.getFloorMapName().equalsIgnoreCase(floorMap.getName())
+                            && favorite.getLayerName().equalsIgnoreCase(floorMap.getUserLayer().getName())
+                            && favorite.getPoiName().equalsIgnoreCase(poi.getName())) {
                         poi.setFavorite(true);
                     }
                 }
             }
         }
-
     }
 }

@@ -70,9 +70,6 @@ public class ImageLayer extends Canvas {
      * @return true if the layer is a base layer, false otherwise
      */
         private static boolean isBaseLayer(Layer layer){
-        if (layer != null && layer.getLayerType() != null && "base".equals(layer.getLayerType().trim().toLowerCase())){
-            return true;
+            return layer != null && layer.getLayerType() != null && "base".equalsIgnoreCase(layer.getLayerType().trim());
         }
-        return false;
-    }
 }

@@ -67,7 +67,7 @@ public class MapEditingController {
     private double zoom = 1.0;
     private double imageWidth;
     private double imageHeight;
-    private List<PointOfInterest> pois = new ArrayList<>();
+    private final List<PointOfInterest> pois = new ArrayList<>();
     private Circle currentSelectedPoiCircle;
     private PointOfInterest currentSelectedPoi;
     private FloorMap currentFloorMap;
@@ -171,10 +171,7 @@ public class MapEditingController {
      @return true if the POI is hit by the mouse click, false otherwise
      */
     private boolean hitTest(Point2D mousePosition, PointOfInterest poi){
-        if (mousePosition.getX() <= poi.getX()+6/zoom && mousePosition.getX() >= poi.getX()-6/zoom && mousePosition.getY() <= poi.getY()+6/zoom && mousePosition.getY() >= poi.getY()-6/zoom){
-            return true;
-        }
-        return false;
+        return mousePosition.getX() <= poi.getX() + 6 / zoom && mousePosition.getX() >= poi.getX() - 6 / zoom && mousePosition.getY() <= poi.getY() + 6 / zoom && mousePosition.getY() >= poi.getY() - 6 / zoom;
     }
 
     /**
@@ -449,8 +446,7 @@ public class MapEditingController {
                         .getJSONArray("points")
                         .getJSONObject(0)
                         .getString("type")
-                        .toLowerCase()
-                        .equals(roomSelector.getValue().toLowerCase())){
+                        .equalsIgnoreCase(roomSelector.getValue())){
                     JSONObject point = new JSONObject()
                             .put("x", coordinateX)
                             .put("y", coordinateY)
@@ -471,7 +467,7 @@ public class MapEditingController {
                 JSONObject layer = new JSONObject()
                         .put("name", "Main Map")
                         .put("color", "BLACK");
-                if (roomSelector.getValue().toLowerCase().equals("washroom") || roomSelector.getValue().toLowerCase().equals("accessibility")){
+                if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")){
                     layer.put("layerType", "base");
                 }
                 else {
@@ -576,16 +572,15 @@ public class MapEditingController {
         if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()){
             outerloop:
             for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++){
-                innerloop:
                 for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
                     JSONObject checkPOI = jsonObject.getJSONArray("layers")
                             .getJSONObject(i)
                             .getJSONArray("points")
                             .getJSONObject(j);
 
-                    if (checkPOI.getString("name").toLowerCase().equals(roomName.toLowerCase())
-                            && checkPOI.getString("roomNumber").toLowerCase().equals(poiRoomNumber.toLowerCase())
-                            && checkPOI.getString("type").toLowerCase().equals(roomType.toLowerCase())){
+                    if (checkPOI.getString("name").equalsIgnoreCase(roomName)
+                            && checkPOI.getString("roomNumber").equalsIgnoreCase(poiRoomNumber)
+                            && checkPOI.getString("type").equalsIgnoreCase(roomType)) {
                         jsonObject.getJSONArray("layers")
                                 .getJSONObject(i)
                                 .getJSONArray("points")
@@ -652,14 +647,13 @@ public class MapEditingController {
             }
             outerloop:
             for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++){
-                innerloop:
                 for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
                     JSONObject checkPOI = jsonObject.getJSONArray("layers")
                             .getJSONObject(i)
                             .getJSONArray("points")
                             .getJSONObject(j);
 
-                    if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())){
+                    if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
                         alert.setHeaderText("POI already exists");
@@ -668,9 +662,9 @@ public class MapEditingController {
                         return;
                     }
 
-                    if (checkPOI.getString("name").toLowerCase().equals(roomName.toLowerCase())
-                            && checkPOI.getString("roomNumber").toLowerCase().equals(poiRoomNumber.toLowerCase())
-                            && checkPOI.getString("type").toLowerCase().equals(roomType.toLowerCase())){
+                    if (checkPOI.getString("name").equalsIgnoreCase(roomName)
+                            && checkPOI.getString("roomNumber").equalsIgnoreCase(poiRoomNumber)
+                            && checkPOI.getString("type").equalsIgnoreCase(roomType)) {
                         jsonObject.getJSONArray("layers")
                                 .getJSONObject(i)
                                 .getJSONArray("points")

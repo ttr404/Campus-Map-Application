@@ -6,9 +6,13 @@ import org.uwo.cs2212.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents user-specific data, such as user-created layers and favorite Points of Interest (POIs).
+ */
 public class UserData {
     private List<UserLayer> userLayers;
     private List<FavoritePoi> favoritePois;
+
     public UserData() {
         this.userLayers = new ArrayList<>();
         this.favoritePois = new ArrayList<>();
@@ -21,6 +25,14 @@ public class UserData {
         this.userLayers = userLayers;
     }
 
+
+    /**
+     * Adds a Point of Interest (POI) to the corresponding UserLayer for the given BaseMap and FloorMap.
+     *
+     * @param baseMap the BaseMap containing the FloorMap
+     * @param floorMap the FloorMap where the POI is located
+     * @param poi the Point of Interest to be added
+     */
     public void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi){
         // Used to store if a new userLayer had to be created
         boolean newUserLayerCreated = false;
@@ -57,9 +69,9 @@ public class UserData {
     }
 
     /**
-     * This method is used to update the UserLayer in the list for the corresponding Map and floor layer
+     * Updates a UserLayer in the list with a new version.
      *
-     * @param updatedUserLayer The layer that will replace the older UserLayer in the list
+     * @param updatedUserLayer the updated UserLayer to replace the old one in the list
      */
     public void updateUserLayers(UserLayer updatedUserLayer) {
         // Loop through all UserLayers in the list
@@ -75,11 +87,12 @@ public class UserData {
     }
 
     /**
-     * This method is used to remove a favourite POI from the favoritePois list
+     * Removes a favorite POI from the favoritePois list.
      *
-     * @param poiName The name of the favourite POI to be removed
-     * @param baseMapName The name of the matching baseMap for POI to be removed
-     * @param floorMapName The name of the matching floorMap for POI to be removed
+     * @param poi the POI to remove from the favoritePois list
+     * @param poiName the name of the POI to be removed
+     * @param baseMapName the name of the corresponding BaseMap for the POI to be removed
+     * @param floorMapName the name of the corresponding FloorMap for the POI to be removed
      */
     public void removeFavourite(PointOfInterest poi, String poiName, String baseMapName, String floorMapName) {
         // Loop through the list of the favouritePois
@@ -87,8 +100,7 @@ public class UserData {
             // If favPoi matches the given names then remove the favourite at the index
             if (favPoi.getPoiName().equals(poiName) && favPoi.getBaseMapName().equals(baseMapName) &&
                     favPoi.getFloorMapName().equals(floorMapName)) {
-                int index = favoritePois.indexOf(favPoi);
-                favoritePois.remove(index);
+                favoritePois.remove(favPoi);
                 break; // Break early since the layer was found
             }
         }
@@ -101,10 +113,10 @@ public class UserData {
     }
 
     /**
-     * This method is used to swap the favourite value from its current value, so if it is a favourite then it will
-     * be not a favourite and vise-versa.
+     * Swaps the favorite status of the specified POI.
+     * If the POI is a favorite, it will be set as not a favorite and vice versa.
      *
-     * @param searchPoi The poi to match to change the favourite status of
+     * @param searchPoi the POI to change the favorite status of
      */
     private void swapFavouriteVal(PointOfInterest searchPoi) {
         // Loop through all userLayers and POIs

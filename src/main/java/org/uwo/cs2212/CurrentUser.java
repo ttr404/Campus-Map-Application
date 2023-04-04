@@ -18,7 +18,7 @@ public class CurrentUser {
     private static UserData userData;
 
     public static boolean isAdmin(){
-        return username != null && username.toLowerCase().equals("admin");
+        return username != null && username.equalsIgnoreCase("admin");
     }
 
     public static void setUsername(String username) {
