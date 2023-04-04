@@ -17,9 +17,8 @@ import java.nio.file.Path;
  * and from JSON files. It makes use of the Jackson library for JSON
  * deserialization and serialization.
  *
- * @author
- * @author
- * @author
+ * @author Yaopeng Xie
+ * @author Tingrui Zhang
  */
 public class ConfigUtil {
     /**

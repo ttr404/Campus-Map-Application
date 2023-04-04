@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * The LoginViewController class is responsible for managing the login view.
  *
- * @author
+ * @author Yaopeng Xie
  *
  */
 public class LoginViewController {
