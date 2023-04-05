@@ -231,7 +231,7 @@ public class PoiPopupController implements Initializable {
      * This method is used to set the text fields of the popup and the state of favourite
      * based on the selected POI stored in CurrentUser
      */
-    public void setFields() {
+    private void setFields() {
         // Get the currently selected POI
         PointOfInterest currentSelectedPoi = CurrentUser.getCurrentSelectedPoi();
 

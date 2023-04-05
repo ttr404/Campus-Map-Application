@@ -2,10 +2,7 @@ package org.uwo.cs2212;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.uwo.cs2212.model.BaseMap;
-import org.uwo.cs2212.model.FloorMap;
-import org.uwo.cs2212.model.PointOfInterest;
-import org.uwo.cs2212.model.UserData;
+import org.uwo.cs2212.model.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -156,5 +153,54 @@ class CurrentUserTest {
         assertTrue(CurrentUser.saveUserData());
     }
 
+    @Test
+    void testRemoveSelectedPoiNormalCase() {
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        CurrentUser.setCurrentSelectedPoi(poi);
+        CurrentUser.removeSelectedPOI();
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
+        assertNotNull(userLayer);
+        assertFalse(userLayer.getPoints().contains(poi));
+    }
+
+    @Test
+    void testRemoveSelectedPoiWithNullBaseMap() {
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        CurrentUser.setCurrentSelectedPoi(poi);
+        CurrentUser.setCurrentBaseMap(null);
+        CurrentUser.removeSelectedPOI();
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
+        assertNotNull(userLayer);
+        assertTrue(userLayer.getPoints().contains(poi));
+    }
+
+    @Test
+    void testRemoveSelectedPoiWithNullFloorMap() {
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        CurrentUser.setCurrentSelectedPoi(poi);
+        CurrentUser.setCurrentFloorMap(null);
+        CurrentUser.removeSelectedPOI();
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
+        assertNotNull(userLayer);
+        assertTrue(userLayer.getPoints().contains(poi));
+    }
+
+    @Test
+    void testRemoveSelectedPoiWithNullPoi() {
+        CurrentUser.addPoi(baseMap, floorMap, poi);
+        CurrentUser.setCurrentSelectedPoi(null);
+        CurrentUser.removeSelectedPOI();
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
+        assertNotNull(userLayer);
+        assertTrue(userLayer.getPoints().contains(poi));
+    }
+
+    @Test
+    void testRemoveSelectedPoiWithEmptyUserData() {
+        CurrentUser.setUserData(null);
+        CurrentUser.setCurrentSelectedPoi(poi);
+        CurrentUser.removeSelectedPOI();
+        assertNull(CurrentUser.getUserData());
+    }
 }
 

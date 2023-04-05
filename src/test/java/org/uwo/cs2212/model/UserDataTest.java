@@ -33,6 +33,10 @@ class UserDataTest {
         poi.setName("Test POI");
         CurrentUser.setUsername("testUser");
         CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
+
+        CurrentUser.setCurrentBaseMap(baseMap);
+        CurrentUser.setCurrentFloorMap(floorMap);
+        CurrentUser.setCurrentSelectedPoi(poi);
     }
 
     @Test
@@ -206,6 +210,71 @@ class UserDataTest {
         assertTrue(userData.getFavoritePois().get(0).getPoiName().equals("TestFavoritePoi"));
 
         assertTrue(poi.isFavorite());
+    }
+    @Test
+    void testRemoveSelectedPOINormalCase() {
+        userData.addPoi(baseMap, floorMap, poi);
+        CurrentUser.removeSelectedPOI();
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, userData);
+        assertNotNull(userLayer);
+        assertFalse(userLayer.getPoints().contains(poi));
+    }
+
+    @Test
+    void testRemoveSelectedPOIWithNullBaseMap() {
+        CurrentUser.setCurrentBaseMap(null);
+        CurrentUser.removeSelectedPOI();
+        // Assert no exception is thrown and the method returns early
+    }
+
+    @Test
+    void testRemoveSelectedPOIWithNullFloorMap() {
+        CurrentUser.setCurrentFloorMap(null);
+        CurrentUser.removeSelectedPOI();
+        // Assert no exception is thrown and the method returns early
+    }
+
+    @Test
+    void testRemoveSelectedPOIWithNullPOI() {
+        CurrentUser.setCurrentSelectedPoi(null);
+        CurrentUser.removeSelectedPOI();
+        // Assert no exception is thrown and the method returns early
+    }
+
+    @Test
+    void testEditPoiNormalCase() {
+        userData.addPoi(baseMap, floorMap, poi);
+        PointOfInterest updatedPoi = new PointOfInterest();
+        CurrentUser.editPoi(updatedPoi);
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, userData);
+        assertNotNull(userLayer);
+        assertTrue(userLayer.getPoints().contains(updatedPoi));
+        assertFalse(userLayer.getPoints().contains(poi));
+    }
+
+    @Test
+    void testEditPoiWithNullBaseMap() {
+        CurrentUser.setCurrentBaseMap(null);
+        PointOfInterest updatedPoi = new PointOfInterest();
+        CurrentUser.editPoi(updatedPoi);
+        // Assert no exception is thrown and the method returns early
+    }
+
+    @Test
+    void testEditPoiWithNullFloorMap() {
+        CurrentUser.setCurrentFloorMap(null);
+        PointOfInterest updatedPoi = new PointOfInterest();
+        CurrentUser.editPoi(updatedPoi);
+        // Assert no exception is thrown and the method returns early
+    }
+    @Test
+    void testEditPoiWithNullUpdatedPoi() {
+        userData.addPoi(baseMap, floorMap, poi);
+        CurrentUser.editPoi(null);
+        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, userData);
+        assertNotNull(userLayer);
+        assertTrue(userLayer.getPoints().contains(poi));
+        // Assert no exception is thrown and the method returns early without changing the existing POI
     }
 
 }
