@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 // TODO:    * Check for existing POI and prevent the same name (and room number?)
-//          * Fix admin not being allowed to add user created POIs
-//          * Fix bug with saving? - admin
 //          * Reload the new POIs
 //          * Fix user POIs not being shown for the checkbox
 //          * Fix user POIs not showing for search

@@ -80,6 +80,9 @@ public class LoginViewController {
         if (checkAccount()) {
             CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
             URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
+
+            CurrentUser.resetSessionData();
+
             if(currentUserUrl != null){
                 CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerUrl()));
             }
