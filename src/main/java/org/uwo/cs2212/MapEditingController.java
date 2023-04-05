@@ -654,12 +654,17 @@ public class MapEditingController {
                             .getJSONObject(j);
 
                     if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("POI already exists");
-                        alert.setContentText("Please enter a different POI name or room number");
-                        alert.showAndWait();
-                        return;
+                        if (checkPOI.getInt("x") <= (coordinateX - 7)
+                                && checkPOI.getInt("x") >= (coordinateX + 7)
+                                && checkPOI.getInt("y") <= (coordinateY - 7)
+                                && checkPOI.getInt("y") >= (coordinateY + 7)) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("POI already exists");
+                            alert.setContentText("Please enter a different POI name or room number");
+                            alert.showAndWait();
+                            return;
+                        }
                     }
 
                     if (checkPOI.getString("name").equalsIgnoreCase(roomName)
