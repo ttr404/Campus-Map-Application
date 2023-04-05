@@ -58,6 +58,9 @@ public class CampusMapController implements Initializable {
 
     public Button zoomReset;
     public Button clearIcon;
+    public Button addPOI;
+    public Button editPOI;
+    public Button deletePOI;
     @FXML
     private Button floor0;
     @FXML
@@ -125,13 +128,6 @@ public class CampusMapController implements Initializable {
     private double coordinateY = 0;
 
     /**
-     * This variable is used to determine if the map was clicked. This is set when the
-     * AddPOI button is pressed so that the program can determine where the map was
-     * clicked to add a POI.
-     */
-    private boolean mapClicked = false;
-
-    /**
      * This method is called by the FXMLLoader when initialization is complete.
      * It initializes the map selector, search list view, displays all POI,
      * shows the floor buttons, shows the map, and sets the favourite button state.
@@ -143,7 +139,13 @@ public class CampusMapController implements Initializable {
         setShowAllPOI();
         showFloorButtons();
         showMap();
+
+        // Disable the POI buttons
         setFavouriteButtonState();
+        addPOI.setDisable(true);
+        editPOI.setDisable(true);
+        deletePOI.setDisable(true);
+
         floorButtons = new Button[]{floor0, floor1, floor2, floor3, floor4}; //initialize the floorButtons array
         editButton.setVisible(CurrentUser.isAdmin());
     }
@@ -186,7 +188,7 @@ public class CampusMapController implements Initializable {
      */
     private void checkBoxSelected() {
         informationList.getItems().clear();
-        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
+        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) { // TODO: Add a loop to check user created POIs here and for the search
             for (PointOfInterest poi : layer.getPoints()) {
                 if ((classrooms.isSelected() && poi.getType().equalsIgnoreCase("classroom"))
                         || (stairwells.isSelected() && poi.getType().equalsIgnoreCase("stairwell"))
@@ -196,7 +198,7 @@ public class CampusMapController implements Initializable {
                         || (restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
                         || (cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
                         || (collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
-                        || (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_pois"))
+                        || (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_poi"))
                 ) {
                     layer.setHideLayer(false);
                     informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
@@ -210,7 +212,7 @@ public class CampusMapController implements Initializable {
                         || (!restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
                         || (!cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
                         || (!collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
-                        || (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_pois"))
+                        || (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_poi"))
                 ) {
                     layer.setHideLayer(true);
                 }
@@ -386,21 +388,20 @@ public class CampusMapController implements Initializable {
     @FXML
     private void aboutButtonAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        String s = "About\n\n" +
-                "Western Campus Navigation App\n" +
+        String s = "Western Campus Navigation App\n" +
                 "Version: 1.3.4\n" +
                 "Release Date: April 5, 2023\n" +
                 "\n" +
-                "Our Team\n" +
+                "Our Team:\n" +
                 "\n" +
-                "  1) Boersen, Jarrett        Student\n       jboerse2@uwo.ca\n" +
-                "  2) Huang, Truman          Student\n        yhuan939@uwo.ca\n" +
-                "  3) Xie, Yaopeng            Student\n       yxie447@uwo.ca\n" +
-                "  4) Zhang, Binchi           Student\n       bzhan484@uwo.ca\n" +
-                "  5) Zhang, Tingrui          Student\n       tzhan425@uwo.ca\n\n" +
+                "  1) Boersen, Jarrett (Student): jboerse2@uwo.ca\n" +
+                "  2) Huang, Truman (Student): yhuan939@uwo.ca\n" +
+                "  3) Xie, Yaopeng (Student): yxie447@uwo.ca\n" +
+                "  4) Zhang, Binchi (Student): bzhan484@uwo.ca\n" +
+                "  5) Zhang, Tingrui (Student): tzhan425@uwo.ca\n\n" +
 
-                "Contact Us\n\n" +
-                "  If you have any questions, feedback or suggestions, please feel free to reach out to us at bzhan484@uwo.com. We are always happy to hear from our users and help you in any way we can.\n" +
+                "Contact Us:\n\n" +
+                "If you have any questions, feedback or suggestions, please feel free to reach out to us at bzhan484@uwo.com. We are always happy to hear from our users and help you in any way we can.\n" +
                 "\n" +
                 "Thank you for using our Western Campus Navigation App!";
 
@@ -410,24 +411,26 @@ public class CampusMapController implements Initializable {
         // Create a Label with wrapped text and a fixed width
         Label aboutLabel = new Label(s);
         aboutLabel.setWrapText(true);
-        aboutLabel.setMaxWidth(260);
 
         VBox vbox = new VBox(aboutLabel);
         vbox.setPadding(new Insets(10));
 
-        // Wrap the VBox in a ScrollPane
-        ScrollPane scrollPane = new ScrollPane(vbox);
-        scrollPane.setFitToWidth(true);
-
-        Scene scene = new Scene(scrollPane, 300, 100);
+        Scene scene = new Scene(vbox, 300, 100);
         stage.setScene(scene);
-        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - 300);
-        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
-        stage.setWidth(300);
-        stage.setHeight(500);
+//        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - 600);
+//        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        stage.centerOnScreen();
+        stage.setWidth(310);
+        stage.setHeight(430);
+        stage.setMinWidth(310);
+        stage.setMinHeight(430);
+        stage.setMaxWidth(310);
+        stage.setMaxHeight(430);
+
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
         stage.getIcons().add(icon);
         stage.setTitle("About");
+
         stage.show();
     }
 
@@ -466,11 +469,16 @@ public class CampusMapController implements Initializable {
         stage.setScene(scene);
         stage.setWidth(300);
         stage.setHeight(500);
-        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - stage.getWidth());
-        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        stage.setMinWidth(300);
+        stage.setMinHeight(500);
+//        stage.setX(((Node) event.getSource()).getScene().getWindow().getX() + ((Node) event.getSource()).getScene().getWindow().getWidth() - stage.getWidth());
+//        stage.setY(((Node) event.getSource()).getScene().getWindow().getY());
+        stage.centerOnScreen();
+
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
         stage.getIcons().add(icon);
         stage.setTitle("Help");
+
         stage.show();
 
         // Set the initial help text
@@ -581,7 +589,7 @@ public class CampusMapController implements Initializable {
     @FXML
     private FXMLLoader returnBack(String file, String title) throws IOException {
         int v = 1080;
-        int v1 = 800;
+        int v1 = 830;
 
 
         Stage stage = new Stage();
@@ -828,9 +836,6 @@ public class CampusMapController implements Initializable {
             }
         }
         selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
-
-        mapClicked = true;
-
     }
 
     /**
@@ -884,7 +889,24 @@ public class CampusMapController implements Initializable {
             }
             centralizeSelectedPoi();
             showMap();
+
+            // Allow the user to interact with the POI buttons
             setFavouriteButtonState();
+            // If the currently selected POI is not null, and it is of type user POI then set the editor buttons to edit and delete
+            if (CurrentUser.getCurrentSelectedPoi() != null && CurrentUser.getCurrentSelectedPoi().getType().equals("user_poi")) {
+                addPOI.setDisable(true);
+                editPOI.setDisable(false);
+                deletePOI.setDisable(false);
+            // Otherwise, if the currently selected POI is not null, and it is not of type user POI then set the editor buttons to disabled
+            } else if (CurrentUser.getCurrentSelectedPoi() != null && !CurrentUser.getCurrentSelectedPoi().getType().equals("user_poi")) {
+                addPOI.setDisable(true);
+                editPOI.setDisable(true);
+                deletePOI.setDisable(true);
+            } else { // Otherwise, show the add button since the user clicked on the map
+                addPOI.setDisable(false);
+                editPOI.setDisable(true);
+                deletePOI.setDisable(true);
+            }
         }
     }
     /**
@@ -1223,12 +1245,39 @@ public class CampusMapController implements Initializable {
      * @throws IOException
      */
     public void onAddPOIClicked(ActionEvent actionEvent) throws IOException {
-        // If mapClicked is true then call the openPOIPopup to open the POI popup window to add a new POI.
-        // Pass along the current realMousePosition
-        if (mapClicked) {
-            openPOIPopup();
-            // Reset mapClicked so the button has to be pressed again
-            mapClicked = false;
+        // Set the editor POI mode to false
+        PoiPopupController.setEditMode(false);
+        // Call the openPOIPopup to open the POI popup window to add a new POI.
+        // Pass along if the popup is in editor mode
+        openPOIPopup("Add");
+    }
+
+    public void onEditPOIClicked(ActionEvent actionEvent) throws IOException {
+        // Set the editor POI mode to true
+        PoiPopupController.setEditMode(true);
+        // Call the openPOIPopup to open the POI popup window to edit a POI.
+        // Pass along if the popup is in editor mode
+        openPOIPopup("Edit");
+    }
+
+    public void onDeletePOIClicked(ActionEvent actionEvent) {
+        // Create an error message box
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete POI");
+        alert.setHeaderText("Warning you are able to delete the selected POI!");
+        alert.setContentText("This cannot be undone! If you are okay with this press ok. Otherwise, press cancel.");
+        Optional<ButtonType> result = alert.showAndWait();
+        ButtonType button = result.orElse(ButtonType.CANCEL);
+
+        if (button == ButtonType.OK) {
+            System.out.println("Ok pressed");
+            // Remove the selected POI
+            CurrentUser.removeSelectedPOI();
+
+            // Save the list of user POIs now that the POI was removed
+            CurrentUser.saveUserData();
+        } else {
+            System.out.println("canceled");
         }
     }
 
@@ -1243,7 +1292,7 @@ public class CampusMapController implements Initializable {
      *
      * @throws IOException if the FXML file for the POI popup window cannot be loaded
      */
-    private void openPOIPopup() throws IOException {
+    private void openPOIPopup(String mode) throws IOException {
         // Create the new stage (window)
         Stage poiPopupStage = new Stage();
 
@@ -1256,7 +1305,7 @@ public class CampusMapController implements Initializable {
         PoiPopupController.setCoords(coordinateX, coordinateY);
 
         // Set the window's title
-        poiPopupStage.setTitle("New POI");
+        poiPopupStage.setTitle(mode + " POI");
         // Set the max and min heights and widths
         poiPopupStage.setMinHeight(400);
         poiPopupStage.setMinWidth(280);
@@ -1277,5 +1326,4 @@ public class CampusMapController implements Initializable {
         // Show the window
         poiPopupStage.show();
     }
-
 }

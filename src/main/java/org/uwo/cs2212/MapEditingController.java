@@ -311,7 +311,7 @@ public class MapEditingController {
     private void returnBack(String file, String title) throws IOException {
         // Declare and initialize the window size
         int v = 1080;
-        int v1 = 800;
+        int v1 = 830;
 
         // Create a new Stage object for the new window
         Stage stage = new Stage();

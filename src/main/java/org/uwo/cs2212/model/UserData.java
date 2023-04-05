@@ -27,7 +27,8 @@ public class UserData {
 
 
     /**
-     * Adds a Point of Interest (POI) to the corresponding UserLayer for the given BaseMap and FloorMap.
+     * This method is used to add a Point of Interest (POI) to the corresponding
+     * UserLayer for the given BaseMap and FloorMap.
      *
      * @param baseMap the BaseMap containing the FloorMap
      * @param floorMap the FloorMap where the POI is located
@@ -65,6 +66,45 @@ public class UserData {
             userLayers.add(userLayer);
         } else { // Otherwise, update the existing layer
             updateUserLayers(userLayer);
+        }
+    }
+
+    /**
+     *  This method is used to remove a Point of Interest (POI) from the corresponding
+     *  UserLayer for the given BaseMap and FloorMap and POI.
+     *
+     * @param baseMap The BaseMap the POI is on
+     * @param floorMap The FloorMap the POI is on
+     * @param poiToRemove The POI to be removed
+     */
+    public void removePOI(BaseMap baseMap, FloorMap floorMap, PointOfInterest poiToRemove) {
+        // Find the userLayer the POI in
+        UserLayer userLayer = findUserLayer(baseMap, floorMap, this);
+
+        // Loop through all the points in the userLayer
+        for (PointOfInterest point : userLayer.getPoints()) {
+            // If the point is equal to the given poiToRemove then remove the point from the userLayer
+            if (point.equals(poiToRemove)) {
+                userLayer.getPoints().remove(point);
+                break; // Leave loop early since point was removed
+            }
+        }
+    }
+
+    public void editPOI(BaseMap baseMap, FloorMap floorMap, PointOfInterest oldPOI, PointOfInterest updatedPOI) {
+        // Find the userLayer the POI in
+        UserLayer userLayer = findUserLayer(baseMap, floorMap, this);
+
+        // Loop through all the points in the userLayer
+        for (PointOfInterest point : userLayer.getPoints()) {
+            // If the point is equal to the given oldPOI then set the point to updatedPOI
+            if (point.equals(oldPOI)) {
+                // Get the index of the matching point
+                int index = userLayer.getPoints().indexOf(point);
+                // Set the old point (selected poi) to the updatedPOI
+                userLayer.getPoints().set(index, updatedPOI);
+                break; // Leave loop early since point was removed
+            }
         }
     }
 

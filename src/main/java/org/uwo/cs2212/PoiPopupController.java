@@ -1,26 +1,21 @@
 package org.uwo.cs2212;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import org.uwo.cs2212.model.BaseMap;
-import org.uwo.cs2212.model.FloorMap;
 import org.uwo.cs2212.model.PointOfInterest;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-// TODO:    * Name
-//          * Room number
-//          * Favourite
-//          * Description
-//          * Set the type as well to user created
+// TODO:    * Check for existing POI and prevent the same name (and room number?)
+//          * Fix admin not being allowed to add user created POIs
+//          * Fix bug with saving? - admin
+//          * Reload the new POIs
+//          * Fix user POIs not being shown for the checkbox
+//          * Fix user POIs not showing for search
 
 public class PoiPopupController implements Initializable {
     // The elements in the window
@@ -49,22 +44,20 @@ public class PoiPopupController implements Initializable {
      */
     private static Stage stage;
 
-    /**
-     * This variable is used to store the current base map so the POI
-     * can be saved based on the base map
-     */
-    private static BaseMap currentBaseMap;
-    /**
-     * This variable is used to store the current floor map so the POI
-     * can be saved based on the floor map
-     */
-    private static FloorMap currentFloopMap;
+    private static boolean editMode;
 
     /**
      * This method called automatically by javafx and is used to load some things when window is initialized.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // If editMode is true then set the fields
+        if (editMode) {
+            // Set the filed text based on the selected POI in CurrentUser
+            setFields();
+            // Switch the value so it will be correct after setFavouriteButtonState is called
+            favourite = !favourite;
+        }
         setFavouriteButtonState();
     }
 
@@ -89,21 +82,12 @@ public class PoiPopupController implements Initializable {
     }
 
     /**
-     * This method is used to set the current BaseMap (which building/campus map is active)
+     * This method is used to set the state of the editMode
      *
-     * @param currentBaseMap The BaseMap object to be stored
+     * @param editMode The value set editMode to
      */
-    public static void setCurrentBaseMap(BaseMap currentBaseMap) {
-        PoiPopupController.currentBaseMap = currentBaseMap;
-    }
-
-    /**
-     * This method is used to set the current FloopMap (which floor of the BaseMap is active)
-     *
-     * @param currentFloopMap The FloopMap object to be stored
-     */
-    public static void setCurrentFloopMap(FloorMap currentFloopMap) {
-        PoiPopupController.currentFloopMap = currentFloopMap;
+    public static void setEditMode(boolean editMode) {
+        PoiPopupController.editMode = editMode;
     }
 
     /**
@@ -132,7 +116,12 @@ public class PoiPopupController implements Initializable {
             alert.setContentText("Some of the required POI information was missing. To save it please enter both a name and room Number.");
             alert.showAndWait();
         } else { // Otherwise, save and close the Add POI pop-up
-            save(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText());
+            // If editMode is true then call the method to save the   edited POI
+            if (editMode) {
+                edit(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText());
+            } else { // Otherwise, call the method to save the POI
+                save(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText());
+            }
 
             stage.close();
         }
@@ -147,7 +136,7 @@ public class PoiPopupController implements Initializable {
      */
     private void save(String name, String roomNumber, String description) {
         // Used to store if the user data saved successfully
-        boolean saveSuccessful = true;
+        boolean saveSuccessful;
 
         // Create a new POI
         PointOfInterest poi = new PointOfInterest();
@@ -160,7 +149,7 @@ public class PoiPopupController implements Initializable {
         poi.setX(xCoord);
         poi.setY(yCoord);
         // Set the type for the POI
-        poi.setType("User");
+        poi.setType("user_poi");
 
         // Call the method to add the POI to the current user's data object
         CurrentUser.addPoi(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), poi);
@@ -174,6 +163,42 @@ public class PoiPopupController implements Initializable {
             alert.setTitle("Save POI");
             alert.setHeaderText("Successfully saved the POI!");
             alert.setContentText("The POI was successfully added to your list of POIs.");
+            alert.showAndWait();
+        }
+    }
+
+    private void edit(String name, String roomNumber, String description) {
+        // Used to store if the user data saved successfully
+        boolean saveSuccessful;
+
+        // Get currently selected POI
+        PointOfInterest currentSelectedPoi = CurrentUser.getCurrentSelectedPoi();
+        // Create a new POI
+        PointOfInterest editedPOI = new PointOfInterest();
+
+
+        // Add the information
+        editedPOI.setName(name);
+        editedPOI.setRoomNumber(roomNumber);
+        editedPOI.setDescription(description);
+        editedPOI.setFavorite(favourite);
+        editedPOI.setX(currentSelectedPoi.getX());
+        editedPOI.setY(currentSelectedPoi.getY());
+        // Set the type for the POI
+        editedPOI.setType("user_poi");
+
+        // Call the method to edit the POI in the current user's data object
+        CurrentUser.editPoi(editedPOI);
+        // Save the object to a JSON file and store if the method saved successfully
+        saveSuccessful = CurrentUser.saveUserData();
+
+        // Show a successfully saved method
+        if (saveSuccessful) {
+            // Create an error message box
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Updated POI");
+            alert.setHeaderText("Successfully updated the POI!");
+            alert.setContentText("The POI was successfully updated in your list of POIs.");
             alert.showAndWait();
         }
     }
@@ -200,5 +225,21 @@ public class PoiPopupController implements Initializable {
         imageView.setFitWidth(16);
         imageView.setFitHeight(16);
         favouriteButton.setGraphic(imageView);
+    }
+
+    /**
+     * This method is used to set the text fields of the popup and the state of favourite
+     * based on the selected POI stored in CurrentUser
+     */
+    public void setFields() {
+        // Get the currently selected POI
+        PointOfInterest currentSelectedPoi = CurrentUser.getCurrentSelectedPoi();
+
+        // Set the fields
+        NameField.setText(currentSelectedPoi.getName());
+        RoomNumberField.setText(currentSelectedPoi.getRoomNumber());
+        DescriptionField.setText(currentSelectedPoi.getDescription());
+        // Set the state of favourite
+        favourite = currentSelectedPoi.isFavorite();
     }
 }

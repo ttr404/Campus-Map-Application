@@ -85,13 +85,15 @@ public class LoginViewController {
             }
 
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1080, 800);
+            Scene scene = new Scene(fxmlLoader.load(), 1080, 830);
 
             CampusMapController campusMapController = fxmlLoader.getController();
 
             stage.setTitle("Western Campus Map");
             stage.setScene(scene);
-            stage.setResizable(false);
+            stage.setResizable(true);
+            stage.setMinHeight(830);
+            stage.setMinWidth(1080);
             stage.setX(200);
             stage.setY(70);
 

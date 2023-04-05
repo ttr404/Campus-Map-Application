@@ -99,6 +99,30 @@ public class CurrentUser {
         userData.addPoi(baseMap, floorMap, poi);
     }
 
+    public static void removeSelectedPOI() {
+        BaseMap baseMap = CurrentUser.getCurrentBaseMap();
+        FloorMap floorMap = CurrentUser.getCurrentFloorMap();
+        PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
+
+        if (baseMap == null || floorMap == null || poi == null){
+            return;
+        }
+
+        userData.removePOI(baseMap, floorMap, poi);
+    }
+
+    public static void editPoi(PointOfInterest updatedPOI){
+        BaseMap baseMap = CurrentUser.getCurrentBaseMap();
+        FloorMap floorMap = CurrentUser.getCurrentFloorMap();
+        PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
+
+        if (baseMap == null || floorMap == null || poi == null){
+            return;
+        }
+
+        userData.editPOI(baseMap, floorMap, poi, updatedPOI);
+    }
+
     /**
      * Saves the user data to a file, by calling the saveUserData method from the ConfigUtil class. The user data includes the list
      * of favorite points of interest, which are extracted from the mapConfig object. The method also creates a new user layer file,
@@ -107,15 +131,15 @@ public class CurrentUser {
      *
      * @return true if the user data was saved successfully, false otherwise
      */
-    public static boolean saveUserData()  {
+    public static boolean saveUserData() {
         // Used to store if the user data saved successfully
         boolean saveSuccessful = true;
 
-        if(isAdmin()){ // TODO: Remove
+        if (isAdmin()) { // TODO: Remove
             return true;
         }
         URL tmpUrl = CurrentUser.getCurrentUserLayerUrl();
-        if (tmpUrl == null){
+        if (tmpUrl == null) {
             tmpUrl = CurrentUser.class.getResource("empty-user-layer.json"); // TODO: Switch this from the target dir to the resource one?
             String path = tmpUrl.getPath();
             path = path.replace("empty-user-layer.json", "user-layer-" + CurrentUser.getUsername().trim().toLowerCase() + ".json");
@@ -134,11 +158,11 @@ public class CurrentUser {
             }
         }
         List<FavoritePoi> favoritePois = new ArrayList<>();
-        for (BaseMap baseMap : mapConfig.getBaseMaps()){
-            for (FloorMap floorMap : baseMap.getFloorMaps()){
-                for(Layer layer : floorMap.getLayers()){
-                    for(PointOfInterest poi : layer.getPoints()){
-                        if (poi.isFavorite()){
+        for (BaseMap baseMap : mapConfig.getBaseMaps()) {
+            for (FloorMap floorMap : baseMap.getFloorMaps()) {
+                for (Layer layer : floorMap.getLayers()) {
+                    for (PointOfInterest poi : layer.getPoints()) {
+                        if (poi.isFavorite()) {
                             favoritePois.add(new FavoritePoi(baseMap.getName(), floorMap.getName(), layer.getName(), poi.getName()));
                         }
                     }
