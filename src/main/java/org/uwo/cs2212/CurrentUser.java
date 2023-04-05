@@ -170,6 +170,9 @@ public class CurrentUser {
         return saveSuccessful;
     }
 
+    /**
+     * This method is used to reset thr user's session data (the userData list containing user created POIs and favourites)
+     */
     public static void resetSessionData() {
         userData = new UserData();
     }

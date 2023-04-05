@@ -1266,18 +1266,21 @@ public class CampusMapController implements Initializable {
         alert.setTitle("Delete POI");
         alert.setHeaderText("Warning you are able to delete the selected POI!");
         alert.setContentText("This cannot be undone! If you are okay with this press ok. Otherwise, press cancel.");
+        // Add a exclamation graphic
+        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("exclamation_icon.png")));
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        alert.setGraphic(imageView);
+
         Optional<ButtonType> result = alert.showAndWait();
         ButtonType button = result.orElse(ButtonType.CANCEL);
 
         if (button == ButtonType.OK) {
-            System.out.println("Ok pressed");
             // Remove the selected POI
             CurrentUser.removeSelectedPOI();
 
             // Save the list of user POIs now that the POI was removed
             CurrentUser.saveUserData();
-        } else {
-            System.out.println("canceled");
         }
     }
 

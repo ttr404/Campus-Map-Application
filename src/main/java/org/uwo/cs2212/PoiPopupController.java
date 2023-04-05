@@ -3,6 +3,7 @@ package org.uwo.cs2212;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.PointOfInterest;
@@ -53,7 +54,7 @@ public class PoiPopupController implements Initializable {
         if (editMode) {
             // Set the filed text based on the selected POI in CurrentUser
             setFields();
-            // Switch the value so it will be correct after setFavouriteButtonState is called
+            // Switch the value, so it will be correct after setFavouriteButtonState is called
             favourite = !favourite;
         }
         setFavouriteButtonState();
@@ -112,6 +113,12 @@ public class PoiPopupController implements Initializable {
             alert.setTitle("Save POI");
             alert.setHeaderText("Unable to save POI!");
             alert.setContentText("Some of the required POI information was missing. To save it please enter both a name and room Number.");
+            // Add an error graphic
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("error_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+
             alert.showAndWait();
         } else { // Otherwise, save and close the Add POI pop-up
             // If editMode is true then call the method to save the   edited POI
@@ -156,15 +163,41 @@ public class PoiPopupController implements Initializable {
 
         // Show a successfully saved method
         if (saveSuccessful) {
-            // Create an error message box
+            // Create an success message box
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save POI");
             alert.setHeaderText("Successfully saved the POI!");
             alert.setContentText("The POI was successfully added to your list of POIs.");
+            // Add a checkmark graphic
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+
+            alert.showAndWait();
+        } else {
+            // Create an error message box
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Save POI");
+            alert.setHeaderText("Unable to save POI!");
+            alert.setContentText("An error occurred while saving.");
+            // Add an error graphic
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("error_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+
             alert.showAndWait();
         }
     }
 
+    /**
+     * This method is used to edit a POI using the given information and call the required helper methods to edit it
+     *
+     * @param name The name of the POI
+     * @param roomNumber The room number for the POI
+     * @param description The description for the POI
+     */
     private void edit(String name, String roomNumber, String description) {
         // Used to store if the user data saved successfully
         boolean saveSuccessful;
@@ -174,8 +207,7 @@ public class PoiPopupController implements Initializable {
         // Create a new POI
         PointOfInterest editedPOI = new PointOfInterest();
 
-
-        // Add the information
+        // Add the information to the edited POI
         editedPOI.setName(name);
         editedPOI.setRoomNumber(roomNumber);
         editedPOI.setDescription(description);
@@ -192,11 +224,29 @@ public class PoiPopupController implements Initializable {
 
         // Show a successfully saved method
         if (saveSuccessful) {
-            // Create an error message box
+            // Create an success message box
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Updated POI");
             alert.setHeaderText("Successfully updated the POI!");
             alert.setContentText("The POI was successfully updated in your list of POIs.");
+            // Add a checkmark graphic
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+            alert.showAndWait();
+        } else {
+            // Create an error message box
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Updated POI");
+            alert.setHeaderText("Unable to update the POI!");
+            alert.setContentText("An error occurred while updating.");
+            // Add an error graphic
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("error_icon.png")));
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            alert.setGraphic(imageView);
+
             alert.showAndWait();
         }
     }
