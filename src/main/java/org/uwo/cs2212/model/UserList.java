@@ -5,6 +5,9 @@ import java.util.List;
 /**
  * This class is used to store the list of users, the list contains the
  * user's configuration (username and password)
+ *
+ * @author Yaopeng Xie
+ * @author Jarrett Boersen
  */
 public class UserList {
     /**

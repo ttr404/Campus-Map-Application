@@ -9,6 +9,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to store data on the logged-in user. This includes their user generated POIs and their favourites
+ *
+ * @author Yaopeng Xie
+ * @author Jarrett Boersen
+ */
 public class CurrentUser {
     private static String username;
     private static PointOfInterest currentSelectedPoi;
@@ -79,7 +85,7 @@ public class CurrentUser {
     }
 
     /**
-     * Add the poi data into the user's layer
+     * This method is used to add the POI data to the user layer
      *
      * @param baseMap the base map of the user layer
      * @param floorMap the floor map of the user layer
@@ -95,6 +101,9 @@ public class CurrentUser {
         userData.addPoi(baseMap, floorMap, poi);
     }
 
+    /**
+     * This method is used to remove the selected POI from the user layer
+     */
     public static void removeSelectedPOI() {
         BaseMap baseMap = CurrentUser.getCurrentBaseMap();
         FloorMap floorMap = CurrentUser.getCurrentFloorMap();
@@ -107,6 +116,12 @@ public class CurrentUser {
         userData.removePOI(baseMap, floorMap, poi);
     }
 
+    /**
+     * This method is used to update selected POI in the user layer
+     *
+     * @param updatedPOI The updated version of the POI (this is a new POI instead of editing the old one to allow
+     *                   searching for the old POI)
+     */
     public static void editPoi(PointOfInterest updatedPOI){
         BaseMap baseMap = CurrentUser.getCurrentBaseMap();
         FloorMap floorMap = CurrentUser.getCurrentFloorMap();

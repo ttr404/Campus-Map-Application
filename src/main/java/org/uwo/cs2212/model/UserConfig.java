@@ -1,7 +1,10 @@
 package org.uwo.cs2212.model;
 
 /**
- * This class is used to store the user's configuration data
+ * This class is used to store the user's configuration data, such as their username and password
+ *
+ * @author Yaopeng Xie
+ * @author Jarrett Boersen
  */
 public class UserConfig {
     /**

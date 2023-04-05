@@ -2,6 +2,14 @@ package org.uwo.cs2212.model;
 
 import java.util.List;
 
+/**
+ * This class is used to store data on the floor's layer, which is the type or classification of the various POIs that
+ * can be shown. This includes, it's name, type, text format information and if it is hidden. Each layer also contains
+ * a list of points (POIs).
+ *
+ * @author Yaopeng Xie
+ * @author Tingrui Zhang
+ */
 public class Layer {
     private String name;
     private String layerType;

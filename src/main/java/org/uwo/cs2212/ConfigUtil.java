@@ -19,6 +19,7 @@ import java.nio.file.Path;
  *
  * @author Yaopeng Xie
  * @author Tingrui Zhang
+ * @author Jarrett Boersen
  */
 public class ConfigUtil {
     /**

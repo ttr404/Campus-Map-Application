@@ -16,6 +16,13 @@ import java.util.ResourceBundle;
 //          * Fix user POIs not being shown for the checkbox
 //          * Fix user POIs not showing for search
 
+/**
+ * This class is used to handle the functionality of the POI popup adder/editor. It always gets information from the
+ * user via the text fields and buttons, however, in edit mode it starts off with the POI's data being edited. It calls
+ * other external classes that implement the saving and editing functionality.
+ *
+ * @author Jarrett Boersen
+ */
 public class PoiPopupController implements Initializable {
     // The elements in the window
     public TextField NameField;
@@ -31,6 +38,10 @@ public class PoiPopupController implements Initializable {
      */
     boolean favourite = true;
     /**
+     * This variable is sued to store if the POI popup is in edit mode
+     */
+    private static boolean editMode;
+    /**
      * This variable is used to store the x coordinate of the POI
      */
     private static double xCoord;
@@ -42,8 +53,6 @@ public class PoiPopupController implements Initializable {
      * This variable is used to store the stage for the popup view
      */
     private static Stage stage;
-
-    private static boolean editMode;
 
     /**
      * This method called automatically by javafx and is used to load some things when window is initialized.

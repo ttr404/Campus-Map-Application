@@ -8,6 +8,10 @@ import java.util.List;
 
 /**
  * Represents user-specific data, such as user-created layers and favorite Points of Interest (POIs).
+ *
+ * @author Yaopeng Xie
+ * @author Jarrett Boersen
+ * @author Tingrui Zhang
  */
 public class UserData {
     private List<UserLayer> userLayers;
@@ -91,6 +95,14 @@ public class UserData {
         }
     }
 
+    /**
+     * This method is used to edit a given POI in the corresponding UserLayer for the given BaseMap and FloorMap
+     *
+     * @param baseMap The BaseMap the POI is on
+     * @param floorMap The FloorMap the POI is on
+     * @param oldPOI The POI that is being updated
+     * @param updatedPOI The updated POI (this is a new POI instead of editing the old one to allow searching for the old POI)
+     */
     public void editPOI(BaseMap baseMap, FloorMap floorMap, PointOfInterest oldPOI, PointOfInterest updatedPOI) {
         // Find the userLayer the POI in
         UserLayer userLayer = findUserLayer(baseMap, floorMap, this);

@@ -1,5 +1,11 @@
 package org.uwo.cs2212.model;
 
+/**
+ * This class is used to store data on a favourite POI. This includes, the map, floor and layer name, along
+ * with the POI name.
+ *
+ * @author Yaopeng Xie
+ */
 public class FavoritePoi {
     private String baseMapName;
     private String floorMapName;

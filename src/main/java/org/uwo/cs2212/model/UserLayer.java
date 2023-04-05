@@ -1,5 +1,13 @@
 package org.uwo.cs2212.model;
 
+/**
+ * This class is used to store data on the user layer which is just a bit of extra data for a layer but specifically for
+ * the user
+ *
+ * @author Yaopeng Xie
+ * @author Jarrett Boersen
+ * @author Tingrui Zhang
+ */
 public class UserLayer extends Layer {
     private String floorName;
     private String baseName;

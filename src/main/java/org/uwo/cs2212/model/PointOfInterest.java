@@ -2,7 +2,14 @@ package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+/**
+ * This class is used to store data on the Point of Interest. This includes, the coordinates, name, room number,
+ * description, type, if it is selected or a favourite
+ *
+ * @author Yaopeng Xie
+ * @author Jarrett Boersen
+ * @author Tingrui Zhang
+ */
 public class PointOfInterest {
     private double x;
     private double y;
@@ -12,9 +19,7 @@ public class PointOfInterest {
     private String type;
     @JsonIgnore
     private boolean selected;
-    // TODO: Keep ignore removed?
     private boolean favorite;
-
 
     public double getX() {
         return x;

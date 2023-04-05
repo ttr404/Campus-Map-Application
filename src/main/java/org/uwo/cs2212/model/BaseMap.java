@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to store the base map, which is a building or the campus map. This includes its name,
+ * and list of floor configs and maps.
+ *
+ * @author Yaopeng Xie
+ */
 public class BaseMap {
     private String name;
     private List<FloorMap> floorConfigs;
@@ -34,5 +40,4 @@ public class BaseMap {
     public void setFloorMaps(List<FloorMap> floorMaps) {
         this.floorMaps = floorMaps;
     }
-
 }

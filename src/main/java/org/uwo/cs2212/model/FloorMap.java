@@ -3,6 +3,12 @@ package org.uwo.cs2212.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
+/**
+ * This class is used to store data on the floor map for a base map. This includes the name, file name, if the legend
+ * is shown, and it's position, the list of layers, the config (json) file name, and the corresponding userLayer.
+ *
+ * @author Yaopeng Xie
+ */
 public class FloorMap {
     private String name;
     private String mapFileName;
