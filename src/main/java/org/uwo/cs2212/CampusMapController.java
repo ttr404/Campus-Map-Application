@@ -1064,6 +1064,7 @@ public class CampusMapController implements Initializable {
 
         if (currentPOI != null) {
             currentPOI.setFavorite(!currentPOI.isFavorite());
+            CurrentUser.saveUserData();
             if (currentPOI.getType().toLowerCase().contains("user")) {
                 System.out.println("POI type: " + currentPOI.getType());
                 CurrentUser.getUserData().removeFavourite(currentPOI, currentPOI.getName(),
