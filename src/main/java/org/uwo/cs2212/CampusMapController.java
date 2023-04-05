@@ -452,7 +452,7 @@ public class CampusMapController implements Initializable {
 
         // Create a ChoiceBox control to select the help topic
         ChoiceBox<String> helpTopic = new ChoiceBox<>();
-        helpTopic.getItems().addAll("Getting Started", "Search Function", "POI and Favorite", "Editing Mode");
+        helpTopic.getItems().addAll("Getting Started", "Search Function", "POI and Favorite", "Editor Mode");
         helpTopic.setValue("Getting Started"); // Set the default value
         Label helpLabel = new Label();
         helpLabel.setWrapText(true); // Wrap text to multiple lines
@@ -530,21 +530,21 @@ public class CampusMapController implements Initializable {
                         By using the favorite and POI functions in a map navigation app, you can quickly and easily save important locations and points of interest for future reference. This can make it easier to navigate to these locations in the future.""";
 
 
-            case "Editing Mode":
+            case "Editor Mode":
                 return """
 
-                        To use the Editing mode in a map navigation app, follow these steps:
+                        To use the Editor mode in a map navigation app, follow these steps:
 
                         1. Log in to your admin account.
-                        2. Find the "Editing" mode button in the app and click on it.
-                        3. Once you are in Editing mode, you can add, delete, or edit POIs on the map.
+                        2. Find the "Editor" mode button in the app and click on it.
+                        3. Once you are in Editor mode, you can add, delete, or edit POIs on the map.
                         4. To add a new POI, select a location on the map and click the "Add POI" button located at the top of the screen.
                         5. Fill in the required details, including the POI name, room number, and room type by selecting a choice from the drop-down box.
                         6. To delete or edit an existing POI, select the POI on the map and click either the "Delete" or "Edit" button.
                         7. If you choose to edit the POI, make any necessary changes to the details and then click "Edit" to save the changes
                         8. Click "Close" to save the change of POI and return to the main page.
 
-                        Using the Editing mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information. This can improve the accuracy and usefulness of the app for all users.""";
+                        Using the Editor mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information. This can improve the accuracy and usefulness of the app for all users.""";
             case "Search Function":
                 return """
 
@@ -835,6 +835,8 @@ public class CampusMapController implements Initializable {
                 }
             }
         }
+
+        selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
     }
 
     /**
@@ -886,8 +888,12 @@ public class CampusMapController implements Initializable {
             if (CurrentUser.getCurrentSelectedPoi() != null) {
                 CurrentUser.getCurrentSelectedPoi().setSelected(true);
             }
-            centralizeSelectedPoi();
-            showMap();
+
+            // Only centralize the selected POI and update the map if a POI has actually been selected
+            if (CurrentUser.getCurrentSelectedPoi() != null) {
+                centralizeSelectedPoi();
+                showMap();
+            }
 
             // Allow the user to interact with the POI buttons
             setFavouriteButtonState();
