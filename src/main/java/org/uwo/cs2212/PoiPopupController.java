@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 // TODO:    * Check for existing POI and prevent the same name (and room number?)
-//          * Reload the new POIs
 //          * Fix user POIs not being shown for the checkbox
 
 /**

@@ -835,7 +835,6 @@ public class CampusMapController implements Initializable {
                 }
             }
         }
-        selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
     }
 
     /**
@@ -1088,7 +1087,7 @@ public class CampusMapController implements Initializable {
 
     /**
      * Populates the informationList with favorite Points of Interest (POIs) when the "List Favorites" button is clicked.
-     *
+     * --------
      * This method clears the current content of the informationList and iterates through all the BaseMaps, FloorMaps, Layers,
      * and UserLayers to find favorite POIs. If a POI is marked as a favorite, it is added to the informationList as a SearchResult.
      *
