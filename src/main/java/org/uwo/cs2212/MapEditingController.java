@@ -84,6 +84,10 @@ public class MapEditingController {
     private void initialize() {
         ObservableList<String> roomsToSelect = FXCollections.observableArrayList("", "Accessibility","Washroom","Classroom", "CS Lab", "Collaborative Room", "Elevator", "Entry/Exit", "GenLab", "Restaurant", "Stairwell");
         roomSelector.setItems(roomsToSelect);
+
+        // Disable the buttons initially
+        editPOI.setDisable(true);
+        deletePOI.setDisable(true);
     }
 
     /**
@@ -244,6 +248,19 @@ public class MapEditingController {
             if(currentSelectedPoi != null){
                 currentSelectedPoi.setSelected(true);
             }
+
+            if (currentSelectedPoi != null && currentSelectedPoi.isSelected()) {
+                // Enable only edit and disable buttons
+                addPOI.setDisable(true);
+                editPOI.setDisable(false);
+                deletePOI.setDisable(false);
+            } else {
+                // Enable only add button
+                addPOI.setDisable(false);
+                editPOI.setDisable(true);
+                deletePOI.setDisable(true);
+            }
+
             showMap();
         }
     }
