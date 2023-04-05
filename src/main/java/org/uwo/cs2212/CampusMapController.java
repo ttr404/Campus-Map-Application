@@ -995,6 +995,19 @@ public class CampusMapController implements Initializable {
                         }
                     }
                 }
+
+                // Make sure the list of UserLayers isn't empty
+                if (floorMap.getUserLayer() != null) {
+                    // Loop through the user-created POIs and check if they are a favourite
+                    for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
+                        // Check if the user-created POI is in the layer
+                        if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text) ||
+                                contains(poi.getType(), text) || contains(poi.getDescription(), text)) {
+                            // Add the user-created POI to the informationList as a SearchResult
+                            informationList.getItems().add(new SearchResult(floorMap, poi));
+                        }
+                    }
+                }
             }
         }
     }

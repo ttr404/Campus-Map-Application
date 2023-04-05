@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 // TODO:    * Check for existing POI and prevent the same name (and room number?)
 //          * Reload the new POIs
 //          * Fix user POIs not being shown for the checkbox
-//          * Fix user POIs not showing for search
 
 /**
  * This class is used to handle the functionality of the POI popup adder/editor. It always gets information from the
