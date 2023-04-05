@@ -466,7 +466,7 @@ public class MapEditingController {
                 JSONArray jsonArray = new JSONArray();
                 JSONObject layer = new JSONObject()
                         .put("name", "Main Map")
-                        .put("color", "BLACK");
+                        .put("color", "BLUE");
                 if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")){
                     layer.put("layerType", "base");
                 }

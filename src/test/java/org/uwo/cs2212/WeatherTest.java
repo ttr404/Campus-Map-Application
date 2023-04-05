@@ -3,8 +3,6 @@ package org.uwo.cs2212;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -18,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Binchi Zhang
  */
-@ExtendWith(MockitoExtension.class)
+
 class WeatherTest {
 
     private Weather weather;

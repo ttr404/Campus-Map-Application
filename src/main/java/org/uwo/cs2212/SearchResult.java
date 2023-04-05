@@ -9,7 +9,8 @@ import org.uwo.cs2212.model.PointOfInterest;
  * for getting and setting the PointOfInterest and FloorMap objects associated with the
  * search result, as well as for generating a String representation of the search result.
  *
- * @author
+ * @author Yaopeng Xie
+ * @author Tingrui Zhang
  */
 public class SearchResult {
     private PointOfInterest poi;

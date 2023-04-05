@@ -52,7 +52,7 @@ import javafx.geometry.Insets;
  * @author Binchi Zhang
  * @author Truman Huang
  * @author Jarrett Boersen
- * @author
+ * @author Yaopeng Xie
  */
 public class CampusMapController implements Initializable {
 
