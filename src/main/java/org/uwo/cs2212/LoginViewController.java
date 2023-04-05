@@ -81,6 +81,7 @@ public class LoginViewController {
             CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
             URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
 
+            // Reset the user's session data to prevent other user's data being shown for other users
             CurrentUser.resetSessionData();
 
             if(currentUserUrl != null){

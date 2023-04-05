@@ -121,7 +121,7 @@ public class UserData {
     }
 
     /**
-     * Updates a UserLayer in the list with a new version.
+     * This method is to update a UserLayer in the list with a new version.
      *
      * @param updatedUserLayer the updated UserLayer to replace the old one in the list
      */

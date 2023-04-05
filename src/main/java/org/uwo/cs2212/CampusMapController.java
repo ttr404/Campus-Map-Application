@@ -566,7 +566,7 @@ public class CampusMapController implements Initializable {
      * Signs the user out and returns them to the login page. This method changes the view to the login page and hides the
      * current window.
      *
-     * @param actionEvent the ActionEvent object representing the event that triggered the sign out action
+     * @param actionEvent the ActionEvent object representing the event that triggered the sign-out action
      * @throws IOException if an error occurs while loading the login page view
      */
     @FXML
@@ -1215,7 +1215,7 @@ public class CampusMapController implements Initializable {
     public void onEditButtonClick(ActionEvent actionEvent) throws IOException {
         try {
             // Load the MapEditingController and show the new stage
-            FXMLLoader fxmlLoader = returnBack("map-editing.fxml", "Map Editing Mode");
+            FXMLLoader fxmlLoader = returnBack("map-editing.fxml", "Map Editor Mode");
 
             // Get the MapEditingController and set the currentFloorMap
             MapEditingController mapEditingController = fxmlLoader.getController();
@@ -1253,7 +1253,7 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * This method is called when the Add POI button was clicked, it calls the popup window
+     * This method is called when the Add POI button was clicked, it then calls the popup window
      *
      * @param actionEvent Pass the action event data along
      * @throws IOException
@@ -1266,6 +1266,12 @@ public class CampusMapController implements Initializable {
         openPOIPopup("Add");
     }
 
+    /**
+     * This method is called when the edit POI button was clicked, it then calls the popup window
+     *
+     * @param actionEvent Pass the action event data along
+     * @throws IOException
+     */
     public void onEditPOIClicked(ActionEvent actionEvent) throws IOException {
         // Set the editor POI mode to true
         PoiPopupController.setEditMode(true);
@@ -1274,13 +1280,19 @@ public class CampusMapController implements Initializable {
         openPOIPopup("Edit");
     }
 
+    /**
+     * This method is called when the delete POI button was clicked, it then shows an alert asking to confirm the deletion.
+     * If ok is pressed then removeSelectedPOI() is called to remove it from the user's data list, the JSON is also updated.
+     *
+     * @param actionEvent
+     */
     public void onDeletePOIClicked(ActionEvent actionEvent) {
         // Create an error message box
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete POI");
-        alert.setHeaderText("Warning you are able to delete the selected POI!");
+        alert.setHeaderText("Warning you are about to delete the selected POI!");
         alert.setContentText("This cannot be undone! If you are okay with this press ok. Otherwise, press cancel.");
-        // Add a exclamation graphic
+        // Add an exclamation graphic
         ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("exclamation_icon.png")));
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
@@ -1296,11 +1308,14 @@ public class CampusMapController implements Initializable {
             // Save the list of user POIs now that the POI was removed
             CurrentUser.saveUserData();
         }
+
+        // Refresh the map's POIs
+        refreshPOIs();
     }
 
     /**
      * Opens a new window with a form to create a new Point of Interest (POI).
-     *
+     * -----------
      * This method creates a new window displaying a form for the user to input
      * details about a new POI. It passes the current mouse coordinates to the
      * controller, sets the window properties (size, title, and icon), and configures
@@ -1342,5 +1357,19 @@ public class CampusMapController implements Initializable {
         poiPopupStage.initModality(Modality.APPLICATION_MODAL);
         // Show the window
         poiPopupStage.show();
+
+        // When the popup closes refresh the map's POIs
+        poiPopupStage.setOnHidden(e -> {
+            refreshPOIs();
+        });
+    }
+
+    /**
+     * This method is used to refresh the (user created) POIs on the map after modifying them
+     */
+    public void refreshPOIs() {
+        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
+        initializeMapSelector();
+        showMap();
     }
 }
