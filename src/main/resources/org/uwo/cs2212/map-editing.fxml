@@ -1,55 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<?import javafx.scene.image.ImageView?>
-<AnchorPane prefHeight="411.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditingController">
-    <children>
-      <HBox layoutX="-1.0" prefHeight="0.0" prefWidth="947.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane prefHeight="511.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditingController">
+     <top>
+        <ToolBar prefHeight="37.0" BorderPane.alignment="CENTER">
+          <items>
+              <Button fx:id="close" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefWidth="61.0" text="Close" />
+            <Label prefWidth="180.0" />
+              <Button fx:id="zoomOUT" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomOutButtonClick" text="+" />
+              <Button fx:id="zoomIN" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" text="-" textAlignment="RIGHT" />
+          </items>
+        </ToolBar>
+     </top>
+     <left>
+      <HBox>
          <children>
-            <ToolBar prefHeight="37.0" HBox.hgrow="ALWAYS">
-              <items>
-                  <Button fx:id="close" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="26.0" prefWidth="61.0" text="Close" />
-                  <Button fx:id="addPOI" layoutX="68.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAddPOIButtonClick" text="Add POI" />
-                  <Button fx:id="deletePOI" layoutX="126.0" layoutY="10.0" mnemonicParsing="false" onAction="#onDeletePOIButtonClick" text="Delete POI" />
-                  <Button fx:id="editPOI" layoutX="184.0" layoutY="10.0" mnemonicParsing="false" onAction="#onEditPOIButtonClick" prefHeight="26.0" prefWidth="72.0" text="Edit POI" />
-                  <Button fx:id="zoomOUT" mnemonicParsing="false" onAction="#onZoomOutButtonClick" prefHeight="11.0" prefWidth="19.0" text="+" />
-                  <Button fx:id="zoomIN" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" prefHeight="26.0" prefWidth="25.0" text="-" textAlignment="RIGHT" />
-              </items>
-            </ToolBar>
-            <ScrollPane fx:id="scrollPane" prefHeight="411.0" prefWidth="724.0" onMouseClicked="#onEditorMapClicked">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
-         </children>
-      </HBox>
-      <VBox layoutY="39.0" prefHeight="356.0" prefWidth="238.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="39.0">
-         <children>
-            <VBox prefHeight="1.0" prefWidth="152.0" />
-            <VBox prefHeight="149.0" prefWidth="276.0">
+              <VBox maxWidth="230.0" minWidth="240.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="POI Name:" />
-                  <TextField fx:id="poiName" prefHeight="6.0" prefWidth="152.0" />
-                  <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Number:" />
-                  <TextField fx:id="roomNumber" layoutX="10.0" layoutY="27.0" prefHeight="6.0" prefWidth="152.0" />
-                  <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Type:" />
-                  <ComboBox fx:id="roomSelector" prefHeight="27.0" prefWidth="236.0" />
-                  <Text layoutX="10.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
+                    <VBox>
+                       <children>
+                        <HBox alignment="CENTER" spacing="8.0">
+                           <children>
+                                <Button fx:id="addPOI" mnemonicParsing="false" onAction="#onAddPOIButtonClick" text="Add POI" />
+                                <Button fx:id="deletePOI" mnemonicParsing="false" onAction="#onDeletePOIButtonClick" text="Delete POI" />
+                                <Button fx:id="editPOI" mnemonicParsing="false" onAction="#onEditPOIButtonClick" prefWidth="72.0" text="Edit POI" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="POI Name:">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </Text>
+                          <TextField fx:id="poiName">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </TextField>
+                          <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Number:">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </Text>
+                          <TextField fx:id="roomNumber" layoutX="10.0" layoutY="27.0">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </TextField>
+                          <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Type:">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </Text>
+                          <ComboBox fx:id="roomSelector" prefWidth="240.0">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                          <Text layoutX="10.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </Text>
+                       </children>
+                    </VBox>
+                    <TextArea fx:id="Description" minHeight="100.0" wrapText="true" VBox.vgrow="ALWAYS" />
                </children>
-            </VBox>
-            <TextArea fx:id="Description" prefHeight="200.0" prefWidth="253.0" />
+               <HBox.margin>
+                  <Insets left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+              </VBox>
          </children>
-      </VBox>
-   </children>
-</AnchorPane>
+         <BorderPane.margin>
+            <Insets bottom="8.0" />
+         </BorderPane.margin>
+      </HBox>
+     </left>
+   <center>
+        <ScrollPane fx:id="scrollPane" minWidth="333.0" onMouseClicked="#onEditorMapClicked" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin>
+        </ScrollPane>
+   </center>
+</BorderPane>

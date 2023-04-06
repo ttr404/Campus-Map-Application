@@ -96,8 +96,8 @@ public class LoginViewController {
             stage.setTitle("Western Campus Map");
             stage.setScene(scene);
             stage.setResizable(true);
-            stage.setMinHeight(830);
-            stage.setMinWidth(1080);
+            stage.setMinHeight(660);
+            stage.setMinWidth(1030);
             stage.centerOnScreen();
 //            stage.setX(200);
 //            stage.setY(70);

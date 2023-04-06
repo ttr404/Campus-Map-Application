@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1080.0" style="-fx-background-color: #e6f0ff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.CampusMapController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #e6f0ff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.CampusMapController">
     <top>
         <BorderPane style="-fx-background-color: #e6f0ff;">
             <left>
                 <HBox>
                     <Button fx:id="signOut" onAction="#signOut" style="-fx-background-color: #8bb4c1;" text="Sign Out">
                   <HBox.margin>
-                     <Insets right="23.0" />
+                     <Insets right="22.0" />
                   </HBox.margin></Button>
                <HBox spacing="3.0">
                   <children>
@@ -29,7 +29,7 @@
                           <Button fx:id="about" onAction="#aboutButtonAction" style="-fx-background-color: #b3dee5;" text="About" />
                   </children>
                   <HBox.margin>
-                     <Insets right="24.0" />
+                     <Insets right="23.0" />
                   </HBox.margin>
                </HBox>
                <HBox spacing="3.0">
@@ -52,7 +52,7 @@
                      <Button fx:id="addPOI" onAction="#onAddPOIClicked" style="-fx-background-color: #b3dee5;" text="Add POI" />
                      <Button fx:id="editPOI" onAction="#onEditPOIClicked" style="-fx-background-color: #b3dee5;" text="Edit POI" />
                      <Button fx:id="deletePOI" onAction="#onDeletePOIClicked" style="-fx-background-color: #b3dee5;" text="Delete POI" />
-                          <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" style="-fx-background-color: #b3dee5;">
+                          <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" prefWidth="26.0" style="-fx-background-color: #b3dee5;">
                         <opaqueInsets>
                            <Insets />
                         </opaqueInsets>
@@ -96,9 +96,9 @@
         </BorderPane>
     </top>
     <left>
-        <HBox style="-fx-background-color: #e6f0ff;">
-            <VBox fx:id="leftPane" maxWidth="200" minWidth="200">
-                <ComboBox fx:id="mapSelector" style="-fx-background-color: #d9b3ff;">
+        <HBox minWidth="216.0" style="-fx-background-color: #e6f0ff;">
+            <VBox fx:id="leftPane" maxWidth="200.0" minWidth="200.0">
+                <ComboBox fx:id="mapSelector" prefWidth="200.0" style="-fx-background-color: #d9b3ff;">
                <VBox.margin>
                   <Insets bottom="17.0" />
                </VBox.margin></ComboBox>
@@ -146,9 +146,9 @@
                   <Insets bottom="8.0" top="8.0" />
                </VBox.margin>
             </Separator>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.0">
                      <children>
                         <CheckBox fx:id="classrooms" mnemonicParsing="false" onAction="#onClassrooms" text="Classroom">
                            <font>
@@ -177,7 +177,7 @@
                         </CheckBox>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.0">
                      <children>
                         <CheckBox fx:id="restaurants" mnemonicParsing="false" onAction="#onRestaurants" text="Restaurant">
                            <font>
@@ -202,6 +202,9 @@
                      </children>
                   </VBox>
                </children>
+               <VBox.margin>
+                  <Insets bottom="8.0" top="4.0" />
+               </VBox.margin>
             </HBox>
                 <!--<Label minHeight="10"/>-->
                 <ListView fx:id="informationList" VBox.vgrow="ALWAYS" />

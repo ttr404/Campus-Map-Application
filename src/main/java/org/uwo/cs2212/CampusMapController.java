@@ -621,7 +621,13 @@ public class CampusMapController implements Initializable {
 
         stage.setTitle(title);
         stage.setScene(scene);
-        stage.setResizable(false);
+        if (file.compareTo("login-view.fxml") == 0) {
+            stage.setResizable(false);
+        } else {
+            stage.setResizable(true);
+            stage.setMinHeight(410);
+            stage.setMinWidth(600);
+        }
 //        stage.setX(200);
 //        stage.setY(70);
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
@@ -1296,7 +1302,7 @@ public class CampusMapController implements Initializable {
     public void onDeletePOIClicked(ActionEvent actionEvent) {
         // Create an error message box
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete POI");
+        alert.setTitle("Delete POI?");
         alert.setHeaderText("Warning you are about to delete the selected POI!");
         alert.setContentText("This cannot be undone! If you are okay with this press ok. Otherwise, press cancel.");
         // Add an exclamation graphic

@@ -343,8 +343,10 @@ public class MapEditingController {
         // Set the scene for the new window
         stage.setScene(scene);
 
-        // Set the new window to be non-resizable
-        stage.setResizable(false);
+        // Set the new window to be resizable and give it a min size
+        stage.setResizable(true);
+        stage.setMinHeight(660);
+        stage.setMinWidth(1030);
 
         // Set the X and Y position of the new window
 //        stage.setX(200);
@@ -427,9 +429,9 @@ public class MapEditingController {
 
         if (coordinateX == 0 && coordinateY == 0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No coordinate selected");
-            alert.setContentText("Please select a coordinate on the map");
+            alert.setTitle("Error Adding");
+            alert.setHeaderText("Unable to add POI, there was no coordinate selected!");
+            alert.setContentText("Please select a coordinate on the map before saving.");
             alert.showAndWait();
             return;
         }
@@ -449,9 +451,9 @@ public class MapEditingController {
                             .getJSONObject(j);
                     if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())){
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("POI already exists");
-                        alert.setContentText("Please enter a different POI name or room number");
+                        alert.setTitle("Error Adding");
+                        alert.setHeaderText("A POI already exists with that information!");
+                        alert.setContentText("Please enter a different POI name and/or room number.");
                         alert.showAndWait();
                         return;
                     }
@@ -502,9 +504,9 @@ public class MapEditingController {
                 jsonObject.getJSONArray("layers").put(layer);
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("POI added");
-            alert.setContentText("POI has been added to the map");
+            alert.setTitle("Added POI");
+            alert.setHeaderText("Successfully saved the POI!");
+            alert.setContentText("The POI was successfully added to the map.");
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
@@ -512,9 +514,9 @@ public class MapEditingController {
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Please fill all the fields");
+            alert.setTitle("Error Adding");
+            alert.setHeaderText("Unable to add the POI!");
+            alert.setContentText("Please fill all the fields.");
             alert.showAndWait();
             return;
         }
@@ -646,9 +648,9 @@ public class MapEditingController {
             }
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("POI deleted");
-            alert.setContentText("POI has been deleted from the map");
+            alert.setTitle("Deleted POI");
+            alert.setHeaderText("Successfully deleted the POI!");
+            alert.setContentText("POI has been deleted from the map.");
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
@@ -656,9 +658,9 @@ public class MapEditingController {
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("The POI you are trying to delete does not exist");
+            alert.setTitle("Error Deleting");
+            alert.setHeaderText("Unable to delete the POI!");
+            alert.setContentText("The POI you are trying to delete does not exist!");
             alert.showAndWait();
             return;
         }
@@ -711,9 +713,9 @@ public class MapEditingController {
         if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()){
             if (poiName.getText().isEmpty() || roomNumber.getText().isEmpty() || roomSelector.getValue() == null){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("Please enter at least one field");
+                alert.setTitle("Error Editing");
+                alert.setHeaderText("Unable to edit the POI!");
+                alert.setContentText("Please enter data in at least one field.");
                 alert.showAndWait();
                 return;
             }
@@ -731,8 +733,8 @@ public class MapEditingController {
                                 && checkPOI.getInt("y") <= (coordinateY - 7)
                                 && checkPOI.getInt("y") >= (coordinateY + 7)) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Error");
-                            alert.setHeaderText("POI already exists");
+                            alert.setTitle("Error Editing");
+                            alert.setHeaderText("Unable to edit because the POI already exists!");
                             alert.setContentText("Please enter a different POI name or room number");
                             alert.showAndWait();
                             return;
@@ -757,9 +759,9 @@ public class MapEditingController {
                 }
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-   //         alert.setTitle("Success");
-            alert.setHeaderText("POI has been successfully edited");
-     //       alert.setContentText("POI has been edited");
+            alert.setTitle("Edited POI");
+            alert.setHeaderText("Successfully edited the POI!");
+            alert.setContentText("The POI has been successfully edited on the map.");
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("check_icon.png")));
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
@@ -767,9 +769,9 @@ public class MapEditingController {
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-   //         alert.setHeaderText("Error!");
-            alert.setContentText("Please select a POI to edit");
+            alert.setTitle("Error Editing");
+            alert.setHeaderText("Unable to edit the POI!");
+            alert.setContentText("Please select a POI to edit first.");
             alert.showAndWait();
             return;
         }

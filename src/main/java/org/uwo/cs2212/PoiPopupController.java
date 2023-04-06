@@ -13,6 +13,13 @@ import java.util.ResourceBundle;
 
 // TODO:    * Check for existing POI and prevent the same name (and room number?)
 //          * Fix user POIs not being shown for the checkbox
+//          * Fix mapSelector not showing the correct name
+//          * Finish the tests/fix them
+//          * Try to make the jar
+//          * Fix spelling
+//          * Fix editor UI
+//          * Fix window resizing in windows?
+//          * Change Popup wording in editor mode
 
 /**
  * This class is used to handle the functionality of the POI popup adder/editor. It always gets information from the
@@ -170,7 +177,7 @@ public class PoiPopupController implements Initializable {
 
         // Show a successfully saved method
         if (saveSuccessful) {
-            // Create an success message box
+            // Create a success message box
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save POI");
             alert.setHeaderText("Successfully saved the POI!");
@@ -185,7 +192,7 @@ public class PoiPopupController implements Initializable {
         } else {
             // Create an error message box
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Save POI");
+            alert.setTitle("Error Saving POI");
             alert.setHeaderText("Unable to save POI!");
             alert.setContentText("An error occurred while saving.");
             // Add an error graphic
