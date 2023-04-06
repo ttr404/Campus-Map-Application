@@ -11,4 +11,5 @@ module com.example.form {
     opens org.uwo.cs2212 to javafx.fxml;
     exports org.uwo.cs2212;
     exports org.uwo.cs2212.model;
+    requires org.junit.jupiter.api;
 }
