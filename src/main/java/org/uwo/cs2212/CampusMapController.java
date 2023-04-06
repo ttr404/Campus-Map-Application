@@ -999,29 +999,31 @@ public class CampusMapController implements Initializable {
         String text = searchText.getText().toLowerCase().trim();
         if (!text.equals("")) {
             informationList.getItems().clear();
-            for (FloorMap floorMap : CurrentUser.getCurrentBaseMap().getFloorMaps()) {
-                for (Layer layer : floorMap.getLayers()) {
-                    for (PointOfInterest poi : layer.getPoints()) {
-                        if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text) ||
-                                contains(poi.getType(), text) || contains(poi.getDescription(), text)) {
-                            informationList.getItems().add(new SearchResult(floorMap, poi));
+            for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()){
+                for (FloorMap floorMap : baseMap.getFloorMaps()) {
+                    for (Layer layer : floorMap.getLayers()) {
+                        for (PointOfInterest poi : layer.getPoints()) {
+                            if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text) ||
+                                    contains(poi.getType(), text) || contains(poi.getDescription(), text)) {
+                                informationList.getItems().add(new SearchResult(floorMap, poi));
+                            }
                         }
                     }
-                }
-
-                // Make sure the list of UserLayers isn't empty
-                if (floorMap.getUserLayer() != null) {
-                    // Loop through the user-created POIs and check if they are a favourite
-                    for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
-                        // Check if the user-created POI is in the layer
-                        if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text) ||
-                                contains(poi.getType(), text) || contains(poi.getDescription(), text)) {
-                            // Add the user-created POI to the informationList as a SearchResult
-                            informationList.getItems().add(new SearchResult(floorMap, poi));
+                    // Make sure the list of UserLayers isn't empty
+                    if (floorMap.getUserLayer() != null) {
+                        // Loop through the user-created POIs and check if they are a favourite
+                        for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
+                            // Check if the user-created POI is in the layer
+                            if (contains(poi.getName(), text) || contains(poi.getRoomNumber(), text) ||
+                                    contains(poi.getType(), text) || contains(poi.getDescription(), text)) {
+                                // Add the user-created POI to the informationList as a SearchResult
+                                informationList.getItems().add(new SearchResult(floorMap, poi));
+                            }
                         }
                     }
                 }
             }
+
         }
     }
 
