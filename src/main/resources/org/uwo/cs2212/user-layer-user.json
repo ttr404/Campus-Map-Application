@@ -15,7 +15,7 @@
           "name": "userPOI1",
           "roomNumber": "17",
           "description": "MC GF Classroom 17",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 600,
@@ -23,7 +23,7 @@
           "name": "userPOI2",
           "roomNumber": "6",
           "description": "MC GF Classroom 6",
-          "type": "ClassRoom"
+          "type": "Classroom"
         }
       ]
     }

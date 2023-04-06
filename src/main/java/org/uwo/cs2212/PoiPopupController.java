@@ -161,7 +161,7 @@ public class PoiPopupController implements Initializable {
         poi.setX(xCoord);
         poi.setY(yCoord);
         // Set the type for the POI
-        poi.setType("user_poi");
+        poi.setType("User POI");
 
         // Call the method to add the POI to the current user's data object
         CurrentUser.addPoi(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), poi);
@@ -222,7 +222,7 @@ public class PoiPopupController implements Initializable {
         editedPOI.setX(currentSelectedPoi.getX());
         editedPOI.setY(currentSelectedPoi.getY());
         // Set the type for the POI
-        editedPOI.setType("user_poi");
+        editedPOI.setType("User POI");
 
         // Call the method to edit the POI in the current user's data object
         CurrentUser.editPoi(editedPOI);
@@ -231,7 +231,7 @@ public class PoiPopupController implements Initializable {
 
         // Show a successfully saved method
         if (saveSuccessful) {
-            // Create an success message box
+            // Create a success message box
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Updated POI");
             alert.setHeaderText("Successfully updated the POI!");

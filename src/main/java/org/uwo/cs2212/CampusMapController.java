@@ -193,12 +193,12 @@ public class CampusMapController implements Initializable {
                 if ((classrooms.isSelected() && poi.getType().equalsIgnoreCase("classroom"))
                         || (stairwells.isSelected() && poi.getType().equalsIgnoreCase("stairwell"))
                         || (elevators.isSelected() && poi.getType().equalsIgnoreCase("elevator"))
-                        || (entryAndExit.isSelected() && poi.getType().trim().equalsIgnoreCase("entryandexit"))
+                        || (entryAndExit.isSelected() && poi.getType().trim().equalsIgnoreCase("entry/exit"))
                         || (genlabs.isSelected() && poi.getType().equalsIgnoreCase("genlab"))
                         || (restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
                         || (cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
                         || (collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
-                        || (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_poi"))
+                        || (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user poi"))
                 ) {
                     layer.setHideLayer(false);
                     informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
@@ -207,12 +207,12 @@ public class CampusMapController implements Initializable {
                 if ((!classrooms.isSelected() && poi.getType().equalsIgnoreCase("classroom"))
                         || (!stairwells.isSelected() && poi.getType().equalsIgnoreCase("stairwell"))
                         || (!elevators.isSelected() && poi.getType().equalsIgnoreCase("elevator"))
-                        || (!entryAndExit.isSelected() && poi.getType().trim().equalsIgnoreCase("entryandexit"))
+                        || (!entryAndExit.isSelected() && poi.getType().trim().equalsIgnoreCase("entry/exit"))
                         || (!genlabs.isSelected() && poi.getType().equalsIgnoreCase("genlab"))
                         || (!restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
                         || (!cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
                         || (!collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
-                        || (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user_poi"))
+                        || (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user poi"))
                 ) {
                     layer.setHideLayer(true);
                 }
@@ -347,11 +347,11 @@ public class CampusMapController implements Initializable {
             for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
-                for(PointOfInterest poi: layer.getPoints()){
+                for (PointOfInterest poi : layer.getPoints()) {
                     if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
                             && (int) Math.round(poi.getX()) <= (coordinateX + 7)
                             && (int) Math.round(poi.getY()) >= (coordinateY - 7)
-                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)){
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)) {
                         coordinateView.setVisible(false);
                     }
                 }
@@ -658,6 +658,7 @@ public class CampusMapController implements Initializable {
         zoomReset.setDisable(false);
         showMap();
     }
+
     public void onClearIconButtonClicked(ActionEvent actionEvent) {
         clearPinIcon();
     }
@@ -823,7 +824,7 @@ public class CampusMapController implements Initializable {
                     if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
                             && (int) Math.round(poi.getX()) <= (coordinateX + 7)
                             && (int) Math.round(poi.getY()) >= (coordinateY - 7)
-                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)){
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)) {
                         coordinateX = 0;
                         coordinateY = 0;
                     }
@@ -843,7 +844,7 @@ public class CampusMapController implements Initializable {
      * Displays a popup window with details about the given PointOfInterest object.
      *
      * @param mouseEvent the mouse event that triggered the popup
-     * @param poi the PointOfInterest to display details for
+     * @param poi        the PointOfInterest to display details for
      */
     private void poiDetailsPopup(MouseEvent mouseEvent, PointOfInterest poi) {
         /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
@@ -898,12 +899,12 @@ public class CampusMapController implements Initializable {
             // Allow the user to interact with the POI buttons
             setFavouriteButtonState();
             // If the currently selected POI is not null, and it is of type user POI then set the editor buttons to edit and delete
-            if (CurrentUser.getCurrentSelectedPoi() != null && CurrentUser.getCurrentSelectedPoi().getType().equals("user_poi")) {
+            if (CurrentUser.getCurrentSelectedPoi() != null && CurrentUser.getCurrentSelectedPoi().getType().equalsIgnoreCase("user poi")) {
                 addPOI.setDisable(true);
                 editPOI.setDisable(false);
                 deletePOI.setDisable(false);
-            // Otherwise, if the currently selected POI is not null, and it is not of type user POI then set the editor buttons to disabled
-            } else if (CurrentUser.getCurrentSelectedPoi() != null && !CurrentUser.getCurrentSelectedPoi().getType().equals("user_poi")) {
+                // Otherwise, if the currently selected POI is not null, and it is not of type user POI then set the editor buttons to disabled
+            } else if (CurrentUser.getCurrentSelectedPoi() != null && !CurrentUser.getCurrentSelectedPoi().getType().equals("user poi")) {
                 addPOI.setDisable(true);
                 editPOI.setDisable(true);
                 deletePOI.setDisable(true);
@@ -914,6 +915,7 @@ public class CampusMapController implements Initializable {
             }
         }
     }
+
     /**
      * Shows the given PointOfInterest in the informationList ListView.
      * Clears the previous items in the list and adds a new SearchResult object containing the given poi.
@@ -929,7 +931,7 @@ public class CampusMapController implements Initializable {
      * Determines if the given mouse position hits the given point of interest.
      *
      * @param mousePosition The mouse position as a Point2D object.
-     * @param poi The point of interest as a PointOfInterest object.
+     * @param poi           The point of interest as a PointOfInterest object.
      * @return True if the mouse position hits the point of interest, false otherwise.
      */
     private boolean hitTest(Point2D mousePosition, PointOfInterest poi) {
@@ -1375,6 +1377,7 @@ public class CampusMapController implements Initializable {
     public void refreshPOIs() {
         CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
         initializeMapSelector();
+
         showMap();
     }
 }

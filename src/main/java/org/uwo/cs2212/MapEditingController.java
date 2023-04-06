@@ -99,8 +99,6 @@ public class MapEditingController {
      *
      * <p> In case of any exceptions during the loading or processing of the map
      * or layers, the exception is caught and no further action is taken. </p>
-     *
-     * @return
      */
     protected void showMap(){
         try {

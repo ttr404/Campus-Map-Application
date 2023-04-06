@@ -22,7 +22,7 @@
           "name": "MC105",
           "roomNumber": "105",
           "description": "1F Classroom 105",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 136,
@@ -30,7 +30,7 @@
           "name": "MC105B",
           "roomNumber": "105",
           "description": "1F Classroom 105B",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 697,
@@ -38,7 +38,7 @@
           "name": "MC110",
           "roomNumber": "110",
           "description": "1F Classroom 110",
-          "type": "ClassRoom"
+          "type": "Classroom"
         }
       ]
     },
@@ -55,7 +55,7 @@
           "name": "Men's washroom",
           "roomNumber": "100",
           "description": "1F Men's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 1129,
@@ -63,7 +63,7 @@
           "name": "Women's washroom",
           "roomNumber": "139",
           "description": "1F Women's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 1081,

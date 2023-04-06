@@ -10,7 +10,7 @@
   ],
   "layers": [
     {
-      "name": "ClassRoom layer",
+      "name": "Classroom layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -22,7 +22,7 @@
           "name": "MC204",
           "roomNumber": "204",
           "description": "2F Classroom 204",
-          "type": "ClassRoom"
+          "type": "Classroom"
         }
       ]
     },
@@ -138,7 +138,7 @@
           "name": "Women's washroom",
           "roomNumber": "205",
           "description": "2F Women's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 1134.5,

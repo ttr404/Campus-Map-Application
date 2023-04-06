@@ -153,7 +153,7 @@
           "name": "PAB106",
           "roomNumber": "106",
           "description": "1F Classroom 106",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 420,
@@ -161,7 +161,7 @@
           "name": "PAB100",
           "roomNumber": "100",
           "description": "1F Classroom 100",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 613,
@@ -169,7 +169,7 @@
           "name": "PAB150",
           "roomNumber": "150",
           "description": "1F Classroom 150",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 748,
@@ -177,7 +177,7 @@
           "name": "PAB148",
           "roomNumber": "148",
           "description": "1F Classroom 148",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 378,
@@ -185,7 +185,7 @@
           "name": "PAB117",
           "roomNumber": "117",
           "description": "1F Classroom 117",
-          "type": "ClassRoom"
+          "type": "Classroom"
         }
       ]
     },

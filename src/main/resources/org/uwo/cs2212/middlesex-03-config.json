@@ -10,7 +10,7 @@
   ],
   "layers": [
     {
-      "name": "ClassRoom layer",
+      "name": "Classroom layer",
       "color": "BLUE",
       "layerType": "internal",
       "font": "Arial",
@@ -22,7 +22,7 @@
           "name": "MC300",
           "roomNumber": "300",
           "description": "3F Classroom 300",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 419,
@@ -30,7 +30,7 @@
           "name": "MC316",
           "roomNumber": "316",
           "description": "3F Classroom 316",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 344,
@@ -38,7 +38,7 @@
           "name": "MC320",
           "roomNumber": "320",
           "description": "3F Classroom 320",
-          "type": "ClassRoom"
+          "type": "Classroom"
         }
       ]
     },
@@ -130,7 +130,7 @@
           "name": "Men's washroom",
           "roomNumber": "311",
           "description": "3F Men's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 870.5,
@@ -138,7 +138,7 @@
           "name": "Women's washroom",
           "roomNumber": "388",
           "description": "3F Women's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         }
       ]
     },

@@ -22,7 +22,7 @@
           "name": "MC17",
           "roomNumber": "17",
           "description": "MC GF Classroom 17",
-          "type": "ClassRoom"
+          "type": "Classroom"
         },
         {
           "x": 506,
@@ -30,7 +30,7 @@
           "name": "MC6",
           "roomNumber": "6",
           "description": "MC GF Classroom 6",
-          "type": "ClassRoom"
+          "type": "Classroom"
         }
       ]
     },
@@ -47,7 +47,7 @@
           "name": "Men's washroom",
           "roomNumber": "5B",
           "description": "MC GF Men's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 1129,
@@ -55,7 +55,7 @@
           "name": "Men's washroom",
           "roomNumber": "28E",
           "description": "MC GF Men's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 609,
@@ -63,7 +63,7 @@
           "name": "Women's washroom",
           "roomNumber": "4B",
           "description": "MC GF Women's washroom",
-          "type": "WashRoom"
+          "type": "Washroom"
         },
         {
           "x": 576.33,
