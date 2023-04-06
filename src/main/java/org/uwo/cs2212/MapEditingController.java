@@ -526,6 +526,43 @@ public class MapEditingController {
 
         fileWriter.close();
 
+        PointOfInterest pointOfInterest = new PointOfInterest();
+        pointOfInterest.setX(coordinateX);
+        pointOfInterest.setY(coordinateY);
+        pointOfInterest.setName(poiName.getText());
+        pointOfInterest.setRoomNumber(roomNumber.getText());
+        pointOfInterest.setDescription(Description.getText());
+        pointOfInterest.setType(roomSelector.getValue());
+
+        for (Layer layer : currentFloorMap.getLayers()){
+            for(PointOfInterest point : layer.getPoints()){
+                if (point.getType().equals(pointOfInterest.getType())){
+                    layer.getPoints().add(pointOfInterest);
+                    showMap();
+                    return;
+                }
+            }
+        }
+
+        Layer layer = new Layer();
+        layer.setName(roomSelector.getValue() + " layer");
+        layer.setColor("BLUE");
+        if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")){
+            layer.setLayerType("base");
+        }
+        else{
+            layer.setLayerType("internal");
+        }
+
+
+        layer.setFont("Arial");
+        layer.setSize(16);
+        List<PointOfInterest> pointOfInterestList = new ArrayList<>();
+        pointOfInterestList.add(pointOfInterest);
+        layer.setPoints(pointOfInterestList);
+        currentFloorMap.getLayers().add(layer);
+        showMap();
+
     }
     private ImageLayer imageLayer;
     private double currentZoom;
@@ -602,13 +639,13 @@ public class MapEditingController {
                                 .getJSONObject(i)
                                 .getJSONArray("points")
                                 .remove(j);
+                        if (jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length() == 0){
+                            jsonObject.getJSONArray("layers").remove(i);
+                        }
                         break outerloop;
                     }
                 }
             }
-            roomName = "";
-            roomType = "";
-            poiRoomNumber = "";
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
@@ -632,6 +669,26 @@ public class MapEditingController {
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
+
+        outerloop:
+        for (Layer layer : currentFloorMap.getLayers()){
+            for(PointOfInterest point : layer.getPoints()){
+                if (point.getName().equalsIgnoreCase(roomName)
+                        && point.getRoomNumber().equalsIgnoreCase(poiRoomNumber)
+                        && point.getType().equalsIgnoreCase(roomType)){
+                    layer.getPoints().remove(point);
+                    if (layer.getPoints().isEmpty()){
+                        currentFloorMap.getLayers().remove(layer);
+                    }
+                    showMap();
+                    break outerloop;
+                }
+            }
+        }
+
+        roomName = "";
+        roomType = "";
+        poiRoomNumber = "";
 
     }
 
@@ -722,6 +779,21 @@ public class MapEditingController {
         fileWriter.write(jsonObject.toString());
 
         fileWriter.close();
+
+        for (Layer layer : currentFloorMap.getLayers()){
+            for(PointOfInterest point : layer.getPoints()){
+                if (point.getName().equalsIgnoreCase(roomName)
+                        && point.getRoomNumber().equalsIgnoreCase(poiRoomNumber)
+                        && point.getType().equalsIgnoreCase(roomType)){
+                    point.setName(poiName.getText());
+                    point.setRoomNumber(roomNumber.getText());
+                    point.setDescription(Description.getText());
+                    point.setType(roomSelector.getValue());
+                    showMap();
+                    return;
+                }
+            }
+        }
 
     }
 }
