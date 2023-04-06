@@ -622,8 +622,8 @@ public class CampusMapController implements Initializable {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setX(200);
-        stage.setY(70);
+//        stage.setX(200);
+//        stage.setY(70);
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
         stage.getIcons().add(icon);
         stage.show();

@@ -347,8 +347,8 @@ public class MapEditingController {
         stage.setResizable(false);
 
         // Set the X and Y position of the new window
-        stage.setX(200);
-        stage.setY(70);
+//        stage.setX(200);
+//        stage.setY(70);
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
         stage.getIcons().add(icon);
         // Display the new window

@@ -98,8 +98,9 @@ public class LoginViewController {
             stage.setResizable(true);
             stage.setMinHeight(830);
             stage.setMinWidth(1080);
-            stage.setX(200);
-            stage.setY(70);
+            stage.centerOnScreen();
+//            stage.setX(200);
+//            stage.setY(70);
 
             stage.show();
         }
