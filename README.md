@@ -1,6 +1,6 @@
 # Western Campus Map Application
 ## About The Project
-The Campus Map Application is a JavaFX-based software that is a user-friendly desktop software designed to help students, staff, faculty, and visitors navigate the Western University campus. The application provides an interactive map with various Points of Interest (POIs) such as buildings, classrooms, computer labs, washroom, collaboration room, restaurant. Users can log in, search for POIs, and save their favorite locations. The application also provides weather information and accessibility information for different locations on campus. 
+The Campus Map Application is a JavaFX-based desktop software designed to help students, staff, faculty, and visitors navigate the Western University campus. The application provides an interactive map with various Points of Interest (POIs) such as buildings, classrooms, computer labs, washrooms, collaboration rooms, restaurants, etc. Users can log in, search for POIs, and save their favorite locations. The application also provides weather information and accessibility information for different locations on campus.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -18,10 +18,17 @@ The Campus Map Application is a JavaFX-based software that is a user-friendly de
 
 ### Required Libraries and Third-Party Tools
 - Java Development Kit (JDK) 19.0.2 or higher
-- JavaFX 19.0.2.1 or higher
-- Jackson 2.14.2 or higher
-- org.json 20160810 or higher
-- Junit-jupiter 5.9.2 or higher
+- Maven 3.6.0 or later 
+- Jackson Databind 2.14.2 
+- Jackson Annotations 2.14.2 
+- Jackson Core 2.14.2 
+- JavaFX Controls 19.0.2.1 
+- JavaFX FXML 19.0.2.1 
+- FormsFX Core 11.3.2 
+- JSON 20160810 
+- JUnit Jupiter API 5.9.2 (for testing)
+- JUnit Jupiter 5.9.2 (for testing)
+- JetBrains Annotations (for testing)
 
 ### Building from Source Code
 1.  Install the Java Development Kit (JDK) from the official Oracle website. Follow the instructions for your operating system.
@@ -34,15 +41,15 @@ The Campus Map Application is a JavaFX-based software that is a user-friendly de
 5. Download the JUnit Jupiter JAR files from the official JUnit website. Add the following JAR files to your IDE's build path:
    - junit-jupiter-api-5.9.2.jar
 6. Clone the repository using the following command:
-   git clone https://repo.csd.uwo.ca/scm/compsci2212_w2023/group17.git
+   `git clone https://repo.csd.uwo.ca/scm/compsci2212_w2023/group17.git`
 7. Open the project in your IDE and build the project.
 8. The CampusMapApplication class is the main class for the application. You can run the application from this class.
 
 ## Running the Application
 1. Open the project in your IDE and run the CampusMapApplication class.
-2. The application will open in a new window. You can log in using the following credentials provided in the Account Information section.
+2. The application will open in a new window. You can log in using the following credentials provided in the [Account Information](#account-information) section.
 3. The current weather information will be displayed bottom of the application.
-4. The application will display the main view. You can use the application as described in the Main View and Editing Mode sections.
+4. The application will display the main view. Utilize the application as described in the [Main View](#main-view) and [Editor Mode](#editor-mode) sections.
 
 ### Main View
 1. Use the search bar to search for points of interest(POIs) by room name or room number in a single building.
@@ -77,7 +84,12 @@ The Campus Map Application is a JavaFX-based software that is a user-friendly de
 ### Account Information
 The following accounts are available for testing:
 - Username: `admin`, Password: `123`
+- Username: `admin2`, Password: `1234`
 - Username: `user`, Password: `123`
+- Username: `user2`, Password: `1234`
+- Username: `user3`, Password: `12345`
+- Username: `user4`, Password: `123456`
+- Username: `user5`, Password: `1234567`
 
 ## Running the Tests
 1. Open the project in your IDE and run each test class under test folder as needed.
