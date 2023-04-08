@@ -7,6 +7,7 @@ import org.uwo.cs2212.CurrentUser;
  * with the POI name.
  *
  * @author Yaopeng Xie
+ * @author Jarrett Boersen
  */
 public class FavoritePoi {
     private String baseMapName;

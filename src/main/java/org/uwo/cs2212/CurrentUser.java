@@ -92,12 +92,16 @@ public class CurrentUser {
      * @param poi the poi will be added into the user layer
      */
     public static void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi){
+        // Initialize userData if it doesn't exist
         if (userData == null){
             userData = new UserData();
         }
+
+        // Check for null values
         if (baseMap == null || floorMap == null || poi == null){
             return;
         }
+
         userData.addPoi(baseMap, floorMap, poi);
     }
 
@@ -109,6 +113,7 @@ public class CurrentUser {
         FloorMap floorMap = CurrentUser.getCurrentFloorMap();
         PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
 
+        // Check for null values
         if (baseMap == null || floorMap == null || poi == null){
             return;
         }
@@ -127,6 +132,7 @@ public class CurrentUser {
         FloorMap floorMap = CurrentUser.getCurrentFloorMap();
         PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
 
+        // Check for null values
         if (baseMap == null || floorMap == null || poi == null){
             return;
         }

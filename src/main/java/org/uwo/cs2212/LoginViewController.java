@@ -8,8 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.UserConfig;
-import org.uwo.cs2212.model.UserData;
-import org.uwo.cs2212.model.UserLayer;
 import org.uwo.cs2212.model.UserList;
 
 import java.io.IOException;

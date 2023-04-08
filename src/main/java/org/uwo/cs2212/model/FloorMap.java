@@ -74,4 +74,15 @@ public class FloorMap {
     public void setUserLayer(UserLayer userLayer) {
         this.userLayer = userLayer;
     }
+
+    /**
+     * Check if the 2 FloorMap are equal to each other
+     *
+     * @param other The other FloorMap to compare to
+     * @return Returns true if they match, otherwise, it returns false
+     */
+    public boolean equals(FloorMap other) {
+        return this.getName().equals(other.getName()) && this.getConfigFileName().equals(other.getConfigFileName())
+                && this.getMapFileName().equals(other.getMapFileName());
+    }
 }

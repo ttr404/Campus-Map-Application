@@ -235,8 +235,6 @@ public class CampusMapController implements Initializable {
             }
         }
 
-        UserData userData = CurrentUser.getUserData();
-
         showMap();
     }
 
@@ -363,13 +361,6 @@ public class CampusMapController implements Initializable {
             root.getChildren().add(imageView);
             Image coordinate = new Image(getClass().getResourceAsStream("map-marker.png"));
             ImageView coordinateView = new ImageView(coordinate);
-
-            // Update the floor map (this syncs the user data to the floor map)
-//            UserLayer userLayer = UserData.findUserLayer(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), CurrentUser.getUserData());
-//            if (userLayer != null) {
-//                CurrentUser.getCurrentFloorMap().setUserLayer(userLayer);
-//            }
-            // TODO: Remove?
 
             // Show the POIs points on the map
             for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
@@ -937,13 +928,6 @@ public class CampusMapController implements Initializable {
                 CurrentUser.getCurrentSelectedPoi().setSelected(true);
             }
 
-            // Update the floor map as well (this syncs the user data to the floor map)
-//            UserLayer userLayer = UserData.findUserLayer(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), CurrentUser.getUserData());
-//            if (userLayer != null) {
-//                CurrentUser.getCurrentFloorMap().setUserLayer(userLayer);
-//            }
-            // TODO: Remove?
-
             // Only centralize the selected POI and update the map if a POI has actually been selected
             if (CurrentUser.getCurrentSelectedPoi() != null) {
                 centralizeSelectedPoi();
@@ -1044,6 +1028,7 @@ public class CampusMapController implements Initializable {
 
         selectAllLayers();
         checkBoxSelected();
+
         String text = searchText.getText().toLowerCase().trim();
         if (!text.equals("")) {
             informationList.getItems().clear();
@@ -1136,7 +1121,7 @@ public class CampusMapController implements Initializable {
     }
 
     /**
-     * Clears the current selection by deselecting all layers, unchecking all checkboxes, clearing the search text, and clearing the information list.
+     * Clears the current selection by deselecting all layers, unchecking all checkboxes and clearing the search text.
      *
      * @param actionEvent the event that triggered the button click
      */
@@ -1144,7 +1129,6 @@ public class CampusMapController implements Initializable {
         deselectAllLayers();
         checkBoxSelected();
         searchText.setText("");
-        informationList.getItems().clear(); // TODO: Remove as it is likely unnecessary
     }
 
     /**
@@ -1234,8 +1218,8 @@ public class CampusMapController implements Initializable {
                     CurrentUser.getCurrentSelectedPoi().getY() >= windowTopLeft.getY()) {
                 return;
             }
-            double scrollX = 0;
-            double scrollY = 0;
+            double scrollX;
+            double scrollY;
             if (CurrentUser.getCurrentSelectedPoi().getX() < (windowBottomRight.getX() - windowTopLeft.getX()) / 2) {
                 scrollX = 0;
             } else if (CurrentUser.getCurrentSelectedPoi().getX() > imageWidth -
@@ -1437,9 +1421,24 @@ public class CampusMapController implements Initializable {
     /**
      * This method is used to refresh the (user created) POIs on the map after modifying them
      */
-    public void refreshPOIs() {
+    private void refreshPOIs() {
         CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
-        initializeMapSelector(); // TODO: Optimize the function being called
+
+        // Find the matching current BaseMap in the MapConfig
+        for (BaseMap desiredBaseMap : CurrentUser.getMapConfig().getBaseMaps()) {
+            if (desiredBaseMap.equals(CurrentUser.getCurrentBaseMap())) {
+                CurrentUser.setCurrentBaseMap(desiredBaseMap);
+                break; // Leave the loop early
+            }
+        }
+
+        // Find the matching current FloorMap in the MapConfig
+        for (FloorMap desiredFloorMap : CurrentUser.getCurrentBaseMap().getFloorMaps()) {
+            if (desiredFloorMap.equals(CurrentUser.getCurrentFloorMap())) {
+                CurrentUser.setCurrentFloorMap(desiredFloorMap);
+                break; // Leave the loop early
+            }
+        }
 
         showMap();
     }

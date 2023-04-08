@@ -40,4 +40,14 @@ public class BaseMap {
     public void setFloorMaps(List<FloorMap> floorMaps) {
         this.floorMaps = floorMaps;
     }
+
+    /**
+     * Check if the 2 BaseMap are equal to each other
+     *
+     * @param other The other BaseMap to compare to
+     * @return Returns true if they match, otherwise, it returns false
+     */
+    public boolean equals(BaseMap other) {
+        return this.getName().equals(other.getName());
+    }
 }

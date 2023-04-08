@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 // TODO:    * Check for existing POI and prevent the same name (and room number?)
-//          * Fix user POIs not being shown for the checkbox
 //          * Fix mapSelector not showing the correct name
 //          * Finish the tests/fix them
 //          * Try to make the jar

@@ -45,10 +45,6 @@ public class ImageLayer extends Canvas {
         boolean isBaseLayer = ImageLayer.isBaseLayer(layer);
         boolean isHiddenLayer = layer.isHideLayer();
 
-        //if(isHiddenLayer){
-        //layer.getPoints().get(0).setSelected(true);
-        //}
-
         for (PointOfInterest poi : layer.getPoints()) {
             if (isBaseLayer || !isHiddenLayer || poi.isSelected()) {
                 if (poi.isSelected()) {
