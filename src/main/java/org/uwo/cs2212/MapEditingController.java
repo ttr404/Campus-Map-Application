@@ -346,7 +346,7 @@ public class MapEditingController {
         Stage stage = new Stage();
 
         // Create an FXMLLoader object and set the FXML file for the target view
-        FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource(file));
+        FXMLLoader fxmlLoader = new FXMLLoader(ConfigUtil.getPath(file).toUri().toURL());
 
         // Load the FXML file and create a Scene object with the specified window size
         Scene scene = new Scene(fxmlLoader.load(), v, v1);

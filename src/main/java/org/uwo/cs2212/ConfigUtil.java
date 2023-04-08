@@ -301,7 +301,7 @@ public class ConfigUtil {
 
     public static Path getPath(String fileName) throws IOException {
         final String path = "org/uwo/cs2212";
-        final File jarFile = new File(myClass.getProtectionDomain().getCodeSource().getLocation().getPath());
+        final File jarFile = new File(myClass.getProtectionDomain().getCodeSource().getLocation().getPath().replace("%20", " "));
 
         Path filePath = null;
 
@@ -313,7 +313,15 @@ public class ConfigUtil {
                 if (name.startsWith(path + "/")) { //filter according to the path
                     System.out.println(name);
 
-                    filePath = new File(name).toPath();
+                    final File apps = new File(name);
+                    System.out.println(apps.toPath());
+                    for (File app : apps.listFiles()) {
+                        if (app.getName().equals(fileName)) {
+                            System.out.println(app);
+                            System.out.println(app.getName());
+                            filePath = app.toPath();
+                        }
+                    }
                 }
             }
             jar.close();

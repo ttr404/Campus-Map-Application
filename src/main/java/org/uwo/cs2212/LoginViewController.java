@@ -78,15 +78,13 @@ public class LoginViewController {
      */
     public void logIn() throws IOException {
         if (checkAccount()) {
-            CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
-            URL currentUserUrl = CurrentUser.getCurrentUserLayerName();
+            CurrentUser.setMapConfig(ConfigUtil.loadMapConfig("map-config.json"));
+            String currentUserFileName = CurrentUser.getCurrentUserLayerName();
 
             // Reset the user's session data to prevent other user's data being shown for other users
             CurrentUser.resetSessionData();
 
-            if(currentUserUrl != null){
-                CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerName()));
-            }
+            CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerName()));
 
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 830);
@@ -116,7 +114,7 @@ public class LoginViewController {
      * @return a boolean value representing whether the user entered the correct credentials
      */
     public boolean checkAccount() {
-        UserList userlist = ConfigUtil.loadUserList(CampusMapApplication.class.getResource("user-account.json"));
+        UserList userlist = ConfigUtil.loadUserList("user-account.json");
         String encodePassword = toHexString(getSHA(password.getText()));
 
         // Check if the entered credentials match an account in the user list

@@ -25,7 +25,7 @@ class CurrentUserTest {
         poi = new PointOfInterest();
         poi.setName("Test POI");
         CurrentUser.setUsername("testUser");
-        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
+        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig("map-config.json"));
     }
 
     @Test
