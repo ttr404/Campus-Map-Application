@@ -1,1 +1,206 @@
-{"mapFileName":"main-map.png","name":"Main campus","showLegend":true,"layers":[{"layerType":"base","color":"blue","size":16,"name":"Main Map","font":"Arial","points":[{"roomNumber":"MSBa01","x":66,"name":"MSBa01","y":217,"description":"","type":"Accessibility"},{"roomNumber":"MSBa02","x":200,"name":"MSBa02","y":291,"description":"","type":"Accessibility"},{"roomNumber":"CSa01","x":123,"name":"CSa01","y":337,"description":"","type":"Accessibility"},{"roomNumber":"SSCa01","x":109,"name":"SSCa01","y":514,"description":"","type":"Accessibility"},{"roomNumber":"LHa01","x":211,"name":"LHa01","y":796.5,"description":"","type":"Accessibility"},{"roomNumber":"LHa02","x":267,"name":"LHa02","y":781.5,"description":"","type":"Accessibility"},{"roomNumber":"SHa01","x":283,"name":"SHa01","y":659.5,"description":"","type":"Accessibility"},{"roomNumber":"SHa02","x":302,"name":"SHa02","y":604.5,"description":"","type":"Accessibility"},{"roomNumber":"UCa01","x":414,"name":"UCa01","y":643.5,"description":"","type":"Accessibility"},{"roomNumber":"PABa01","x":447.0000001043081,"name":"PABa01","y":377.0000000298023,"description":"","type":"Accessibility"},{"roomNumber":"PABa02","x":505.0000001043081,"name":"PABa02","y":324.0000000298023,"description":"","type":"Accessibility"},{"roomNumber":"NSa01","x":392.0000001043081,"name":"NSa01","y":249.00000002980232,"description":"","type":"Accessibility"},{"roomNumber":"NSa02","x":461.0000001043081,"name":"NSa02","y":241.00000002980232,"description":"","type":"Accessibility"},{"roomNumber":"WSCa01","x":670.0000008493661,"name":"WSCa01","y":343.00000008940697,"description":"","type":"Accessibility"},{"roomNumber":"WSCa02","x":773.0000008493661,"name":"WSCa02","y":373.00000008940697,"description":"","type":"Accessibility"},{"roomNumber":"WSCa03","x":732.0000008493661,"name":"WSCa03","y":286.00000008940697,"description":"","type":"Accessibility"},{"roomNumber":"MCa01","x":985.0000018179414,"name":"MCa01","y":441.00000064074993,"description":"","type":"Accessibility"},{"roomNumber":"MCa02","x":975.0000018179414,"name":"MCa02","y":576.0000006407499,"description":"","type":"Accessibility"},{"roomNumber":"VACa01","x":976.4999996572733,"name":"VACa01","y":179,"description":"","type":"Accessibility"},{"roomNumber":"NCBa01","x":1054.4999996572733,"name":"NCBa01","y":269,"description":"","type":"Accessibility"},{"roomNumber":"DHa01","x":1184.49999935925,"name":"DHa01","y":678.4999999850988,"description":"","type":"Accessibility"},{"roomNumber":"DSCa01","x":157,"name":"DSCa01","y":59,"description":"","type":"Accessibility"},{"roomNumber":"DSCa02","x":204,"name":"DSCa02","y":49,"description":"","type":"Accessibility"}]}],"legendPosition":[0,0,1,1]}
+{
+  "mapFileName": "main-map.png",
+  "name": "Main campus",
+  "showLegend": true,
+  "layers": [
+    {
+      "layerType": "base",
+      "color": "blue",
+      "size": 16,
+      "name": "Main Map",
+      "font": "Arial",
+      "points": [
+        {
+          "roomNumber": "MSBa01",
+          "x": 66,
+          "name": "MSBa01",
+          "y": 217,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "MSBa02",
+          "x": 200,
+          "name": "MSBa02",
+          "y": 291,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "CSa01",
+          "x": 123,
+          "name": "CSa01",
+          "y": 337,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "SSCa01",
+          "x": 109,
+          "name": "SSCa01",
+          "y": 514,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "LHa01",
+          "x": 211,
+          "name": "LHa01",
+          "y": 796.5,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "LHa02",
+          "x": 267,
+          "name": "LHa02",
+          "y": 781.5,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "SHa01",
+          "x": 283,
+          "name": "SHa01",
+          "y": 659.5,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "SHa02",
+          "x": 302,
+          "name": "SHa02",
+          "y": 604.5,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "UCa01",
+          "x": 414,
+          "name": "UCa01",
+          "y": 643.5,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "PABa01",
+          "x": 447.0000001043081,
+          "name": "PABa01",
+          "y": 377.0000000298023,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "PABa02",
+          "x": 505.0000001043081,
+          "name": "PABa02",
+          "y": 324.0000000298023,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "NSa01",
+          "x": 392.0000001043081,
+          "name": "NSa01",
+          "y": 249.00000002980232,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "NSa02",
+          "x": 461.0000001043081,
+          "name": "NSa02",
+          "y": 241.00000002980232,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "WSCa01",
+          "x": 670.0000008493661,
+          "name": "WSCa01",
+          "y": 343.00000008940697,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "WSCa02",
+          "x": 773.0000008493661,
+          "name": "WSCa02",
+          "y": 373.00000008940697,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "WSCa03",
+          "x": 732.0000008493661,
+          "name": "WSCa03",
+          "y": 286.00000008940697,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "MCa01",
+          "x": 985.0000018179414,
+          "name": "MCa01",
+          "y": 441.00000064074993,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "MCa02",
+          "x": 975.0000018179414,
+          "name": "MCa02",
+          "y": 576.0000006407499,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "VACa01",
+          "x": 976.4999996572733,
+          "name": "VACa01",
+          "y": 179,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "NCBa01",
+          "x": 1054.4999996572733,
+          "name": "NCBa01",
+          "y": 269,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "DHa01",
+          "x": 1184.49999935925,
+          "name": "DHa01",
+          "y": 678.4999999850988,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "DSCa01",
+          "x": 157,
+          "name": "DSCa01",
+          "y": 59,
+          "description": "",
+          "type": "Accessibility"
+        },
+        {
+          "roomNumber": "DSCa02",
+          "x": 204,
+          "name": "DSCa02",
+          "y": 49,
+          "description": "",
+          "type": "Accessibility"
+        }
+      ]
+    }
+  ],
+  "legendPosition": [
+    0,
+    0,
+    1,
+    1
+  ]
+}

@@ -3,8 +3,6 @@ package org.uwo.cs2212.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.uwo.cs2212.CurrentUser;
 
-import java.util.Map;
-
 /**
  * This class is used to store data on the Point of Interest. This includes, the coordinates, name, room number,
  * description, type, if it is selected or a favourite

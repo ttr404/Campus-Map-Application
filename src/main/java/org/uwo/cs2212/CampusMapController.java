@@ -284,11 +284,9 @@ public class CampusMapController implements Initializable {
      */
     private void setShowAllPOI() {
         selectAllLayers();
-//        informationList.getItems().clear();
         checkBoxSelected();
-//        informationList.getItems().clear();
         for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
-            if (layer.getLayerType().equalsIgnoreCase("internal")) {
+            if (layer.getLayerType().equalsIgnoreCase("base")) {
                 for (PointOfInterest poi : layer.getPoints()) {
                     informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                 }
@@ -1158,6 +1156,10 @@ public class CampusMapController implements Initializable {
      * @param actionEvent the event object representing the button click
      */
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
+        // Show all the layers show the user can see them
+        selectAllLayers();
+        checkBoxSelected();
+
         // Clear the current content of the informationList
         informationList.getItems().clear();
 
