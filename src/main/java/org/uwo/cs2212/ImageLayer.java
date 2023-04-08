@@ -25,11 +25,13 @@ public class ImageLayer extends Canvas {
 
     /**
      * Initializes a new ImageLayer object with the given width, height, zoom level, and layer of points of interest.
+     * This method is used to signify if a POI is selected by increasing the point size and making the POI's text bold
+     * on the map
      *
-     * @param width the width of the canvas
+     * @param width  the width of the canvas
      * @param height the height of the canvas
-     * @param zoom the zoom level of the canvas
-     * @param layer the layer of points of interest to draw on the canvas
+     * @param zoom   the zoom level of the canvas
+     * @param layer  the layer of points of interest to draw on the canvas
      */
     public ImageLayer(double width, double height, double zoom, Layer layer) {
         super(width * zoom, height * zoom);
@@ -38,38 +40,37 @@ public class ImageLayer extends Canvas {
         graphic.setStroke(color);
         graphic.setFill(color);
         Font normalFont = Font.font(layer.getFont(), FontWeight.NORMAL, layer.getSize());
-        Font boldFont = Font.font(layer.getFont(), FontWeight.BOLD, layer.getSize()*1.5);
+        Font boldFont = Font.font(layer.getFont(), FontWeight.BOLD, layer.getSize() * 1.5);
 
         boolean isBaseLayer = ImageLayer.isBaseLayer(layer);
-        boolean isHideLayer = layer.isHideLayer();
+        boolean isHiddenLayer = layer.isHideLayer();
 
-        //if(isHideLayer){
-            //layer.getPoints().get(0).setSelected(true);
+        //if(isHiddenLayer){
+        //layer.getPoints().get(0).setSelected(true);
         //}
 
-        for(PointOfInterest poi: layer.getPoints()){
-            if(isBaseLayer || !isHideLayer || poi.isSelected()){
-                if(poi.isSelected()){
+        for (PointOfInterest poi : layer.getPoints()) {
+            if (isBaseLayer || !isHiddenLayer || poi.isSelected()) {
+                if (poi.isSelected()) {
                     graphic.setFont(boldFont);
-                    graphic.fillOval(poi.getX()*zoom - 8, poi.getY()*zoom - 8, 16, 16);
-                    graphic.fillText(poi.getName(), poi.getX()*zoom - 16, poi.getY()*zoom - 16);
-                }
-                else{
+                    graphic.fillOval(poi.getX() * zoom - 8, poi.getY() * zoom - 8, 16, 16);
+                    graphic.fillText(poi.getName(), poi.getX() * zoom - 16, poi.getY() * zoom - 16);
+                } else {
                     graphic.setFont(normalFont);
-                    graphic.fillOval(poi.getX()*zoom - 6, poi.getY()*zoom - 6, 12, 12);
-                    graphic.fillText(poi.getName(), poi.getX()*zoom - 10, poi.getY()*zoom - 10);
+                    graphic.fillOval(poi.getX() * zoom - 6, poi.getY() * zoom - 6, 12, 12);
+                    graphic.fillText(poi.getName(), poi.getX() * zoom - 10, poi.getY() * zoom - 10);
                 }
             }
         }
     }
-    
+
     /**
      * Checks if the given layer is a base layer or not. A base layer is a layer that contains the base map image and is always shown.
      *
      * @param layer the layer to check
      * @return true if the layer is a base layer, false otherwise
      */
-        private static boolean isBaseLayer(Layer layer){
-            return layer != null && layer.getLayerType() != null && "base".equalsIgnoreCase(layer.getLayerType().trim());
-        }
+    private static boolean isBaseLayer(Layer layer) {
+        return layer != null && layer.getLayerType() != null && "base".equalsIgnoreCase(layer.getLayerType().trim());
+    }
 }

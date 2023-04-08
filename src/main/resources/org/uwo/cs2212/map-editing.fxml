@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="511.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditingController">
+<BorderPane prefHeight="679.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditingController">
      <top>
         <ToolBar prefHeight="37.0" BorderPane.alignment="CENTER">
           <items>
@@ -78,7 +78,7 @@
                         </Text>
                        </children>
                     </VBox>
-                    <TextArea fx:id="Description" minHeight="100.0" wrapText="true" VBox.vgrow="ALWAYS" />
+                    <TextArea fx:id="Description" maxHeight="250.0" minHeight="100.0" wrapText="true" VBox.vgrow="ALWAYS" />
                </children>
                <HBox.margin>
                   <Insets left="8.0" right="8.0" top="8.0" />

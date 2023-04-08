@@ -1,45 +1,58 @@
 {
-  "userLayers": [
-    {
-      "floorName": "Ground Floor",
-      "baseName": "Middlesex College Building",
-      "name": "User layer",
-      "color": "RED",
-      "layerType": "user_POI",
-      "font": "Arial",
-      "size": 16,
-      "points": [
-        {
-          "x": 500,
-          "y": 500,
-          "name": "userPOI1",
-          "roomNumber": "17",
-          "description": "MC GF Classroom 17",
-          "type": "Classroom"
-        },
-        {
-          "x": 600,
-          "y": 420,
-          "name": "userPOI2",
-          "roomNumber": "6",
-          "description": "MC GF Classroom 6",
-          "type": "Classroom"
-        }
-      ]
-    }
-  ],
-  "favoritePois": [
-    {
-      "baseMapName": "Middlesex College Building",
-      "floorMapName": "Ground Floor",
-      "layerName": "Classroom layer",
-      "poiName": "MC17"
-    },
-    {
-      "baseMapName": "Middlesex College Building",
-      "floorMapName": "Ground Floor",
-      "layerName": "User layer",
-      "poiName": "userPOI1"
-    }
-  ]
+  "userLayers" : [ {
+    "name" : "User layer",
+    "layerType" : "user_POI",
+    "color" : "BLACK",
+    "font" : "Arial",
+    "size" : 16.0,
+    "hideLayer" : false,
+    "points" : [ {
+      "x" : 349.0,
+      "y" : 441.0,
+      "name" : "Test",
+      "roomNumber" : "21345",
+      "description" : "",
+      "type" : "User POI"
+    } ],
+    "floorName" : "Ground Floor",
+    "baseName" : "Middlesex College Building"
+  }, {
+    "name" : "User layer",
+    "layerType" : "User layer",
+    "color" : "BLACK",
+    "font" : "Arial",
+    "size" : 16.0,
+    "hideLayer" : false,
+    "points" : [ {
+      "x" : 320.0,
+      "y" : 167.0,
+      "name" : "Yooooo",
+      "roomNumber" : "2345",
+      "description" : "",
+      "type" : "User POI"
+    } ],
+    "floorName" : "Main campus",
+    "baseName" : "Western Main Campus"
+  } ],
+  "favoritePois" : [ {
+    "baseMapName" : "Middlesex College Building",
+    "floorMapName" : "Ground Floor",
+    "layerName" : "Classroom layer",
+    "poiName" : "MC17"
+  }, {
+    "baseMapName" : "Western Main Campus",
+    "floorMapName" : "Main campus",
+    "layerName" : "Main Map",
+    "poiName" : "NSa01"
+  }, {
+    "baseMapName" : "Middlesex College Building",
+    "floorMapName" : "Ground Floor",
+    "layerName" : "User layer",
+    "poiName" : "Test"
+  }, {
+    "baseMapName" : "Middlesex College Building",
+    "floorMapName" : "Main campus",
+    "layerName" : "User layer",
+    "poiName" : "Yooooo"
+  } ]
 }

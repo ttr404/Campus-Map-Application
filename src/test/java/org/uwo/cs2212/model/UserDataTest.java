@@ -121,7 +121,7 @@ class UserDataTest {
         FavoritePoi favoritepoi = new FavoritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
         userData.getFavoritePois().add(favoritepoi);
         // Remove the favorite POI
-        userData.removeFavourite(poi, poi.getName(), baseMap.getName(), floorMap.getName());
+        userData.removeFavourite(poi, baseMap, floorMap);
 
         // Check if the favorite POI was removed
         assertFalse(userData.getFavoritePois().contains(favoritepoi));
@@ -172,7 +172,7 @@ class UserDataTest {
     @Test
     void testRemoveNonExistingFavourite() {
         // Attempt to remove a non-existing favorite POI
-        userData.removeFavourite(poi, poi.getName(), baseMap.getName(), floorMap.getName());
+        userData.removeFavourite(poi, baseMap, floorMap);
         assertTrue(userData.getFavoritePois().isEmpty());
     }
 
@@ -204,7 +204,7 @@ class UserDataTest {
 
 
         // Attempt to remove the favorite POI with incorrect base and floor map names
-        userData.removeFavourite(poi, poi.getName(), "IncorrectBaseMap", "IncorrectFloorMap");
+        userData.removeFavourite(poi, "IncorrectBaseMap", "IncorrectFloorMap");
 
         // Check if the favorite POI still exists
         assertTrue(userData.getFavoritePois().get(0).getPoiName().equals("TestFavoritePoi"));

@@ -149,8 +149,10 @@ public class MapEditingController {
 
             scrollPane.setContent(root);
         }
-        catch(Exception ex)
-        {}
+        catch(Exception ex) {
+            // Handle the exception
+            ex.printStackTrace();
+        }
     }
 
     /**

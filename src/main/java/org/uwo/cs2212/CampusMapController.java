@@ -188,7 +188,9 @@ public class CampusMapController implements Initializable {
      */
     private void checkBoxSelected() {
         informationList.getItems().clear();
-        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) { // TODO: Add a loop to check user created POIs here and for the search
+
+        // Show all POIs in the information list
+        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
             for (PointOfInterest poi : layer.getPoints()) {
                 if ((classrooms.isSelected() && poi.getType().equalsIgnoreCase("classroom"))
                         || (stairwells.isSelected() && poi.getType().equalsIgnoreCase("stairwell"))
@@ -198,7 +200,6 @@ public class CampusMapController implements Initializable {
                         || (restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
                         || (cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
                         || (collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
-                        || (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user poi"))
                 ) {
                     layer.setHideLayer(false);
                     informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
@@ -212,12 +213,30 @@ public class CampusMapController implements Initializable {
                         || (!restaurants.isSelected() && poi.getType().equalsIgnoreCase("restaurant"))
                         || (!cs_Labs.isSelected() && poi.getType().equalsIgnoreCase("cs_labs"))
                         || (!collaborative.isSelected() && poi.getType().equalsIgnoreCase("collaborative"))
-                        || (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user poi"))
                 ) {
                     layer.setHideLayer(true);
                 }
             }
         }
+
+        // Get the user layer from the floor map
+        UserLayer userLayer = CurrentUser.getCurrentFloorMap().getUserLayer();
+        // Show the user POIs in the information list if there is data in the layer
+        if (userLayer != null) {
+            for (PointOfInterest poi : userLayer.getPoints()) {
+                if (user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user poi")) {
+                    userLayer.setHideLayer(false);
+                    informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
+
+                }
+                if (!user_POIs.isSelected() && poi.getType().equalsIgnoreCase("user poi")) {
+                    userLayer.setHideLayer(true);
+                }
+            }
+        }
+
+        UserData userData = CurrentUser.getUserData();
+
         showMap();
     }
 
@@ -265,11 +284,14 @@ public class CampusMapController implements Initializable {
      */
     private void setShowAllPOI() {
         selectAllLayers();
+//        informationList.getItems().clear();
         checkBoxSelected();
-        informationList.getItems().clear();
+//        informationList.getItems().clear();
         for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
-            for (PointOfInterest poi : layer.getPoints()) {
-                informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
+            if (layer.getLayerType().equalsIgnoreCase("internal")) {
+                for (PointOfInterest poi : layer.getPoints()) {
+                    informationList.getItems().add(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
+                }
             }
         }
     }
@@ -344,10 +366,34 @@ public class CampusMapController implements Initializable {
             Image coordinate = new Image(getClass().getResourceAsStream("map-marker.png"));
             ImageView coordinateView = new ImageView(coordinate);
 
+            // Update the floor map (this syncs the user data to the floor map)
+//            UserLayer userLayer = UserData.findUserLayer(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), CurrentUser.getUserData());
+//            if (userLayer != null) {
+//                CurrentUser.getCurrentFloorMap().setUserLayer(userLayer);
+//            }
+            // TODO: Remove?
+
+            // Show the POIs points on the map
             for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
                 for (PointOfInterest poi : layer.getPoints()) {
+                    if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
+                            && (int) Math.round(poi.getX()) <= (coordinateX + 7)
+                            && (int) Math.round(poi.getY()) >= (coordinateY - 7)
+                            && (int) Math.round(poi.getY()) <= (coordinateY + 7)) {
+                        coordinateView.setVisible(false);
+                    }
+                }
+            }
+
+            // Get the user layer from the floor map
+            UserLayer userLayer = CurrentUser.getCurrentFloorMap().getUserLayer();
+            // Show the user POIs if the checkbox is selected
+            if (user_POIs.isSelected() && userLayer != null) {
+                ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, userLayer);
+                root.getChildren().add(imageLayer);
+                for (PointOfInterest poi : userLayer.getPoints()) {
                     if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
                             && (int) Math.round(poi.getX()) <= (coordinateX + 7)
                             && (int) Math.round(poi.getY()) >= (coordinateY - 7)
@@ -367,13 +413,10 @@ public class CampusMapController implements Initializable {
             coordinateView.setPreserveRatio(true);
             root.getChildren().add(coordinateView);
 
-            if (user_POIs.isSelected() && CurrentUser.getCurrentFloorMap().getUserLayer() != null) {
-                ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, CurrentUser.getCurrentFloorMap().getUserLayer());
-                root.getChildren().add(imageLayer);
-            }
-
             mapPane.setContent(root);
         } catch (Exception ex) {
+            // Handle the exception
+            ex.printStackTrace();
         }
     }
 
@@ -896,6 +939,13 @@ public class CampusMapController implements Initializable {
                 CurrentUser.getCurrentSelectedPoi().setSelected(true);
             }
 
+            // Update the floor map as well (this syncs the user data to the floor map)
+//            UserLayer userLayer = UserData.findUserLayer(CurrentUser.getCurrentBaseMap(), CurrentUser.getCurrentFloorMap(), CurrentUser.getUserData());
+//            if (userLayer != null) {
+//                CurrentUser.getCurrentFloorMap().setUserLayer(userLayer);
+//            }
+            // TODO: Remove?
+
             // Only centralize the selected POI and update the map if a POI has actually been selected
             if (CurrentUser.getCurrentSelectedPoi() != null) {
                 centralizeSelectedPoi();
@@ -910,7 +960,7 @@ public class CampusMapController implements Initializable {
                 editPOI.setDisable(false);
                 deletePOI.setDisable(false);
                 // Otherwise, if the currently selected POI is not null, and it is not of type user POI then set the editor buttons to disabled
-            } else if (CurrentUser.getCurrentSelectedPoi() != null && !CurrentUser.getCurrentSelectedPoi().getType().equals("user poi")) {
+            } else if (CurrentUser.getCurrentSelectedPoi() != null && !CurrentUser.getCurrentSelectedPoi().getType().equalsIgnoreCase("user poi")) {
                 addPOI.setDisable(true);
                 editPOI.setDisable(true);
                 deletePOI.setDisable(true);
@@ -1079,12 +1129,10 @@ public class CampusMapController implements Initializable {
 
         if (currentPOI != null) {
             currentPOI.setFavorite(!currentPOI.isFavorite());
-            CurrentUser.saveUserData();
-            if (currentPOI.getType().toLowerCase().contains("user")) {
-                System.out.println("POI type: " + currentPOI.getType());
-                CurrentUser.getUserData().removeFavourite(currentPOI, currentPOI.getName(),
-                        CurrentUser.getCurrentBaseMap().getName(), CurrentUser.getCurrentFloorMap().getName());
-            }
+
+            // Set the POI as a favourite or not for the user
+            FavoritePoi.setUserFavourite(currentPOI);
+
             setFavouriteButtonState();
         }
     }
@@ -1098,7 +1146,7 @@ public class CampusMapController implements Initializable {
         deselectAllLayers();
         checkBoxSelected();
         searchText.setText("");
-        informationList.getItems().clear();
+        informationList.getItems().clear(); // TODO: Remove as it is likely unnecessary
     }
 
     /**
@@ -1306,7 +1354,7 @@ public class CampusMapController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete POI?");
         alert.setHeaderText("Warning you are about to delete the selected POI!");
-        alert.setContentText("This cannot be undone! If you are okay with this press ok. Otherwise, press cancel.");
+        alert.setContentText("This cannot be undone! If you are okay with this press Ok. Otherwise, press Cancel.");
         // Add an exclamation graphic
         ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("exclamation_icon.png")));
         imageView.setFitHeight(50);
@@ -1317,6 +1365,11 @@ public class CampusMapController implements Initializable {
         ButtonType button = result.orElse(ButtonType.CANCEL);
 
         if (button == ButtonType.OK) {
+            // Remove the POI from the favourites before deleting
+            PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
+            poi.setFavorite(false);
+            FavoritePoi.setUserFavourite(poi);
+
             // Remove the selected POI
             CurrentUser.removeSelectedPOI();
 
@@ -1363,7 +1416,7 @@ public class CampusMapController implements Initializable {
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("western-logo.png")));
         poiPopupStage.getIcons().add(icon);
 
-        // add a listener to the setOnHiding() method
+        // add a listener to the setOnHiding() method to remove the pin once the popup closes
         poiPopupStage.setOnHiding(event -> clearPinIcon());
 
         // Add the scene to the stage
@@ -1384,7 +1437,7 @@ public class CampusMapController implements Initializable {
      */
     public void refreshPOIs() {
         CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
-        initializeMapSelector();
+        initializeMapSelector(); // TODO: Optimize the function being called
 
         showMap();
     }

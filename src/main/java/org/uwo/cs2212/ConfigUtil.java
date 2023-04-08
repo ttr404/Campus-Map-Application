@@ -88,7 +88,6 @@ public class ConfigUtil {
                         floorMap.setUserLayer(userLayer);
                     }
 
-
                     if (CurrentUser.getUserData() != null && CurrentUser.getUserData().getFavoritePois() != null) {
                         updateFavorite(baseMap, floorMap);
                     }

@@ -1,6 +1,9 @@
 package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.uwo.cs2212.CurrentUser;
+
+import java.util.Map;
 
 /**
  * This class is used to store data on the Point of Interest. This includes, the coordinates, name, room number,
@@ -19,6 +22,7 @@ public class PointOfInterest {
     private String type;
     @JsonIgnore
     private boolean selected;
+    @JsonIgnore
     private boolean favorite;
 
     public double getX() {
@@ -102,5 +106,48 @@ public class PointOfInterest {
         }
 
         return type.equals(other.type) && name.equals(other.name) && roomNumber.equals(other.roomNumber) && description.equals(other.description);
+    }
+
+    /**
+     * This method is used to match a layer to a POI
+     *
+     * @param searchPoi The POI to match the layer with
+     * @param mapConfig The MapConfig that stores all the maps
+     * @return Returns the layer if it was found to match, otherwise, it returns null
+     */
+    public static Layer findPOILayer(PointOfInterest searchPoi, MapConfig mapConfig) {
+        for (BaseMap baseMap : mapConfig.getBaseMaps()) {
+            for (FloorMap floorMap : baseMap.getFloorMaps()) {
+                for (Layer layer : floorMap.getLayers()) {
+                    for (PointOfInterest poi : layer.getPoints()) {
+                        // If the POIs match return the layer
+                        if (poi.equals(searchPoi)) {
+                            return layer;
+                        }
+                    }
+                }
+            }
+        }
+
+        return null; // No matching layer found
+    }
+
+    /**
+     * This method is used to match a user layer to a POI
+     *
+     * @param searchPoi The POI to match the layer with
+     * @return Returns the layer if it was found to match, otherwise, it returns null
+     */
+    public static Layer findUserPOILayer(PointOfInterest searchPoi) {
+        for (Layer layer : CurrentUser.getUserData().getUserLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
+                // If the POIs match return the layer
+                if (poi.equals(searchPoi)) {
+                    return layer;
+                }
+            }
+        }
+
+        return null; // No matching layer found
     }
 }

@@ -165,20 +165,7 @@ public class CurrentUser {
                 e.printStackTrace();
             }
         }
-        List<FavoritePoi> favoritePois = new ArrayList<>();
-        for (BaseMap baseMap : mapConfig.getBaseMaps()) {
-            for (FloorMap floorMap : baseMap.getFloorMaps()) {
-                for (Layer layer : floorMap.getLayers()) {
-                    for (PointOfInterest poi : layer.getPoints()) {
-                        if (poi.isFavorite()) {
-                            favoritePois.add(new FavoritePoi(baseMap.getName(), floorMap.getName(), layer.getName(), poi.getName()));
-                        }
-                    }
-                }
-            }
-        }
 
-        userData.setFavoritePois(favoritePois);
         ConfigUtil.saveUserData(userData, tmpUrl);
 
         // Returns true if no errors occurred

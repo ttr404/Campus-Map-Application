@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.uwo.cs2212.model.FavoritePoi;
 import org.uwo.cs2212.model.PointOfInterest;
 
 import java.net.URL;
@@ -17,9 +18,7 @@ import java.util.ResourceBundle;
 //          * Finish the tests/fix them
 //          * Try to make the jar
 //          * Fix spelling
-//          * Fix editor UI
 //          * Fix window resizing in windows?
-//          * Change Popup wording in editor mode
 
 /**
  * This class is used to handle the functionality of the POI popup adder/editor. It always gets information from the
@@ -175,6 +174,9 @@ public class PoiPopupController implements Initializable {
         // Save the object to a JSON file and store if the method saved successfully
         saveSuccessful = CurrentUser.saveUserData();
 
+        // Set the POI as a favourite or not for the user
+        FavoritePoi.setUserFavourite(poi);
+
         // Show a successfully saved method
         if (saveSuccessful) {
             // Create a success message box
@@ -218,6 +220,12 @@ public class PoiPopupController implements Initializable {
 
         // Get currently selected POI
         PointOfInterest currentSelectedPoi = CurrentUser.getCurrentSelectedPoi();
+        // Set the state of the favourite
+        currentSelectedPoi.setFavorite(favourite);
+
+        // Set the POI as a favourite or not for the user
+        FavoritePoi.setUserFavourite(currentSelectedPoi);
+
         // Create a new POI
         PointOfInterest editedPOI = new PointOfInterest();
 
@@ -236,10 +244,11 @@ public class PoiPopupController implements Initializable {
         // Save the object to a JSON file and store if the method saved successfully
         saveSuccessful = CurrentUser.saveUserData();
 
-        // Show a successfully saved method
+        Alert alert;
+        // Show a successfully saved alert
         if (saveSuccessful) {
             // Create a success message box
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Updated POI");
             alert.setHeaderText("Successfully updated the POI!");
             alert.setContentText("The POI was successfully updated in your list of POIs.");
@@ -248,10 +257,9 @@ public class PoiPopupController implements Initializable {
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
-            alert.showAndWait();
-        } else {
+        } else { // Otherwise, show an error
             // Create an error message box
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Updated POI");
             alert.setHeaderText("Unable to update the POI!");
             alert.setContentText("An error occurred while updating.");
@@ -261,8 +269,8 @@ public class PoiPopupController implements Initializable {
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
 
-            alert.showAndWait();
         }
+        alert.showAndWait();
     }
 
     /**

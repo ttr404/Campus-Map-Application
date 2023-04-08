@@ -115,7 +115,7 @@ public class UserData {
                 int index = userLayer.getPoints().indexOf(point);
                 // Set the old point (selected poi) to the updatedPOI
                 userLayer.getPoints().set(index, updatedPOI);
-                break; // Leave loop early since point was removed
+                break; // Leave loop early since point was edited
             }
         }
     }
@@ -141,45 +141,40 @@ public class UserData {
     /**
      * Removes a favorite POI from the favoritePois list.
      *
-     * @param poi the POI to remove from the favoritePois list
-     * @param poiName the name of the POI to be removed
-     * @param baseMapName the name of the corresponding BaseMap for the POI to be removed
-     * @param floorMapName the name of the corresponding FloorMap for the POI to be removed
+     * @param poi The POI to remove from the favoritePois list
+     * @param baseMap The BaseMap for the POI to be removed
+     * @param floorMap The FloorMap for the POI to be removed
      */
-    public void removeFavourite(PointOfInterest poi, String poiName, String baseMapName, String floorMapName) {
+    public void removeFavourite(PointOfInterest poi, BaseMap baseMap, FloorMap floorMap) {
         // Loop through the list of the favouritePois
         for (FavoritePoi favPoi : favoritePois) {
             // If favPoi matches the given names then remove the favourite at the index
-            if (favPoi.getPoiName().equals(poiName) && favPoi.getBaseMapName().equals(baseMapName) &&
-                    favPoi.getFloorMapName().equals(floorMapName)) {
+            if (favPoi.getPoiName().equals(poi.getName()) && favPoi.getBaseMapName().equals(baseMap.getName()) &&
+                    favPoi.getFloorMapName().equals(floorMap.getName())) {
                 favoritePois.remove(favPoi);
                 break; // Break early since the layer was found
             }
         }
-
-        // Modify the favourite value in the UserLayer list
-        swapFavouriteVal(poi);
 
         // Save the updated object to the json file
         CurrentUser.saveUserData();
     }
 
     /**
-     * Swaps the favorite status of the specified POI.
-     * If the POI is a favorite, it will be set as not a favorite and vice versa.
+     * Adds a favorite POI to the favoritePois list.
      *
-     * @param searchPoi the POI to change the favorite status of
+     * @param poi The POI to add to the favoritePois list
+     * @param baseMap The BaseMap for the POI to be added
+     * @param floorMap The FloorMap for the POI to be added
      */
-    private void swapFavouriteVal(PointOfInterest searchPoi) {
-        // Loop through all userLayers and POIs
-        for (UserLayer userLayer : userLayers) {
-            for (PointOfInterest poi : userLayer.getPoints()) {
-                // If the POI is found change swap it's boolean value
-                if (poi.equals(searchPoi)) {
-                    poi.setFavorite(!poi.isFavorite());
-                }
-            }
-        }
+    public void addFavourite(PointOfInterest poi, BaseMap baseMap, Layer layer, FloorMap floorMap) {
+        // Create a new favourite
+        FavoritePoi favoritePoi = new FavoritePoi(baseMap.getName(), floorMap.getName(), layer.getName(), poi.getName());
+        // Add it to the user's list
+        favoritePois.add(favoritePoi);
+
+        // Save the updated object to the json file
+        CurrentUser.saveUserData();
     }
 
     public static UserLayer findUserLayer(BaseMap baseMap, FloorMap floorMap, UserData userLayerList){
