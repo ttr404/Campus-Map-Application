@@ -1,6 +1,7 @@
 package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.uwo.cs2212.CurrentUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +50,24 @@ public class BaseMap {
      */
     public boolean equals(BaseMap other) {
         return this.getName().equals(other.getName());
+    }
+
+    /**
+     * This method is used to find a BaseMap given a FloorMap
+     *
+     * @param searchFloorMap The FloorMap that will match to a BaseMap
+     * @return Returns the matching BaseMap if it exits, otherwise, it returns null
+     */
+    public static BaseMap findBaseMap(FloorMap searchFloorMap) {
+        // Look for a matching FloorMap
+        for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()) {
+            for (FloorMap floorMap : baseMap.floorMaps) {
+                if (floorMap.equals(searchFloorMap)) {
+                    return baseMap;
+                }
+            }
+        }
+
+        return null;
     }
 }

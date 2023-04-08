@@ -98,7 +98,7 @@
     <left>
         <HBox minWidth="216.0" style="-fx-background-color: #e6f0ff;">
             <VBox fx:id="leftPane" maxWidth="200.0" minWidth="200.0">
-                <ComboBox fx:id="mapSelector" prefWidth="200.0" style="-fx-background-color: #d9b3ff;">
+                <ComboBox fx:id="mapSelector" onMouseClicked="#onMapSelectorClicked" prefWidth="200.0" style="-fx-background-color: #d9b3ff;">
                <VBox.margin>
                   <Insets bottom="17.0" />
                </VBox.margin></ComboBox>

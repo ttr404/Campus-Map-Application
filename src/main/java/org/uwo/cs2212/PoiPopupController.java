@@ -12,13 +12,6 @@ import org.uwo.cs2212.model.PointOfInterest;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-// TODO:    * Check for existing POI and prevent the same name (and room number?)
-//          * Fix mapSelector not showing the correct name
-//          * Finish the tests/fix them
-//          * Try to make the jar
-//          * Fix spelling
-//          * Fix window resizing in windows?
-
 /**
  * This class is used to handle the functionality of the POI popup adder/editor. It always gets information from the
  * user via the text fields and buttons, however, in edit mode it starts off with the POI's data being edited. It calls

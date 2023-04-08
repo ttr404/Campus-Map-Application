@@ -1,5 +1,6 @@
 package org.uwo.cs2212;
 
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -126,6 +127,14 @@ public class CampusMapController implements Initializable {
     private ContextMenu poiPopup;
     private double coordinateX = 0;
     private double coordinateY = 0;
+    /**
+     * Used to prevent the MapSelector from updating the map if favourite was pressed
+     */
+    boolean preventMapSelectorUpdatesFav = false;
+    /**
+     * Used to prevent the MapSelector from updating the map if search was pressed
+     */
+    boolean preventMapSelectorUpdatesSearch = false;
 
     /**
      * This method is called by the FXMLLoader when initialization is complete.
@@ -164,7 +173,11 @@ public class CampusMapController implements Initializable {
 
         mapSelector.valueProperty().setValue(CurrentUser.getCurrentBaseMap().getName());
         mapSelector.valueProperty().addListener((ov, oldValue, newValue) -> {
-            handleComboBoxValueChanged(ov, oldValue, newValue);
+            // If preventMapSelectorUpdatesFav and preventMapSelectorUpdatesSearch are false then allow the
+            // MapSelector to change the map
+            if (!preventMapSelectorUpdatesFav && !preventMapSelectorUpdatesSearch) {
+                handleComboBoxValueChanged(ov, oldValue, newValue);
+            }
         });
     }
 
@@ -177,7 +190,58 @@ public class CampusMapController implements Initializable {
         lvSelModel.selectedItemProperty().addListener(
                 (changed, oldVal, newVal) -> {
                     searchResultSelectionChanged(changed, oldVal, newVal);
+
+                    // Only find a BaseMap if newValue isn't null (it was run by the user)
+                    if (newVal != null) {
+                        BaseMap matchedBaseMap = BaseMap.findBaseMap(newVal.getFloorMap());
+
+                        // If the BaseMap was found change the selector
+                        if (matchedBaseMap != null) {
+                            // Store the index of the matchedBaseMap
+                            int index = 0;
+
+                            // Determine the index of the current floor map by looping through all FloorMaps and
+                            // increasing the index until the matching one is found
+                            for (FloorMap floorMap : matchedBaseMap.getFloorMaps()) {
+                                // Once the matching FloorMap is found stop
+                                if (floorMap.equals(newVal.getFloorMap())) {
+                                    break;
+                                }
+                                index ++;
+                            }
+
+                            // Highlight the matching button for the current floor
+                            highlightSelectedFloorButton(floorButtons[index]);
+
+                            CurrentUser.setCurrentBaseMap(matchedBaseMap);
+                            showFloorButtons();
+
+                            // The setter for the selector must be called in this way when it's not
+                            // called from the main thread
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Change the map selector's value to the current map
+                                    mapSelector.valueProperty().setValue(matchedBaseMap.getName());
+                                }
+                            });
+                        }
+                    }
                 });
+    }
+
+    public void onMapSelectorClicked() {
+        // Allow the mapSelector to update
+        preventMapSelectorUpdatesFav = false;
+        preventMapSelectorUpdatesSearch = false;
+
+        // Reset the cords to disable the Add button
+        coordinateX = 0;
+        coordinateY = 0;
+
+        // Remove the unselected POI
+        selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
+        showMap(); // TODO: Correct?
     }
 
     /**
@@ -699,6 +763,13 @@ public class CampusMapController implements Initializable {
 
     public void onClearIconButtonClicked(ActionEvent actionEvent) {
         clearPinIcon();
+
+        coordinateX = 0;
+        coordinateY = 0;
+
+        // Remove the unselected POI and refresh the map
+        selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
+        showMap();
     }
 
     /**
@@ -848,6 +919,7 @@ public class CampusMapController implements Initializable {
                     showPoiInList(poi);
 
                     poiDetailsPopup(mouseEvent, poi);
+
                     return;
                 }
             }
@@ -868,14 +940,16 @@ public class CampusMapController implements Initializable {
                     }
 
                     poiDetailsPopup(mouseEvent, poi);
-                    showMap();
+                    //showMap(); // TODO: Keep removed?
 
                     return;
                 }
             }
         }
 
+        // Remove the unselected POI and refresh the map
         selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
+        showMap();
     }
 
     /**
@@ -920,10 +994,17 @@ public class CampusMapController implements Initializable {
     private void selectPoi(SearchResult searchResult) {
         if (searchResult != null) {
             CurrentUser.setCurrentFloorMap(searchResult.getFloorMap());
+
+            // Reset the selection status of the currently selected POI if one had been selected previously
             if (CurrentUser.getCurrentSelectedPoi() != null) {
                 CurrentUser.getCurrentSelectedPoi().setSelected(false);
             }
+
+            // Set the currently selected POI to the one from the search result
             CurrentUser.setCurrentSelectedPoi(searchResult.getPoi());
+
+            // If there is a currently selected POI set it as selected as long as there is also a POI in the search
+            // result
             if (CurrentUser.getCurrentSelectedPoi() != null) {
                 CurrentUser.getCurrentSelectedPoi().setSelected(true);
             }
@@ -934,15 +1015,24 @@ public class CampusMapController implements Initializable {
                 showMap();
             }
 
-            // Allow the user to interact with the POI buttons
+            // Allow the user to interact with the POI buttons or not
             setFavouriteButtonState();
-            // If the currently selected POI is not null, and it is of type user POI then set the editor buttons to edit and delete
-            if (CurrentUser.getCurrentSelectedPoi() != null && CurrentUser.getCurrentSelectedPoi().getType().equalsIgnoreCase("user poi")) {
+            // If the currently selected POI is not null, and it is of type user POI then set
+            // the editor buttons to edit and delete
+            if (CurrentUser.getCurrentSelectedPoi() != null
+                    && CurrentUser.getCurrentSelectedPoi().getType().equalsIgnoreCase("user poi")) {
                 addPOI.setDisable(true);
                 editPOI.setDisable(false);
                 deletePOI.setDisable(false);
-                // Otherwise, if the currently selected POI is not null, and it is not of type user POI then set the editor buttons to disabled
-            } else if (CurrentUser.getCurrentSelectedPoi() != null && !CurrentUser.getCurrentSelectedPoi().getType().equalsIgnoreCase("user poi")) {
+            // Otherwise, the currently selected POI is not null, and it is not of type
+            // user POI then set the editor buttons to disabled
+            } else if (searchResult.getPoi() != null && CurrentUser.getCurrentSelectedPoi() != null
+                    && !CurrentUser.getCurrentSelectedPoi().getType().equalsIgnoreCase("user poi")) {
+                addPOI.setDisable(true);
+                editPOI.setDisable(true);
+                deletePOI.setDisable(true);
+            // Otherwise, if the coordinates are off the map disable the buttons
+            } else if (coordinateX <= 0 && coordinateY <= 0) {
                 addPOI.setDisable(true);
                 editPOI.setDisable(true);
                 deletePOI.setDisable(true);
@@ -1025,6 +1115,9 @@ public class CampusMapController implements Initializable {
      * @param actionEvent an ActionEvent object representing the click event
      */
     public void onSearchButtonClicked(ActionEvent actionEvent) {
+        // Don't allow the mapSelector to update because search was pressed
+        preventMapSelectorUpdatesFav = false;
+        preventMapSelectorUpdatesSearch = true;
 
         selectAllLayers();
         checkBoxSelected();
@@ -1032,7 +1125,7 @@ public class CampusMapController implements Initializable {
         String text = searchText.getText().toLowerCase().trim();
         if (!text.equals("")) {
             informationList.getItems().clear();
-            for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()){
+            for (BaseMap baseMap : CurrentUser.getMapConfig().getBaseMaps()) {
                 for (FloorMap floorMap : baseMap.getFloorMaps()) {
                     for (Layer layer : floorMap.getLayers()) {
                         for (PointOfInterest poi : layer.getPoints()) {
@@ -1080,7 +1173,8 @@ public class CampusMapController implements Initializable {
      */
     private void setFavouriteButtonState() {
         ImageView imageView;
-        if (CurrentUser.getCurrentSelectedPoi() != null) {
+        // Only enable the favorite button if the currently selected POI is not null and is actually selected
+        if (CurrentUser.getCurrentSelectedPoi() != null && CurrentUser.getCurrentSelectedPoi().isSelected()) {
             favoriteButton.setDisable(false);
             if (CurrentUser.getCurrentSelectedPoi().isFavorite()) {
                 imageView = new ImageView(getClass().getResource("favorite1.png").toExternalForm());
@@ -1133,13 +1227,17 @@ public class CampusMapController implements Initializable {
 
     /**
      * Populates the informationList with favorite Points of Interest (POIs) when the "List Favorites" button is clicked.
-     * --------
+     * ------
      * This method clears the current content of the informationList and iterates through all the BaseMaps, FloorMaps, Layers,
      * and UserLayers to find favorite POIs. If a POI is marked as a favorite, it is added to the informationList as a SearchResult.
      *
      * @param actionEvent the event object representing the button click
      */
     public void onListFavoritesButtonClicked(ActionEvent actionEvent) {
+        // Don't allow the mapSelector to update because favorite list was pressed
+        preventMapSelectorUpdatesFav = true;
+        preventMapSelectorUpdatesSearch = false;
+
         // Show all the layers show the user can see them
         selectAllLayers();
         checkBoxSelected();
@@ -1178,7 +1276,6 @@ public class CampusMapController implements Initializable {
         }
     }
 
-
     /**
      * Centralizes the currently selected Point of Interest (POI) on the map by scrolling
      * the view to show the POI in the center of the screen.
@@ -1202,10 +1299,7 @@ public class CampusMapController implements Initializable {
      * height of the map image.
      * -----
      * Finally, this method sets the scroll positions of the mapPane's horizontal and vertical scroll bars
-     * to the calculated values. It then loops through all the points of interest that are marked as
-     * favorites in the currentFloorMap's layers and adds them to the informationList ListView.
-     *
-     * @throws NullPointerException if any of the objects referenced within the method are null.
+     * to the calculated values.
      */
     private void centralizeSelectedPoi() {
         if (CurrentUser.getCurrentSelectedPoi() != null) {
@@ -1242,13 +1336,6 @@ public class CampusMapController implements Initializable {
             }
             mapPane.setHvalue(scrollX);
             mapPane.setVvalue(scrollY);
-        }
-        for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
-            for (PointOfInterest poi : layer.getPoints()) {
-                if (poi.isFavorite()) {
-                    informationList.getItems().add(poi);
-                }
-            }
         }
     }
 
@@ -1361,6 +1448,15 @@ public class CampusMapController implements Initializable {
 
             // Save the list of user POIs now that the POI was removed
             CurrentUser.saveUserData();
+
+            // Call the correct method to update the informationList based on what it is populated with
+            if (preventMapSelectorUpdatesFav) {
+                onListFavoritesButtonClicked(actionEvent);
+            } else if (preventMapSelectorUpdatesSearch) {
+                onSearchButtonClicked(actionEvent);
+            } else {
+                setShowAllPOI();
+            }
         }
 
         // Refresh the map's POIs
@@ -1415,6 +1511,18 @@ public class CampusMapController implements Initializable {
         // When the popup closes refresh the map's POIs
         poiPopupStage.setOnHidden(e -> {
             refreshPOIs();
+
+            // Create a blank action event
+            ActionEvent actionEvent = new ActionEvent();
+
+            // Call the correct method to update the informationList based on what it is populated with
+            if (preventMapSelectorUpdatesFav) {
+                onListFavoritesButtonClicked(actionEvent);
+            } else if (preventMapSelectorUpdatesSearch) {
+                onSearchButtonClicked(actionEvent);
+            } else {
+                setShowAllPOI();
+            }
         });
     }
 
