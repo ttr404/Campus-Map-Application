@@ -91,7 +91,7 @@ public class LoginViewController {
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1080, 830);
 
-            CampusMapController campusMapController = fxmlLoader.getController();
+            //CampusMapController campusMapController = fxmlLoader.getController();
 
             stage.setTitle("Western Campus Map");
             stage.setScene(scene);

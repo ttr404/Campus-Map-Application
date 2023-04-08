@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is used to store data on the logged-in user. This includes their user generated POIs and their favourites
@@ -23,7 +21,7 @@ public class CurrentUser {
     private static FloorMap currentFloorMap;
     private static UserData userData;
 
-    public static boolean isAdmin(){
+    public static boolean isAdmin() {
         return username != null && username.toLowerCase().contains("admin");
     }
 
@@ -80,25 +78,25 @@ public class CurrentUser {
      *
      * @return the url of current user's json file
      */
-    public static URL getCurrentUserLayerUrl(){
+    public static URL getCurrentUserLayerUrl() {
         return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json");
     }
 
     /**
      * This method is used to add the POI data to the user layer
      *
-     * @param baseMap the base map of the user layer
+     * @param baseMap  the base map of the user layer
      * @param floorMap the floor map of the user layer
-     * @param poi the poi will be added into the user layer
+     * @param poi      the poi will be added into the user layer
      */
-    public static void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi){
+    public static void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi) {
         // Initialize userData if it doesn't exist
-        if (userData == null){
+        if (userData == null) {
             userData = new UserData();
         }
 
         // Check for null values
-        if (baseMap == null || floorMap == null || poi == null){
+        if (baseMap == null || floorMap == null || poi == null) {
             return;
         }
 
@@ -114,7 +112,7 @@ public class CurrentUser {
         PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
 
         // Check for null values
-        if (baseMap == null || floorMap == null || poi == null){
+        if (baseMap == null || floorMap == null || poi == null) {
             return;
         }
 
@@ -127,13 +125,13 @@ public class CurrentUser {
      * @param updatedPOI The updated version of the POI (this is a new POI instead of editing the old one to allow
      *                   searching for the old POI)
      */
-    public static void editPoi(PointOfInterest updatedPOI){
+    public static void editPoi(PointOfInterest updatedPOI) {
         BaseMap baseMap = CurrentUser.getCurrentBaseMap();
         FloorMap floorMap = CurrentUser.getCurrentFloorMap();
         PointOfInterest poi = CurrentUser.getCurrentSelectedPoi();
 
         // Check for null values
-        if (baseMap == null || floorMap == null || poi == null){
+        if (baseMap == null || floorMap == null || poi == null) {
             return;
         }
 

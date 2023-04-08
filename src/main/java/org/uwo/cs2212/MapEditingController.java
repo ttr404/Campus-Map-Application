@@ -19,6 +19,7 @@ import javafx.stage.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.uwo.cs2212.model.*;
+
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -31,14 +32,13 @@ import java.util.stream.Collectors;
  * such as zooming in and out, selecting points of interest (POIs), adding and deleting POIs,
  * and loading maps for different floors. It also contains methods for converting between
  * window and real map coordinate systems, as well as for handling mouse events.
- *
+ * -------
  * The CampusMapController class works in conjunction with the FloorMap, PointOfInterest,
  * ImageLayer, and Layer classes, as well as the FXML view files to provide a complete map
  * navigation and editing experience.
  *
  * @author Tingrui Zhang
  * @author Binchi Zhang
- *
  */
 public class MapEditingController {
 
@@ -82,7 +82,7 @@ public class MapEditingController {
 
     @FXML
     private void initialize() {
-        ObservableList<String> roomsToSelect = FXCollections.observableArrayList("", "Accessibility","Washroom","Classroom", "CS Lab", "Collaborative Room", "Elevator", "Entry/Exit", "GenLab", "Restaurant", "Stairwell");
+        ObservableList<String> roomsToSelect = FXCollections.observableArrayList("", "Accessibility", "Washroom", "Classroom", "CS Lab", "Collaborative Room", "Elevator", "Entry/Exit", "GenLab", "Restaurant", "Stairwell");
         roomSelector.setItems(roomsToSelect);
 
         // Disable the buttons initially
@@ -100,7 +100,7 @@ public class MapEditingController {
      * <p> In case of any exceptions during the loading or processing of the map
      * or layers, the exception is caught and no further action is taken. </p>
      */
-    protected void showMap(){
+    protected void showMap() {
         try {
             URL mapUrl = CampusMapController.class.getResource(CurrentUser.getCurrentFloorMap().getMapFileName());
             URI uri = mapUrl.toURI();
@@ -122,11 +122,12 @@ public class MapEditingController {
             Image coordinate = new Image(getClass().getResourceAsStream("map-marker.png"));
             ImageView coordinateView = new ImageView(coordinate);
 
-            for(Layer layer: CurrentUser.getCurrentFloorMap().getLayers()){
+            // Show the POIs points on the map
+            for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
                 ImageLayer imageLayer = new ImageLayer(image.getWidth(), image.getHeight(), zoom, layer);
                 root.getChildren().add(imageLayer);
 
-                for(PointOfInterest poi: layer.getPoints()){
+                for (PointOfInterest poi : layer.getPoints()) {
                     if ((int) Math.round(poi.getX()) >= (coordinateX - 7)
                             && (int) Math.round(poi.getX()) <= (coordinateX + 7)
                             && (int) Math.round(poi.getY()) >= (coordinateY - 7)
@@ -137,7 +138,7 @@ public class MapEditingController {
             }
 
             // bug fixed
-            if (coordinateX == 0 && coordinateY == 0){
+            if (coordinateX == 0 && coordinateY == 0) {
                 coordinateView.setVisible(false);
             }
 
@@ -148,8 +149,7 @@ public class MapEditingController {
             root.getChildren().add(coordinateView);
 
             scrollPane.setContent(root);
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             // Handle the exception
             ex.printStackTrace();
         }
@@ -170,11 +170,11 @@ public class MapEditingController {
      * the current zoom level of the map. If the distance between the POI and the mouse position is less than or equal to 6 pixels
      * (scaled according to the current zoom level), the POI is considered hit and this method returns true. Otherwise, it returns false.
      *
-     @param mousePosition the real-world position of the mouse click
-     @param poi the point of interest to check for a hit
-     @return true if the POI is hit by the mouse click, false otherwise
+     * @param mousePosition the real-world position of the mouse click
+     * @param poi           the point of interest to check for a hit
+     * @return true if the POI is hit by the mouse click, false otherwise
      */
-    private boolean hitTest(Point2D mousePosition, PointOfInterest poi){
+    private boolean hitTest(Point2D mousePosition, PointOfInterest poi) {
         return mousePosition.getX() <= poi.getX() + 6 / zoom && mousePosition.getX() >= poi.getX() - 6 / zoom && mousePosition.getY() <= poi.getY() + 6 / zoom && mousePosition.getY() >= poi.getY() - 6 / zoom;
     }
 
@@ -194,38 +194,38 @@ public class MapEditingController {
         // Calculate the real mouse position
         Point2D realMousePosition = calculateRealMousePosition(mouseEvent);
 
-            for (Layer layer : currentFloorMap.getLayers()) {
-                for (PointOfInterest poi : layer.getPoints()) {
-                    if (hitTest(realMousePosition, poi)) {
-                        roomName = poi.getName();
-                        roomType = poi.getType();
-                        poiRoomNumber = poi.getRoomNumber();
-                        roomDescription = poi.getDescription();
-                        selectPoi(new SearchResult(currentFloorMap, poi));
+        for (Layer layer : currentFloorMap.getLayers()) {
+            for (PointOfInterest poi : layer.getPoints()) {
+                if (hitTest(realMousePosition, poi)) {
+                    roomName = poi.getName();
+                    roomType = poi.getType();
+                    poiRoomNumber = poi.getRoomNumber();
+                    roomDescription = poi.getDescription();
+                    selectPoi(new SearchResult(currentFloorMap, poi));
 
-                        /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
+                    /* Below: pop-up window wrote by @Truman, debugged and improved by @Tingrui */
 
-                        // Create the ContextMenu
-                        poiPopup = new ContextMenu();
-                        poiPopup.setStyle("-fx-background-color: transparent;");
-                        MenuItem menuItem = new MenuItem();
-                        menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
+                    // Create the ContextMenu
+                    poiPopup = new ContextMenu();
+                    poiPopup.setStyle("-fx-background-color: transparent;");
+                    MenuItem menuItem = new MenuItem();
+                    menuItem.setStyle("-fx-background-color: transparent; -fx-font-size: 12px;");
 
-                        // Set the content for the ContextMenu
-                        String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
-                        menuItem = new MenuItem(s);
-                        menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
-                        poiPopup.getItems().add(menuItem);
+                    // Set the content for the ContextMenu
+                    String s = "Name:" + "   " + poi.getName() + "\nType:    " + poi.getType() + "\nDescription:" + "  " + poi.getDescription();
+                    menuItem = new MenuItem(s);
+                    menuItem.setStyle("-fx-font-size: 12px;-fx-text-fill: black");
+                    poiPopup.getItems().add(menuItem);
 
-                        // Calculate the window position of the POI
-                        Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
-                        Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
+                    // Calculate the window position of the POI
+                    //Point2D poiRealPoint = new Point2D(poi.getX(), poi.getY());
+                    //Point2D poiWindowPoint = WindowPointToRealPoint(poiRealPoint);
 
-                        // Show the context menu at the POI position
-                        poiPopup.show(scrollPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
-                        return;
-                    }
+                    // Show the context menu at the POI position
+                    poiPopup.show(scrollPane.getScene().getWindow(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                    return;
                 }
+            }
         }
         selectPoi(new SearchResult(currentFloorMap, null));
     }
@@ -238,14 +238,14 @@ public class MapEditingController {
      *
      * @param searchResult the SearchResult object representing the selected POI and its associated floor map
      */
-    private void selectPoi(SearchResult searchResult){
-        if(searchResult != null){
+    private void selectPoi(SearchResult searchResult) {
+        if (searchResult != null) {
             currentFloorMap = searchResult.getFloorMap();
-            if(currentSelectedPoi != null){
+            if (currentSelectedPoi != null) {
                 currentSelectedPoi.setSelected(false);
             }
             currentSelectedPoi = searchResult.getPoi();
-            if(currentSelectedPoi != null){
+            if (currentSelectedPoi != null) {
                 currentSelectedPoi.setSelected(true);
             }
 
@@ -271,7 +271,7 @@ public class MapEditingController {
 
     /**
      * Handles the event when the "Zoom In" button is clicked in the UI.
-     *
+     * -----
      * This method updates the zoom level of the campus map and displays the updated map.
      * If the current zoom level is already at its maximum (0.5), the "Zoom In" button is disabled.
      *
@@ -283,11 +283,10 @@ public class MapEditingController {
             poiPopup.hide();
         }
         // Check if zoom level is greater than 0.5
-        if (zoom > 0.5){
+        if (zoom > 0.5) {
             // Reduce zoom level by a factor of 0.8
             zoom *= 0.8;
-        }
-        else{
+        } else {
             // Disable "Zoom In" button if current zoom level is at maximum
             zoomIN.setDisable(false);
         }
@@ -296,9 +295,10 @@ public class MapEditingController {
         // Create a new CampusMapController object and call the showMap method to display the updated map
         showMap();
     }
+
     /**
      * Handles the event when the "Zoom Out" button is clicked in the UI.
-     *
+     * -----
      * This method updates the zoom level of the campus map and displays the updated map.
      * If the current zoom level is already at its minimum (1.7), the "Zoom Out" button is disabled.
      *
@@ -310,11 +310,10 @@ public class MapEditingController {
             poiPopup.hide();
         }
         // Check if zoom level is less than 1.7
-        if (zoom < 1.7){
+        if (zoom < 1.7) {
             // Increase zoom level by a factor of 1.2
             zoom *= 1.2;
-        }
-        else{
+        } else {
             // Disable "Zoom Out" button if current zoom level is at minimum
             zoomOUT.setDisable(false);
         }
@@ -323,16 +322,25 @@ public class MapEditingController {
         showMap();
     }
 
-    /** This method is responsible for transitioning to a new view/window within the application.
+    /**
+     * This method is responsible for transitioning to a new view/window within the application.
      *
-     * @param file: The FXML file name for the target view.
-     * @param title: The title for the new window.
-     * @throws IOException
+     * @param file  The FXML file name for the target view.
+     * @param title The title for the new window.
+     * @param actionEvent an ActionEvent object representing the click event
+     * @throws IOException thrown if the fxmlLoader doesn't have a proper file to load
      */
-    private void returnBack(String file, String title) throws IOException {
+    private void returnBack(String file, String title, ActionEvent actionEvent) throws IOException {
         // Declare and initialize the window size
         int v = 1080;
         int v1 = 830;
+
+        // Make the window not full screen in macOS to prevent a crash
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            Node source = (Node) actionEvent.getSource();
+            Window theStage = source.getScene().getWindow();
+            ((Stage) theStage).setFullScreen(false);
+        }
 
         // Create a new Stage object for the new window
         Stage stage = new Stage();
@@ -408,13 +416,13 @@ public class MapEditingController {
     public void onCloseButtonClick(ActionEvent actionEvent) throws RuntimeException {
         try {
             // Calls the returnBack method with the specified FXML file name and window title
-            returnBack("main-view.fxml", "Western Campus Map");
+            returnBack("main-view.fxml", "Western Campus Map", actionEvent);
         } catch (IOException ex) {
             // Throws a RuntimeException if an IOException occurs during the execution of returnBack
             throw new RuntimeException(ex);
         }
         // Hides the current window using the hide() method
-        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 
 
@@ -427,17 +435,22 @@ public class MapEditingController {
      * exists, a new layer is created and the new POI is added to that layer's list of points. If the POI is successfully added, an
      * information dialog is shown indicating success.
      *
-     @param actionEvent the action event that triggered this method
-     @throws IOException if an I/O error occurs while reading from or writing to the configuration file
+     * @param actionEvent the action event that triggered this method
+     * @throws IOException if an I/O error occurs while reading from or writing to the configuration file
      */
     public void onAddPOIButtonClick(ActionEvent actionEvent) throws IOException {
         boolean flag = false;
 
-        if (coordinateX == 0 && coordinateY == 0){
+        if (coordinateX == 0 && coordinateY == 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Adding");
             alert.setHeaderText("Unable to add POI, there was no coordinate selected!");
             alert.setContentText("Please select a coordinate on the map before saving.");
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
             return;
         }
@@ -448,18 +461,23 @@ public class MapEditingController {
 
         JSONObject jsonObject = new JSONObject(json);
 
-        if (!poiName.getText().isEmpty() && !roomNumber.getText().isEmpty() && roomSelector.getValue() != null){
+        if (!poiName.getText().isEmpty() && !roomNumber.getText().isEmpty() && roomSelector.getValue() != null) {
             for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++) {
                 for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
                     JSONObject checkPOI = jsonObject.getJSONArray("layers")
                             .getJSONObject(i)
                             .getJSONArray("points")
                             .getJSONObject(j);
-                    if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())){
+                    if (checkPOI.getString("name").equals(poiName.getText()) || checkPOI.getString("roomNumber").equals(roomNumber.getText())) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error Adding");
                         alert.setHeaderText("A POI already exists with that information!");
                         alert.setContentText("Please enter a different POI name and/or room number.");
+
+                        // Make the alert prevent interaction with the windows behind and force it on the same screen
+                        alert.initModality(Modality.APPLICATION_MODAL);
+                        alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
                         alert.showAndWait();
                         return;
                     }
@@ -469,7 +487,7 @@ public class MapEditingController {
                         .getJSONArray("points")
                         .getJSONObject(0)
                         .getString("type")
-                        .equalsIgnoreCase(roomSelector.getValue())){
+                        .equalsIgnoreCase(roomSelector.getValue())) {
                     JSONObject point = new JSONObject()
                             .put("x", coordinateX)
                             .put("y", coordinateY)
@@ -485,15 +503,14 @@ public class MapEditingController {
                     break;
                 }
             }
-            if (!flag){
+            if (!flag) {
                 JSONArray jsonArray = new JSONArray();
                 JSONObject layer = new JSONObject()
                         .put("name", "Main Map")
                         .put("color", "BLUE");
-                if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")){
+                if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")) {
                     layer.put("layerType", "base");
-                }
-                else {
+                } else {
                     layer.put("layerType", "internal");
                 }
                 layer.put("font", "Arial")
@@ -517,12 +534,22 @@ public class MapEditingController {
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Adding");
             alert.setHeaderText("Unable to add the POI!");
             alert.setContentText("Please fill all the fields.");
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
             return;
         }
@@ -540,9 +567,9 @@ public class MapEditingController {
         pointOfInterest.setDescription(Description.getText());
         pointOfInterest.setType(roomSelector.getValue());
 
-        for (Layer layer : currentFloorMap.getLayers()){
-            for(PointOfInterest point : layer.getPoints()){
-                if (point.getType().equals(pointOfInterest.getType())){
+        for (Layer layer : currentFloorMap.getLayers()) {
+            for (PointOfInterest point : layer.getPoints()) {
+                if (point.getType().equals(pointOfInterest.getType())) {
                     layer.getPoints().add(pointOfInterest);
                     showMap();
                     return;
@@ -553,10 +580,9 @@ public class MapEditingController {
         Layer layer = new Layer();
         layer.setName(roomSelector.getValue() + " layer");
         layer.setColor("BLUE");
-        if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")){
+        if (roomSelector.getValue().equalsIgnoreCase("washroom") || roomSelector.getValue().equalsIgnoreCase("accessibility")) {
             layer.setLayerType("base");
-        }
-        else{
+        } else {
             layer.setLayerType("internal");
         }
 
@@ -570,6 +596,7 @@ public class MapEditingController {
         showMap();
 
     }
+
     private ImageLayer imageLayer;
     private double currentZoom;
     private Layer layer;
@@ -579,22 +606,22 @@ public class MapEditingController {
      * Converts a point in the window coordinate system to a point in the real map coordinate system.
      * Takes into account the current zoom level and scroll position.
      *
-     @param windowPoint The point in the window coordinate system
-     @return The converted point in the real map coordinate system
+     * @param windowPoint The point in the window coordinate system
+     * @return The converted point in the real map coordinate system
      */
-    private Point2D WindowPointToRealPoint(Point2D windowPoint){
-        double windowXValue = (imageWidth - scrollPane.getViewportBounds().getWidth()/zoom) * scrollPane.getHvalue();
-        double windowYValue = (imageHeight - scrollPane.getViewportBounds().getHeight()/zoom) * scrollPane.getVvalue();
-        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue+")");
-        double mouseX = windowXValue + windowPoint.getX()/zoom;
-        double mouseY = windowYValue + windowPoint.getY()/zoom;
-        if (scrollPane.getViewportBounds().getHeight() >= imageHeight){
-            mouseY = windowPoint.getY()/zoom;
+    private Point2D WindowPointToRealPoint(Point2D windowPoint) {
+        double windowXValue = (imageWidth - scrollPane.getViewportBounds().getWidth() / zoom) * scrollPane.getHvalue();
+        double windowYValue = (imageHeight - scrollPane.getViewportBounds().getHeight() / zoom) * scrollPane.getVvalue();
+        System.out.println("windowPosition:(" + windowXValue + ", " + windowYValue + ")");
+        double mouseX = windowXValue + windowPoint.getX() / zoom;
+        double mouseY = windowYValue + windowPoint.getY() / zoom;
+        if (scrollPane.getViewportBounds().getHeight() >= imageHeight) {
+            mouseY = windowPoint.getY() / zoom;
         }
-        if (scrollPane.getViewportBounds().getWidth() >= imageWidth){
-            mouseX = windowPoint.getX()/zoom;
+        if (scrollPane.getViewportBounds().getWidth() >= imageWidth) {
+            mouseX = windowPoint.getX() / zoom;
         }
-        System.out.println("mouse real position:(" + mouseX + ", " + mouseY+")");
+        System.out.println("mouse real position:(" + mouseX + ", " + mouseY + ")");
         return new Point2D(mouseX, mouseY);
     }
 
@@ -605,7 +632,7 @@ public class MapEditingController {
      * @return a Point2D object representing the real-world position of the mouse
      */
     @FXML
-    private Point2D calculateRealMousePosition(MouseEvent mouseEvent){
+    private Point2D calculateRealMousePosition(MouseEvent mouseEvent) {
         coordinateX = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getX();
         coordinateY = WindowPointToRealPoint(new Point2D(mouseEvent.getX(), mouseEvent.getY())).getY();
         showMap();
@@ -618,8 +645,8 @@ public class MapEditingController {
      * POI is found and deleted, an information dialog is shown indicating success. If the POI is not found, an error dialog
      * is shown indicating that the POI could not be deleted.
      *
-     @param actionEvent the action event that triggered this method
-     @throws IOException if an I/O error occurs while reading from or writing to the configuration file
+     * @param actionEvent the action event that triggered this method
+     * @throws IOException if an I/O error occurs while reading from or writing to the configuration file
      */
     public void onDeletePOIButtonClick(ActionEvent actionEvent) throws IOException {
 
@@ -629,9 +656,9 @@ public class MapEditingController {
 
         JSONObject jsonObject = new JSONObject(json);
 
-        if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()){
+        if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()) {
             outerloop:
-            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++){
+            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++) {
                 for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
                     JSONObject checkPOI = jsonObject.getJSONArray("layers")
                             .getJSONObject(i)
@@ -645,7 +672,7 @@ public class MapEditingController {
                                 .getJSONObject(i)
                                 .getJSONArray("points")
                                 .remove(j);
-                        if (jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length() == 0){
+                        if (jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length() == 0) {
                             jsonObject.getJSONArray("layers").remove(i);
                         }
                         break outerloop;
@@ -661,6 +688,11 @@ public class MapEditingController {
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
 
             // Make the fields for entering info empty
@@ -670,6 +702,11 @@ public class MapEditingController {
             alert.setTitle("Error Deleting");
             alert.setHeaderText("Unable to delete the POI!");
             alert.setContentText("The POI you are trying to delete does not exist!");
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
             return;
         }
@@ -680,13 +717,13 @@ public class MapEditingController {
         fileWriter.close();
 
         outerloop:
-        for (Layer layer : currentFloorMap.getLayers()){
-            for(PointOfInterest point : layer.getPoints()){
+        for (Layer layer : currentFloorMap.getLayers()) {
+            for (PointOfInterest point : layer.getPoints()) {
                 if (point.getName().equalsIgnoreCase(roomName)
                         && point.getRoomNumber().equalsIgnoreCase(poiRoomNumber)
-                        && point.getType().equalsIgnoreCase(roomType)){
+                        && point.getType().equalsIgnoreCase(roomType)) {
                     layer.getPoints().remove(point);
-                    if (layer.getPoints().isEmpty()){
+                    if (layer.getPoints().isEmpty()) {
                         currentFloorMap.getLayers().remove(layer);
                     }
                     showMap();
@@ -709,8 +746,8 @@ public class MapEditingController {
      * POI is found and edited, an information dialog is shown indicating success. If the POI is not found, an error dialog
      * is shown indicating that a POI must be selected for editing.
      *
-     @param actionEvent the action event that triggered this method
-     @throws IOException if an I/O error occurs while reading from or writing to the configuration file
+     * @param actionEvent the action event that triggered this method
+     * @throws IOException if an I/O error occurs while reading from or writing to the configuration file
      */
     public void onEditPOIButtonClick(ActionEvent actionEvent) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/org/uwo/cs2212/" + currentFloorMap.getConfigFileName()));
@@ -719,17 +756,22 @@ public class MapEditingController {
 
         JSONObject jsonObject = new JSONObject(json);
 
-        if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()){
-            if (poiName.getText().isEmpty() || roomNumber.getText().isEmpty() || roomSelector.getValue() == null){
+        if (!roomName.isEmpty() && !roomType.isEmpty() && !poiRoomNumber.isEmpty()) {
+            if (poiName.getText().isEmpty() || roomNumber.getText().isEmpty() || roomSelector.getValue() == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Editing");
                 alert.setHeaderText("Unable to edit the POI!");
                 alert.setContentText("Please enter data in at least one field.");
+
+                // Make the alert prevent interaction with the windows behind and force it on the same screen
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
                 alert.showAndWait();
                 return;
             }
             outerloop:
-            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++){
+            for (int i = 0; i < jsonObject.getJSONArray("layers").length(); i++) {
                 for (int j = 0; j < jsonObject.getJSONArray("layers").getJSONObject(i).getJSONArray("points").length(); j++) {
                     JSONObject checkPOI = jsonObject.getJSONArray("layers")
                             .getJSONObject(i)
@@ -745,6 +787,11 @@ public class MapEditingController {
                             alert.setTitle("Error Editing");
                             alert.setHeaderText("Unable to edit because the POI already exists!");
                             alert.setContentText("Please enter a different POI name or room number");
+
+                            // Make the alert prevent interaction with the windows behind and force it on the same screen
+                            alert.initModality(Modality.APPLICATION_MODAL);
+                            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
                             alert.showAndWait();
                             return;
                         }
@@ -775,12 +822,22 @@ public class MapEditingController {
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Editing");
             alert.setHeaderText("Unable to edit the POI!");
             alert.setContentText("Please select a POI to edit first.");
+
+            // Make the alert prevent interaction with the windows behind and force it on the same screen
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
             return;
         }
@@ -789,11 +846,11 @@ public class MapEditingController {
 
         fileWriter.close();
 
-        for (Layer layer : currentFloorMap.getLayers()){
-            for(PointOfInterest point : layer.getPoints()){
+        for (Layer layer : currentFloorMap.getLayers()) {
+            for (PointOfInterest point : layer.getPoints()) {
                 if (point.getName().equalsIgnoreCase(roomName)
                         && point.getRoomNumber().equalsIgnoreCase(poiRoomNumber)
-                        && point.getType().equalsIgnoreCase(roomType)){
+                        && point.getType().equalsIgnoreCase(roomType)) {
                     point.setName(poiName.getText());
                     point.setRoomNumber(roomNumber.getText());
                     point.setDescription(Description.getText());
@@ -803,7 +860,6 @@ public class MapEditingController {
                 }
             }
         }
-
     }
 
     /**

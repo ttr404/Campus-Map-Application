@@ -21,9 +21,9 @@ public class SearchResult {
      * Creates a new SearchResult object representing a point of interest on a specific floor map.
      *
      * @param floorMap the FloorMap object where the point of interest is located
-     * @param poi the PointOfInterest object representing the point of interest
+     * @param poi      the PointOfInterest object representing the point of interest
      */
-    public SearchResult(FloorMap floorMap, PointOfInterest poi){
+    public SearchResult(FloorMap floorMap, PointOfInterest poi) {
         this.floorMap = floorMap;
         this.poi = poi;
     }
@@ -70,7 +70,7 @@ public class SearchResult {
      * @return a String representation of this search result
      */
     @Override
-    public String toString(){
+    public String toString() {
         // Handling Null cases
         String floorMapName = floorMap != null ? floorMap.getName() : "null";
         String poiName = poi != null ? poi.toString() : "null";

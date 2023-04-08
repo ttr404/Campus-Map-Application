@@ -273,7 +273,7 @@ public class ConfigUtil {
      * Updates the favorite status of Points of Interest (POIs) in the given BaseMap and FloorMap
      * based on the current user's list of favorite POIs.
      *
-     * @param baseMap the BaseMap containing the FloorMap
+     * @param baseMap  the BaseMap containing the FloorMap
      * @param floorMap the FloorMap containing the layers with POIs to update
      */
     private static void updateFavorite(BaseMap baseMap, FloorMap floorMap) {

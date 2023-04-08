@@ -1,6 +1,7 @@
 package org.uwo.cs2212.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 /**

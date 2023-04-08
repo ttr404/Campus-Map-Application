@@ -86,9 +86,10 @@ public class PointOfInterest {
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
+
     @Override
-    public String toString(){
-        return "Room Type: " + type +"\n" + "Room Name: " + name + " \n" + description;
+    public String toString() {
+        return "Room Type: " + type + "\n" + "Room Name: " + name + " \n" + description;
     }
 
     /**

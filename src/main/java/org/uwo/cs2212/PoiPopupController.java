@@ -2,9 +2,11 @@ package org.uwo.cs2212;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.uwo.cs2212.model.FavoritePoi;
 import org.uwo.cs2212.model.PointOfInterest;
@@ -98,7 +100,7 @@ public class PoiPopupController implements Initializable {
      * This method is called when the favourite button is clicked which calls the setFavouriteButtonState
      * method to toggle the favourite state
      *
-     * @param actionEvent
+     * @param actionEvent an ActionEvent object representing the click event
      */
     public void OnFavouriteClicked(ActionEvent actionEvent) {
         setFavouriteButtonState();
@@ -108,7 +110,7 @@ public class PoiPopupController implements Initializable {
      * This method is called when the save button is clicked this collects all the data the user
      * entered then runs the save method
      *
-     * @param actionEvent
+     * @param actionEvent an ActionEvent object representing the click event
      */
     public void OnSaveClicked(ActionEvent actionEvent) {
         // If the user didn't enter the required information inform them
@@ -124,13 +126,16 @@ public class PoiPopupController implements Initializable {
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
 
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
             alert.showAndWait();
         } else { // Otherwise, save and close the Add POI pop-up
-            // If editMode is true then call the method to save the   edited POI
+            // If editMode is true then call the method to save the edited POI
             if (editMode) {
-                edit(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText());
+                edit(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText(), actionEvent);
             } else { // Otherwise, call the method to save the POI
-                save(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText());
+                save(NameField.getText(), RoomNumberField.getText(), DescriptionField.getText(), actionEvent);
             }
 
             stage.close();
@@ -140,11 +145,12 @@ public class PoiPopupController implements Initializable {
     /**
      * This method is used to create a POI using the given information and call the required helper methods to save it
      *
-     * @param name The name of the POI
-     * @param roomNumber The room number for the POI
+     * @param name        The name of the POI
+     * @param roomNumber  The room number for the POI
      * @param description The description for the POI
+     * @param actionEvent an ActionEvent object representing the click event
      */
-    private void save(String name, String roomNumber, String description) {
+    private void save(String name, String roomNumber, String description, ActionEvent actionEvent) {
         // Used to store if the user data saved successfully
         boolean saveSuccessful;
 
@@ -170,9 +176,10 @@ public class PoiPopupController implements Initializable {
         FavoritePoi.setUserFavourite(poi);
 
         // Show a successfully saved method
+        Alert alert;
         if (saveSuccessful) {
             // Create a success message box
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Save POI");
             alert.setHeaderText("Successfully saved the POI!");
             alert.setContentText("The POI was successfully added to your list of POIs.");
@@ -182,10 +189,9 @@ public class PoiPopupController implements Initializable {
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
 
-            alert.showAndWait();
         } else {
             // Create an error message box
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Saving POI");
             alert.setHeaderText("Unable to save POI!");
             alert.setContentText("An error occurred while saving.");
@@ -195,30 +201,35 @@ public class PoiPopupController implements Initializable {
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
 
-            alert.showAndWait();
         }
+
+        // Make the alert prevent interaction with the windows behind and force it on the same screen
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
+        alert.showAndWait();
     }
 
     /**
      * This method is used to edit a POI using the given information and call the required helper methods to edit it
      *
-     * @param name The name of the POI
-     * @param roomNumber The room number for the POI
+     * @param name        The name of the POI
+     * @param roomNumber  The room number for the POI
      * @param description The description for the POI
+     * @param actionEvent an ActionEvent object representing the click event
      */
-    private void edit(String name, String roomNumber, String description) {
+    private void edit(String name, String roomNumber, String description, ActionEvent actionEvent) {
         // Used to store if the user data saved successfully
         boolean saveSuccessful;
 
         // Get currently selected POI
         PointOfInterest currentSelectedPoi = CurrentUser.getCurrentSelectedPoi();
-        // Set the state of the favourite
-        currentSelectedPoi.setFavorite(favourite);
 
-        // Set the POI as a favourite or not for the user
+        // Remove the POI from the favourites before editing
+        currentSelectedPoi.setFavorite(false);
         FavoritePoi.setUserFavourite(currentSelectedPoi);
 
-        // Create a new POI
+        // Create a new POI to store the updated information
         PointOfInterest editedPOI = new PointOfInterest();
 
         // Add the information to the edited POI
@@ -235,6 +246,9 @@ public class PoiPopupController implements Initializable {
         CurrentUser.editPoi(editedPOI);
         // Save the object to a JSON file and store if the method saved successfully
         saveSuccessful = CurrentUser.saveUserData();
+
+        // Set the updated POI as a favourite or not
+        FavoritePoi.setUserFavourite(editedPOI);
 
         Alert alert;
         // Show a successfully saved alert
@@ -262,6 +276,11 @@ public class PoiPopupController implements Initializable {
             alert.setGraphic(imageView);
 
         }
+
+        // Make the alert prevent interaction with the windows behind and force it on the same screen
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
+
         alert.showAndWait();
     }
 

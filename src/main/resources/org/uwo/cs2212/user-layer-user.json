@@ -7,11 +7,11 @@
     "size" : 16.0,
     "hideLayer" : false,
     "points" : [ {
-      "x" : 349.0,
-      "y" : 441.0,
-      "name" : "Test",
-      "roomNumber" : "21345",
-      "description" : "",
+      "x" : 365.0,
+      "y" : 504.0,
+      "name" : "My Favourite Room",
+      "roomNumber" : "10",
+      "description" : "My Favourite Room 10",
       "type" : "User POI"
     } ],
     "floorName" : "Ground Floor",
@@ -24,21 +24,31 @@
     "size" : 16.0,
     "hideLayer" : false,
     "points" : [ {
-      "x" : 320.0,
-      "y" : 167.0,
-      "name" : "Yooooo",
-      "roomNumber" : "2345",
-      "description" : "",
+      "x" : 964.0000027716158,
+      "y" : 485.5,
+      "name" : "My Favourite Building!!!!",
+      "roomNumber" : "01",
+      "description" : "This is a great study spot!",
       "type" : "User POI"
     } ],
     "floorName" : "Main campus",
     "baseName" : "Western Main Campus"
+  }, {
+    "name" : "User layer",
+    "layerType" : "User layer",
+    "color" : "BLACK",
+    "font" : "Arial",
+    "size" : 16.0,
+    "hideLayer" : false,
+    "points" : [ ],
+    "floorName" : "3rd floor",
+    "baseName" : "Middlesex College Building"
   } ],
   "favoritePois" : [ {
-    "baseMapName" : "Middlesex College Building",
-    "floorMapName" : "Ground Floor",
-    "layerName" : "Classroom layer",
-    "poiName" : "MC17"
+    "baseMapName" : "Western Main Campus",
+    "floorMapName" : "Main campus",
+    "layerName" : "User layer",
+    "poiName" : "My Favourite Building!!!!"
   }, {
     "baseMapName" : "Western Main Campus",
     "floorMapName" : "Main campus",
@@ -47,12 +57,17 @@
   }, {
     "baseMapName" : "Middlesex College Building",
     "floorMapName" : "Ground Floor",
-    "layerName" : "User layer",
-    "poiName" : "Test"
+    "layerName" : "Classroom layer",
+    "poiName" : "MC17"
   }, {
     "baseMapName" : "Middlesex College Building",
-    "floorMapName" : "Main campus",
+    "floorMapName" : "Ground Floor",
     "layerName" : "User layer",
-    "poiName" : "Yooooo"
+    "poiName" : "My Favourite Room"
+  }, {
+    "baseMapName" : "Middlesex College Building",
+    "floorMapName" : "3rd floor",
+    "layerName" : "Classroom layer",
+    "poiName" : "MC320"
   } ]
 }

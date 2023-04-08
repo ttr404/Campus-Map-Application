@@ -1,7 +1,6 @@
 package org.uwo.cs2212.model;
 
 import org.uwo.cs2212.CurrentUser;
-import org.uwo.cs2212.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,7 @@ public class UserData {
         this.userLayers = new ArrayList<>();
         this.favoritePois = new ArrayList<>();
     }
+
     public List<UserLayer> getUserLayers() {
         return userLayers;
     }
@@ -34,16 +34,16 @@ public class UserData {
      * This method is used to add a Point of Interest (POI) to the corresponding
      * UserLayer for the given BaseMap and FloorMap.
      *
-     * @param baseMap the BaseMap containing the FloorMap
+     * @param baseMap  the BaseMap containing the FloorMap
      * @param floorMap the FloorMap where the POI is located
-     * @param poi the Point of Interest to be added
+     * @param poi      the Point of Interest to be added
      */
-    public void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi){
+    public void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi) {
         // Used to store if a new userLayer had to be created
         boolean newUserLayerCreated = false;
 
         UserLayer userLayer = findUserLayer(baseMap, floorMap, this);
-        if (userLayer == null){
+        if (userLayer == null) {
             newUserLayerCreated = true;
             userLayer = new UserLayer();
             userLayer.setBaseName(baseMap.getName());
@@ -61,7 +61,7 @@ public class UserData {
         userLayer.getPoints().add(poi);
 
         // If userLayers is empty create a new list
-        if(userLayers == null){
+        if (userLayers == null) {
             userLayers = new ArrayList<>();
         }
 
@@ -74,11 +74,11 @@ public class UserData {
     }
 
     /**
-     *  This method is used to remove a Point of Interest (POI) from the corresponding
-     *  UserLayer for the given BaseMap and FloorMap and POI.
+     * This method is used to remove a Point of Interest (POI) from the corresponding
+     * UserLayer for the given BaseMap and FloorMap and POI.
      *
-     * @param baseMap The BaseMap the POI is on
-     * @param floorMap The FloorMap the POI is on
+     * @param baseMap     The BaseMap the POI is on
+     * @param floorMap    The FloorMap the POI is on
      * @param poiToRemove The POI to be removed
      */
     public void removePOI(BaseMap baseMap, FloorMap floorMap, PointOfInterest poiToRemove) {
@@ -98,9 +98,9 @@ public class UserData {
     /**
      * This method is used to edit a given POI in the corresponding UserLayer for the given BaseMap and FloorMap
      *
-     * @param baseMap The BaseMap the POI is on
-     * @param floorMap The FloorMap the POI is on
-     * @param oldPOI The POI that is being updated
+     * @param baseMap    The BaseMap the POI is on
+     * @param floorMap   The FloorMap the POI is on
+     * @param oldPOI     The POI that is being updated
      * @param updatedPOI The updated POI (this is a new POI instead of editing the old one to allow searching for the old POI)
      */
     public void editPOI(BaseMap baseMap, FloorMap floorMap, PointOfInterest oldPOI, PointOfInterest updatedPOI) {
@@ -141,8 +141,8 @@ public class UserData {
     /**
      * Removes a favorite POI from the favoritePois list.
      *
-     * @param poi The POI to remove from the favoritePois list
-     * @param baseMap The BaseMap for the POI to be removed
+     * @param poi      The POI to remove from the favoritePois list
+     * @param baseMap  The BaseMap for the POI to be removed
      * @param floorMap The FloorMap for the POI to be removed
      */
     public void removeFavourite(PointOfInterest poi, BaseMap baseMap, FloorMap floorMap) {
@@ -163,8 +163,8 @@ public class UserData {
     /**
      * Adds a favorite POI to the favoritePois list.
      *
-     * @param poi The POI to add to the favoritePois list
-     * @param baseMap The BaseMap for the POI to be added
+     * @param poi      The POI to add to the favoritePois list
+     * @param baseMap  The BaseMap for the POI to be added
      * @param floorMap The FloorMap for the POI to be added
      */
     public void addFavourite(PointOfInterest poi, BaseMap baseMap, Layer layer, FloorMap floorMap) {
@@ -177,10 +177,10 @@ public class UserData {
         CurrentUser.saveUserData();
     }
 
-    public static UserLayer findUserLayer(BaseMap baseMap, FloorMap floorMap, UserData userLayerList){
-        if (userLayerList != null && userLayerList.getUserLayers() != null){
-            for(UserLayer userLayer : userLayerList.getUserLayers()){
-                if(userLayer.getFloorName().equals(floorMap.getName()) && userLayer.getBaseName().equals(baseMap.getName())){
+    public static UserLayer findUserLayer(BaseMap baseMap, FloorMap floorMap, UserData userLayerList) {
+        if (userLayerList != null && userLayerList.getUserLayers() != null) {
+            for (UserLayer userLayer : userLayerList.getUserLayers()) {
+                if (userLayer.getFloorName().equals(floorMap.getName()) && userLayer.getBaseName().equals(baseMap.getName())) {
                     return userLayer;
                 }
             }

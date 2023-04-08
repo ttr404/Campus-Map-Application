@@ -26,8 +26,8 @@ public class Weather {
     /**
      * Constructs a new Weather object with the specified latitude and longitude.
      *
-     * @param latitude       the latitude of the location for which to retrieve weather information
-     * @param longitude      the longitude of the location for which to retrieve weather information
+     * @param latitude  the latitude of the location for which to retrieve weather information
+     * @param longitude the longitude of the location for which to retrieve weather information
      * @throws IOException if there was an error retrieving the weather data
      */
     public Weather(double latitude, double longitude) throws IOException {
@@ -39,9 +39,10 @@ public class Weather {
 
     /**
      * Retrieves the current weather description for the location specified in the constructor.
+     *
      * @return a String representing the current weather description, or "---" if there was an error retrieving the data
      */
-    public String getWeather(){
+    public String getWeather() {
         JSONObject data = retrieveData();
 
         if (data.has("error")) {
@@ -53,7 +54,7 @@ public class Weather {
         icon = weather.getString("icon");
 
         // Split the string apart in order to capitalize the first letter of the weather
-        String firstCharCurrWeather = currWeather.substring(0,1);
+        String firstCharCurrWeather = currWeather.substring(0, 1);
         String remainingCurrWeather = currWeather.substring(1);
 
         // Return the current weather with the first letter capitalized
@@ -62,9 +63,10 @@ public class Weather {
 
     /**
      * Retrieves the current temperature for the location specified in the constructor.
+     *
      * @return a Double representing the current temperature in Celsius, or Double.NaN if there was an error retrieving the data
      */
-    public Double getTemp(){
+    public Double getTemp() {
         JSONObject data = retrieveData();
 
         // Check if there's an error (no internet connection)
@@ -78,9 +80,10 @@ public class Weather {
 
     /**
      * Retrieves the JSON data for the weather information from the OpenWeatherMap API.
+     *
      * @return a JSONObject representing the weather data
      */
-    public JSONObject retrieveData(){
+    public JSONObject retrieveData() {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(fetchWeather().getInputStream()));
             String inputLine;
@@ -95,7 +98,7 @@ public class Weather {
 
             JSONObject jsonObject = new JSONObject(jsonData);
             return jsonObject;
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("HTTP Connection Error: " + e.getMessage());
             JSONObject errorObject = new JSONObject();
             errorObject.put("error", "No internet connection");
@@ -105,6 +108,7 @@ public class Weather {
 
     /**
      * Retrieves an HttpURLConnection for the weather information from the OpenWeatherMap API.
+     *
      * @return an HttpURLConnection object that can be used to retrieve the weather data
      * @throws IOException if there was an error connecting to the API
      */
@@ -118,6 +122,7 @@ public class Weather {
 
     /**
      * Retrieves an ImageView for the specified weather icon.
+     *
      * @param icon a String representing the weather icon code
      * @return an ImageView object for the specified icon
      * @throws IOException if there was an error retrieving the icon image
@@ -132,9 +137,10 @@ public class Weather {
 
     /**
      * Retrieves the current weather icon code for the location specified in the constructor.
+     *
      * @return a String representing the current weather icon code
      */
-    public String getIcon(){
+    public String getIcon() {
         return icon;
     }
 }

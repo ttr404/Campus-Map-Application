@@ -15,10 +15,10 @@ public class FavoritePoi {
     private String layerName;
     private String poiName;
 
-    public FavoritePoi(){
+    public FavoritePoi() {
     }
 
-    public FavoritePoi(String baseMapName, String floorMapName, String layerName, String poiName){
+    public FavoritePoi(String baseMapName, String floorMapName, String layerName, String poiName) {
         this.baseMapName = baseMapName;
         this.floorMapName = floorMapName;
         this.layerName = layerName;
