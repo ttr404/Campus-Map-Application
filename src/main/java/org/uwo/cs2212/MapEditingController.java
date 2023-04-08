@@ -254,11 +254,15 @@ public class MapEditingController {
                 addPOI.setDisable(true);
                 editPOI.setDisable(false);
                 deletePOI.setDisable(false);
+
+                setFields();
             } else {
                 // Enable only add button
                 addPOI.setDisable(false);
                 editPOI.setDisable(true);
                 deletePOI.setDisable(true);
+
+                clearFields();
             }
 
             showMap();
@@ -658,6 +662,9 @@ public class MapEditingController {
             imageView.setFitWidth(50);
             alert.setGraphic(imageView);
             alert.showAndWait();
+
+            // Make the fields for entering info empty
+            clearFields();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Deleting");
@@ -797,5 +804,25 @@ public class MapEditingController {
             }
         }
 
+    }
+
+    /**
+     * This method clears all the fields for entering information about the POI
+     */
+    private void clearFields() {
+        poiName.setText("");
+        roomNumber.setText("");
+        Description.setText("");
+        roomSelector.valueProperty().setValue("");
+    }
+
+    /**
+     * This method sets the fields for entering information to the currently selected POI's information
+     */
+    private void setFields() {
+        poiName.setText(roomName);
+        roomNumber.setText(poiRoomNumber);
+        Description.setText(roomDescription);
+        roomSelector.valueProperty().setValue(roomType);
     }
 }
