@@ -79,13 +79,13 @@ public class LoginViewController {
     public void logIn() throws IOException {
         if (checkAccount()) {
             CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
-            URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
+            URL currentUserUrl = CurrentUser.getCurrentUserLayerName();
 
             // Reset the user's session data to prevent other user's data being shown for other users
             CurrentUser.resetSessionData();
 
             if(currentUserUrl != null){
-                CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerUrl()));
+                CurrentUser.setUserData(ConfigUtil.loadUserLayers(CurrentUser.getCurrentUserLayerName()));
             }
 
             FXMLLoader fxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("main-view.fxml"));
