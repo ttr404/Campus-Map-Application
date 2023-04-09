@@ -498,8 +498,8 @@ public class CampusMapController implements Initializable {
     private void aboutButtonAction(ActionEvent event) {
         Stage stage = new Stage();
         String s = "Western Campus Navigation App\n" +
-                "Version: 1.3.4\n" +
-                "Release Date: April 5, 2023\n" +
+                "Version: 1.8.0\n" +
+                "Release Date: April 9, 2023\n" +
                 "\n" +
                 "Our Team:\n" +
                 "\n" +
@@ -618,21 +618,43 @@ public class CampusMapController implements Initializable {
             case "POIs and Favourites":
                 return """
 
-                        To use the favourite and POI (point of interest) functions in the map navigation app, you can do the following:
+                        To use the POI (point of interest) functions in the map navigation app, you can do the following:
+                        
+                        Adding POIs:
                                                 
-                        1. To add a POI to the map, click on the desired point on the map and then click the "Add POI" button located at the top of the screen.
+                            1. To add a POI to the map, click on the desired point on the map and then click the “Add POI“ button located at the top of the screen.
+                                                    
+                            2. Fill in the name and any relevant details about the POI, such as a room number and description. You can also add the new POI to your favourites at the same time.
+                                                    
+                            3. Click “Save“ to add the POI to your map. (However, if you changed your mind click the close button on the popup).
+                            
+                        Editing POIs:
+                        
+                            1. First, select a POI, either click on it from the map or one of the left side bar functions to find the POI you're looking for then select it from the list.
+                            
+                            2. Now you can click “Edit POI“
+                            
+                            3. Change any of the details in the popup
+                            
+                            4. Click “Save“ to save the edited POI. (However, if you changed your mind click the close button on the popup).
+                            
+                        Removing POIs:
+                        
+                            1. First, select a POI, either click on it from the map or one of the left side bar functions to find the POI you're looking for then select it from the list.
+                            
+                            2. Now you can click “Delete POI“
+                            
+                            3. If you're sure you want to delete it click “Ok“ to the confirmation popup. (However, if you changed your mind click the “Cancel“ button on the popup).
                                                 
-                        2. Fill in the name and any relevant details about the POI, such as a room number and description. You can also add the new POI to your favourites at the same time.
+                        To use the favourite function in the map navigation app, you can do the following:
                                                 
-                        3. Click "Save" to add the POI to your map.
+                        1. To add a location to your favourites, click on a POI point on the map or a search result from the list.
                                                 
-                        4. To add a location to your favourites, click on a POI point on the map or a search result from the list.
+                        2. Once you have selected a location, click the Favourite button, it's the one with a star, to add it to your favourites list. This button should be highlighted when clicking on the favourite POIs.
                                                 
-                        5. Once you have selected a location, click the Favourite button, it's the one with a star, to add it to your favourites list. This button should be highlighted or easily visible when clicking on the appropriate POI.
+                        3. To access your favourites, click the “Favourites“ button under the search bar in the app. This will display a list of all the locations you have saved as favourites.
                                                 
-                        6. To access your favourites, click the "Favourites" button in the app. This will display a list of all the locations you have saved as favourites.
-                                                
-                        7. To remove a POI or favourite from your list, click on the item and then click the "Favourite" button.
+                        4. To remove a POI or favourite from your list, click on the item and then click the highlighted star button in the top right of the screen.
                                                 
                         By using the favourite and POI functions in a map navigation app, you can quickly and easily save important locations and points of interest for future reference. This can make it easier to navigate to these locations in the future.""";
 
@@ -644,19 +666,19 @@ public class CampusMapController implements Initializable {
                                                 
                         1. Log in to your admin account.
                                                 
-                        2. Click on the "Editor" mode button in the app.
+                        2. Click on the “Editor“ mode button in the app.
                                                 
                         3. Once in Editor mode, you can add, delete, or edit POIs on the map.
                                                 
-                        4. To add a new POI, select a location on the map and click the "Add POI" button at the top of the screen.
+                        4. To add a new POI, select a location on the map and click the “Add POI“ button at the top of the screen.
                                                 
                         5. Fill in the required details, including the POI name, room number, and room type, by selecting a choice from the drop-down box.
                                                 
-                        6. To delete or edit an existing POI, select the POI on the map and click either the "Delete" or "Edit" buttons.
+                        6. To delete or edit an existing POI, select the POI on the map and click either the “Delete“ or “Edit“ buttons.
                                                 
-                        7. If you choose to edit the POI, make any necessary changes to the details and then click "Edit" to save the changes
+                        7. If you choose to edit the POI, make any necessary changes to the details and then click “Edit“ to save the changes
                                                 
-                        8. Click "Close" to save the change of POI and return to the main page.
+                        8. Click “Close“ to save the change of POI and return to the main page.
                                               
                         Using the Editor mode allows admin users to customize the POIs on the map and keep them up-to-date with the latest information, which can improve the accuracy and usefulness of the app for all users.""";
             case "Search Function":
@@ -664,13 +686,13 @@ public class CampusMapController implements Initializable {
 
                         To use the search function in a map navigation app, follow these steps:
 
-                        1. Type in your desired destination or point of interest and click search. For example, you could search for a specific classroom, lab name, or type of place (e.g., "lab101").
+                        1. Type in your desired destination or point of interest and click search. For example, you could search for a specific classroom, lab name, or type of place (e.g., “lab101“).
 
                         2. The app will display a list of results that match your search terms. Select the result you want to navigate to in the search list below.
 
                         3. If you want to quickly find a specific type of point of interest, look for the checkboxes on the map that correspond to different categories, such as washroom or classroom.
 
-                        4. Finally, if you have any favourite locations saved in the app, you can access them by tapping on the "Favourites" button. This will show you a list of all the locations you have saved, so you can easily navigate to them without having to search for them again.""";
+                        4. Finally, if you have any favourite locations saved in the app, you can access them by tapping on the “Favourites“ button. This will show you a list of all the locations you have saved, so you can easily navigate to them without having to search for them again.""";
             default:
                 return "";
         }
