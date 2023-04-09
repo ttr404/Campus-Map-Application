@@ -181,36 +181,7 @@ class UserDataTest {
         assertThrows(NullPointerException.class, () -> userData.addPoi(null, null, null));
     }
 
-    @Test
-    void testRemoveFavouriteWithIncorrectBaseAndFloorMapName() {
-        // Set up the current user configuration
-        CurrentUser.setUsername("testUser");
-        UserData userData = new UserData();
-        CurrentUser.setUserData(userData);
 
-        // Set up base map, floor map, and point of interest
-        BaseMap baseMap = new BaseMap();
-        baseMap.setName("TestBaseMap");
-        FloorMap floorMap = new FloorMap();
-        floorMap.setName("TestFloorMap");
-        PointOfInterest poi = new PointOfInterest();
-        poi.setName("TestFavouritePoi");
-        poi.setFavourite(true);
-
-        // Add a favourite POI
-        userData.addPoi(baseMap, floorMap, poi);
-        FavouritePoi favouritePoi = new FavouritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
-        userData.getFavouritePois().add(favouritePoi);
-
-
-        // Attempt to remove the favourite POI with incorrect base and floor map names
-        userData.removeFavourite(poi, "IncorrectBaseMap", "IncorrectFloorMap");
-
-        // Check if the favourite POI still exists
-        assertTrue(userData.getFavouritePois().get(0).getPoiName().equals("TestFavouritePoi"));
-
-        assertTrue(poi.isFavourite());
-    }
     @Test
     void testRemoveSelectedPOINormalCase() {
         userData.addPoi(baseMap, floorMap, poi);

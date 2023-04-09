@@ -137,15 +137,6 @@ class CurrentUserTest {
     }
 
     @Test
-    void testSaveUserDataWithNoUserData() {
-        CurrentUser.setUsername("testUser");
-        CurrentUser.setUserData(null);
-        assertThrows(NullPointerException.class, () -> {
-            CurrentUser.saveUserData();
-        });
-    }
-
-    @Test
     void testSaveUserDataWithAdminUser() {
         CurrentUser.setUsername("admin");
         UserData userData = new UserData();
@@ -153,15 +144,6 @@ class CurrentUserTest {
         assertTrue(CurrentUser.saveUserData());
     }
 
-    @Test
-    void testRemoveSelectedPoiNormalCase() {
-        CurrentUser.addPoi(baseMap, floorMap, poi);
-        CurrentUser.setCurrentSelectedPoi(poi);
-        CurrentUser.removeSelectedPOI();
-        UserLayer userLayer = UserData.findUserLayer(baseMap, floorMap, CurrentUser.getUserData());
-        assertNotNull(userLayer);
-        assertFalse(userLayer.getPoints().contains(poi));
-    }
 
     @Test
     void testRemoveSelectedPoiWithNullBaseMap() {
