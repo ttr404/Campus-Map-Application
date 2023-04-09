@@ -6,6 +6,7 @@ import org.uwo.cs2212.model.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -42,7 +43,9 @@ public class ConfigUtil {
     public static MapConfig loadMapConfig(URL url) {
         try {
             // Read the JSON file data to a byte array
-            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            InputStream inputStream = url.openStream();
+            byte[] mapJsonData = inputStream.readAllBytes();
+
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -52,18 +55,14 @@ public class ConfigUtil {
 
             URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
             if (currentUserUrl != null) {
-                File file = new File(currentUserUrl.toURI());
+                InputStream inputStream1 = currentUserUrl.openStream();
                 // Check if the file contains data
-                if (file.length() > 0) {
+                if (inputStream1.available() > 0) {
                     CurrentUser.setUserData(ConfigUtil.loadUserLayers(currentUserUrl));
                 } else {
                     // Delete the file if it is blank to prevent crashes
                     try {
-                        if (file.delete()) {
-                            System.out.println(file.getName() + " is deleted!");
-                        } else {
-                            System.out.println("Delete operation is failed.");
-                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -100,8 +99,6 @@ public class ConfigUtil {
             return mapConfig;
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -120,7 +117,8 @@ public class ConfigUtil {
     public static FloorMap loadFloorMap(URL url) {
         try {
             // Read the JSON file data to a byte array
-            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            InputStream inputStream = url.openStream();
+            byte[] mapJsonData = inputStream.readAllBytes();
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -132,9 +130,6 @@ public class ConfigUtil {
             return floorMap;
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
             throw new RuntimeException(e);
         }
     }
@@ -151,7 +146,8 @@ public class ConfigUtil {
     public static UserList loadUserList(URL url) {
         try {
             // Read the JSON file data to a byte array
-            byte[] userJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            InputStream inputStream = url.openStream();
+            byte[] userJsonData = inputStream.readAllBytes();
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -163,9 +159,6 @@ public class ConfigUtil {
             return userList;
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
             throw new RuntimeException(e);
         }
     }
@@ -181,7 +174,8 @@ public class ConfigUtil {
     public static UserData loadUserLayers(URL url) {
         try {
             // Read the JSON file data to a byte array
-            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            InputStream inputStream = url.openStream();
+            byte[] mapJsonData = inputStream.readAllBytes();
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -193,9 +187,6 @@ public class ConfigUtil {
             return userLayers;
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
             throw new RuntimeException(e);
         }
     }

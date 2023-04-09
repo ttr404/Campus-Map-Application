@@ -104,10 +104,8 @@ public class MapEditorController {
      */
     protected void showMap() {
         try {
-            URL mapUrl = CampusMapController.class.getResource(CurrentUser.getCurrentFloorMap().getMapFileName());
-            URI uri = mapUrl.toURI();
-            InputStream stream = new FileInputStream(new File(uri));
-            Image image = new Image(stream);
+            InputStream inputStream = CampusMapController.class.getResourceAsStream(CurrentUser.getCurrentFloorMap().getMapFileName());
+            Image image = new Image(inputStream);
             imageHeight = image.getHeight();
             imageWidth = image.getWidth();
             //Creating the image view
@@ -427,10 +425,8 @@ public class MapEditorController {
     private void loadMapForEditing() {
         if (currentFloorMap != null) {
             try {
-                URL mapUrl = getClass().getResource(currentFloorMap.getMapFileName());
-                URI uri = mapUrl.toURI();
-                InputStream stream = new FileInputStream(new File(uri));
-                Image image = new Image(stream);
+                InputStream inputStream = getClass().getResourceAsStream(currentFloorMap.getMapFileName());
+                Image image = new Image(inputStream);
 //                double imageHeight = image.getHeight();
 //                double imageWidth = image.getWidth();
 

@@ -419,10 +419,9 @@ public class CampusMapController implements Initializable {
      */
     protected void showMap() {
         try {
-            URL mapUrl = CampusMapController.class.getResource(CurrentUser.getCurrentFloorMap().getMapFileName());
-            URI uri = mapUrl.toURI();
-            InputStream stream = new FileInputStream(new File(uri));
-            Image image = new Image(stream);
+            InputStream map = CampusMapController.class.getResourceAsStream(CurrentUser.getCurrentFloorMap().getMapFileName());
+            Image image = new Image(map);
+
             imageHeight = image.getHeight();
             imageWidth = image.getWidth();
             //Creating the image view
