@@ -65,9 +65,9 @@ class UserDataTest {
     }
 
     @Test
-    void testEmptyFavoritePois() {
-        userData.setFavoritePois(new ArrayList<>());
-        assertEquals(0, userData.getFavoritePois().size());
+    void testEmptyFavouritePois() {
+        userData.setFavouritePois(new ArrayList<>());
+        assertEquals(0, userData.getFavouritePois().size());
     }
 
     @Test
@@ -111,23 +111,23 @@ class UserDataTest {
         FloorMap floorMap = new FloorMap();
         floorMap.setName("TestFloorMap");
         PointOfInterest poi = new PointOfInterest();
-        poi.setName("TestFavoritePoi");
-        poi.setFavorite(true);
+        poi.setName("TestFavouritePoi");
+        poi.setFavourite(true);
 
         CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
 
-        // Add a favorite POI
+        // Add a favourite POI
         userData.addPoi(baseMap, floorMap, poi);
-        FavoritePoi favoritepoi = new FavoritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
-        userData.getFavoritePois().add(favoritepoi);
-        // Remove the favorite POI
+        FavouritePoi favouritepoi = new FavouritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
+        userData.getFavouritePois().add(favouritepoi);
+        // Remove the favourite POI
         userData.removeFavourite(poi, baseMap, floorMap);
 
-        // Check if the favorite POI was removed
-        assertFalse(userData.getFavoritePois().contains(favoritepoi));
+        // Check if the favourite POI was removed
+        assertFalse(userData.getFavouritePois().contains(favouritepoi));
 
-        // Check if the favorite flag was changed
-        assertFalse(poi.isFavorite());
+        // Check if the favourite flag was changed
+        assertFalse(poi.isFavourite());
     }
 
     @Test
@@ -139,10 +139,10 @@ class UserDataTest {
     }
 
     @Test
-    void testFavoritePoisGetterAndSetter() {
-        List<FavoritePoi> favoritePois = new ArrayList<>();
-        FavoritePoi favoritePoi = new FavoritePoi();
-        favoritePoi.setPoiName("Test FavoritePoi");
+    void testFavouritePoisGetterAndSetter() {
+        List<FavouritePoi> favouritePois = new ArrayList<>();
+        FavouritePoi favouritePoi = new FavouritePoi();
+        favouritePoi.setPoiName("Test FavouritePoi");
     }
     // Additional test cases
 
@@ -171,9 +171,9 @@ class UserDataTest {
 
     @Test
     void testRemoveNonExistingFavourite() {
-        // Attempt to remove a non-existing favorite POI
+        // Attempt to remove a non-existing favourite POI
         userData.removeFavourite(poi, baseMap, floorMap);
-        assertTrue(userData.getFavoritePois().isEmpty());
+        assertTrue(userData.getFavouritePois().isEmpty());
     }
 
     @Test
@@ -194,22 +194,22 @@ class UserDataTest {
         FloorMap floorMap = new FloorMap();
         floorMap.setName("TestFloorMap");
         PointOfInterest poi = new PointOfInterest();
-        poi.setName("TestFavoritePoi");
-        poi.setFavorite(true);
+        poi.setName("TestFavouritePoi");
+        poi.setFavourite(true);
 
-        // Add a favorite POI
+        // Add a favourite POI
         userData.addPoi(baseMap, floorMap, poi);
-        FavoritePoi favoritePoi = new FavoritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
-        userData.getFavoritePois().add(favoritePoi);
+        FavouritePoi favouritePoi = new FavouritePoi(baseMap.getName(), floorMap.getName(), null, poi.getName());
+        userData.getFavouritePois().add(favouritePoi);
 
 
-        // Attempt to remove the favorite POI with incorrect base and floor map names
+        // Attempt to remove the favourite POI with incorrect base and floor map names
         userData.removeFavourite(poi, "IncorrectBaseMap", "IncorrectFloorMap");
 
-        // Check if the favorite POI still exists
-        assertTrue(userData.getFavoritePois().get(0).getPoiName().equals("TestFavoritePoi"));
+        // Check if the favourite POI still exists
+        assertTrue(userData.getFavouritePois().get(0).getPoiName().equals("TestFavouritePoi"));
 
-        assertTrue(poi.isFavorite());
+        assertTrue(poi.isFavourite());
     }
     @Test
     void testRemoveSelectedPOINormalCase() {

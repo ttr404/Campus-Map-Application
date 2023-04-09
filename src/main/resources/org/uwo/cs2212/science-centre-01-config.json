@@ -19,25 +19,25 @@
         {
           "x": 470,
           "y": 370,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "154A",
-          "description": "1F Barrier-free Men's washroom",
+          "description": "WSC 1F Barrier-free Men's Washroom 154A",
           "type": "Accessibility"
         },
         {
           "x": 459,
           "y": 427,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "155",
-          "description": "1F Barrier-free Women's washroom",
+          "description": "WSC 1F Barrier-free Women's Washroom 155",
           "type": "Accessibility"
         },
         {
           "x": 688,
           "y": 542,
-          "name": "Unisex washroom",
+          "name": "Unisex Washroom",
           "roomNumber": "181",
-          "description": "1F Barrier-free Unisex washroom",
+          "description": "WSC 1F Barrier-free Unisex Washroom 181",
           "type": "Accessibility"
         },
         {
@@ -45,7 +45,7 @@
           "y": 313.5,
           "name": "Entrance/Exit",
           "roomNumber": "EX.2",
-          "description": "1F Barrier-free Entrance/Exit",
+          "description": "WSC 1F Barrier-free Entrance/Exit EX.2",
           "type": "Accessibility"
         }
       ]
@@ -62,7 +62,7 @@
           "y": 288,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "WSC 1F Elevator EL.A",
           "type": "Elevator"
         }
       ]
@@ -79,7 +79,7 @@
           "y": 684.5,
           "name": "Entrance/Exit",
           "roomNumber": "EX.1",
-          "description": "Main Entrance/Exit",
+          "description": "WSC 1F Main Entrance/Exit EX.1",
           "type": "entryAndExit"
         }
       ]
@@ -96,7 +96,7 @@
           "y": 636.95,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "WSC 1F Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -104,7 +104,7 @@
           "y": 268.95,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "WSC 1F Stairwell ST.2",
           "type": "Stairwell"
         }
       ]

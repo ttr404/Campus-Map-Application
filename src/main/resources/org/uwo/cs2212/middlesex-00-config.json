@@ -15,7 +15,7 @@
           "x": 353,
           "name": "MC17",
           "y": 380,
-          "description": "MC GF Classroom 17",
+          "description": "MC MC GF Classroom 17",
           "type": "Classroom"
         },
         {
@@ -38,33 +38,33 @@
         {
           "roomNumber": "5B",
           "x": 572,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "y": 442,
-          "description": "MC GF Men's washroom",
+          "description": "MC GF Men's Washroom 58",
           "type": "Washroom"
         },
         {
           "roomNumber": "28E",
           "x": 1129,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "y": 556.01,
-          "description": "MC GF Men's washroom",
+          "description": "MC GF Men's Washroom 28E",
           "type": "Washroom"
         },
         {
           "roomNumber": "4B",
           "x": 609,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "y": 404,
-          "description": "MC GF Women's washroom",
+          "description": "MC GF Women's Washroom 4B",
           "type": "Washroom"
         },
         {
           "roomNumber": "4C",
           "x": 576.33,
-          "name": "Unisex washroom",
+          "name": "Unisex Washroom",
           "y": 364.11,
-          "description": "MC GF Barrier-free washroom",
+          "description": "MC GF Barrier-free Washroom 4C",
           "type": "Accessibility"
         },
         {
@@ -72,7 +72,7 @@
           "x": 572,
           "name": "Barrier-free Entrance/Exit",
           "y": 198,
-          "description": "MC GF Barrier-free Entrance/Exit",
+          "description": "MC GF Barrier-free Entrance/Exit EX.6",
           "type": "Accessibility"
         }
       ]
@@ -89,7 +89,7 @@
           "x": 83.33,
           "name": "Stairwell",
           "y": 589.95,
-          "description": "Stairwell ST.1",
+          "description": "MC GF Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -97,7 +97,7 @@
           "x": 270.55,
           "name": "Stairwell",
           "y": 533.84,
-          "description": "Stairwell ST.2",
+          "description": "MC GF Stairwell ST.2",
           "type": "Stairwell"
         },
         {
@@ -105,7 +105,7 @@
           "x": 826.89,
           "name": "Stairwell",
           "y": 400.17,
-          "description": "Stairwell ST.3",
+          "description": "MC GF Stairwell ST.3",
           "type": "Stairwell"
         },
         {
@@ -113,7 +113,7 @@
           "x": 1239,
           "name": "Stairwell",
           "y": 601.84,
-          "description": "Stairwell ST.5",
+          "description": "MC GF Stairwell ST.5",
           "type": "Stairwell"
         },
         {
@@ -121,7 +121,7 @@
           "x": 404.4,
           "name": "Stairwell",
           "y": 288.84,
-          "description": "Stairwell ST.6",
+          "description": "MC GF Stairwell ST.6",
           "type": "Stairwell"
         }
       ]
@@ -138,7 +138,7 @@
           "x": 664,
           "name": "Grad Club",
           "y": 239,
-          "description": "Grad Club Restaurant",
+          "description": "MC GF Grad Club Restaurant 19",
           "type": "Restaurant"
         }
       ]
@@ -155,7 +155,7 @@
           "x": 768.55,
           "name": "Elevator",
           "y": 371.34,
-          "description": "Elevator EL.A",
+          "description": "MC GF Elevator EL.A",
           "type": "Elevator"
         },
         {
@@ -163,7 +163,7 @@
           "x": 1098.5,
           "name": "Elevator",
           "y": 528.5,
-          "description": "Elevator EL.C",
+          "description": "MC GF Elevator EL.C",
           "type": "Elevator"
         }
       ]

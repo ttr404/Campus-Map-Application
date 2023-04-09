@@ -98,12 +98,12 @@ class PointOfInterestTest {
     }
 
     @Test
-    void testFavorite() {
-        poi.setFavorite(true);
-        assertTrue(poi.isFavorite());
+    void testFavourite() {
+        poi.setFavourite(true);
+        assertTrue(poi.isFavourite());
 
-        poi.setFavorite(false);
-        assertFalse(poi.isFavorite());
+        poi.setFavourite(false);
+        assertFalse(poi.isFavourite());
     }
 
     @Test

@@ -52,7 +52,7 @@
                      <Button fx:id="addPOI" onAction="#onAddPOIClicked" style="-fx-background-color: #b3dee5;" text="Add POI" />
                      <Button fx:id="editPOI" onAction="#onEditPOIClicked" style="-fx-background-color: #b3dee5;" text="Edit POI" />
                      <Button fx:id="deletePOI" onAction="#onDeletePOIClicked" style="-fx-background-color: #b3dee5;" text="Delete POI" />
-                          <Button fx:id="favoriteButton" onAction="#onFavoriteButtonClicked" prefWidth="26.0" style="-fx-background-color: #b3dee5;">
+                          <Button fx:id="favouriteButton" onAction="#onFavouriteButtonClicked" prefWidth="26.0" style="-fx-background-color: #b3dee5;">
                         <opaqueInsets>
                            <Insets />
                         </opaqueInsets>
@@ -133,7 +133,7 @@
                   <HBox.margin>
                      <Insets />
                   </HBox.margin></Button>
-                    <Button onAction="#onListFavoritesButtonClicked" style="-fx-background-color: #d9b3ff;" text="Favorites">
+                    <Button onAction="#onListFavouritesButtonClicked" style="-fx-background-color: #d9b3ff;" text="Favourites">
                   <font>
                      <Font size="10.0" />
                   </font>

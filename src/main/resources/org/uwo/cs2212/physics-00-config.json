@@ -21,23 +21,23 @@
           "y": 246,
           "name": "Entrance/Exit",
           "roomNumber": "EX.3",
-          "description": "LG Barrier-free Entrance/Exit",
+          "description": "PAB LG Barrier-free Entrance/Exit EX.3",
           "type": "Accessibility"
         },
         {
           "x": 584,
           "y": 304,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "18",
-          "description": "LG Barrier-free Men's washroom",
+          "description": "PAB LG Barrier-free Men's Washroom 18",
           "type": "Accessibility"
         },
         {
           "x": 622,
           "y": 266,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "20",
-          "description": "LG Barrier-free Women's washroom",
+          "description": "PAB LG Barrier-free Women's Washroom 20",
           "type": "Accessibility"
         }
       ]
@@ -54,7 +54,7 @@
           "y":582,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "PAB LG Elevator EL.A",
           "type": "Elevator"
         },
         {
@@ -62,7 +62,7 @@
           "y": 278.5,
           "name": "Elevator",
           "roomNumber": "EL.B",
-          "description": "Elevator EL.B",
+          "description": "PAB LG Elevator EL.B",
           "type": "Elevator"
         }
       ]
@@ -79,7 +79,7 @@
           "y": 637.95,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "PAB LG Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -87,7 +87,7 @@
           "y": 607.84,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "PAB LG Stairwell ST.2",
           "type": "Stairwell"
         },
         {
@@ -95,7 +95,7 @@
           "y": 241.17,
           "name": "Stairwell",
           "roomNumber": "ST.5",
-          "description": "Stairwell ST.5",
+          "description": "PAB LG Stairwell ST.5",
           "type": "Stairwell"
         },
         {
@@ -103,7 +103,7 @@
           "y": 613.84,
           "name": "Stairwell",
           "roomNumber": "ST.6",
-          "description": "Stairwell ST.6",
+          "description": "PAB LG Stairwell ST.6",
           "type": "Stairwell"
         },
         {
@@ -111,7 +111,7 @@
           "y": 472.84,
           "name": "Stairwell",
           "roomNumber": "ST.8",
-          "description": "Stairwell ST.8",
+          "description": "PAB LG Stairwell ST.8",
           "type": "Stairwell"
         }
       ]
@@ -128,7 +128,7 @@
           "y": 691,
           "name": "PAB34",
           "roomNumber": "34",
-          "description": "LG Classroom 34",
+          "description": "PAB LG Classroom 34",
           "type": "Classroom"
         },
         {
@@ -136,7 +136,7 @@
           "y": 654,
           "name": "PAB34",
           "roomNumber": "34",
-          "description": "LG Classroom 34",
+          "description": "PAB LG Classroom 34",
           "type": "Classroom"
         }
       ]

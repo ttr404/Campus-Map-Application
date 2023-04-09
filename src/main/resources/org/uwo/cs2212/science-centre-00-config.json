@@ -19,17 +19,17 @@
         {
           "x": 659,
           "y": 563,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "60",
-          "description": "GF Barrier-free Men's washroom",
+          "description": "WSC GF Barrier-free Men's Washroom 60",
           "type": "Accessibility"
         },
         {
           "x": 785,
           "y": 597,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "63A",
-          "description": "GF Barrier-free Women's washroom",
+          "description": "WSC GF Barrier-free Women's Washroom 63A",
           "type": "Accessibility"
         },
         {
@@ -37,7 +37,7 @@
           "y": 690.5,
           "name": "Entrance/Exit",
           "roomNumber": "EX.6",
-          "description": "GF Barrier-free Entrance/Exit",
+          "description": "WSC GF Barrier-free Entrance/Exit EX.6",
           "type": "Accessibility"
         }
       ]
@@ -54,7 +54,7 @@
           "y": 462,
           "name": "WSC55",
           "roomNumber": "55",
-          "description": "GF Classroom 55",
+          "description": "WSC GF Classroom 55",
           "type": "Classroom"
         }
       ]
@@ -71,7 +71,7 @@
           "y": 306,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "WSC GF Elevator EL.A",
           "type": "Elevator"
         }
       ]
@@ -88,7 +88,7 @@
           "y": 696.95,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "WSC GF Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -96,7 +96,7 @@
           "y": 280.95,
           "name": "Stairwell",
           "roomNumber": "ST.3",
-          "description": "Stairwell ST.3",
+          "description": "WSC GF Stairwell ST.3",
           "type": "Stairwell"
         }
       ]

@@ -9,16 +9,16 @@ import org.uwo.cs2212.CurrentUser;
  * @author Yaopeng Xie
  * @author Jarrett Boersen
  */
-public class FavoritePoi {
+public class FavouritePoi {
     private String baseMapName;
     private String floorMapName;
     private String layerName;
     private String poiName;
 
-    public FavoritePoi() {
+    public FavouritePoi() {
     }
 
-    public FavoritePoi(String baseMapName, String floorMapName, String layerName, String poiName) {
+    public FavouritePoi(String baseMapName, String floorMapName, String layerName, String poiName) {
         this.baseMapName = baseMapName;
         this.floorMapName = floorMapName;
         this.layerName = layerName;
@@ -64,7 +64,7 @@ public class FavoritePoi {
      */
     public static void setUserFavourite(PointOfInterest poi) {
         // If the POI is a favourite add it to the favourite list
-        if (poi.isFavorite()) {
+        if (poi.isFavourite()) {
             // If a mapConfig and the layer can be found (none user POIs) add the favourite
             if (CurrentUser.getMapConfig() != null && PointOfInterest.findPOILayer(poi, CurrentUser.getMapConfig()) != null) {
                 CurrentUser.getUserData().addFavourite(poi, CurrentUser.getCurrentBaseMap(),

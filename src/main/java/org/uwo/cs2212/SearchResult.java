@@ -20,8 +20,8 @@ public class SearchResult {
     /**
      * Creates a new SearchResult object representing a point of interest on a specific floor map.
      *
-     * @param floorMap the FloorMap object where the point of interest is located
-     * @param poi      the PointOfInterest object representing the point of interest
+     * @param floorMap The FloorMap object where the point of interest is located
+     * @param poi      The PointOfInterest object representing the point of interest
      */
     public SearchResult(FloorMap floorMap, PointOfInterest poi) {
         this.floorMap = floorMap;
@@ -31,7 +31,7 @@ public class SearchResult {
     /**
      * Returns the PointOfInterest object associated with this search result.
      *
-     * @return the PointOfInterest object
+     * @return The PointOfInterest object
      */
     public PointOfInterest getPoi() {
         return poi;
@@ -40,7 +40,7 @@ public class SearchResult {
     /**
      * Sets the PointOfInterest object associated with this search result.
      *
-     * @param poi the PointOfInterest object to set
+     * @param poi The PointOfInterest object to set
      */
     public void setPoi(PointOfInterest poi) {
         this.poi = poi;
@@ -49,7 +49,7 @@ public class SearchResult {
     /**
      * Returns the FloorMap object associated with this search result.
      *
-     * @return the FloorMap object
+     * @return The FloorMap object
      */
     public FloorMap getFloorMap() {
         return floorMap;
@@ -58,7 +58,7 @@ public class SearchResult {
     /**
      * Sets the FloorMap object associated with this search result.
      *
-     * @param floorMap the FloorMap object to set
+     * @param floorMap The FloorMap object to set
      */
     public void setFloorMap(FloorMap floorMap) {
         this.floorMap = floorMap;
@@ -67,7 +67,7 @@ public class SearchResult {
     /**
      * Returns a String representation of this search result in the format "Floor: [floor map name]\n[point of interest information]".
      *
-     * @return a String representation of this search result
+     * @return A String representation of this search result
      */
     @Override
     public String toString() {

@@ -21,7 +21,7 @@
           "y": 447,
           "name": "MC300",
           "roomNumber": "300",
-          "description": "3F Classroom 300",
+          "description": "MC 3F Classroom 300",
           "type": "Classroom"
         },
         {
@@ -29,7 +29,7 @@
           "y": 470,
           "name": "MC316",
           "roomNumber": "316",
-          "description": "3F Classroom 316",
+          "description": "MC 3F Classroom 316",
           "type": "Classroom"
         },
         {
@@ -37,7 +37,7 @@
           "y": 518,
           "name": "MC320",
           "roomNumber": "320",
-          "description": "3F Classroom 320",
+          "description": "MC 3F Classroom 320",
           "type": "Classroom"
         }
       ]
@@ -54,7 +54,7 @@
           "y": 596,
           "name": "MC325",
           "roomNumber": "325",
-          "description": "3F Collaborative room 325",
+          "description": "MC 3F Collaborative room 325",
           "type": "Collaborative"
         }
       ]
@@ -71,7 +71,7 @@
           "y": 289,
           "name": "MC342",
           "roomNumber": "342",
-          "description": "3F Computer Lab 342",
+          "description": "MC 3F Computer Lab 342",
           "type": "cs_labs"
         }
       ]
@@ -88,7 +88,7 @@
           "y": 591.5,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "MC 3F Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -96,7 +96,7 @@
           "y": 550,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "MC 3F Stairwell ST.2",
           "type": "Stairwell"
         },
         {
@@ -104,7 +104,7 @@
           "y": 418.5,
           "name": "Stairwell",
           "roomNumber": "ST.3",
-          "description": "Stairwell ST.3",
+          "description": "MC 3F Stairwell ST.3",
           "type": "Stairwell"
         },
         {
@@ -112,7 +112,7 @@
           "y": 609.5,
           "name": "Stairwell",
           "roomNumber": "ST.5",
-          "description": "Stairwell ST.5",
+          "description": "MC 3F Stairwell ST.5",
           "type": "Stairwell"
         }
       ]
@@ -127,17 +127,17 @@
         {
           "x": 572,
           "y": 442,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "311",
-          "description": "3F Men's washroom",
+          "description": "MC 3F Men's Washroom 311",
           "type": "Washroom"
         },
         {
           "x": 870.5,
           "y": 423,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "388",
-          "description": "3F Women's washroom",
+          "description": "MC 3F Women's Washroom 388",
           "type": "Washroom"
         }
       ]
@@ -154,7 +154,7 @@
           "y": 371.34,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "MC 3F Elevator EL.A",
           "type": "Elevator"
         },
         {
@@ -162,7 +162,7 @@
           "y": 528.5,
           "name": "Elevator",
           "roomNumber": "EL.C",
-          "description": "Elevator EL.C",
+          "description": "MC 3F Elevator EL.C",
           "type": "Elevator"
         }
       ]

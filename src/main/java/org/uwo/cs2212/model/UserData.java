@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents user-specific data, such as user-created layers and favorite Points of Interest (POIs).
+ * Represents user-specific data, such as user-created layers and favourite Points of Interest (POIs).
  *
  * @author Yaopeng Xie
  * @author Jarrett Boersen
@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class UserData {
     private List<UserLayer> userLayers;
-    private List<FavoritePoi> favoritePois;
+    private List<FavouritePoi> favouritePois;
 
     public UserData() {
         this.userLayers = new ArrayList<>();
-        this.favoritePois = new ArrayList<>();
+        this.favouritePois = new ArrayList<>();
     }
 
     public List<UserLayer> getUserLayers() {
@@ -34,9 +34,9 @@ public class UserData {
      * This method is used to add a Point of Interest (POI) to the corresponding
      * UserLayer for the given BaseMap and FloorMap.
      *
-     * @param baseMap  the BaseMap containing the FloorMap
-     * @param floorMap the FloorMap where the POI is located
-     * @param poi      the Point of Interest to be added
+     * @param baseMap  The BaseMap containing the FloorMap
+     * @param floorMap The FloorMap where the POI is located
+     * @param poi      The Point of Interest to be added
      */
     public void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi) {
         // Used to store if a new userLayer had to be created
@@ -123,7 +123,7 @@ public class UserData {
     /**
      * This method is to update a UserLayer in the list with a new version.
      *
-     * @param updatedUserLayer the updated UserLayer to replace the old one in the list
+     * @param updatedUserLayer The updated UserLayer to replace the old one in the list
      */
     public void updateUserLayers(UserLayer updatedUserLayer) {
         // Loop through all UserLayers in the list
@@ -139,19 +139,19 @@ public class UserData {
     }
 
     /**
-     * Removes a favorite POI from the favoritePois list.
+     * Removes a favourite POI from the favouritePois list.
      *
-     * @param poi      The POI to remove from the favoritePois list
+     * @param poi      The POI to remove from the favouritePois list
      * @param baseMap  The BaseMap for the POI to be removed
      * @param floorMap The FloorMap for the POI to be removed
      */
     public void removeFavourite(PointOfInterest poi, BaseMap baseMap, FloorMap floorMap) {
         // Loop through the list of the favouritePois
-        for (FavoritePoi favPoi : favoritePois) {
+        for (FavouritePoi favPoi : favouritePois) {
             // If favPoi matches the given names then remove the favourite at the index
             if (favPoi.getPoiName().equals(poi.getName()) && favPoi.getBaseMapName().equals(baseMap.getName()) &&
                     favPoi.getFloorMapName().equals(floorMap.getName())) {
-                favoritePois.remove(favPoi);
+                favouritePois.remove(favPoi);
                 break; // Break early since the layer was found
             }
         }
@@ -161,17 +161,17 @@ public class UserData {
     }
 
     /**
-     * Adds a favorite POI to the favoritePois list.
+     * Adds a favourite POI to the favouritePois list.
      *
-     * @param poi      The POI to add to the favoritePois list
+     * @param poi      The POI to add to the favouritePois list
      * @param baseMap  The BaseMap for the POI to be added
      * @param floorMap The FloorMap for the POI to be added
      */
     public void addFavourite(PointOfInterest poi, BaseMap baseMap, Layer layer, FloorMap floorMap) {
         // Create a new favourite
-        FavoritePoi favoritePoi = new FavoritePoi(baseMap.getName(), floorMap.getName(), layer.getName(), poi.getName());
+        FavouritePoi favouritePoi = new FavouritePoi(baseMap.getName(), floorMap.getName(), layer.getName(), poi.getName());
         // Add it to the user's list
-        favoritePois.add(favoritePoi);
+        favouritePois.add(favouritePoi);
 
         // Save the updated object to the json file
         CurrentUser.saveUserData();
@@ -188,11 +188,11 @@ public class UserData {
         return null;
     }
 
-    public List<FavoritePoi> getFavoritePois() {
-        return favoritePois;
+    public List<FavouritePoi> getFavouritePois() {
+        return favouritePois;
     }
 
-    public void setFavoritePois(List<FavoritePoi> favoritePois) {
-        this.favoritePois = favoritePois;
+    public void setFavouritePois(List<FavouritePoi> favouritePois) {
+        this.favouritePois = favouritePois;
     }
 }

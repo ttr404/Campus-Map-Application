@@ -21,7 +21,7 @@
           "y": 418.5,
           "name": "Stairwell",
           "roomNumber": "ST.3",
-          "description": "Stairwell ST.3",
+          "description": "MC 4F Stairwell ST.3",
           "type": "Stairwell"
         },
         {
@@ -29,7 +29,7 @@
           "y": 609.5,
           "name": "Stairwell",
           "roomNumber": "ST.5",
-          "description": "Stairwell ST.5",
+          "description": "MC 4F Stairwell ST.5",
           "type": "Stairwell"
         }
       ]
@@ -46,7 +46,7 @@
           "y": 528.5,
           "name": "Elevator",
           "roomNumber": "EL.C",
-          "description": "Elevator EL.C",
+          "description": "MC 4F Elevator EL.C",
           "type": "Elevator"
         }
       ]

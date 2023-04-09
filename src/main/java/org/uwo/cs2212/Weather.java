@@ -26,9 +26,9 @@ public class Weather {
     /**
      * Constructs a new Weather object with the specified latitude and longitude.
      *
-     * @param latitude  the latitude of the location for which to retrieve weather information
-     * @param longitude the longitude of the location for which to retrieve weather information
-     * @throws IOException if there was an error retrieving the weather data
+     * @param latitude  The latitude of the location for which to retrieve weather information
+     * @param longitude The longitude of the location for which to retrieve weather information
+     * @throws IOException If there was an error retrieving the weather data
      */
     public Weather(double latitude, double longitude) throws IOException {
         this.latitude = latitude;
@@ -40,7 +40,7 @@ public class Weather {
     /**
      * Retrieves the current weather description for the location specified in the constructor.
      *
-     * @return a String representing the current weather description, or "---" if there was an error retrieving the data
+     * @return A String representing the current weather description, or "---" if there was an error retrieving the data
      */
     public String getWeather() {
         JSONObject data = retrieveData();
@@ -64,7 +64,7 @@ public class Weather {
     /**
      * Retrieves the current temperature for the location specified in the constructor.
      *
-     * @return a Double representing the current temperature in Celsius, or Double.NaN if there was an error retrieving the data
+     * @return A Double representing the current temperature in Celsius, or Double.NaN if there was an error retrieving the data
      */
     public Double getTemp() {
         JSONObject data = retrieveData();
@@ -81,7 +81,7 @@ public class Weather {
     /**
      * Retrieves the JSON data for the weather information from the OpenWeatherMap API.
      *
-     * @return a JSONObject representing the weather data
+     * @return A JSONObject representing the weather data
      */
     public JSONObject retrieveData() {
         try {
@@ -109,8 +109,8 @@ public class Weather {
     /**
      * Retrieves an HttpURLConnection for the weather information from the OpenWeatherMap API.
      *
-     * @return an HttpURLConnection object that can be used to retrieve the weather data
-     * @throws IOException if there was an error connecting to the API
+     * @return An HttpURLConnection object that can be used to retrieve the weather data
+     * @throws IOException If there was an error connecting to the API
      */
     public HttpURLConnection fetchWeather() throws IOException {
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=metric";
@@ -123,9 +123,9 @@ public class Weather {
     /**
      * Retrieves an ImageView for the specified weather icon.
      *
-     * @param icon a String representing the weather icon code
-     * @return an ImageView object for the specified icon
-     * @throws IOException if there was an error retrieving the icon image
+     * @param icon A String representing the weather icon code
+     * @return An ImageView object for the specified icon
+     * @throws IOException If there was an error retrieving the icon image
      */
     public ImageView grabImage(String icon) throws IOException {
         String imageUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
@@ -138,7 +138,7 @@ public class Weather {
     /**
      * Retrieves the current weather icon code for the location specified in the constructor.
      *
-     * @return a String representing the current weather icon code
+     * @return A String representing the current weather icon code
      */
     public String getIcon() {
         return icon;

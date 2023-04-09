@@ -1,6 +1,6 @@
 # Western Campus Map Application
 ## About The Project
-The Campus Map Application is a JavaFX-based desktop software designed to help students, staff, faculty, and visitors navigate the Western University campus. The application provides an interactive map with various Points of Interest (POIs) such as buildings, classrooms, computer labs, washrooms, collaboration rooms, restaurants, etc. Users can log in, search for POIs, and save their favorite locations. The application also provides weather information and accessibility information for different locations on campus.
+The Campus Map Application is a JavaFX-based desktop software designed to help students, staff, faculty, and visitors navigate the Western University campus. The application provides an interactive map with various Points of Interest (POIs) such as buildings, classrooms, computer labs, washrooms, collaboration rooms, restaurants, etc. Users can log in, search for POIs, and save their favourite locations. The application also provides weather information and accessibility information for different locations on campus.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -58,13 +58,13 @@ The Campus Map Application is a JavaFX-based desktop software designed to help s
    - To view the search results on the map, click on the POI name in the list that appears below the search bar.
 2. To view the POI information, click on the POI on the map, a pop-up window will appear with the POI information.
 3. To view the floor plan of a building, click on the building name in the drop-down list that appears above the search bar. 
-4. To save and remove a POI as a favorite, click on the star icon next to the Editing Mode in the toolbar on top right corner of application.
+4. To save and remove a POI as a favourite, click on the star icon next to the Editing Mode in the toolbar on top right corner of application.
 5. To display and hide layers on map, click on the Layers checkbox in the toolbar.
-6. To show all favorite POIs, click on the Favorites button in the toolbar.
+6. To show all favourite POIs, click on the Favourites button in the toolbar.
 7. To Zoom in and out, click on the Zoom In and Zoom Out button in the top toolbar.
 8. To reset the map to the default view, click on the Reset button in the top toolbar.
 9. To clear the map-marker, click on the Clear button in the top toolbar.
-10. To add a user-created POI, click on the map first and then click on the addPOI button in the top toolbar, enter the name and room number of the POI and click on the Add POI button, you will have the option to save the POI as a favorite in the same time.
+10. To add a user-created POI, click on the map first and then click on the addPOI button in the top toolbar, enter the name and room number of the POI and click on the Add POI button, you will have the option to save the POI as a favourite in the same time.
 11. To edit a user-created POI, click on the POI on the map and click on the Edit POI button in the toolbar on the top of the application.
 12. To delete a user-created POI, click on the POI on the map and click on the Delete POI button in the toolbar on the top of the application.
 13. If the user clicked on the built-in POIs, the add,edit and delete button will be disabled.
@@ -79,7 +79,7 @@ The Campus Map Application is a JavaFX-based desktop software designed to help s
 3. To edit a POI, click on the POI on the map and click on the Edit POI button in the toolbar on top left corner of application, then filling out name, room number and room type field.
 4. To delete a POI, click on the POI on the map and click on the Delete POI button in the toolbar on top left corner of application.
 5. After successfully adding, editing, or deleting a POI, the application will automatically save changes to the JSON files. The developer have to restart the application in order for the changes to show-up.
-6. To close editing mode and return to the main view, click on the close button on the top left toolbar.
+6. To close editor mode and return to the main view, click on the close button on the top left toolbar.
 
 ### Account Information
 The following accounts are available for testing:

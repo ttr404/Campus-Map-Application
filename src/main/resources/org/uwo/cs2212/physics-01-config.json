@@ -21,39 +21,39 @@
           "y": 109,
           "name": "Entrance/Exit",
           "roomNumber": "EX.4",
-          "description": "1F Barrier-free Entrance/Exit",
+          "description": "PAB 1F Barrier-free Entrance/Exit",
           "type": "Accessibility"
         },
         {
           "x": 509,
           "y": 300,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "131",
-          "description": "1F Barrier-free Men's washroom",
+          "description": "PAB 1F Barrier-free Men's Washroom 131",
           "type": "Accessibility"
         },
         {
           "x": 550,
           "y": 304,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "133",
-          "description": "1F Barrier-free Women's washroom",
+          "description": "PAB 1F Barrier-free Women's Washroom 133",
           "type": "Accessibility"
         },
         {
           "x": 524,
           "y": 566,
-          "name": "Unisex washroom",
+          "name": "Unisex Washroom",
           "roomNumber": "153",
-          "description": "1F Barrier-free Unisex washroom",
+          "description": "PAB 1F Barrier-free Unisex Washroom 153",
           "type": "Accessibility"
         },
         {
           "x": 557,
           "y": 543,
-          "name": "Unisex washroom",
+          "name": "Unisex Washroom",
           "roomNumber": "154",
-          "description": "1F Barrier-free Unisex washroom",
+          "description": "PAB 1F Barrier-free Unisex Washroom 154",
           "type": "Accessibility"
         }
       ]
@@ -70,7 +70,7 @@
           "y":575,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "PAB 1F Elevator EL.A",
           "type": "Elevator"
         },
         {
@@ -78,7 +78,7 @@
           "y": 289.5,
           "name": "Elevator",
           "roomNumber": "EL.B",
-          "description": "Elevator EL.B",
+          "description": "PAB 1F Elevator EL.B",
           "type": "Elevator"
         }
       ]
@@ -95,7 +95,7 @@
           "y": 640.95,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "PAB 1F Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -103,7 +103,7 @@
           "y": 590.84,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "PAB 1F Stairwell ST.2",
           "type": "Stairwell"
         },
         {
@@ -111,7 +111,7 @@
           "y": 252.84,
           "name": "Stairwell",
           "roomNumber": "ST.5",
-          "description": "Stairwell ST.5",
+          "description": "PAB 1F Stairwell ST.5",
           "type": "Stairwell"
         },
         {
@@ -119,7 +119,7 @@
           "y":591 ,
           "name": "Stairwell",
           "roomNumber": "ST.6",
-          "description": "Stairwell ST.6",
+          "description": "PAB 1F Stairwell ST.6",
           "type": "Stairwell"
         },
         {
@@ -127,7 +127,7 @@
           "y": 431.84,
           "name": "Stairwell",
           "roomNumber": "ST.8",
-          "description": "Stairwell ST.8",
+          "description": "PAB 1F Stairwell ST.8",
           "type": "Stairwell"
         },
         {
@@ -135,7 +135,7 @@
           "y": 423.84,
           "name": "Stairwell",
           "roomNumber": "ST.9",
-          "description": "Stairwell ST.9",
+          "description": "PAB 1F Stairwell ST.9",
           "type": "Stairwell"
         }
       ]
@@ -152,7 +152,7 @@
           "y": 657,
           "name": "PAB106",
           "roomNumber": "106",
-          "description": "1F Classroom 106",
+          "description": "PAB 1F Classroom 106",
           "type": "Classroom"
         },
         {
@@ -160,7 +160,7 @@
           "y": 643,
           "name": "PAB100",
           "roomNumber": "100",
-          "description": "1F Classroom 100",
+          "description": "PAB 1F Classroom 100",
           "type": "Classroom"
         },
         {
@@ -168,7 +168,7 @@
           "y": 633,
           "name": "PAB150",
           "roomNumber": "150",
-          "description": "1F Classroom 150",
+          "description": "PAB 1F Classroom 150",
           "type": "Classroom"
         },
         {
@@ -176,7 +176,7 @@
           "y": 656,
           "name": "PAB148",
           "roomNumber": "148",
-          "description": "1F Classroom 148",
+          "description": "PAB 1F Classroom 148",
           "type": "Classroom"
         },
         {
@@ -184,7 +184,7 @@
           "y": 333,
           "name": "PAB117",
           "roomNumber": "117",
-          "description": "1F Classroom 117",
+          "description": "PAB 1F Classroom 117",
           "type": "Classroom"
         }
       ]
@@ -201,7 +201,7 @@
           "y": 721,
           "name": "Entrance/Exit",
           "roomNumber": "EX.1",
-          "description": "1F Main Entrance/Exit",
+          "description": "PAB 1F Main Entrance/Exit EX.1",
           "type": "entryAndExit"
         }
       ]

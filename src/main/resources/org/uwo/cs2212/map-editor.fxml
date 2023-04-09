@@ -13,14 +13,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="679.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditingController">
+<BorderPane prefHeight="679.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uwo.cs2212.MapEditorController">
      <top>
         <ToolBar prefHeight="37.0" BorderPane.alignment="CENTER">
           <items>
               <Button fx:id="close" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefWidth="61.0" text="Close" />
             <Label prefWidth="180.0" />
-              <Button fx:id="zoomOUT" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomOutButtonClick" text="+" />
-              <Button fx:id="zoomIN" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" text="-" textAlignment="RIGHT" />
+              <Button fx:id="zoomOut" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomOutButtonClick" text="+" />
+              <Button fx:id="zoomIn" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" text="-" textAlignment="RIGHT" />
+            <Button fx:id="resetZoom" mnemonicParsing="false" onAction="#onZoomResetButtonClicked" text="Reset" />
           </items>
         </ToolBar>
      </top>

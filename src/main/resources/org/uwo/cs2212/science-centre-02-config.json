@@ -19,17 +19,17 @@
         {
           "x": 469,
           "y": 366,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "254A",
-          "description": "2F Barrier-free Men's washroom",
+          "description": "WSC 2F Barrier-free Men's Washroom",
           "type": "Accessibility"
         },
         {
           "x": 459,
           "y": 421,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "255",
-          "description": "2F Barrier-free Women's washroom",
+          "description": "WSC 2F Barrier-free Women's Washroom",
           "type": "Accessibility"
         }
       ]
@@ -46,7 +46,7 @@
           "y": 288,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "WSC 2F Elevator EL.A",
           "type": "Elevator"
         }
       ]
@@ -63,7 +63,7 @@
           "y": 636.95,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "WSC 2F Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -71,7 +71,7 @@
           "y": 268.95,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "WSC 2F Stairwell ST.2",
           "type": "Stairwell"
         }
       ]
@@ -88,7 +88,7 @@
           "y": 172,
           "name": "WSC240",
           "roomNumber": "240",
-          "description": "2F Classroom 240",
+          "description": "WSC 2F Classroom 240",
           "type": "Classroom"
         }
       ]

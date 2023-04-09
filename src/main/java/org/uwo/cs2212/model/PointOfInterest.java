@@ -21,7 +21,7 @@ public class PointOfInterest {
     @JsonIgnore
     private boolean selected;
     @JsonIgnore
-    private boolean favorite;
+    private boolean favourite;
 
     public double getX() {
         return x;
@@ -79,12 +79,12 @@ public class PointOfInterest {
         return selected;
     }
 
-    public boolean isFavorite() {
-        return favorite;
+    public boolean isFavourite() {
+        return favourite;
     }
 
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 
     @Override

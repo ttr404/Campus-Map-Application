@@ -88,8 +88,8 @@ public class ConfigUtil {
                         floorMap.setUserLayer(userLayer);
                     }
 
-                    if (CurrentUser.getUserData() != null && CurrentUser.getUserData().getFavoritePois() != null) {
-                        updateFavorite(baseMap, floorMap);
+                    if (CurrentUser.getUserData() != null && CurrentUser.getUserData().getFavouritePois() != null) {
+                        updateFavourite(baseMap, floorMap);
                     }
 
 
@@ -174,9 +174,9 @@ public class ConfigUtil {
     /**
      * Loads the user layers from a JSON file at the specified URL and returns a UserData object containing the user layers.
      *
-     * @param url the URL of the JSON file containing the user layers data
+     * @param url The URL of the JSON file containing the user layers data
      * @return UserData object containing the user layers
-     * @throws RuntimeException if an IOException or URISyntaxException occurs during the load operation
+     * @throws RuntimeException If an IOException or URISyntaxException occurs during the load operation
      */
     public static UserData loadUserLayers(URL url) {
         try {
@@ -203,9 +203,9 @@ public class ConfigUtil {
     /**
      * Saves the given UserData object to the specified file URL as a JSON string.
      *
-     * @param userData the UserData object to be saved
-     * @param url      the URL of the file where the UserData object will be saved
-     * @throws RuntimeException if an IOException or URISyntaxException occurs during the save operation
+     * @param userData The UserData object to be saved
+     * @param url      The URL of the file where the UserData object will be saved
+     * @throws RuntimeException If an IOException or URISyntaxException occurs during the save operation
      */
     public static void saveUserData(UserData userData, URL url) {
         try {
@@ -270,25 +270,25 @@ public class ConfigUtil {
     }
 
     /**
-     * Updates the favorite status of Points of Interest (POIs) in the given BaseMap and FloorMap
-     * based on the current user's list of favorite POIs.
+     * Updates the favourite status of Points of Interest (POIs) in the given BaseMap and FloorMap
+     * based on the current user's list of favourite POIs.
      *
-     * @param baseMap  the BaseMap containing the FloorMap
-     * @param floorMap the FloorMap containing the layers with POIs to update
+     * @param baseMap  The BaseMap containing the FloorMap
+     * @param floorMap The FloorMap containing the layers with POIs to update
      */
-    private static void updateFavorite(BaseMap baseMap, FloorMap floorMap) {
+    private static void updateFavourite(BaseMap baseMap, FloorMap floorMap) {
         // Loop through all the layers in the floorMap
         for (Layer layer : floorMap.getLayers()) {
             // Loop through all the POIs in the layer
             for (PointOfInterest poi : layer.getPoints()) {
-                // Loop through all the favorite POIs of the current user
-                for (FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()) {
-                    // If the favorite POI matches the baseMap, floorMap, layer, and POI names, set the POI as a favorite
-                    if (favorite.getBaseMapName().equalsIgnoreCase(baseMap.getName())
-                            && favorite.getFloorMapName().equalsIgnoreCase(floorMap.getName())
-                            && favorite.getLayerName().equalsIgnoreCase(layer.getName())
-                            && favorite.getPoiName().equalsIgnoreCase(poi.getName())) {
-                        poi.setFavorite(true);
+                // Loop through all the favourite POIs of the current user
+                for (FavouritePoi favourite : CurrentUser.getUserData().getFavouritePois()) {
+                    // If the favourite POI matches the baseMap, floorMap, layer, and POI names, set the POI as a favourite
+                    if (favourite.getBaseMapName().equalsIgnoreCase(baseMap.getName())
+                            && favourite.getFloorMapName().equalsIgnoreCase(floorMap.getName())
+                            && favourite.getLayerName().equalsIgnoreCase(layer.getName())
+                            && favourite.getPoiName().equalsIgnoreCase(poi.getName())) {
+                        poi.setFavourite(true);
                     }
                 }
             }
@@ -297,14 +297,14 @@ public class ConfigUtil {
         // If the floorMap has a userLayer with POIs, loop through the user-created POIs
         if (floorMap.getUserLayer() != null && floorMap.getUserLayer().getPoints() != null) {
             for (PointOfInterest poi : floorMap.getUserLayer().getPoints()) {
-                // Loop through all the favorite POIs of the current user
-                for (FavoritePoi favorite : CurrentUser.getUserData().getFavoritePois()) {
-                    // If the favorite POI matches the baseMap, floorMap, userLayer, and POI names, set the POI as a favorite
-                    if (favorite.getBaseMapName().equalsIgnoreCase(baseMap.getName())
-                            && favorite.getFloorMapName().equalsIgnoreCase(floorMap.getName())
-                            && favorite.getLayerName().equalsIgnoreCase(floorMap.getUserLayer().getName())
-                            && favorite.getPoiName().equalsIgnoreCase(poi.getName())) {
-                        poi.setFavorite(true);
+                // Loop through all the favourite POIs of the current user
+                for (FavouritePoi favourite : CurrentUser.getUserData().getFavouritePois()) {
+                    // If the favourite POI matches the baseMap, floorMap, userLayer, and POI names, set the POI as a favourite
+                    if (favourite.getBaseMapName().equalsIgnoreCase(baseMap.getName())
+                            && favourite.getFloorMapName().equalsIgnoreCase(floorMap.getName())
+                            && favourite.getLayerName().equalsIgnoreCase(floorMap.getUserLayer().getName())
+                            && favourite.getPoiName().equalsIgnoreCase(poi.getName())) {
+                        poi.setFavourite(true);
                     }
                 }
             }

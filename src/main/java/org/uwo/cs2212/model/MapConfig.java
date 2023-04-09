@@ -16,7 +16,7 @@ public class MapConfig {
     /**
      * Returns the list of base maps defined in this configuration.
      *
-     * @return the list of base maps
+     * @return The list of base maps
      */
     public List<BaseMap> getBaseMaps() {
         return baseMaps;
@@ -25,7 +25,7 @@ public class MapConfig {
     /**
      * Sets the list of base maps for this configuration.
      *
-     * @param baseMaps the list of base maps to set
+     * @param baseMaps The list of base maps to set
      */
     public void setBaseMaps(List<BaseMap> baseMaps) {
         this.baseMaps = baseMaps;

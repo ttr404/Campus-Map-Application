@@ -19,17 +19,17 @@
         {
           "x": 469,
           "y": 366,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "354A",
-          "description": "3F Barrier-free Men's washroom",
+          "description": "WSC 3F Barrier-free Men's Washroom",
           "type": "Accessibility"
         },
         {
           "x": 459,
           "y": 421,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "356",
-          "description": "3F Barrier-free Women's washroom",
+          "description": "WSC 3F Barrier-free Women's Washroom",
           "type": "Accessibility"
         }
       ]
@@ -46,7 +46,7 @@
           "y": 288,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "WSC 3F Elevator EL.A",
           "type": "Elevator"
         }
       ]
@@ -63,7 +63,7 @@
           "y": 636.95,
           "name": "Stairwell",
           "roomNumber": "ST.1",
-          "description": "Stairwell ST.1",
+          "description": "WSC 3F Stairwell ST.1",
           "type": "Stairwell"
         },
         {
@@ -71,7 +71,7 @@
           "y": 268.95,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "WSC 3F Stairwell ST.2",
           "type": "Stairwell"
         }
       ]

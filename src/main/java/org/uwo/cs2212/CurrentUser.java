@@ -76,7 +76,7 @@ public class CurrentUser {
     /**
      * This function allow the application to get the user's json file url
      *
-     * @return the url of current user's json file
+     * @return The url of current user's json file
      */
     public static URL getCurrentUserLayerUrl() {
         return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json");
@@ -85,9 +85,9 @@ public class CurrentUser {
     /**
      * This method is used to add the POI data to the user layer
      *
-     * @param baseMap  the base map of the user layer
-     * @param floorMap the floor map of the user layer
-     * @param poi      the poi will be added into the user layer
+     * @param baseMap  The base map of the user layer
+     * @param floorMap The floor map of the user layer
+     * @param poi      The poi will be added into the user layer
      */
     public static void addPoi(BaseMap baseMap, FloorMap floorMap, PointOfInterest poi) {
         // Initialize userData if it doesn't exist
@@ -140,11 +140,11 @@ public class CurrentUser {
 
     /**
      * Saves the user data to a file, by calling the saveUserData method from the ConfigUtil class. The user data includes the list
-     * of favorite points of interest, which are extracted from the mapConfig object. The method also creates a new user layer file,
+     * of favourite points of interest, which are extracted from the mapConfig object. The method also creates a new user layer file,
      * if one does not already exist, and updates the current user layer URL accordingly. The method returns a boolean value indicating
      * whether the user data was saved successfully or not.
      *
-     * @return true if the user data was saved successfully, false otherwise
+     * @return True if the user data was saved successfully, false otherwise
      */
     public static boolean saveUserData() {
         // Used to store if the user data saved successfully

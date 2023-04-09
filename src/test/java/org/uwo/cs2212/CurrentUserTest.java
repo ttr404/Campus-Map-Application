@@ -105,7 +105,7 @@ class CurrentUserTest {
         CurrentUser.addPoi(baseMap, null, poi);
         UserData userData = CurrentUser.getUserData();
         assertEquals(0, userData.getUserLayers().size());
-        assertEquals(0, userData.getFavoritePois().size());
+        assertEquals(0, userData.getFavouritePois().size());
     }
 
     @Test
@@ -115,7 +115,7 @@ class CurrentUserTest {
         CurrentUser.addPoi(baseMap, floorMap, null);
         UserData userData = CurrentUser.getUserData();
         assertEquals(0, userData.getUserLayers().size());
-        assertEquals(0, userData.getFavoritePois().size());
+        assertEquals(0, userData.getFavouritePois().size());
     }
     @Test
     void testSaveUserData() {

@@ -31,7 +31,7 @@
       "description" : "This is a great study spot!",
       "type" : "User POI"
     } ],
-    "floorName" : "Main campus",
+    "floorName" : "Main Campus",
     "baseName" : "Western Main Campus"
   }, {
     "name" : "User layer",
@@ -44,14 +44,14 @@
     "floorName" : "3rd floor",
     "baseName" : "Middlesex College Building"
   } ],
-  "favoritePois" : [ {
+  "favouritePois" : [ {
     "baseMapName" : "Western Main Campus",
-    "floorMapName" : "Main campus",
+    "floorMapName" : "Main Campus",
     "layerName" : "User layer",
     "poiName" : "My Favourite Building!!!!"
   }, {
     "baseMapName" : "Western Main Campus",
-    "floorMapName" : "Main campus",
+    "floorMapName" : "Main Campus",
     "layerName" : "Main Map",
     "poiName" : "NSa01"
   }, {

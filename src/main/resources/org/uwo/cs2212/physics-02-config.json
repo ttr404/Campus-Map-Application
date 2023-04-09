@@ -19,17 +19,17 @@
         {
           "x": 503,
           "y": 279,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "219",
-          "description": "2F Barrier-free Men's washroom",
+          "description": "PAB 2F Barrier-free Men's Washroom 219",
           "type": "Accessibility"
         },
         {
           "x": 555,
           "y": 276,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "221",
-          "description": "2F Barrier-free Women's washroom",
+          "description": "PAB 2F Barrier-free Women's Washroom 221",
           "type": "Accessibility"
         }
       ]
@@ -46,7 +46,7 @@
           "y": 542,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "PAB 2F Elevator EL.A",
           "type": "Elevator"
         },
         {
@@ -54,7 +54,7 @@
           "y": 259.5,
           "name": "Elevator",
           "roomNumber": "EL.B",
-          "description": "Elevator EL.B",
+          "description": "PAB 2F Elevator EL.B",
           "type": "Elevator"
         }
       ]
@@ -71,7 +71,7 @@
           "y": 564.95,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "PAB 2F Stairwell ST.2",
           "type": "Stairwell"
         },
         {
@@ -79,7 +79,7 @@
           "y": 225.95,
           "name": "Stairwell",
           "roomNumber": "ST.5",
-          "description": "Stairwell ST.5",
+          "description": "PAB 2F Stairwell ST.5",
           "type": "Stairwell"
         },
         {
@@ -87,7 +87,7 @@
           "y": 564.95,
           "name": "Stairwell",
           "roomNumber": "ST.6",
-          "description": "Stairwell ST.6",
+          "description": "PAB 2F Stairwell ST.6",
           "type": "Stairwell"
         },
         {
@@ -95,7 +95,7 @@
           "y": 394.95,
           "name": "Stairwell",
           "roomNumber": "ST.9",
-          "description": "Stairwell ST.9",
+          "description": "PAB 2F Stairwell ST.9",
           "type": "Stairwell"
         },
         {
@@ -103,7 +103,7 @@
           "y": 456.95,
           "name": "Stairwell",
           "roomNumber": "ST.10",
-          "description": "Stairwell ST.10",
+          "description": "PAB 2F Stairwell ST.10",
           "type": "Stairwell"
         }
       ]

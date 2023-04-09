@@ -25,10 +25,10 @@ public class ImageLayer extends Canvas {
      * This method is used to signify if a POI is selected by increasing the point size and making the POI's text bold
      * on the map
      *
-     * @param width  the width of the canvas
-     * @param height the height of the canvas
-     * @param zoom   the zoom level of the canvas
-     * @param layer  the layer of points of interest to draw on the canvas
+     * @param width  The width of the canvas
+     * @param height The height of the canvas
+     * @param zoom   The zoom level of the canvas
+     * @param layer  The layer of points of interest to draw on the canvas
      */
     public ImageLayer(double width, double height, double zoom, Layer layer) {
         super(width * zoom, height * zoom);
@@ -60,8 +60,8 @@ public class ImageLayer extends Canvas {
     /**
      * Checks if the given layer is a base layer or not. A base layer is a layer that contains the base map image and is always shown.
      *
-     * @param layer the layer to check
-     * @return true if the layer is a base layer, false otherwise
+     * @param layer The layer to check
+     * @return True if the layer is a base layer, false otherwise
      */
     private static boolean isBaseLayer(Layer layer) {
         return layer != null && layer.getLayerType() != null && "base".equalsIgnoreCase(layer.getLayerType().trim());

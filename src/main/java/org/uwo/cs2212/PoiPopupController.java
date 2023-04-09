@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.uwo.cs2212.model.FavoritePoi;
+import org.uwo.cs2212.model.FavouritePoi;
 import org.uwo.cs2212.model.PointOfInterest;
 
 import java.net.URL;
@@ -70,7 +70,7 @@ public class PoiPopupController implements Initializable {
     /**
      * Set the stage for the POI popup view.
      *
-     * @param stage a Stage object representing the stage for the login view
+     * @param stage A Stage object representing the stage for the login view
      */
     public static void setStage(Stage stage) {
         PoiPopupController.stage = stage;
@@ -100,7 +100,7 @@ public class PoiPopupController implements Initializable {
      * This method is called when the favourite button is clicked which calls the setFavouriteButtonState
      * method to toggle the favourite state
      *
-     * @param actionEvent an ActionEvent object representing the click event
+     * @param actionEvent An ActionEvent object representing the click event
      */
     public void OnFavouriteClicked(ActionEvent actionEvent) {
         setFavouriteButtonState();
@@ -110,7 +110,7 @@ public class PoiPopupController implements Initializable {
      * This method is called when the save button is clicked this collects all the data the user
      * entered then runs the save method
      *
-     * @param actionEvent an ActionEvent object representing the click event
+     * @param actionEvent An ActionEvent object representing the click event
      */
     public void OnSaveClicked(ActionEvent actionEvent) {
         // If the user didn't enter the required information inform them
@@ -148,7 +148,7 @@ public class PoiPopupController implements Initializable {
      * @param name        The name of the POI
      * @param roomNumber  The room number for the POI
      * @param description The description for the POI
-     * @param actionEvent an ActionEvent object representing the click event
+     * @param actionEvent An ActionEvent object representing the click event
      */
     private void save(String name, String roomNumber, String description, ActionEvent actionEvent) {
         // Used to store if the user data saved successfully
@@ -161,7 +161,7 @@ public class PoiPopupController implements Initializable {
         poi.setName(name);
         poi.setRoomNumber(roomNumber);
         poi.setDescription(description);
-        poi.setFavorite(favourite);
+        poi.setFavourite(favourite);
         poi.setX(xCoord);
         poi.setY(yCoord);
         // Set the type for the POI
@@ -173,7 +173,7 @@ public class PoiPopupController implements Initializable {
         saveSuccessful = CurrentUser.saveUserData();
 
         // Set the POI as a favourite or not for the user
-        FavoritePoi.setUserFavourite(poi);
+        FavouritePoi.setUserFavourite(poi);
 
         // Show a successfully saved method
         Alert alert;
@@ -216,7 +216,7 @@ public class PoiPopupController implements Initializable {
      * @param name        The name of the POI
      * @param roomNumber  The room number for the POI
      * @param description The description for the POI
-     * @param actionEvent an ActionEvent object representing the click event
+     * @param actionEvent An ActionEvent object representing the click event
      */
     private void edit(String name, String roomNumber, String description, ActionEvent actionEvent) {
         // Used to store if the user data saved successfully
@@ -226,8 +226,8 @@ public class PoiPopupController implements Initializable {
         PointOfInterest currentSelectedPoi = CurrentUser.getCurrentSelectedPoi();
 
         // Remove the POI from the favourites before editing
-        currentSelectedPoi.setFavorite(false);
-        FavoritePoi.setUserFavourite(currentSelectedPoi);
+        currentSelectedPoi.setFavourite(false);
+        FavouritePoi.setUserFavourite(currentSelectedPoi);
 
         // Create a new POI to store the updated information
         PointOfInterest editedPOI = new PointOfInterest();
@@ -236,7 +236,7 @@ public class PoiPopupController implements Initializable {
         editedPOI.setName(name);
         editedPOI.setRoomNumber(roomNumber);
         editedPOI.setDescription(description);
-        editedPOI.setFavorite(favourite);
+        editedPOI.setFavourite(favourite);
         editedPOI.setX(currentSelectedPoi.getX());
         editedPOI.setY(currentSelectedPoi.getY());
         // Set the type for the POI
@@ -248,7 +248,7 @@ public class PoiPopupController implements Initializable {
         saveSuccessful = CurrentUser.saveUserData();
 
         // Set the updated POI as a favourite or not
-        FavoritePoi.setUserFavourite(editedPOI);
+        FavouritePoi.setUserFavourite(editedPOI);
 
         Alert alert;
         // Show a successfully saved alert
@@ -297,9 +297,9 @@ public class PoiPopupController implements Initializable {
 
         // If favourite is true show a coloured in icon
         if (favourite) {
-            imageView = new ImageView(getClass().getResource("favorite1.png").toExternalForm());
+            imageView = new ImageView(getClass().getResource("favourite1.png").toExternalForm());
         } else { // Otherwise, grey out the icon
-            imageView = new ImageView(getClass().getResource("favorite0.png").toExternalForm());
+            imageView = new ImageView(getClass().getResource("favourite0.png").toExternalForm());
         }
 
         // Set the size of the imageview and set it as the button's graphic
@@ -321,6 +321,6 @@ public class PoiPopupController implements Initializable {
         RoomNumberField.setText(currentSelectedPoi.getRoomNumber());
         DescriptionField.setText(currentSelectedPoi.getDescription());
         // Set the state of favourite
-        favourite = currentSelectedPoi.isFavorite();
+        favourite = currentSelectedPoi.isFavourite();
     }
 }

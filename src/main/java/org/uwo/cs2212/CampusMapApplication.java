@@ -22,15 +22,15 @@ public class CampusMapApplication extends Application {
     /**
      * Set up the login view and display it.
      *
-     * @param stage a Stage object representing the application window
-     * @throws IOException if there is an error while attempting to load the login view
+     * @param stage A Stage object representing the application window
+     * @throws IOException If there is an error while attempting to load the login view
      */
     @Override
     public void start(Stage stage) throws IOException {
 
         LoginViewController.setStage(stage);
         FXMLLoader loginFxmlLoader = new FXMLLoader(CampusMapApplication.class.getResource("login-view.fxml"));
-        Scene loginScene = new Scene(loginFxmlLoader.load(), 571, 400);
+        Scene loginScene = new Scene(loginFxmlLoader.load(), 570, 400);
         pressEnter(loginFxmlLoader, loginScene);
         stage.setTitle("Login");
         stage.setScene(loginScene);
@@ -52,8 +52,8 @@ public class CampusMapApplication extends Application {
     /**
      * Look for the Enter key to be pressed while the login view is active.
      *
-     * @param loginFxmlLoader a FXMLLoader object representing the loader for the login view FXML file
-     * @param loginScene      a Scene object representing the login view scene
+     * @param loginFxmlLoader A FXMLLoader object representing the loader for the login view FXML file
+     * @param loginScene      A Scene object representing the login view scene
      */
     public static void pressEnter(FXMLLoader loginFxmlLoader, Scene loginScene) {
         LoginViewController controller = loginFxmlLoader.getController();

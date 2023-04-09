@@ -19,17 +19,17 @@
         {
           "x": 339,
           "y": 646,
-          "name": "Men's washroom",
+          "name": "Men's Washroom",
           "roomNumber": "305",
-          "description": "3F Barrier-free Men's washroom",
+          "description": "PAB 3F Barrier-free Men's Washroom 305",
           "type": "Accessibility"
         },
         {
           "x": 339,
           "y": 607,
-          "name": "Women's washroom",
+          "name": "Women's Washroom",
           "roomNumber": "307",
-          "description": "3F Barrier-free Women's washroom",
+          "description": "PAB 3F Barrier-free Women's Washroom 307",
           "type": "Accessibility"
         }
       ]
@@ -46,7 +46,7 @@
           "y": 542,
           "name": "Elevator",
           "roomNumber": "EL.A",
-          "description": "Elevator EL.A",
+          "description": "PAB 3F Elevator EL.A",
           "type": "Elevator"
         }
       ]
@@ -63,7 +63,7 @@
           "y": 564.95,
           "name": "Stairwell",
           "roomNumber": "ST.2",
-          "description": "Stairwell ST.2",
+          "description": "PAB 3F Stairwell ST.2",
           "type": "Stairwell"
         },
         {
@@ -71,7 +71,7 @@
           "y": 564.95,
           "name": "Stairwell",
           "roomNumber": "ST.6",
-          "description": "Stairwell ST.6",
+          "description": "PAB 3F Stairwell ST.6",
           "type": "Stairwell"
         },
         {
@@ -79,7 +79,7 @@
           "y": 481.95,
           "name": "Stairwell",
           "roomNumber": "ST.10",
-          "description": "Stairwell ST.10",
+          "description": "PAB 3F Stairwell ST.10",
           "type": "Stairwell"
         }
       ]
