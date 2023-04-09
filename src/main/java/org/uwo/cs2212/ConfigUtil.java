@@ -299,29 +299,13 @@ public class ConfigUtil {
 
     public static Path getCorrectPath(String fileName) {
         // Get the location of the file in the project's resource folder
-        URL resourceUrl = CurrentUser.class.getResource("map-config.json");
+        InputStream resourceUrl = CurrentUser.class.getResourceAsStream(fileName);
 
-        //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        ClassLoader classLoader = resourceClass.getClassLoader();
+//        String resourcePath = resourceUrl.;
+//        resourcePath = resourcePath.replace("map-config.json", fileName);
+//        resourcePath = resourcePath.replace("%20", " ");
 
-        try (InputStream inputStream = classLoader.getResourceAsStream(fileName);
-             InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-             BufferedReader reader = new BufferedReader(streamReader)) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String resourcePath = resourceUrl.getPath();
-        resourcePath = resourcePath.replace("map-config.json", fileName);
-        resourcePath = resourcePath.replace("%20", " ");
-
-        File resourceFile = new File(resourcePath);
+        File resourceFile = new File(resourceUrl);
 
         // Check if the file exists in the user's home folder
         File userFile = new File(getUserSaveFolder() + "/" + fileName);
