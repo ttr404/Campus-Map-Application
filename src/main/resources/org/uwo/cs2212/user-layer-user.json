@@ -45,16 +45,6 @@
     "baseName" : "Middlesex College Building"
   } ],
   "favouritePois" : [ {
-    "baseMapName" : "Western Main Campus",
-    "floorMapName" : "Main Campus",
-    "layerName" : "User layer",
-    "poiName" : "My Favourite Building!!!!"
-  }, {
-    "baseMapName" : "Western Main Campus",
-    "floorMapName" : "Main Campus",
-    "layerName" : "Main Map",
-    "poiName" : "NSa01"
-  }, {
     "baseMapName" : "Middlesex College Building",
     "floorMapName" : "Ground Floor",
     "layerName" : "Classroom layer",
@@ -69,5 +59,15 @@
     "floorMapName" : "3rd floor",
     "layerName" : "Classroom layer",
     "poiName" : "MC320"
+  }, {
+    "baseMapName" : "Western Main Campus",
+    "floorMapName" : "Main Campus",
+    "layerName" : "Main Map",
+    "poiName" : "NSa01"
+  }, {
+    "baseMapName" : "Western Main Campus",
+    "floorMapName" : "Main Campus",
+    "layerName" : "User layer",
+    "poiName" : "My Favourite Building!!!!"
   } ]
 }

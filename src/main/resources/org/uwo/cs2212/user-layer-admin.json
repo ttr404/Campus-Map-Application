@@ -1,0 +1,26 @@
+{
+  "userLayers" : [ {
+    "name" : "User layer",
+    "layerType" : "User layer",
+    "color" : "BLACK",
+    "font" : "Arial",
+    "size" : 16.0,
+    "hideLayer" : false,
+    "points" : [ {
+      "x" : 223.00000074505806,
+      "y" : 603.5,
+      "name" : "My Secret Hideout",
+      "roomNumber" : "13",
+      "description" : "Its a secret",
+      "type" : "User POI"
+    } ],
+    "floorName" : "Ground Floor",
+    "baseName" : "Middlesex College Building"
+  } ],
+  "favouritePois" : [ {
+    "baseMapName" : "Middlesex College Building",
+    "floorMapName" : "Ground Floor",
+    "layerName" : "Restaurant layer",
+    "poiName" : "Grad Club"
+  } ]
+}

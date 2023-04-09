@@ -17,11 +17,11 @@
      <top>
         <ToolBar prefHeight="37.0" BorderPane.alignment="CENTER">
           <items>
-              <Button fx:id="close" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefWidth="61.0" text="Close" />
+              <Button fx:id="close" layoutX="10.0" layoutY="10.0" maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefWidth="61.0" text="Close" />
             <Label prefWidth="180.0" />
-              <Button fx:id="zoomOut" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomOutButtonClick" text="+" />
-              <Button fx:id="zoomIn" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" maxWidth="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" text="-" textAlignment="RIGHT" />
-            <Button fx:id="resetZoom" mnemonicParsing="false" onAction="#onZoomResetButtonClicked" text="Reset" />
+              <Button fx:id="zoomOut" maxHeight="26.0" maxWidth="26.0" minHeight="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomOutButtonClick" text="+" />
+              <Button fx:id="zoomIn" depthTest="DISABLE" layoutX="365.0" layoutY="10.0" maxHeight="26.0" maxWidth="26.0" minHeight="26.0" minWidth="26.0" mnemonicParsing="false" onAction="#onZoomInButtonClick" text="-" textAlignment="RIGHT" />
+            <Button fx:id="resetZoom" maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onZoomResetButtonClicked" text="Reset" />
           </items>
         </ToolBar>
      </top>
@@ -34,9 +34,9 @@
                        <children>
                         <HBox alignment="CENTER" spacing="8.0">
                            <children>
-                                <Button fx:id="addPOI" mnemonicParsing="false" onAction="#onAddPOIButtonClick" text="Add POI" />
-                                <Button fx:id="deletePOI" mnemonicParsing="false" onAction="#onDeletePOIButtonClick" text="Delete POI" />
-                                <Button fx:id="editPOI" mnemonicParsing="false" onAction="#onEditPOIButtonClick" prefWidth="72.0" text="Edit POI" />
+                                <Button fx:id="addPOI" maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onAddPOIButtonClick" text="Add POI" />
+                                <Button fx:id="deletePOI" maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onDeletePOIButtonClick" text="Delete POI" />
+                                <Button fx:id="editPOI" maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onEditPOIButtonClick" prefWidth="72.0" text="Edit POI" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -47,7 +47,7 @@
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </Text>
-                          <TextField fx:id="poiName">
+                          <TextField fx:id="poiName" maxHeight="26.0" minHeight="26.0">
                            <VBox.margin>
                               <Insets bottom="8.0" />
                            </VBox.margin>
@@ -57,7 +57,7 @@
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </Text>
-                          <TextField fx:id="roomNumber" layoutX="10.0" layoutY="27.0">
+                          <TextField fx:id="roomNumber" layoutX="10.0" layoutY="27.0" maxHeight="26.0" minHeight="26.0">
                            <VBox.margin>
                               <Insets bottom="8.0" />
                            </VBox.margin>
@@ -67,7 +67,7 @@
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </Text>
-                          <ComboBox fx:id="roomSelector" prefWidth="240.0">
+                          <ComboBox fx:id="roomSelector" maxHeight="26.0" minHeight="26.0" prefWidth="240.0">
                            <VBox.margin>
                               <Insets bottom="8.0" />
                            </VBox.margin>

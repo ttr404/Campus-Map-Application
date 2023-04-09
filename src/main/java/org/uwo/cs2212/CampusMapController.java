@@ -233,7 +233,12 @@ public class CampusMapController implements Initializable {
                 });
     }
 
-    public void onMapSelectorClicked() {
+    /**
+     * Called when the mapSelector is clicked, this allows it function normally again once clicked if it was disabled
+     *
+     * @param actionEvent The ActionEvent object representing the about button click event
+     */
+    public void onMapSelectorClicked(ActionEvent actionEvent) {
         // Allow the mapSelector to update
         preventMapSelectorUpdatesFav = false;
         preventMapSelectorUpdatesSearch = false;
@@ -244,7 +249,7 @@ public class CampusMapController implements Initializable {
 
         // Remove the unselected POI
         selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
-        showMap(); // TODO: Correct?
+        showMap();
     }
 
     /**
@@ -255,6 +260,9 @@ public class CampusMapController implements Initializable {
      */
     private void checkBoxSelected() {
         informationList.getItems().clear();
+
+        // Unselected the selected POI
+        selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), null));
 
         // Show all POIs in the information list
         for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
@@ -350,6 +358,10 @@ public class CampusMapController implements Initializable {
     private void setShowAllPOI() {
         selectAllLayers();
         checkBoxSelected();
+
+        // Allow the mapSelector to update
+        preventMapSelectorUpdatesFav = false;
+
         for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
             if (layer.getLayerType().equalsIgnoreCase("base")) {
                 for (PointOfInterest poi : layer.getPoints()) {
@@ -547,7 +559,7 @@ public class CampusMapController implements Initializable {
 
         // Create a ChoiceBox control to select the help topic
         ChoiceBox<String> helpTopic = new ChoiceBox<>();
-        helpTopic.getItems().addAll("Getting Started", "Search Function", "POI and Favourite", "Editor Mode");
+        helpTopic.getItems().addAll("Getting Started", "Search Function", "POIs and Favourites", "Editor Mode");
         helpTopic.setValue("Getting Started"); // Set the default value
         Label helpLabel = new Label();
         helpLabel.setWrapText(true); // Wrap text to multiple lines
@@ -603,7 +615,7 @@ public class CampusMapController implements Initializable {
                         You can select from a variety of buildings, including Middlesex College, Western Science Centre and the Physics and Astronomy Building.
 
                         For each building, you can select different floors using the floor buttons located at the top middle of the screen.""";
-            case "POI and Favourite":
+            case "POIs and Favourites":
                 return """
 
                         To use the favourite and POI (point of interest) functions in the map navigation app, you can do the following:
@@ -944,8 +956,12 @@ public class CampusMapController implements Initializable {
         for (Layer layer : CurrentUser.getCurrentFloorMap().getLayers()) {
             for (PointOfInterest poi : layer.getPoints()) {
                 if (hitTest(realMousePosition, poi)) {
+
                     selectPoi(new SearchResult(CurrentUser.getCurrentFloorMap(), poi));
                     showPoiInList(poi);
+
+                    // Allow the mapSelector to update
+                    preventMapSelectorUpdatesFav = false;
 
                     poiDetailsPopup(mouseEvent, poi);
 
@@ -968,8 +984,10 @@ public class CampusMapController implements Initializable {
                         coordinateY = 0;
                     }
 
+                    // Allow the mapSelector to update
+                    preventMapSelectorUpdatesFav = false;
+
                     poiDetailsPopup(mouseEvent, poi);
-                    //showMap(); // TODO: Keep removed?
 
                     return;
                 }
@@ -1243,6 +1261,10 @@ public class CampusMapController implements Initializable {
             FavouritePoi.setUserFavourite(currentPOI);
 
             setFavouriteButtonState();
+        }
+
+        if (preventMapSelectorUpdatesFav) {
+            onListFavouritesButtonClicked(actionEvent);;
         }
     }
 

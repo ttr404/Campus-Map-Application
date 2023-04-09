@@ -90,7 +90,7 @@ public class PoiPopupController implements Initializable {
     /**
      * This method is used to set the state of the editMode
      *
-     * @param editMode The value set editMode to
+     * @param editMode True means edit mode is enabled, false means it is add mode
      */
     public static void setEditMode(boolean editMode) {
         PoiPopupController.editMode = editMode;

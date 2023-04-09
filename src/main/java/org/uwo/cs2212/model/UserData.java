@@ -52,7 +52,7 @@ public class UserData {
             userLayer.setHideLayer(false);
             userLayer.setColor("BLACK");
             userLayer.setFont("Arial");
-            userLayer.setLayerType("User layer"); // TODO: Correct?
+            userLayer.setLayerType("User layer");
             userLayer.setSize(16);
             userLayer.setPoints(new ArrayList<>());
         }

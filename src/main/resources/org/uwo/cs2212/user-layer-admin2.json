@@ -1,0 +1,26 @@
+{
+  "userLayers" : [ {
+    "name" : "User layer",
+    "layerType" : "User layer",
+    "color" : "BLACK",
+    "font" : "Arial",
+    "size" : 16.0,
+    "hideLayer" : false,
+    "points" : [ {
+      "x" : 369.0,
+      "y" : 125.0,
+      "name" : "Good Lunch Spot",
+      "roomNumber" : "01",
+      "description" : "They have a good variety of food!",
+      "type" : "User POI"
+    } ],
+    "floorName" : "Main Campus",
+    "baseName" : "Western Main Campus"
+  } ],
+  "favouritePois" : [ {
+    "baseMapName" : "Western Main Campus",
+    "floorMapName" : "Main Campus",
+    "layerName" : "User layer",
+    "poiName" : "Good Lunch Spot"
+  } ]
+}
