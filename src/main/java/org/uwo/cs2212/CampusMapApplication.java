@@ -36,6 +36,8 @@ public class CampusMapApplication extends Application {
         stage.setScene(loginScene);
         stage.setResizable(false);
 
+        ConfigUtil.resourceClass(getClass());
+
         Image icon = new Image(getClass().getResourceAsStream("western-logo.png"));
         stage.getIcons().add(icon);
 

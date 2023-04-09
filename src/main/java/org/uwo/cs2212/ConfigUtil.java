@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.uwo.cs2212.model.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -30,7 +30,7 @@ public class ConfigUtil {
      * MapConfig object by iterating through the BaseMap and FloorMap
      * configurations.
      *
-     * @param url The URL of the JSON file containing the map configuration
+     * @param fileName The file name of the JSON file containing the map configuration
      *            data to be loaded.
      * @return The MapConfig object containing the map configuration data
      * from the JSON file, including the associated FloorMap objects.
@@ -39,10 +39,10 @@ public class ConfigUtil {
      *                          JSON data to the MapConfig object, or loading the FloorMap
      *                          objects.
      */
-    public static MapConfig loadMapConfig(URL url) {
+    public static MapConfig loadMapConfig(String fileName) {
         try {
             // Read the JSON file data to a byte array
-            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            byte[] mapJsonData = Files.readAllBytes(getCorrectPath(fileName));
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -50,23 +50,20 @@ public class ConfigUtil {
             // Map the JSON data to a MapConfig object
             MapConfig mapConfig = objectMapper.readValue(mapJsonData, MapConfig.class);
 
-            URL currentUserUrl = CurrentUser.getCurrentUserLayerUrl();
-            if (currentUserUrl != null) {
-                File file = new File(currentUserUrl.toURI());
-                // Check if the file contains data
-                if (file.length() > 0) {
-                    CurrentUser.setUserData(ConfigUtil.loadUserLayers(currentUserUrl));
-                } else {
-                    // Delete the file if it is blank to prevent crashes
-                    try {
-                        if (file.delete()) {
-                            System.out.println(file.getName() + " is deleted!");
-                        } else {
-                            System.out.println("Delete operation is failed.");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            File file = new File(CurrentUser.getCurrentUserLayerPath());
+            // Check if the file contains data
+            if (file.length() > 0) {
+                CurrentUser.setUserData(ConfigUtil.loadUserLayers(file.getPath()));
+            } else {
+                // Delete the file if it is blank to prevent crashes
+                try {
+                    if (file.delete()) {
+                        System.out.println(file.getName() + " is deleted!");
+                    } else {
+                        System.out.println("Delete operation is failed.");
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -77,7 +74,8 @@ public class ConfigUtil {
                 for (FloorMap floorConfig : baseMap.getFloorConfigs()) {
 
                     // Get the URL of the FloorMap configuration file
-                    URL floorMapUrl = ConfigUtil.class.getResource(floorConfig.getConfigFileName());
+                    String floorMapUrl = ConfigUtil.getCorrectPath(floorConfig.getConfigFileName()).toString();
+
 
                     // Load the FloorMap object using the configuration file URL
                     FloorMap floorMap = loadFloorMap(floorMapUrl);
@@ -100,8 +98,6 @@ public class ConfigUtil {
             return mapConfig;
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -109,7 +105,7 @@ public class ConfigUtil {
      * Loads a FloorMap object from the specified JSON file.
      * This method reads the JSON file from the given URL, parses it, and maps the JSON data to a FloorMap object.
      *
-     * @param url The URL of the JSON file containing the floor map
+     * @param fileName The file name of the JSON file containing the floor map
      *            configuration data to be loaded.
      * @return The FloorMap object containing the floor map configuration
      * data from the JSON file.
@@ -117,10 +113,10 @@ public class ConfigUtil {
      *                          URISyntaxException while reading the JSON file or mapping
      *                          the JSON data to the FloorMap object.
      */
-    public static FloorMap loadFloorMap(URL url) {
+    public static FloorMap loadFloorMap(String fileName) {
         try {
             // Read the JSON file data to a byte array
-            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            byte[] mapJsonData = Files.readAllBytes(Path.of(fileName));
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -133,9 +129,6 @@ public class ConfigUtil {
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
         }
     }
 
@@ -143,15 +136,15 @@ public class ConfigUtil {
      * Loads a UserList object from the specified JSON file.
      * This method reads the JSON file from the given URL, parses it,and maps the JSON data to a UserList object.
      *
-     * @param url The URL of the JSON file containing the user data to be loaded.
+     * @param fileName The file name of the JSON file containing the user data to be loaded.
      * @return The UserList object containing the user data from the JSON file.
      * @throws RuntimeException If there is an IOException or URISyntaxException while reading the JSON file or
      *                          mapping the JSON data to the UserList object.
      */
-    public static UserList loadUserList(URL url) {
+    public static UserList loadUserList(String fileName) {
         try {
             // Read the JSON file data to a byte array
-            byte[] userJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            byte[] userJsonData = Files.readAllBytes(getCorrectPath(fileName));
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -164,9 +157,6 @@ public class ConfigUtil {
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
         }
     }
 
@@ -174,14 +164,14 @@ public class ConfigUtil {
     /**
      * Loads the user layers from a JSON file at the specified URL and returns a UserData object containing the user layers.
      *
-     * @param url the URL of the JSON file containing the user layers data
+     * @param fileName the file name of the JSON file containing the user layers data
      * @return UserData object containing the user layers
      * @throws RuntimeException if an IOException or URISyntaxException occurs during the load operation
      */
-    public static UserData loadUserLayers(URL url) {
+    public static UserData loadUserLayers(String fileName) {
         try {
             // Read the JSON file data to a byte array
-            byte[] mapJsonData = Files.readAllBytes(Path.of(url.toURI()));
+            byte[] mapJsonData = Files.readAllBytes(Path.of(fileName));
 
             // Create an ObjectMapper instance for handling JSON deserialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -194,9 +184,6 @@ public class ConfigUtil {
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
         }
     }
 
@@ -204,13 +191,13 @@ public class ConfigUtil {
      * Saves the given UserData object to the specified file URL as a JSON string.
      *
      * @param userData the UserData object to be saved
-     * @param url      the URL of the file where the UserData object will be saved
+     * @param fileName      the file name of the file where the UserData object will be saved
      * @throws RuntimeException if an IOException or URISyntaxException occurs during the save operation
      */
-    public static void saveUserData(UserData userData, URL url) {
+    public static void saveUserData(UserData userData, String fileName) {
         try {
             // Convert the URL to a Path object representing the file path
-            Path filePath = Path.of(url.toURI());
+            Path filePath = Path.of(getUserSaveFolder() + "/" + fileName);
 
             // Create an ObjectMapper instance for handling JSON serialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -226,9 +213,6 @@ public class ConfigUtil {
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
         }
     }
 
@@ -239,15 +223,15 @@ public class ConfigUtil {
      *
      * @param userList The UserList object containing the user data
      *                 to be saved.
-     * @param url      The URL of the JSON file where the user data should
+     * @param fileName      The file name of the JSON file where the user data should
      *                 be saved.
      * @throws RuntimeException If there is an IOException or
      *                          URISyntaxException while writing the JSON data to the file.
      */
-    public static void saveUserList(UserList userList, URL url) {
+    public static void saveUserList(UserList userList, String fileName) {
         try {
             // Convert the URL to a Path object representing the file path
-            Path filePath = Path.of(url.toURI());
+            Path filePath = Path.of(getUserSaveFolder() + "/" + fileName);
 
             // Create an ObjectMapper instance for handling JSON serialization
             ObjectMapper objectMapper = new ObjectMapper();
@@ -262,9 +246,6 @@ public class ConfigUtil {
             Files.writeString(filePath, userJsonData);
         } catch (IOException e) {
             // Handle IOException and rethrow as a RuntimeException
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            // Handle URISyntaxException and rethrow as a RuntimeException
             throw new RuntimeException(e);
         }
     }
@@ -309,5 +290,59 @@ public class ConfigUtil {
                 }
             }
         }
+    }
+
+    private static Class resourceClass;
+    public static void resourceClass(Class resourceClass) {
+        ConfigUtil.resourceClass = resourceClass;
+    }
+
+    public static Path getCorrectPath(String fileName) {
+        // Get the location of the file in the project's resource folder
+        URL resourceUrl = CurrentUser.class.getResource("map-config.json");
+
+        //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader classLoader = resourceClass.getClassLoader();
+
+        try (InputStream inputStream = classLoader.getResourceAsStream(fileName);
+             InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(streamReader)) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String resourcePath = resourceUrl.getPath();
+        resourcePath = resourcePath.replace("map-config.json", fileName);
+        resourcePath = resourcePath.replace("%20", " ");
+
+        File resourceFile = new File(resourcePath);
+
+        // Check if the file exists in the user's home folder
+        File userFile = new File(getUserSaveFolder() + "/" + fileName);
+        if (userFile.exists()) {
+            return userFile.toPath();
+        } else {
+            return resourceFile.toPath();
+        }
+    }
+
+    public static String getUserSaveFolder() {
+        // Get the user's home directory
+        String userUrlString = System.getProperty("user.home");
+        userUrlString = userUrlString.replace("%20", " ");
+
+        // Create the storage folder
+        File userDir = new File(userUrlString + "/Western Campus Map");
+        if (!userDir.exists()){
+            userDir.mkdirs();
+        }
+
+        return userDir.getPath();
     }
 }

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 
 /**
  * This class is used to store data on the logged-in user. This includes their user generated POIs and their favourites
@@ -78,8 +79,12 @@ public class CurrentUser {
      *
      * @return the url of current user's json file
      */
-    public static URL getCurrentUserLayerUrl() {
-        return CurrentUser.class.getResource("user-layer-" + username.trim().toLowerCase() + ".json");
+    public static String getCurrentUserLayerPath() {
+        return ConfigUtil.getCorrectPath(getUserFileName()).toString();
+    }
+
+    public static String getUserFileName() {
+        return "user-layer-" + username.trim().toLowerCase() + ".json";
     }
 
     /**
@@ -150,27 +155,20 @@ public class CurrentUser {
         // Used to store if the user data saved successfully
         boolean saveSuccessful = true;
 
-        URL tmpUrl = CurrentUser.getCurrentUserLayerUrl();
-        if (tmpUrl == null) {
-            tmpUrl = CurrentUser.class.getResource("empty-user-layer.json"); // TODO: Switch this from the target dir to the resource one?
-            String path = tmpUrl.getPath();
-            path = path.replace("empty-user-layer.json", "user-layer-" + CurrentUser.getUsername().trim().toLowerCase() + ".json");
-            path = path.replace("%20", " ");
-            try {
-                File file = new File(path);
-                System.out.println(path);
-                file.createNewFile();
-                tmpUrl = CurrentUser.getCurrentUserLayerUrl();
-            } catch (MalformedURLException e) {
-                saveSuccessful = false;
-                e.printStackTrace();
-            } catch (IOException e) {
-                saveSuccessful = false;
-                e.printStackTrace();
-            }
+        String path = CurrentUser.getCurrentUserLayerPath();
+        try {
+            File file = new File(path);
+            System.out.println(path);
+            file.createNewFile();
+        } catch (MalformedURLException e) {
+            saveSuccessful = false;
+            e.printStackTrace();
+        } catch (IOException e) {
+            saveSuccessful = false;
+            e.printStackTrace();
         }
 
-        ConfigUtil.saveUserData(userData, tmpUrl);
+        ConfigUtil.saveUserData(userData, getUserFileName());
 
         // Returns true if no errors occurred
         return saveSuccessful;

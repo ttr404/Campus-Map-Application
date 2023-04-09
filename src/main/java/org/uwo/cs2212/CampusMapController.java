@@ -1549,7 +1549,7 @@ public class CampusMapController implements Initializable {
      * This method is used to refresh the (user created) POIs on the map after modifying them
      */
     private void refreshPOIs() {
-        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig(CampusMapApplication.class.getResource("map-config.json")));
+        CurrentUser.setMapConfig(ConfigUtil.loadMapConfig("map-config.json"));
 
         // Find the matching current BaseMap in the MapConfig
         for (BaseMap desiredBaseMap : CurrentUser.getMapConfig().getBaseMaps()) {
