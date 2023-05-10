@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
  * @author Tingrui Zhang
  * @author Binchi Zhang
  * @author Jarrett Boersen
+ * @author Truman Huang
  */
 public class MapEditorController {
 
